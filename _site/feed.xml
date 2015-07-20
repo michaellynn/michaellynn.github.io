@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>mikeymikey blogs here</title>
+    <description>Details here</description>
+    <link>http://michaellynn.github.io/</link>
+    <atom:link href="http://michaellynn.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    
+      <item>
+        <title>A Home for my Long-form Rambling</title>
+        <description>&lt;p&gt;For quite some time, my friends have been &lt;a href=&quot;https://twitter.com/tvsutton/status/565118553809235968&quot;&gt;nagging
+me&lt;/a&gt; &lt;a href=&quot;https://twitter.com/Vaughn_E_Miller/status/603232042772516866&quot;&gt;to put
+together&lt;/a&gt; &lt;a href=&quot;https://twitter.com/foigus/status/608800195707564032&quot;&gt;a
+blog&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Blame this site on them.&lt;/p&gt;
+
+&lt;p&gt;I’ve been sharing code and tips in random &lt;a href=&quot;https://gist.github.com/pudquick&quot;&gt;Github
+gists&lt;/a&gt; for several years via
+&lt;a href=&quot;https://twitter.com/mikeymikey&quot;&gt;tweets&lt;/a&gt; and online chats.&lt;/p&gt;
+
+&lt;p&gt;I’ll probably keep doing that.&lt;/p&gt;
+
+&lt;p&gt;But now if it’s interesting enough to write about but I can’t fit it into 140
+characters, it’ll probably end up here.&lt;/p&gt;
+
+&lt;p&gt;And if it doesn’t - now I have no excuse to avoid blogging about it when you nag
+me.&lt;/p&gt;
+
+&lt;p&gt;Happy now?&lt;/p&gt;
+</description>
+        <pubDate>Wed, 19 Jul 2017 23:44:00 -0700</pubDate>
+        <link>http://michaellynn.github.io/hello/2017/07/19/your-fault/</link>
+        <guid isPermaLink="true">http://michaellynn.github.io/hello/2017/07/19/your-fault/</guid>
+      </item>
+    
+  </channel>
+</rss>
