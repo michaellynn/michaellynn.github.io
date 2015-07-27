@@ -289,7 +289,7 @@ objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decod
 
 &lt;p&gt;Progress - now we’re working with a “PVSignaturePayload”.&lt;/p&gt;
 
-&lt;p&gt;Again, let’s look at what we data we have, and then compare that against the contents of “PVSignaturePayload.h” from our earlier class-dump run:&lt;/p&gt;
+&lt;p&gt;Again, let’s look at what data we have, and then compare that against the contents of “PVSignaturePayload.h” from our earlier class-dump run:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_plist[&#39;$objects&#39;][1]
 {

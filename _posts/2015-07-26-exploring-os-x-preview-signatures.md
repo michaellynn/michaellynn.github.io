@@ -267,7 +267,7 @@ What do we have this time? Let's try to decode it. But since we decrypted with p
 
 Progress - now we're working with a "PVSignaturePayload".
 
-Again, let's look at what we data we have, and then compare that against the contents of "PVSignaturePayload.h" from our earlier class-dump run:
+Again, let's look at what data we have, and then compare that against the contents of "PVSignaturePayload.h" from our earlier class-dump run:
 
     >>> decrypted_plist['$objects'][1]
     {
