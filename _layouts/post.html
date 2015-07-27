@@ -8,11 +8,16 @@ layout: default
 {% endif %}
 
 <div class="post-header mb2">
-  <h1>{{ page.title }}</h1>
-  <span class="post-meta">{{ page.date | date: "%b %-d, %Y" }}</span><br>
+  <span class="post-meta">{{ page.date | date: "%b %-d, %Y" }}</span>
   {% if page.update_date %}
     <span class="post-meta">Updated: {{ page.update_date | date: "%b %-d, %Y" }}</span><br>
   {% endif %}  
+  <h1>{{ page.title }}</h1>
+  {% if page.tags %}
+  <small><span class="post-meta">tags:
+  {% for tag in page.tags %}
+  <a href="/tag/{{tag}}">{{tag}}</a>
+  {% endfor %}</span></small><p/><p/>{% endif %}
 </div>
 
 <article class="post-content">

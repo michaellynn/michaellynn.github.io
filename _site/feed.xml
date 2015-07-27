@@ -7,6 +7,385 @@
     <atom:link href="http://michaellynn.github.io/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Exploring OS X Preview Signatures</title>
+        <description>&lt;p&gt;If you’ve never used it before, &lt;strong&gt;Preview.app&lt;/strong&gt; has an amazing ability to pull a
+signature from the trackpad on your Mac or from the video feed of your FaceTime
+camera. The feature is located under the menu &lt;em&gt;Tools -&amp;gt; Annotate -&amp;gt;
+Signature&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;The capture experience is pretty magical, second only to (in my opinion) iTunes
+using your camera to capture your iTunes gift card codes.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2015-07-26-exploring-os-x-preview-signatures/signature.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Once it has your signature stored, you can then use the same menu to place your signature into electronic documents like PDFs as transparent image overlays, allowing you to “sign” them.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2015-07-26-exploring-os-x-preview-signatures/award.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now that you’ve stored your signature in your computer, one would hope that Apple spent some time protecting others from accessing it.&lt;/p&gt;
+
+&lt;p&gt;Fortunately they did.&lt;/p&gt;
+
+&lt;p&gt;In OS X 10.9 Mavericks, when you create a signature, two primary pieces of data are configured.&lt;/p&gt;
+
+&lt;p&gt;In the user’s login.keychain, an application password keychain item called “Preview Signature Privacy” is created, with the following notes:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2015-07-26-exploring-os-x-preview-signatures/keychain_notes.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;small&gt;* &lt;em&gt;(yes, I know this is a 10.10 screenshot - it’s prettier this way)&lt;/em&gt;&lt;/small&gt;&lt;/p&gt;
+
+&lt;p&gt;The password contents of this keychain item are a hexadecimal string, representing 16 raw bytes of information.&lt;/p&gt;
+
+&lt;p&gt;The second item that’s created is an application preference in the domain com.apple.Preview.signatures for the key “items-1”, which contains an array of data objects. The backend storage for this domain is located in the user’s application containers at:&lt;/p&gt;
+
+&lt;pre&gt;~/Library/Containers/com.apple.Preview/Data/Library/Preferences/com.apple.Preview.signatures.plist&lt;/pre&gt;
+
+&lt;p&gt;If you didn’t know me already, I’ll just warn you now that my code here will be in &lt;a href=&quot;http://python.org/&quot;&gt;python&lt;/a&gt;. Since we’re going to be working a lot with plists, let’s get a few helper functions defined.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=01_snip.py&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;This has an advantage over the plistlib module included with python in that it can support binary plists as well as just XML.&lt;/p&gt;
+
+&lt;p&gt;Next, let’s read the com.apple.Preview.signatures preference for the key “item-1”.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Never. Ever. Read. Preferences. From. Plist. Files. Directly.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;(… Unless you want to. I mean, I’m not your dad. Go for it if you really want to. But &lt;a href=&quot;https://developer.apple.com/library/mac/releasenotes/DataManagement/RN-CoreFoundationOlderNotes/#//apple_ref/doc/uid/TP40012903-TRANSLATED_CHAPTER_965-SW5&quot;&gt;Apple hates you for it&lt;/a&gt;.)&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;However - following my own advice is a little tricky here! The location of the preference is stored on-disk within ~/Library/Containers, indicating this is a sandboxed application preference and isn’t normally meant to be accessed by other apps outside of Preview.app itself.&lt;/p&gt;
+
+&lt;p&gt;… But OS X will still let you read the preference, if you provide the full path to it.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=02_snip.py&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;The contents of the array is a data object, which if you try to look at it directly, you just see the hex encoding of it.&lt;/p&gt;
+
+&lt;p&gt;But if you look at the first few characters in it, you might see something recognizable:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; str(first_sig)[:50]
+&#39;bplist00\xd4\x01\x02\x03\x04\x05\x06\x1e\x1fX$versionX$objectsY$archiverT$top&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The first few characters “bplist00” are an indicator that the contents of the array are binary plists themselves. So let’s unpack it.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=03_snip.py&quot;&gt; &lt;/script&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sig_plist
+{
+    &quot;$archiver&quot; = NSKeyedArchiver;
+    &quot;$objects&quot; =     (
+        &quot;$null&quot;,
+                {
+[...]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we’ve got something new - an &lt;a href=&quot;https://developer.apple.com/library/prerelease/mac/documentation/Cocoa/Reference/Foundation/Classes/NSKeyedArchiver_Class/index.html&quot;&gt;NSKeyedArchiver&lt;/a&gt; object. This is a way for OS X (and iOS) to store data objects in a file-friendly format.&lt;/p&gt;
+
+&lt;p&gt;So we need to decode the object. Let’s try!&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=04_snip.py&quot;&gt; &lt;/script&gt;
+
+&lt;pre&gt;&lt;code&gt;Traceback (most recent call last):
+  File &quot;&amp;lt;stdin&amp;gt;&quot;, line 1, in &amp;lt;module&amp;gt;
+objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decodeObjectForKey:]: cannot decode object of class (PVSignature)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Whoops. Looks like OS X doesn’t know how to natively handle a “PVSignature” file - so where do we learn about it?&lt;/p&gt;
+
+&lt;p&gt;We’ll need to compare two different pieces of information: what’s stored in the NSKeyedArchiver object and what exactly is a PVSignature object?&lt;/p&gt;
+
+&lt;p&gt;For the PVSignature structure, we’ll need the help of a great tool: &lt;a href=&quot;http://stevenygard.com/projects/class-dump/&quot;&gt;class-dump&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;It can dump the signature of Objective-C objects defined within applications and frameworks (… hopefully PVSignature is within Preview.app itself!)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class-dump -H /Applications/Preview.app/Contents/MacOS/Preview
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Yay, our output includes a “PVSignature.h” file.&lt;/p&gt;
+
+&lt;p&gt;Let’s see what’s inside:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=05_snip.m&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;Now let’s compare that against what’s &lt;em&gt;actually&lt;/em&gt; stored in the encoded object.&lt;/p&gt;
+
+&lt;p&gt;When storing a single object, NSKeyedArchiver object stores the object attributes in the 2nd item of the “$objects” key:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sig_plist[&#39;$objects&#39;][1]
+{
+    &quot;$class&quot; = &quot;&amp;lt;CFKeyedArchiverUID 0x7fd3ada65f80 [0x7fff7951bed0]&amp;gt;{value = 4}&quot;;
+    data = &quot;&amp;lt;CFKeyedArchiverUID 0x7fd3ada98480 [0x7fff7951bed0]&amp;gt;{value = 2}&quot;;
+    uid = 1000;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So it looks like we have a “data” and “uid” values only, unlike everything listed above.&lt;/p&gt;
+
+&lt;p&gt;Enter my next favorite tool: &lt;a href=&quot;http://www.hopperapp.com&quot;&gt;Hopper&lt;/a&gt; (&lt;em&gt;a reverser’s best friend!&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;With Hopper, we’ll read the executable to disassemble located at: /Applications/Preview.app/Contents/MacOS/Preview&lt;/p&gt;
+
+&lt;p&gt;Once loaded up, we’re going to look under “Labels” for &lt;em&gt;PVSignature initWithCoder&lt;/em&gt; (the method that’s called when unarchiving an instance of a class).&lt;/p&gt;
+
+&lt;p&gt;Once we find it, we can use &lt;em&gt;Window -&amp;gt; Show Psuedo Code of Procedure&lt;/em&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[...]
+rbx-&amp;gt;_undecryptedData = [[r14 decodeObjectForKey:@&quot;data&quot;] retain];
+rbx-&amp;gt;_uid = [r14 decodeInt32ForKey:@&quot;uid&quot;];
+rbx-&amp;gt;_cannotDecrypt = 0x0;
+rbx-&amp;gt;_shouldPersist = 0x1;
+rbx-&amp;gt;_largeThumbnail = 0x0;
+rbx-&amp;gt;_smallThumbnail = 0x0;
+rbx-&amp;gt;_payload = 0x0;
+[...]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Pretty staight forward to immitate:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=06_snip.py&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;Yay, no errors! Let’s see what our object looks like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sig_decoded._uid
+1000
+
+&amp;gt;&amp;gt;&amp;gt; sig_decoded._undecryptedData
+&amp;lt;458e1def 5434c5ab 94094049 dfd2424d 0ebe7ff6 c79c7b82 463d6d56 ...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Cool. Let’s try the trick we did before for checking out if the raw data is anything we recognize:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; str(sig_decoded._undecryptedData)[:50]
+&#39;E\x8e\x1d\xefT4\xc5\xab\x94\t@I\xdf\xd2BM\x0e\xbe\x7f\xf6\xc7\x9c{\x82F=mV\xac\xee\x1c\xda8\xe357|\xbb\xa9\xf9\xdc\xbd\x16\x1a+6\x16\x90Z\xfc&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Hmm. Nope. Not ringing any bells.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;… It’s like it’s encrypted or something …&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;But hey, we have that other piece of data - the password value for “Preview Signature Privacy”:&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;“Used by Preview to encrypt stored signatures. If modified or deleted, any existing signatures will become unusable.”&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Sounds like it’s a decryption key to me!&lt;/p&gt;
+
+&lt;p&gt;I’m going to cheat here and just raw copy the value using Keychain Access (just clicking on “Show Password” and copying out the value). &lt;em&gt;(I have code for reading from the keychain, but that’s for another post.)&lt;/em&gt;&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=07_snip.py&quot;&gt; &lt;/script&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; len(binary_key)
+16
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A 16 byte key. If you know anything about encryption, that’s a pretty common key length for many common &lt;a href=&quot;https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation&quot;&gt;block cipher (ECB and CBC) algorithms&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;But we need to know exactly what algorithm was used here.&lt;/p&gt;
+
+&lt;p&gt;Back to Hopper we go!&lt;/p&gt;
+
+&lt;p&gt;Searching through PVSignature code, this would seem key: &lt;strong&gt;-[PVSignature decrypt]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Looking at the pseudocode for it, it generates an instance of a new class “PVSignatureEncryptor”:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;rax = [PVSignatureEncryptor sharedInstance];&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Based on that, we find: &lt;strong&gt;-[PVSignatureEncryptor decryptedData:]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This code has exactly what we’re looking for - information about how it decrypts the data:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;if (CCCrypt(0x1, 0x0, 0x1, r12, 0x10, 0x0, var_68, r14, r15, rax, var_58) == 0x0) {
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And in this instance, we want to look at not just the pseudocode, but also the assembly for a little more clarity:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;   mov edi, 0x1    ; argument &quot;op&quot; for method imp___stubs__CCCrypt
+   mov esi, 0x0    ; argument &quot;alg&quot; for method imp___stubs__CCCrypt
+   mov edx, 0x1    ; argument &quot;options&quot; for method imp___stubs__CCCrypt
+   mov rcx, r12    ; argument &quot;key&quot; for method imp___stubs__CCCrypt
+   mov r8d, 0x10   ; argument &quot;keyLength&quot; for method imp___stubs__CCCrypt
+   xor r9d, r9d    ; argument &quot;iv&quot; for method imp___stubs__CCCrypt
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Looking at the &lt;a href=&quot;https://developer.apple.com/library/ios/documentation/System/Conceptual/ManPages_iPhoneOS/man3/CCCrypt.3cc.html&quot;&gt;documentation for CCCrypt&lt;/a&gt;, we get:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;CCCrypt(CCOperation op, CCAlgorithm alg, CCOptions options,
+         const void *key, size_t keyLength, const void *iv,
+         const void *dataIn, size_t dataInLength, void *dataOut,
+         size_t dataOutAvailable, size_t *dataOutMoved);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we can figure out the arguments that were passed, with a little help from the &lt;a href=&quot;http://www.opensource.apple.com/source/CommonCrypto/CommonCrypto-36064/CommonCrypto/CommonCryptor.h&quot;&gt;CommonCryptor.h header file&lt;/a&gt; and the above:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;operation/”op”: &lt;strong&gt;0x1&lt;/strong&gt; (&lt;em&gt;kCCDecrypt&lt;/em&gt;, from &amp;lt;CommonCryptor.h&amp;gt;)&lt;/li&gt;
+  &lt;li&gt;algorithm/”alg”: &lt;strong&gt;0x0&lt;/strong&gt;   (&lt;em&gt;kCCAlgorithmAES128&lt;/em&gt;)&lt;/li&gt;
+  &lt;li&gt;“options”: &lt;strong&gt;0x1&lt;/strong&gt;   (&lt;em&gt;kCCOptionPKCS7Padding&lt;/em&gt; in this context)&lt;/li&gt;
+  &lt;li&gt;“key” is probably our “binary_key” from above&lt;/li&gt;
+  &lt;li&gt;“keyLength”: &lt;strong&gt;0x10&lt;/strong&gt; which is hex for 16 - a length that matches the length of our “binary_key” 😀&lt;/li&gt;
+  &lt;li&gt;“iv”: &lt;strong&gt;0&lt;/strong&gt;, aka null pointer / empty value in this context&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The rest of the arguments we don’t care so much about as they’re for handling getting data into/out of the decryption.&lt;/p&gt;
+
+&lt;p&gt;With one last bit from the documentation on CCCrypt, we have everything we need:&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;“If CBC mode is selected and no IV is provided, an IV of all zeroes will be used”&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Ok, now to try decrypting. We’re going to use the python Crypto module for this part:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=08_snip.py&quot;&gt; &lt;/script&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_data[:50]
+&quot;\xe4\x9c\x0f\xff\xd2\xee`\x0e\xbe8w8\xef\xaaT\xf1\x07\xeas\xe0Z\x96&#39;6\xfc\x95\x9e\xa9\xce\xb5&amp;gt;\xd4bplist00\xd4\x01\x02\x03\x04\x05\x06,-X&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;em&gt;Oh ho ho!&lt;/em&gt; I see a &lt;strong&gt;bplist00&lt;/strong&gt; …&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_data.index(&#39;bplist00&#39;)
+32
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Looks like there’s a 32 byte prefix - looking back at the code of &lt;strong&gt;-[PVSignatureEncryptor decryptedData:]&lt;/strong&gt;, we can see:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;CC_SHA256(rbx, rsi, var_50);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;SHA-256 is a 32-byte CRC. Likely the decrypted data is prefixed with its CRC hash so that the code can tell easily if it decrypted the signature correctly by validating the hash of the binary plist data matches the hash in the 32 byte prefix.&lt;/p&gt;
+
+&lt;p&gt;So let’s skip the first 32 bytes and try to parse it directly as a plist.&lt;/p&gt;
+
+&lt;p&gt;… But before we do that, the &lt;em&gt;“kCCOptionPKCS7Padding”&lt;/em&gt; option that was mentioned earlier means that this data is padded out to a multiple of 16 bytes:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; len(decrypted_data)/16.
+120.0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So we have to remove the padding per the PKCS7 standard. We can do that with this bit of code:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=09_snip.py&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;Now we can attempt parsing the plist data for bytes 33+&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=10_snip.py&quot;&gt; &lt;/script&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_plist
+{
+    &quot;$archiver&quot; = NSKeyedArchiver;
+    &quot;$objects&quot; =     (
+        &quot;$null&quot;,
+[...]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Success!!&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;What do we have this time? Let’s try to decode it. But since we decrypted with python, our data is a string - need to wrap it into an NSData object first.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=11_snip.py&quot;&gt; &lt;/script&gt;
+
+&lt;pre&gt;&lt;code&gt;Traceback (most recent call last):
+  File &quot;&amp;lt;stdin&amp;gt;&quot;, line 1, in &amp;lt;module&amp;gt;
+objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decodeObjectForKey:]: cannot decode object of class (PVSignaturePayload)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Progress - now we’re working with a “PVSignaturePayload”.&lt;/p&gt;
+
+&lt;p&gt;Again, let’s look at what we data we have, and then compare that against the contents of “PVSignaturePayload.h” from our earlier class-dump run:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_plist[&#39;$objects&#39;][1]
+{
+    &quot;$class&quot; = &quot;&amp;lt;CFKeyedArchiverUID 0x7fba02522bd0 [0x7fff7951bed0]&amp;gt;{value = 7}&quot;;
+    baselineHeight = &quot;0.1176470592617989&quot;;
+    creationDate = &quot;&amp;lt;CFKeyedArchiverUID 0x7fba025203d0 [0x7fff7951bed0]&amp;gt;{value = 4}&quot;;
+    lastUsedDate = &quot;&amp;lt;CFKeyedArchiverUID 0x7fba025203f0 [0x7fff7951bed0]&amp;gt;{value = 6}&quot;;
+    path = &quot;&amp;lt;CFKeyedArchiverUID 0x7fba02520350 [0x7fff7951bed0]&amp;gt;{value = 2}&quot;;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;vs.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=12_snip.m&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;Oh goodness - &lt;em&gt;NSBezierPath??&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;We are &lt;strong&gt;SOOOO&lt;/strong&gt; close.&lt;/p&gt;
+
+&lt;p&gt;That’s vector information, very likely our actual signature!&lt;/p&gt;
+
+&lt;p&gt;We could look back at the code in &lt;strong&gt;Preview.app&lt;/strong&gt; for PVSignaturePayload - but we appear to have a match for a match on everything, &lt;em&gt;let’s just wing it!&lt;/em&gt;&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=13_snip.py&quot;&gt; &lt;/script&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; real_sig_decoded.baselineHeight
+0.11764705926179886
+&amp;gt;&amp;gt;&amp;gt; real_sig_decoded.path
+Path &amp;lt;0x7fba0251bb90&amp;gt;
+  Bounds: {{107.10252904995613, 3.5527136788005009e-15}, {271.91783064182891, 67}}
+  Control point bounds: {{106.36058807373047, -1.9758532047271729}, {274.53815460205078, 68.975853204727173}}
+    204.485748 61.750000 moveto
+    204.099686 58.862499 201.597519 49.750000 198.925385 41.500000 curveto
+    196.253250 33.250000 193.444489 24.025000 192.683685 21.000000 curveto
+[...]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;YAY!&lt;/strong&gt; We’ve got our vector information!&lt;/p&gt;
+
+&lt;p&gt;Now, to verify this is what it is, let’s kick it out to an image file.&lt;/p&gt;
+
+&lt;p&gt;But &lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSBezierPath_Class/index.html&quot;&gt;NSBezierPath&lt;/a&gt; doesn’t have to start at a (0,0) coordinate origin. In fact, the “Bounds” values above indicate it’s offset. So let’s make a transform and shift it back to something more reasonable before we draw it.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=14_snip.py&quot;&gt; &lt;/script&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sig_path_shifted
+Path &amp;lt;0x7fba04ef0000&amp;gt;
+  Bounds: {{0.10000000000000142, 0.10000000000000001}, {271.91783064182891, 67}}
+  Control point bounds: {{-0.64194097622566915, -1.8758532047271763}, {274.53815460205078, 68.975853204727173}}
+    97.483219 61.850000 moveto
+    97.097157 58.962499 94.594990 49.850000 91.922855 41.600000 curveto
+    89.250721 33.350000 86.441959 24.125000 85.681156 21.100000 curveto
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Much better. Now we’re just inside (0,0).&lt;/p&gt;
+
+&lt;p&gt;Now to build an image and draw the path onto it.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;(I’m gonna race through this a bit here because we’re so close to the end!)&lt;/em&gt;&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=15_snip.py&quot;&gt; &lt;/script&gt;
+
+&lt;h2 id=&quot;veni-vidi-vici&quot;&gt;veni, vidi, vici!&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2015-07-26-exploring-os-x-preview-signatures/winnar_is_you.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;final-notes&quot;&gt;final notes&lt;/h2&gt;
+
+&lt;p&gt;This entire post was about signatures in 10.9.&lt;/p&gt;
+
+&lt;p&gt;Signatures in 10.10+ have taken a new turn.&lt;/p&gt;
+
+&lt;p&gt;Now the com.apple.Preview.signatures preference domain appears to be legacy: when you upgrade 10.9 to 10.10, OS X appears to perform a one-time conversion of your signatures into the new format. &lt;em&gt;(Speculation on my part - calling &lt;a href=&quot;http://twitter.com/rtrouton/&quot;&gt;Rich&lt;/a&gt;, master of OS X VMs, to verify …)&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;In 10.10+, signatures appear to be stored entirely in the keychain - but not your login.keychain.&lt;/p&gt;
+
+&lt;p&gt;Now every signature gets a “Signature Annotation Privacy” item in your “Local Items” keychain (which may be named “iCloud Keychain”, if you’ve enabled that function with your iCloud account).&lt;/p&gt;
+
+&lt;p&gt;Instead of an encryption key stored in the password value, &lt;em&gt;an entire binary plist appears to be there.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Additionally, the note has changed:&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;“Signatures for AnnotationKit (shared by e.g. Sketch &amp;amp; Preview). Deletion will remove all signatures from the list.”&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;I’ve done some initial investigations into this binary plist value and as expected, the contents are not like they used to be.&lt;/p&gt;
+
+&lt;p&gt;I’ll continue looking into it (and maybe write about what I find at some point …)&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;- mike&lt;/em&gt;&lt;/p&gt;
+</description>
+        <pubDate>Wed, 26 Jul 2017 21:00:00 -0700</pubDate>
+        <link>http://michaellynn.github.io/2017/07/26/exploring-os-x-preview-signatures/</link>
+        <guid isPermaLink="true">http://michaellynn.github.io/2017/07/26/exploring-os-x-preview-signatures/</guid>
+      </item>
+    
+      <item>
         <title>A Home for my Long-form Rambling</title>
         <description>&lt;p&gt;For quite some time, my friends have been &lt;a href=&quot;https://twitter.com/tvsutton/status/565118553809235968&quot;&gt;nagging
 me&lt;/a&gt; &lt;a href=&quot;https://twitter.com/Vaughn_E_Miller/status/603232042772516866&quot;&gt;to put
@@ -30,8 +409,8 @@ me.&lt;/p&gt;
 &lt;p&gt;Happy now?&lt;/p&gt;
 </description>
         <pubDate>Wed, 19 Jul 2017 23:44:00 -0700</pubDate>
-        <link>http://michaellynn.github.io/hello/2017/07/19/your-fault/</link>
-        <guid isPermaLink="true">http://michaellynn.github.io/hello/2017/07/19/your-fault/</guid>
+        <link>http://michaellynn.github.io/2017/07/19/your-fault/</link>
+        <guid isPermaLink="true">http://michaellynn.github.io/2017/07/19/your-fault/</guid>
       </item>
     
   </channel>

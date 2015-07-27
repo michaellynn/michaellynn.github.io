@@ -1,7 +1,7 @@
 ---
 summary: You maniacs, you blogged it up.
 layout: post
-categories: hello
+tags: hello
 date: "2017-07-19 23:44:00"
 title: A Home for my Long-form Rambling
 ---
