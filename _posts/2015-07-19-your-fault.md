@@ -2,7 +2,7 @@
 summary: You maniacs, you blogged it up.
 layout: post
 tags: hello
-date: "2017-07-19 23:44:00"
+date: "2015-07-19 23:44:00"
 title: A Home for my Long-form Rambling
 ---
 
