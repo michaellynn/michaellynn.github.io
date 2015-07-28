@@ -2,7 +2,7 @@
 summary: "Whereupon I go into way too much detail about OS X Preview.app signatures."
 layout: post
 tags: python osx hopper
-date: "2017-07-26 21:00:00"
+date: "2015-07-26 21:00:00"
 title: Exploring OS X Preview Signatures
 ---
 
