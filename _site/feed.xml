@@ -7,6 +7,99 @@
     <atom:link href="http://michaellynn.github.io/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Customized Python.app Bundles</title>
+        <description>&lt;p&gt;The python that ships with OS X is not managed by &lt;a href=&quot;http://python.org&quot;&gt;python.org&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;It is a custom Apple-maintained distribution of python - much in the same way that Apple used to have their own distribution of Java included in OS X (Apple Java is still available, but has been deprecated and doesn’t ship with OS X - &lt;a href=&quot;https://developer.apple.com/library/prerelease/mac/releasenotes/General/rn-osx-10.11/&quot;&gt;10.11 will be the last version to ever have it&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;As such, Apple’s python has some customizations:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code&gt;/usr/bin/python&lt;/code&gt; is not actually the real “python” binary. It is actually a stub binary that calls the real python interpreter that your OS is configured to use (for more configuration details, see &lt;a href=&quot;https://www.afp548.com/2013/04/25/python-versioning-in-os-x/&quot;&gt;my AFP548 article&lt;/a&gt;)&lt;/li&gt;
+  &lt;li&gt;It ships with many third-party modules pre-installed that are not part of the core python distribution, including the lovely &lt;a href=&quot;https://pythonhosted.org/pyobjc/&quot;&gt;pyobjc&lt;/a&gt;, a personal favorite of mine.&lt;/li&gt;
+  &lt;li&gt;… and because they want to encourage python &amp;lt;-&amp;gt; Objective-C bridging, there is a “Python.app” bundle that’s included, allowing OS X APIs that need application bundle details (Dock icon, display name, etc.) to function. This is where we get the lovely “rocketship”, if you’ve ever seen it before:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2015-07-31-customized-python-app-bundles/rocketship.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Unfortunately, the “Python.app” bundle is located in a subdirectory within /System/Library/Frameworks/Python.framework.&lt;/p&gt;
+
+&lt;p&gt;This means you &lt;em&gt;really shouldn’t&lt;/em&gt; mess with it or change it - making customization of how python presents itself when it appears in the Dock as a GUI application really annoying. And in 10.11, with the advent of &lt;a href=&quot;https://developer.apple.com/library/prerelease/mac/releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_11.html#//apple_ref/doc/uid/TP40016227-DontLinkElementID_19&quot;&gt;System Integrity Protection&lt;/a&gt; it will be &lt;strong&gt;extremely painful&lt;/strong&gt; to make modifications, even if you wanted to.&lt;/p&gt;
+
+&lt;p&gt;But SIP isn’t even the biggest issue facing python in 10.11, it’s just made the real culprit worse.&lt;/p&gt;
+
+&lt;p&gt;The big baddie coming up is: &lt;a href=&quot;https://developer.apple.com/library/prerelease/mac/releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_11.html#//apple_ref/doc/uid/TP40016227-DontLinkElementID_18&quot;&gt;App Transport Security&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Why is ATS a problem you might ask?&lt;/p&gt;
+
+&lt;p&gt;Well, if you write any python code currently on OS X that relies on the NSURL APIs via pyobjc - &lt;em&gt;without performing some major voodoo&lt;/em&gt;, you’re now going to be restricted to &lt;strong&gt;only&lt;/strong&gt; HTTPS connections (and only those that meet the strict/higher encryption requirements of ATS)!&lt;/p&gt;
+
+&lt;p&gt;The reason for this is that disabling ATS to allow the use of HTTP URLs via NSURL APIs requires &lt;a href=&quot;https://developer.apple.com/library/prerelease/ios/technotes/App-Transport-Security-Technote/&quot;&gt;special keys in the Info.plist of the application bundle&lt;/a&gt; … &lt;strong&gt;which are not present in the Apple-provided Python.app&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;And since you really can’t make changes to the embedded Info.plist (and any changes would go away, potentially, with an OS update), this gets pretty painful pretty quickly.&lt;/p&gt;
+
+&lt;p&gt;Several of us that work on &lt;a href=&quot;https://github.com/munki/munki&quot;&gt;munki&lt;/a&gt; learned about this situation when Developer Preview 5 of 10.11 was released (when ATS became enabled), as munki made the switch to using NSURL APIs quite some time ago.&lt;/p&gt;
+
+&lt;p&gt;Out of that research, we did figure out &lt;a href=&quot;https://github.com/munki/munki/commit/1dd8329d665d1d724ddc56ea703552effcd42db8&quot;&gt;a crazy fix&lt;/a&gt; that makes munki work again - but some alternative approaches were also discovered, one of which was suggested by &lt;a href=&quot;https://twitter.com/bruienne/&quot;&gt;Pepijn Bruienne&lt;/a&gt;:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;It is possible to “stub out” an alternate Python.app bundle which symlinks the /System/Library/Framework/Python.framework resources - &lt;strong&gt;except for&lt;/strong&gt; Info.plist.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;You can provide your own Info.plist and then execute python from within this alternate application bundle and OS X will use your customizations instead! Not only could you override ATS if you wanted to, now you can customize the icon in the Dock, the name in the menubar, the bundle identifier of your python instance - the possibilities are endless.&lt;/p&gt;
+
+&lt;p&gt;So, to that effect, I wrote a piece of code that quickly stubs out a new Python.app bundle to a location of your choice, complete with icon customization and Info.plist overrides:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/8e8e09b8c1f5ceb5020b.js?file=01_snip.py&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;To use it as it’s written here, you’d create a TempApp instance with your customizations and then call it like a normal external executable with &lt;a href=&quot;https://docs.python.org/2/library/subprocess.html&quot;&gt;subprocess&lt;/a&gt; and the appropriate arguments (like some code.py file, etc.):&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/8e8e09b8c1f5ceb5020b.js?file=02_snip.py&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;… but this is me writing this, so you &lt;em&gt;know&lt;/em&gt; I didn’t stop there.&lt;/p&gt;
+
+&lt;p&gt;Python includes a another fantastic module called multiprocessing and I especially love the workflow of the &lt;a href=&quot;https://docs.python.org/2/library/multiprocessing.html#the-process-class&quot;&gt;Process class&lt;/a&gt; in it.&lt;/p&gt;
+
+&lt;p&gt;It allows you to spin up another python interpreter trivially in a new process and easily share data between this child process and the original with things like &lt;a href=&quot;https://docs.python.org/2/library/multiprocessing.html#exchanging-objects-between-processes&quot;&gt;Queues and Pipes&lt;/a&gt;. Additionally, you don’t need a chunk of python code in a file - you can just pass a function to the Process class as the &lt;code&gt;target&lt;/code&gt; argument and it will use that for the core of execution.&lt;/p&gt;
+
+&lt;p&gt;It’s a lovely lovely module and I’d recommend using it for any time you’d need to spin up additional python instances …&lt;/p&gt;
+
+&lt;p&gt;… except in the specific case of our situation: running a python interpreter from a different path&lt;/p&gt;
+
+&lt;p&gt;The problem is: For python 2.6+ for Windows - &lt;a href=&quot;https://docs.python.org/2/library/multiprocessing.html#multiprocessing.set_executable&quot;&gt;they make it trivial to use python at a different path&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;For OS X and other Unix platforms, they didn’t add that support &lt;strong&gt;&lt;a href=&quot;https://docs.python.org/3/library/multiprocessing.html#multiprocessing.set_executable&quot;&gt;until python 3.4&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;GAHHHH!&lt;/strong&gt; So annoying.&lt;/p&gt;
+
+&lt;p&gt;… So, I updated my code and added some capability to do that …&lt;/p&gt;
+
+&lt;p&gt;In order to do this, I used the capability of the &lt;a href=&quot;https://docs.python.org/2/library/marshal.html&quot;&gt;marshal&lt;/a&gt; module to turn python code into a semi-portable (within same python builds on same architecture - not a problem in our situation) data stream that can be passed to another python instance and turned back into functional code.&lt;/p&gt;
+
+&lt;p&gt;I also used the &lt;a href=&quot;https://docs.python.org/2/library/pickle.html&quot;&gt;pickle&lt;/a&gt; module to do the same for sending and receiving data between the processes.&lt;/p&gt;
+
+&lt;p&gt;This allowed me to pass my python code to the child process over stdin (which keeps the code out of the argument list, keeping the output of tools like &lt;code&gt;ps&lt;/code&gt; and &lt;code&gt;top&lt;/code&gt; uncluttered).&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/bd98a589dbe0ddf17cd4.js&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;It’s crazy code. But the results are pretty awesome.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2015-07-31-customized-python-app-bundles/running.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2015-07-31-customized-python-app-bundles/temp_loc.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;As you can see, I have full control over the visual representation of python - in the Dock, menubar, and even in application switching and Force Quit dialogs.&lt;/p&gt;
+
+&lt;p&gt;Hope you found this as interesting as I did!&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;- mike&lt;/em&gt;&lt;/p&gt;
+</description>
+        <pubDate>Fri, 31 Jul 2015 11:45:00 -0700</pubDate>
+        <link>http://michaellynn.github.io/2015/07/31/customized-python-app-bundles/</link>
+        <guid isPermaLink="true">http://michaellynn.github.io/2015/07/31/customized-python-app-bundles/</guid>
+      </item>
+    
+      <item>
         <title>Exploring OS X Preview Signatures</title>
         <description>&lt;p&gt;If you’ve never used it before, &lt;strong&gt;Preview.app&lt;/strong&gt; has an amazing ability to pull a
 signature from the trackpad on your Mac or from the video feed of your FaceTime
@@ -63,7 +156,7 @@ using your camera to capture your iTunes gift card codes.&lt;/p&gt;
 &lt;p&gt;But if you look at the first few characters in it, you might see something recognizable:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; str(first_sig)[:50]
-&#39;bplist00\xd4\x01\x02\x03\x04\x05\x06\x1e\x1fX$versionX$objectsY$archiverT$top&#39;
+'bplist00\xd4\x01\x02\x03\x04\x05\x06\x1e\x1fX$versionX$objectsY$archiverT$top'
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;The first few characters “bplist00” are an indicator that the contents of the array are binary plists themselves. So let’s unpack it.&lt;/p&gt;
@@ -111,7 +204,7 @@ objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decod
 
 &lt;p&gt;When storing a single object, NSKeyedArchiver object stores the object attributes in the 2nd item of the “$objects” key:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sig_plist[&#39;$objects&#39;][1]
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sig_plist['$objects'][1]
 {
     &quot;$class&quot; = &quot;&amp;lt;CFKeyedArchiverUID 0x7fd3ada65f80 [0x7fff7951bed0]&amp;gt;{value = 4}&quot;;
     data = &quot;&amp;lt;CFKeyedArchiverUID 0x7fd3ada98480 [0x7fff7951bed0]&amp;gt;{value = 2}&quot;;
@@ -156,7 +249,7 @@ rbx-&amp;gt;_payload = 0x0;
 &lt;p&gt;Cool. Let’s try the trick we did before for checking out if the raw data is anything we recognize:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; str(sig_decoded._undecryptedData)[:50]
-&#39;E\x8e\x1d\xefT4\xc5\xab\x94\t@I\xdf\xd2BM\x0e\xbe\x7f\xf6\xc7\x9c{\x82F=mV\xac\xee\x1c\xda8\xe357|\xbb\xa9\xf9\xdc\xbd\x16\x1a+6\x16\x90Z\xfc&#39;
+'E\x8e\x1d\xefT4\xc5\xab\x94\t@I\xdf\xd2BM\x0e\xbe\x7f\xf6\xc7\x9c{\x82F=mV\xac\xee\x1c\xda8\xe357|\xbb\xa9\xf9\xdc\xbd\x16\x1a+6\x16\x90Z\xfc'
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Hmm. Nope. Not ringing any bells.&lt;/p&gt;
@@ -236,12 +329,12 @@ rbx-&amp;gt;_payload = 0x0;
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=08_snip.py&quot;&gt; &lt;/script&gt;
 
 &lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_data[:50]
-&quot;\xe4\x9c\x0f\xff\xd2\xee`\x0e\xbe8w8\xef\xaaT\xf1\x07\xeas\xe0Z\x96&#39;6\xfc\x95\x9e\xa9\xce\xb5&amp;gt;\xd4bplist00\xd4\x01\x02\x03\x04\x05\x06,-X&quot;
+&quot;\xe4\x9c\x0f\xff\xd2\xee`\x0e\xbe8w8\xef\xaaT\xf1\x07\xeas\xe0Z\x96'6\xfc\x95\x9e\xa9\xce\xb5&amp;gt;\xd4bplist00\xd4\x01\x02\x03\x04\x05\x06,-X&quot;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;&lt;em&gt;Oh ho ho!&lt;/em&gt; I see a &lt;strong&gt;bplist00&lt;/strong&gt; …&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_data.index(&#39;bplist00&#39;)
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_data.index('bplist00')
 32
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -291,7 +384,7 @@ objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decod
 
 &lt;p&gt;Again, let’s look at what data we have, and then compare that against the contents of “PVSignaturePayload.h” from our earlier class-dump run:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_plist[&#39;$objects&#39;][1]
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_plist['$objects'][1]
 {
     &quot;$class&quot; = &quot;&amp;lt;CFKeyedArchiverUID 0x7fba02522bd0 [0x7fff7951bed0]&amp;gt;{value = 7}&quot;;
     baselineHeight = &quot;0.1176470592617989&quot;;
