@@ -52,7 +52,7 @@ To use it as it's written here, you'd create a TempApp instance with your custom
 
 ... but this is me writing this, so you *know* I didn't stop there.
 
-Python includes a another fantastic module called multiprocessing and I especially love the workflow of the [Process class](https://docs.python.org/2/library/multiprocessing.html#the-process-class) in it.
+Python includes another fantastic module called multiprocessing and I especially love the workflow of the [Process class](https://docs.python.org/2/library/multiprocessing.html#the-process-class) in it.
 
 It allows you to spin up another python interpreter trivially in a new process and easily share data between this child process and the original with things like [Queues and Pipes](https://docs.python.org/2/library/multiprocessing.html#exchanging-objects-between-processes). Additionally, you don't need a chunk of python code in a file - you can just pass a function to the Process class as the ```target``` argument and it will use that for the core of execution.
 

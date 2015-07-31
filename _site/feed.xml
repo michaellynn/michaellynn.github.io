@@ -58,7 +58,7 @@
 
 &lt;p&gt;… but this is me writing this, so you &lt;em&gt;know&lt;/em&gt; I didn’t stop there.&lt;/p&gt;
 
-&lt;p&gt;Python includes a another fantastic module called multiprocessing and I especially love the workflow of the &lt;a href=&quot;https://docs.python.org/2/library/multiprocessing.html#the-process-class&quot;&gt;Process class&lt;/a&gt; in it.&lt;/p&gt;
+&lt;p&gt;Python includes another fantastic module called multiprocessing and I especially love the workflow of the &lt;a href=&quot;https://docs.python.org/2/library/multiprocessing.html#the-process-class&quot;&gt;Process class&lt;/a&gt; in it.&lt;/p&gt;
 
 &lt;p&gt;It allows you to spin up another python interpreter trivially in a new process and easily share data between this child process and the original with things like &lt;a href=&quot;https://docs.python.org/2/library/multiprocessing.html#exchanging-objects-between-processes&quot;&gt;Queues and Pipes&lt;/a&gt;. Additionally, you don’t need a chunk of python code in a file - you can just pass a function to the Process class as the &lt;code&gt;target&lt;/code&gt; argument and it will use that for the core of execution.&lt;/p&gt;
 
