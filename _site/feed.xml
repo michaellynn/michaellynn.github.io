@@ -156,7 +156,7 @@ using your camera to capture your iTunes gift card codes.&lt;/p&gt;
 &lt;p&gt;But if you look at the first few characters in it, you might see something recognizable:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; str(first_sig)[:50]
-'bplist00\xd4\x01\x02\x03\x04\x05\x06\x1e\x1fX$versionX$objectsY$archiverT$top'
+&#39;bplist00\xd4\x01\x02\x03\x04\x05\x06\x1e\x1fX$versionX$objectsY$archiverT$top&#39;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;The first few characters “bplist00” are an indicator that the contents of the array are binary plists themselves. So let’s unpack it.&lt;/p&gt;
@@ -204,7 +204,7 @@ objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decod
 
 &lt;p&gt;When storing a single object, NSKeyedArchiver object stores the object attributes in the 2nd item of the “$objects” key:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sig_plist['$objects'][1]
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sig_plist[&#39;$objects&#39;][1]
 {
     &quot;$class&quot; = &quot;&amp;lt;CFKeyedArchiverUID 0x7fd3ada65f80 [0x7fff7951bed0]&amp;gt;{value = 4}&quot;;
     data = &quot;&amp;lt;CFKeyedArchiverUID 0x7fd3ada98480 [0x7fff7951bed0]&amp;gt;{value = 2}&quot;;
@@ -249,7 +249,7 @@ rbx-&amp;gt;_payload = 0x0;
 &lt;p&gt;Cool. Let’s try the trick we did before for checking out if the raw data is anything we recognize:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; str(sig_decoded._undecryptedData)[:50]
-'E\x8e\x1d\xefT4\xc5\xab\x94\t@I\xdf\xd2BM\x0e\xbe\x7f\xf6\xc7\x9c{\x82F=mV\xac\xee\x1c\xda8\xe357|\xbb\xa9\xf9\xdc\xbd\x16\x1a+6\x16\x90Z\xfc'
+&#39;E\x8e\x1d\xefT4\xc5\xab\x94\t@I\xdf\xd2BM\x0e\xbe\x7f\xf6\xc7\x9c{\x82F=mV\xac\xee\x1c\xda8\xe357|\xbb\xa9\xf9\xdc\xbd\x16\x1a+6\x16\x90Z\xfc&#39;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Hmm. Nope. Not ringing any bells.&lt;/p&gt;
@@ -329,12 +329,12 @@ rbx-&amp;gt;_payload = 0x0;
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=08_snip.py&quot;&gt; &lt;/script&gt;
 
 &lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_data[:50]
-&quot;\xe4\x9c\x0f\xff\xd2\xee`\x0e\xbe8w8\xef\xaaT\xf1\x07\xeas\xe0Z\x96'6\xfc\x95\x9e\xa9\xce\xb5&amp;gt;\xd4bplist00\xd4\x01\x02\x03\x04\x05\x06,-X&quot;
+&quot;\xe4\x9c\x0f\xff\xd2\xee`\x0e\xbe8w8\xef\xaaT\xf1\x07\xeas\xe0Z\x96&#39;6\xfc\x95\x9e\xa9\xce\xb5&amp;gt;\xd4bplist00\xd4\x01\x02\x03\x04\x05\x06,-X&quot;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;&lt;em&gt;Oh ho ho!&lt;/em&gt; I see a &lt;strong&gt;bplist00&lt;/strong&gt; …&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_data.index('bplist00')
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_data.index(&#39;bplist00&#39;)
 32
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -384,7 +384,7 @@ objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decod
 
 &lt;p&gt;Again, let’s look at what data we have, and then compare that against the contents of “PVSignaturePayload.h” from our earlier class-dump run:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_plist['$objects'][1]
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_plist[&#39;$objects&#39;][1]
 {
     &quot;$class&quot; = &quot;&amp;lt;CFKeyedArchiverUID 0x7fba02522bd0 [0x7fff7951bed0]&amp;gt;{value = 7}&quot;;
     baselineHeight = &quot;0.1176470592617989&quot;;
