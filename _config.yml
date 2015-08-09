@@ -46,9 +46,12 @@ share_stumbleupon: false
 share_hackernews: false
 
 # Build settings
-markdown:     kramdown
+# markdown:     kramdown
+# redcarpet:
+#   extensions: ['smart', 'tables', 'with_toc_data']
+markdown:    redcarpet
 redcarpet:
-  extensions: ['smart', 'tables', 'with_toc_data']
+    extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "superscript", "with_toc_data"]
 permalink:    pretty
 paginate:     4
 sass:

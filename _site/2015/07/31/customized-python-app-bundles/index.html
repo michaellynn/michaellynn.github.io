@@ -12,7 +12,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for mikeymikey blogs here" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201508021809" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201508081820" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -92,40 +92,40 @@
 <article class="post-content">
   <p>The python that ships with OS X is not managed by <a href="http://python.org">python.org</a>.</p>
 
-<p>It is a custom Apple-maintained distribution of python - much in the same way that Apple used to have their own distribution of Java included in OS X (Apple Java is still available, but has been deprecated and doesn’t ship with OS X - <a href="https://developer.apple.com/library/prerelease/mac/releasenotes/General/rn-osx-10.11/">10.11 will be the last version to ever have it</a>).</p>
+<p>It is a custom Apple-maintained distribution of python - much in the same way that Apple used to have their own distribution of Java included in OS X (Apple Java is still available, but has been deprecated and doesn&#39;t ship with OS X - <a href="https://developer.apple.com/library/prerelease/mac/releasenotes/General/rn-osx-10.11/">10.11 will be the last version to ever have it</a>).</p>
 
-<p>As such, Apple’s python has some customizations:</p>
+<p>As such, Apple&#39;s python has some customizations:</p>
 
 <ul>
-  <li><code>/usr/bin/python</code> is not actually the real “python” binary. It is actually a stub binary that calls the real python interpreter that your OS is configured to use (for more configuration details, see <a href="https://www.afp548.com/2013/04/25/python-versioning-in-os-x/">my AFP548 article</a>)</li>
-  <li>It ships with many third-party modules pre-installed that are not part of the core python distribution, including the lovely <a href="https://pythonhosted.org/pyobjc/">pyobjc</a>, a personal favorite of mine.</li>
-  <li>… and because they want to encourage python &lt;-&gt; Objective-C bridging, there is a “Python.app” bundle that’s included, allowing OS X APIs that need application bundle details (Dock icon, display name, etc.) to function. This is where we get the lovely “rocketship”, if you’ve ever seen it before:</li>
+<li><code>/usr/bin/python</code> is not actually the real &quot;python&quot; binary. It is actually a stub binary that calls the real python interpreter that your OS is configured to use (for more configuration details, see <a href="https://www.afp548.com/2013/04/25/python-versioning-in-os-x/">my AFP548 article</a>)</li>
+<li>It ships with many third-party modules pre-installed that are not part of the core python distribution, including the lovely <a href="https://pythonhosted.org/pyobjc/">pyobjc</a>, a personal favorite of mine.</li>
+<li>... and because they want to encourage python &lt;-&gt; Objective-C bridging, there is a &quot;Python.app&quot; bundle that&#39;s included, allowing OS X APIs that need application bundle details (Dock icon, display name, etc.) to function. This is where we get the lovely &quot;rocketship&quot;, if you&#39;ve ever seen it before:</li>
 </ul>
 
-<p><img src="/images/2015-07-31-customized-python-app-bundles/rocketship.png" alt="" /></p>
+<p><img src="/images/2015-07-31-customized-python-app-bundles/rocketship.png" alt=""></p>
 
-<p>Unfortunately, the “Python.app” bundle is located in a subdirectory within /System/Library/Frameworks/Python.framework.</p>
+<p>Unfortunately, the &quot;Python.app&quot; bundle is located in a subdirectory within /System/Library/Frameworks/Python.framework.</p>
 
-<p>This means you <em>really shouldn’t</em> mess with it or change it - making customization of how python presents itself when it appears in the Dock as a GUI application really annoying. And in 10.11, with the advent of <a href="https://developer.apple.com/library/prerelease/mac/releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_11.html#//apple_ref/doc/uid/TP40016227-DontLinkElementID_19">System Integrity Protection</a> it will be <strong>extremely painful</strong> to make modifications, even if you wanted to.</p>
+<p>This means you <em>really shouldn&#39;t</em> mess with it or change it - making customization of how python presents itself when it appears in the Dock as a GUI application really annoying. And in 10.11, with the advent of <a href="https://developer.apple.com/library/prerelease/mac/releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_11.html#//apple_ref/doc/uid/TP40016227-DontLinkElementID_19">System Integrity Protection</a> it will be <strong>extremely painful</strong> to make modifications, even if you wanted to.</p>
 
-<p>But SIP isn’t even the biggest issue facing python in 10.11, it’s just made the real culprit worse.</p>
+<p>But SIP isn&#39;t even the biggest issue facing python in 10.11, it&#39;s just made the real culprit worse.</p>
 
 <p>The big baddie coming up is: <a href="https://developer.apple.com/library/prerelease/mac/releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_11.html#//apple_ref/doc/uid/TP40016227-DontLinkElementID_18">App Transport Security</a></p>
 
 <p>Why is ATS a problem you might ask?</p>
 
-<p>Well, if you write any python code currently on OS X that relies on the NSURL APIs via pyobjc - <em>without performing some major voodoo</em>, you’re now going to be restricted to <strong>only</strong> HTTPS connections (and only those that meet the strict/higher encryption requirements of ATS)!</p>
+<p>Well, if you write any python code currently on OS X that relies on the NSURL APIs via pyobjc - <em>without performing some major voodoo</em>, you&#39;re now going to be restricted to <strong>only</strong> HTTPS connections (and only those that meet the strict/higher encryption requirements of ATS)!</p>
 
-<p>The reason for this is that disabling ATS to allow the use of HTTP URLs via NSURL APIs requires <a href="https://developer.apple.com/library/prerelease/ios/technotes/App-Transport-Security-Technote/">special keys in the Info.plist of the application bundle</a> … <strong>which are not present in the Apple-provided Python.app</strong>.</p>
+<p>The reason for this is that disabling ATS to allow the use of HTTP URLs via NSURL APIs requires <a href="https://developer.apple.com/library/prerelease/ios/technotes/App-Transport-Security-Technote/">special keys in the Info.plist of the application bundle</a> ... <strong>which are not present in the Apple-provided Python.app</strong>.</p>
 
-<p>And since you really can’t make changes to the embedded Info.plist (and any changes would go away, potentially, with an OS update), this gets pretty painful pretty quickly.</p>
+<p>And since you really can&#39;t make changes to the embedded Info.plist (and any changes would go away, potentially, with an OS update), this gets pretty painful pretty quickly.</p>
 
 <p>Several of us that work on <a href="https://github.com/munki/munki">munki</a> learned about this situation when Developer Preview 5 of 10.11 was released (when ATS became enabled), as munki made the switch to using NSURL APIs quite some time ago.</p>
 
 <p>Out of that research, we did figure out <a href="https://github.com/munki/munki/commit/1dd8329d665d1d724ddc56ea703552effcd42db8">a crazy fix</a> that makes munki work again - but some alternative approaches were also discovered, one of which was suggested by <a href="https://twitter.com/bruienne/">Pepijn Bruienne</a>:</p>
 
 <ul>
-  <li>It is possible to “stub out” an alternate Python.app bundle which symlinks the /System/Library/Framework/Python.framework resources - <strong>except for</strong> Info.plist.</li>
+<li>It is possible to &quot;stub out&quot; an alternate Python.app bundle which symlinks the /System/Library/Framework/Python.framework resources - <strong>except for</strong> Info.plist.</li>
 </ul>
 
 <p>You can provide your own Info.plist and then execute python from within this alternate application bundle and OS X will use your customizations instead! Not only could you override ATS if you wanted to, now you can customize the icon in the Dock, the name in the menubar, the bundle identifier of your python instance - the possibilities are endless.</p>
@@ -134,27 +134,27 @@
 
 <script src="https://gist.github.com/pudquick/8e8e09b8c1f5ceb5020b.js?file=01_snip.py"> </script>
 
-<p>To use it as it’s written here, you’d create a TempApp instance with your customizations and then call it like a normal external executable with <a href="https://docs.python.org/2/library/subprocess.html">subprocess</a> and the appropriate arguments (like some code.py file, etc.):</p>
+<p>To use it as it&#39;s written here, you&#39;d create a TempApp instance with your customizations and then call it like a normal external executable with <a href="https://docs.python.org/2/library/subprocess.html">subprocess</a> and the appropriate arguments (like some code.py file, etc.):</p>
 
 <script src="https://gist.github.com/pudquick/8e8e09b8c1f5ceb5020b.js?file=02_snip.py"> </script>
 
-<p>… but this is me writing this, so you <em>know</em> I didn’t stop there.</p>
+<p>... but this is me writing this, so you <em>know</em> I didn&#39;t stop there.</p>
 
 <p>Python includes another fantastic module called multiprocessing and I especially love the workflow of the <a href="https://docs.python.org/2/library/multiprocessing.html#the-process-class">Process class</a> in it.</p>
 
-<p>It allows you to spin up another python interpreter trivially in a new process and easily share data between this child process and the original with things like <a href="https://docs.python.org/2/library/multiprocessing.html#exchanging-objects-between-processes">Queues and Pipes</a>. Additionally, you don’t need a chunk of python code in a file - you can just pass a function to the Process class as the <code>target</code> argument and it will use that for the core of execution.</p>
+<p>It allows you to spin up another python interpreter trivially in a new process and easily share data between this child process and the original with things like <a href="https://docs.python.org/2/library/multiprocessing.html#exchanging-objects-between-processes">Queues and Pipes</a>. Additionally, you don&#39;t need a chunk of python code in a file - you can just pass a function to the Process class as the <code>target</code> argument and it will use that for the core of execution.</p>
 
-<p>It’s a lovely lovely module and I’d recommend using it for any time you’d need to spin up additional python instances …</p>
+<p>It&#39;s a lovely lovely module and I&#39;d recommend using it for any time you&#39;d need to spin up additional python instances ...</p>
 
-<p>… except in the specific case of our situation: running a python interpreter from a different path</p>
+<p>... except in the specific case of our situation: running a python interpreter from a different path</p>
 
 <p>The problem is: For python 2.6+ for Windows - <a href="https://docs.python.org/2/library/multiprocessing.html#multiprocessing.set_executable">they make it trivial to use python at a different path</a>.</p>
 
-<p>For OS X and other Unix platforms, they didn’t add that support <strong><a href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.set_executable">until python 3.4</a></strong>.</p>
+<p>For OS X and other Unix platforms, they didn&#39;t add that support <strong><a href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.set_executable">until python 3.4</a></strong>.</p>
 
 <p><strong>GAHHHH!</strong> So annoying.</p>
 
-<p>… So, I updated my code and added some capability to do that …</p>
+<p>... So, I updated my code and added some capability to do that ...</p>
 
 <p>In order to do this, I used the capability of the <a href="https://docs.python.org/2/library/marshal.html">marshal</a> module to turn python code into a semi-portable (within same python builds on same architecture - not a problem in our situation) data stream that can be passed to another python instance and turned back into functional code.</p>
 
@@ -164,11 +164,11 @@
 
 <script src="https://gist.github.com/pudquick/bd98a589dbe0ddf17cd4.js"> </script>
 
-<p>It’s crazy code. But the results are pretty awesome.</p>
+<p>It&#39;s crazy code. But the results are pretty awesome.</p>
 
-<p><img src="/images/2015-07-31-customized-python-app-bundles/running.png" alt="" /></p>
+<p><img src="/images/2015-07-31-customized-python-app-bundles/running.png" alt=""></p>
 
-<p><img src="/images/2015-07-31-customized-python-app-bundles/temp_loc.png" alt="" /></p>
+<p><img src="/images/2015-07-31-customized-python-app-bundles/temp_loc.png" alt=""></p>
 
 <p>As you can see, I have full control over the visual representation of python - in the Dock, menubar, and even in application switching and Force Quit dialogs.</p>
 

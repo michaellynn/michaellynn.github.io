@@ -7,43 +7,221 @@
     <atom:link href="http://michaellynn.github.io/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Learn you a better pyobjc Bridgesupport signature</title>
+        <description>&lt;p&gt;This blog post is about correcting function signatures in pyobjc.&lt;/p&gt;
+
+&lt;p&gt;This blog post has a backstory.&lt;/p&gt;
+
+&lt;p&gt;Recently I received a challenge that was posed by &lt;a href=&quot;https://twitter.com/shea_craig&quot;&gt;Shea Craig&lt;/a&gt; to me on the &lt;a href=&quot;http://macadmins.org&quot;&gt;Macadmins Slack&lt;/a&gt; in the &lt;strong&gt;#autopkg&lt;/strong&gt; channel:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;@sheagcraig: Also, it&amp;#39;s possible that we could try to do a mount via PyObjC stuff (paging @frogor)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;em&gt;&lt;small&gt;*(frogor is one of my &lt;a href=&quot;/about&quot;&gt;many names&lt;/a&gt;)&lt;/small&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;In the discussion, a few people were wondering if it was possible to mount network shares with python in OS X (&lt;em&gt;of course it is&lt;/em&gt;) because using the command-line &lt;code&gt;mount&lt;/code&gt; was running into some odd situations with Kerberos ticket handling.&lt;/p&gt;
+
+&lt;p&gt;You could call out to AppleScript (&lt;code&gt;osascript&lt;/code&gt;) to do it with &amp;quot;mount volume&amp;quot;, but the rest of the code involved was already written in python and there was interest in reducing the number of external tools used rather than replacing one with another.&lt;/p&gt;
+
+&lt;p&gt;This sounded like a fun challenge!&lt;/p&gt;
+
+&lt;p&gt;So the first thing I did was pop open the relevant AppleScript code in &lt;a href=&quot;http://hopperapp.com&quot;&gt;Hopper&lt;/a&gt;. In this instance, that particular code is located in the bundle: /System/Library/ScriptingAdditions/StandardAdditions.osax&lt;/p&gt;
+
+&lt;p&gt;How did I find that, you might ask?&lt;/p&gt;
+
+&lt;p&gt;Unless you&amp;#39;re using AppleScript to speak to a particular application that has its own custom commands (aka dictionary), the built-in commands for AppleScript that aren&amp;#39;t just part of the AppleScript language itself are mostly stored in the &amp;quot;Standard Additions&amp;quot; scripting addition.&lt;/p&gt;
+
+&lt;p&gt;If you open up Script Editor and select &lt;em&gt;File -&amp;gt; Open Dictionary...&lt;/em&gt; and select StandardAdditions.osax, you can see the &amp;quot;mount volume&amp;quot; command and its associated documentation.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2015-08-08-learn-you-a-better-pyobjc-bridgesupport-signature/StandardAdditions.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;Opening the executable in Hopper, unfortunately you can&amp;#39;t just search for &amp;quot;mount volume&amp;quot; and find the relevant code. This is because AppleScript additions have a translation layer called a &lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ScriptableCocoaApplications/SApps_creating_sdef/SAppsCreateSdef.html&quot;&gt;Scripting Definition File&lt;/a&gt; that maps the AppleScript language syntax to the code behind it.&lt;/p&gt;
+
+&lt;p&gt;Inside the &amp;quot;StandardAdditions.osax&amp;quot; bundle, within /Contents/Resources you&amp;#39;ll find the &amp;quot;StandardAdditions.sdef&amp;quot; scripting definition file and the relevant definition line within it:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;command&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;mount volume&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;code=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;aevtmvol&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;description=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Mount the specified server volume&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Searching in Hopper for &amp;quot;aevtmvol&amp;quot; reveals the function &amp;quot;_AEVTaevtmvol&amp;quot;, which has this bit of pseudocode:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-asm&quot; data-lang=&quot;asm&quot;&gt;&lt;span class=&quot;nf&quot;&gt;eax&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;NetFSMountURLSync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;var_38&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0x0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0x0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0x0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;var_3C&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;esi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;var_10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;That looks promising!&lt;/p&gt;
+
+&lt;p&gt;A Google search turns up documentation for this function via a note from Apple within the &lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Carbon/Reference/File_Manager/#//apple_ref/c/func/FSMountServerVolumeSync&quot;&gt;File Manager legacy reference for FSMountServerVolumeSync&lt;/a&gt; (&lt;em&gt;careful loading this page, &lt;strong&gt;tons&lt;/strong&gt; of Javascript&lt;/em&gt;), where it says:&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;&amp;quot;To mount local volumes and to eject and unmount all volumes, use Disk Arbitration API instead (for more information, see Disk Arbitration Framework Reference). To mount a network volume, use NetFSMountURLAsync instead (to cancel a pending mount request, use NetFSMountURLCancel). &lt;strong&gt;For more information, see NetFS.h in /System/Library/Frameworks/NetFS.framework/Headers&lt;/strong&gt;.&amp;quot;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;&lt;small&gt;*(yes, it says NetFSMountURLAsync not NetFSMountURLsync, but just bear with me)&lt;/small&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Ok, cool. Time to go look at some headers.&lt;/p&gt;
+
+&lt;p&gt;Within the file mentioned above, we find:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/8f09a0b8893c01637b74.js?file=01_snip.c&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;That&amp;#39;s a bingo.&lt;/p&gt;
+
+&lt;p&gt;Looking at the pseudocode, &lt;code&gt;0x0&lt;/code&gt; (null pointer) is used in place of the user and password arguments which lines right up with the documentation &lt;em&gt;&amp;quot;(overrides URL)&amp;quot;&lt;/em&gt; indicating that as long as someone provides the password within the URL (example: &lt;code&gt;afp://username:password@server/share&lt;/code&gt;), then they&amp;#39;re unnecessary.&lt;/p&gt;
+
+&lt;p&gt;The only arguments AppleScript passes are &lt;em&gt;url&lt;/em&gt;, &lt;em&gt;open_options&lt;/em&gt;, &lt;em&gt;mount_options&lt;/em&gt;, and a placeholder for getting the returned mountpoint after it succeeds.&lt;/p&gt;
+
+&lt;p&gt;So let&amp;#39;s look at &lt;em&gt;open_options&lt;/em&gt; and &lt;em&gt;mount_options&lt;/em&gt; to see AppleScript put in them.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-asm&quot; data-lang=&quot;asm&quot;&gt;&lt;span class=&quot;err&quot;&gt;00014&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;a1b&lt;/span&gt;         &lt;span class=&quot;no&quot;&gt;lea&lt;/span&gt;        &lt;span class=&quot;no&quot;&gt;eax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;dword&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;eax-0x14621&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;cfstring_AllowSubMounts&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;@&amp;quot;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;AllowSubMounts&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;From the same NetFS.h file above, we can find out what this means:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-C&quot; data-lang=&quot;C&quot;&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;kNetFSAllowSubMountsKey&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;Allow&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mount&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dir&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;beneath&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;share&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;point&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#define kNetFSAllowSubMountsKey         CFSTR(&amp;quot;AllowSubMounts&amp;quot;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Allowing mounting subdirectories sounds like an important setting. Are there any other good ones in there?&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-C&quot; data-lang=&quot;C&quot;&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;kNAUIOptionKey&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UIOption&lt;/span&gt;             &lt;span class=&quot;n&quot;&gt;Suppress&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;authentication&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dialog&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UI&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#define kNAUIOptionKey                  CFSTR(&amp;quot;UIOption&amp;quot;)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// UIOption values                      CFStringRef&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#define kNAUIOptionNoUI                 CFSTR(&amp;quot;NoUI&amp;quot;)&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#define kNAUIOptionAllowUI              CFSTR(&amp;quot;AllowUI&amp;quot;)&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#define kNAUIOptionForceUI              CFSTR(&amp;quot;ForceUI&amp;quot;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Useful!&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-C&quot; data-lang=&quot;C&quot;&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;kNetFSMountAtMountDirKey&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;       &lt;span class=&quot;n&quot;&gt;Mount&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;on&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;specified&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mountpath&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;instead&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;below&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#define kNetFSMountAtMountDirKey        CFSTR(&amp;quot;MountAtMountDir&amp;quot;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Could come in handy!&lt;/p&gt;
+
+&lt;p&gt;It&amp;#39;s also interesting to note that the AppleScript code provides &lt;code&gt;0x0&lt;/code&gt; for mountpath, which seems to imply that not defining it will make it mount in the standard dynamic fashion at /Volumes.&lt;/p&gt;
+
+&lt;p&gt;So at what point do we start turning this into python code?&lt;/p&gt;
+
+&lt;p&gt;... How about now? 😆&lt;/p&gt;
+
+&lt;p&gt;If you&amp;#39;ve not dealt with a lot of pyobjc, I feel a little concern as to why you&amp;#39;re reading my blog since &lt;a href=&quot;/tag/python&quot;&gt;that&amp;#39;s mostly what I write about&lt;/a&gt;. But if you do find yourself in this boat, I can point you to two wonderful writeups about it written by the venerable &lt;a href=&quot;http://twitter.com/gregneagle/&quot;&gt;Greg Neagle&lt;/a&gt;: &lt;strong&gt;&lt;a href=&quot;https://managingosx.wordpress.com/2015/02/02/command-line-tools-via-python-and-cocoa/&quot;&gt;Command-line Tools via Python and Cocoa&lt;/a&gt;&lt;/strong&gt; and &lt;strong&gt;&lt;a href=&quot;https://managingosx.wordpress.com/2015/02/05/accessing-more-frameworks-with-python-2/&quot;&gt;Accessing More Frameworks with Python&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The second article I linked there is an important one in relation to this blog post as it&amp;#39;s about extending pyobjc on OS X to support working with Frameworks that you can&amp;#39;t directly import within python.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;#39;s see how NetFS handles in this regard:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;NetFS&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Traceback&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;most&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;recent&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;call&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;last&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;lt;stdin&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;ne&quot;&gt;ImportError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;No&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;named&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NetFS&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;So let&amp;#39;s take a suggestion from that second article as to how to fix this:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/8f09a0b8893c01637b74.js?file=02_snip.py&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;No errors, very promising! Let&amp;#39;s take it for a spin.&lt;/p&gt;
+
+&lt;p&gt;We won&amp;#39;t define any custom options, we&amp;#39;ll just provide a URL to mount and a list (to match the CFArrayRef for our return mountpath).&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NetFSMountURLSync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;share_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[])&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Traceback&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;most&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;recent&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;call&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;last&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;lt;stdin&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;ne&quot;&gt;ValueError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;depythonifying&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;pointer&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;got&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;list&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Ruh roh. It apparently didn&amp;#39;t like my list argument.&lt;/p&gt;
+
+&lt;p&gt;Swapping it to None doesn&amp;#39;t help either.&lt;/p&gt;
+
+&lt;p&gt;It&amp;#39;s expecting a pointer apparently. How do I get a pointer to a list (or an NSArray) in pyobjc? I know how to do it in ctypes - &lt;em&gt;but in pyojc???&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;[INTERMISSION]&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;At this point I came up with a crazy workaround, which worked, but I&amp;#39;m not putting it into this article, I&amp;#39;ll save that for another one. The technique I developed is amazingly useful for other things but is too long to write in the margins here.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;[END OF INTERMISSION]&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The real problem boils down to how &lt;code&gt;NetFSMountURLSync&lt;/code&gt; is defined in the bridgesupport file that shipped with OS X, located at: /System/Library/Frameworks/NetFS.framework/Resources/BridgeSupport/NetFS.bridgesupport&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/8f09a0b8893c01637b74.js?file=03_snip.xml&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;That last argument is what&amp;#39;s killing us: &lt;code&gt;&amp;lt;arg type=&amp;#39;^^{__CFArray}&amp;#39;/&amp;gt;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;... a pointer to a pointer to a CFArray ...&lt;/p&gt;
+
+&lt;p&gt;... aka a pointer to a CFArrayRef ...&lt;/p&gt;
+
+&lt;p&gt;... aka a pointer to a NSArray (&lt;a href=&quot;https://developer.apple.com/library/ios/documentation/CoreFoundation/Conceptual/CFDesignConcepts/Articles/tollFreeBridgedTypes.html&quot;&gt;via bridging&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;Googling for countless examples on how to use &lt;code&gt;NetFSMountURLSync&lt;/code&gt; show I can pass a null pointer by reference for this argument. OS X isn&amp;#39;t expecting me to pass it a CFArrayRef (NSArray), it will &lt;u&gt;build one for me&lt;/u&gt; and give me back a pointer to it.&lt;/p&gt;
+
+&lt;p&gt;I don&amp;#39;t really need to put anything of value &lt;em&gt;into&lt;/em&gt; this function argument, I just need to get something &lt;em&gt;out&lt;/em&gt; of it.&lt;/p&gt;
+
+&lt;p&gt;So without any really good ideas on how to deal with this situation, I emailed the maintainer of the &lt;a href=&quot;http://pythonhosted.org/pyobjc/&quot;&gt;pyobjc project&lt;/a&gt; - Ronald Oussoren.&lt;/p&gt;
+
+&lt;p&gt;He is an &lt;em&gt;extremely&lt;/em&gt; kind person and has responded to me the few times I&amp;#39;ve done this to him before. He definitely came through again this time 😃&lt;/p&gt;
+
+&lt;p&gt;His recommendation was that because all of the arguments were basically toll-free bridged types (&lt;em&gt;pointer to a CFURL&lt;/em&gt; = &lt;em&gt;CFURLRef&lt;/em&gt; = &lt;em&gt;NSURL&lt;/em&gt;, etc.), it would be best to rewrite the signature as taking a series of object type arguments and then changing the last argument from an input argument into an output.&lt;/p&gt;
+
+&lt;p&gt;While pyobjc has problems with double pointer signatures (&lt;code&gt;^^{__CFArray}&lt;/code&gt; - each &lt;code&gt;^&lt;/code&gt; indicates a pointer &lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html&quot;&gt;per the documentation&lt;/a&gt;), it has no problems with a single level of pointers.&lt;/p&gt;
+
+&lt;p&gt;By changing the signature from &lt;code&gt;^^{__CFArray}&lt;/code&gt; (aka &lt;em&gt;pointer to a CFArrayRef&lt;/em&gt; aka &lt;em&gt;pointer to a NSArray&lt;/em&gt;) to &lt;code&gt;^@&lt;/code&gt; (&lt;em&gt;pointer to an object&lt;/em&gt;), pyobjc becomes able to handle it with ease! Just needed to get from &lt;code&gt;^^&lt;/code&gt; to &lt;code&gt;^&lt;/code&gt;.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/8f09a0b8893c01637b74.js?file=04_snip.py&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;Let&amp;#39;s break down that signature: &lt;code&gt;i@@@@@@o^@&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The function has 1 return value and 7 input arguments.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html&quot;&gt;Per the documentation&lt;/a&gt;, we start off by defining the return value as &lt;code&gt;i&lt;/code&gt;, an &lt;strong&gt;int&lt;/strong&gt; type, which is pretty common for functions (usually used for error codes).&lt;/p&gt;
+
+&lt;p&gt;The arguments follow, starting with 6 &lt;code&gt;@&lt;/code&gt; which indicates 6 &lt;strong&gt;object&lt;/strong&gt; type arguments.&lt;/p&gt;
+
+&lt;p&gt;Then magic for the last argument: &lt;code&gt;o^@&lt;/code&gt;: out-only pointer to an &lt;strong&gt;object&lt;/strong&gt; type.&lt;/p&gt;
+
+&lt;p&gt;When you provide a signature like this to pyobjc, you still have to pass &lt;code&gt;None&lt;/code&gt; (null pointer) for the argument, but instead of having to deal with dereferencing pointers it saves you the pain &lt;em&gt;and just moves it to a second return value&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;#39;s how you use it:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mountpaths&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NetFSMountURLSync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;share_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mountpaths&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;u&amp;#39;/Volumes/sharename&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;em&gt;Holy cow - IT WORKED AND IT MOUNTED - how freaking cool is that???&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;If you&amp;#39;d like a more polished version of the code in this article, including the ability the mount shares at an arbitrary mount path (the directory has to exist in advance) and the use of some of the open and mount options listed above, &lt;a href=&quot;https://gist.github.com/pudquick/1362a8908be01e23041d&quot;&gt;you can find it here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;It still lacks %-style encoding (like %20 for a space) for username and password portions of the URL. Exercise is left up to the reader to implement 😄&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;- mike&lt;/em&gt;&lt;/p&gt;
+</description>
+        <pubDate>Sat, 08 Aug 2015 16:15:00 -0700</pubDate>
+        <link>http://michaellynn.github.io/2015/08/08/learn-you-a-better-pyobjc-bridgesupport-signature/</link>
+        <guid isPermaLink="true">http://michaellynn.github.io/2015/08/08/learn-you-a-better-pyobjc-bridgesupport-signature/</guid>
+      </item>
+    
+      <item>
         <title>Customized Python.app Bundles</title>
         <description>&lt;p&gt;The python that ships with OS X is not managed by &lt;a href=&quot;http://python.org&quot;&gt;python.org&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;It is a custom Apple-maintained distribution of python - much in the same way that Apple used to have their own distribution of Java included in OS X (Apple Java is still available, but has been deprecated and doesn’t ship with OS X - &lt;a href=&quot;https://developer.apple.com/library/prerelease/mac/releasenotes/General/rn-osx-10.11/&quot;&gt;10.11 will be the last version to ever have it&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;It is a custom Apple-maintained distribution of python - much in the same way that Apple used to have their own distribution of Java included in OS X (Apple Java is still available, but has been deprecated and doesn&amp;#39;t ship with OS X - &lt;a href=&quot;https://developer.apple.com/library/prerelease/mac/releasenotes/General/rn-osx-10.11/&quot;&gt;10.11 will be the last version to ever have it&lt;/a&gt;).&lt;/p&gt;
 
-&lt;p&gt;As such, Apple’s python has some customizations:&lt;/p&gt;
+&lt;p&gt;As such, Apple&amp;#39;s python has some customizations:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code&gt;/usr/bin/python&lt;/code&gt; is not actually the real “python” binary. It is actually a stub binary that calls the real python interpreter that your OS is configured to use (for more configuration details, see &lt;a href=&quot;https://www.afp548.com/2013/04/25/python-versioning-in-os-x/&quot;&gt;my AFP548 article&lt;/a&gt;)&lt;/li&gt;
-  &lt;li&gt;It ships with many third-party modules pre-installed that are not part of the core python distribution, including the lovely &lt;a href=&quot;https://pythonhosted.org/pyobjc/&quot;&gt;pyobjc&lt;/a&gt;, a personal favorite of mine.&lt;/li&gt;
-  &lt;li&gt;… and because they want to encourage python &amp;lt;-&amp;gt; Objective-C bridging, there is a “Python.app” bundle that’s included, allowing OS X APIs that need application bundle details (Dock icon, display name, etc.) to function. This is where we get the lovely “rocketship”, if you’ve ever seen it before:&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/usr/bin/python&lt;/code&gt; is not actually the real &amp;quot;python&amp;quot; binary. It is actually a stub binary that calls the real python interpreter that your OS is configured to use (for more configuration details, see &lt;a href=&quot;https://www.afp548.com/2013/04/25/python-versioning-in-os-x/&quot;&gt;my AFP548 article&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;It ships with many third-party modules pre-installed that are not part of the core python distribution, including the lovely &lt;a href=&quot;https://pythonhosted.org/pyobjc/&quot;&gt;pyobjc&lt;/a&gt;, a personal favorite of mine.&lt;/li&gt;
+&lt;li&gt;... and because they want to encourage python &amp;lt;-&amp;gt; Objective-C bridging, there is a &amp;quot;Python.app&amp;quot; bundle that&amp;#39;s included, allowing OS X APIs that need application bundle details (Dock icon, display name, etc.) to function. This is where we get the lovely &amp;quot;rocketship&amp;quot;, if you&amp;#39;ve ever seen it before:&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/2015-07-31-customized-python-app-bundles/rocketship.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/2015-07-31-customized-python-app-bundles/rocketship.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
-&lt;p&gt;Unfortunately, the “Python.app” bundle is located in a subdirectory within /System/Library/Frameworks/Python.framework.&lt;/p&gt;
+&lt;p&gt;Unfortunately, the &amp;quot;Python.app&amp;quot; bundle is located in a subdirectory within /System/Library/Frameworks/Python.framework.&lt;/p&gt;
 
-&lt;p&gt;This means you &lt;em&gt;really shouldn’t&lt;/em&gt; mess with it or change it - making customization of how python presents itself when it appears in the Dock as a GUI application really annoying. And in 10.11, with the advent of &lt;a href=&quot;https://developer.apple.com/library/prerelease/mac/releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_11.html#//apple_ref/doc/uid/TP40016227-DontLinkElementID_19&quot;&gt;System Integrity Protection&lt;/a&gt; it will be &lt;strong&gt;extremely painful&lt;/strong&gt; to make modifications, even if you wanted to.&lt;/p&gt;
+&lt;p&gt;This means you &lt;em&gt;really shouldn&amp;#39;t&lt;/em&gt; mess with it or change it - making customization of how python presents itself when it appears in the Dock as a GUI application really annoying. And in 10.11, with the advent of &lt;a href=&quot;https://developer.apple.com/library/prerelease/mac/releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_11.html#//apple_ref/doc/uid/TP40016227-DontLinkElementID_19&quot;&gt;System Integrity Protection&lt;/a&gt; it will be &lt;strong&gt;extremely painful&lt;/strong&gt; to make modifications, even if you wanted to.&lt;/p&gt;
 
-&lt;p&gt;But SIP isn’t even the biggest issue facing python in 10.11, it’s just made the real culprit worse.&lt;/p&gt;
+&lt;p&gt;But SIP isn&amp;#39;t even the biggest issue facing python in 10.11, it&amp;#39;s just made the real culprit worse.&lt;/p&gt;
 
 &lt;p&gt;The big baddie coming up is: &lt;a href=&quot;https://developer.apple.com/library/prerelease/mac/releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_11.html#//apple_ref/doc/uid/TP40016227-DontLinkElementID_18&quot;&gt;App Transport Security&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;Why is ATS a problem you might ask?&lt;/p&gt;
 
-&lt;p&gt;Well, if you write any python code currently on OS X that relies on the NSURL APIs via pyobjc - &lt;em&gt;without performing some major voodoo&lt;/em&gt;, you’re now going to be restricted to &lt;strong&gt;only&lt;/strong&gt; HTTPS connections (and only those that meet the strict/higher encryption requirements of ATS)!&lt;/p&gt;
+&lt;p&gt;Well, if you write any python code currently on OS X that relies on the NSURL APIs via pyobjc - &lt;em&gt;without performing some major voodoo&lt;/em&gt;, you&amp;#39;re now going to be restricted to &lt;strong&gt;only&lt;/strong&gt; HTTPS connections (and only those that meet the strict/higher encryption requirements of ATS)!&lt;/p&gt;
 
-&lt;p&gt;The reason for this is that disabling ATS to allow the use of HTTP URLs via NSURL APIs requires &lt;a href=&quot;https://developer.apple.com/library/prerelease/ios/technotes/App-Transport-Security-Technote/&quot;&gt;special keys in the Info.plist of the application bundle&lt;/a&gt; … &lt;strong&gt;which are not present in the Apple-provided Python.app&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;The reason for this is that disabling ATS to allow the use of HTTP URLs via NSURL APIs requires &lt;a href=&quot;https://developer.apple.com/library/prerelease/ios/technotes/App-Transport-Security-Technote/&quot;&gt;special keys in the Info.plist of the application bundle&lt;/a&gt; ... &lt;strong&gt;which are not present in the Apple-provided Python.app&lt;/strong&gt;.&lt;/p&gt;
 
-&lt;p&gt;And since you really can’t make changes to the embedded Info.plist (and any changes would go away, potentially, with an OS update), this gets pretty painful pretty quickly.&lt;/p&gt;
+&lt;p&gt;And since you really can&amp;#39;t make changes to the embedded Info.plist (and any changes would go away, potentially, with an OS update), this gets pretty painful pretty quickly.&lt;/p&gt;
 
 &lt;p&gt;Several of us that work on &lt;a href=&quot;https://github.com/munki/munki&quot;&gt;munki&lt;/a&gt; learned about this situation when Developer Preview 5 of 10.11 was released (when ATS became enabled), as munki made the switch to using NSURL APIs quite some time ago.&lt;/p&gt;
 
 &lt;p&gt;Out of that research, we did figure out &lt;a href=&quot;https://github.com/munki/munki/commit/1dd8329d665d1d724ddc56ea703552effcd42db8&quot;&gt;a crazy fix&lt;/a&gt; that makes munki work again - but some alternative approaches were also discovered, one of which was suggested by &lt;a href=&quot;https://twitter.com/bruienne/&quot;&gt;Pepijn Bruienne&lt;/a&gt;:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;It is possible to “stub out” an alternate Python.app bundle which symlinks the /System/Library/Framework/Python.framework resources - &lt;strong&gt;except for&lt;/strong&gt; Info.plist.&lt;/li&gt;
+&lt;li&gt;It is possible to &amp;quot;stub out&amp;quot; an alternate Python.app bundle which symlinks the /System/Library/Framework/Python.framework resources - &lt;strong&gt;except for&lt;/strong&gt; Info.plist.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;You can provide your own Info.plist and then execute python from within this alternate application bundle and OS X will use your customizations instead! Not only could you override ATS if you wanted to, now you can customize the icon in the Dock, the name in the menubar, the bundle identifier of your python instance - the possibilities are endless.&lt;/p&gt;
@@ -52,27 +230,27 @@
 
 &lt;script src=&quot;https://gist.github.com/pudquick/8e8e09b8c1f5ceb5020b.js?file=01_snip.py&quot;&gt; &lt;/script&gt;
 
-&lt;p&gt;To use it as it’s written here, you’d create a TempApp instance with your customizations and then call it like a normal external executable with &lt;a href=&quot;https://docs.python.org/2/library/subprocess.html&quot;&gt;subprocess&lt;/a&gt; and the appropriate arguments (like some code.py file, etc.):&lt;/p&gt;
+&lt;p&gt;To use it as it&amp;#39;s written here, you&amp;#39;d create a TempApp instance with your customizations and then call it like a normal external executable with &lt;a href=&quot;https://docs.python.org/2/library/subprocess.html&quot;&gt;subprocess&lt;/a&gt; and the appropriate arguments (like some code.py file, etc.):&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/pudquick/8e8e09b8c1f5ceb5020b.js?file=02_snip.py&quot;&gt; &lt;/script&gt;
 
-&lt;p&gt;… but this is me writing this, so you &lt;em&gt;know&lt;/em&gt; I didn’t stop there.&lt;/p&gt;
+&lt;p&gt;... but this is me writing this, so you &lt;em&gt;know&lt;/em&gt; I didn&amp;#39;t stop there.&lt;/p&gt;
 
 &lt;p&gt;Python includes another fantastic module called multiprocessing and I especially love the workflow of the &lt;a href=&quot;https://docs.python.org/2/library/multiprocessing.html#the-process-class&quot;&gt;Process class&lt;/a&gt; in it.&lt;/p&gt;
 
-&lt;p&gt;It allows you to spin up another python interpreter trivially in a new process and easily share data between this child process and the original with things like &lt;a href=&quot;https://docs.python.org/2/library/multiprocessing.html#exchanging-objects-between-processes&quot;&gt;Queues and Pipes&lt;/a&gt;. Additionally, you don’t need a chunk of python code in a file - you can just pass a function to the Process class as the &lt;code&gt;target&lt;/code&gt; argument and it will use that for the core of execution.&lt;/p&gt;
+&lt;p&gt;It allows you to spin up another python interpreter trivially in a new process and easily share data between this child process and the original with things like &lt;a href=&quot;https://docs.python.org/2/library/multiprocessing.html#exchanging-objects-between-processes&quot;&gt;Queues and Pipes&lt;/a&gt;. Additionally, you don&amp;#39;t need a chunk of python code in a file - you can just pass a function to the Process class as the &lt;code&gt;target&lt;/code&gt; argument and it will use that for the core of execution.&lt;/p&gt;
 
-&lt;p&gt;It’s a lovely lovely module and I’d recommend using it for any time you’d need to spin up additional python instances …&lt;/p&gt;
+&lt;p&gt;It&amp;#39;s a lovely lovely module and I&amp;#39;d recommend using it for any time you&amp;#39;d need to spin up additional python instances ...&lt;/p&gt;
 
-&lt;p&gt;… except in the specific case of our situation: running a python interpreter from a different path&lt;/p&gt;
+&lt;p&gt;... except in the specific case of our situation: running a python interpreter from a different path&lt;/p&gt;
 
 &lt;p&gt;The problem is: For python 2.6+ for Windows - &lt;a href=&quot;https://docs.python.org/2/library/multiprocessing.html#multiprocessing.set_executable&quot;&gt;they make it trivial to use python at a different path&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;For OS X and other Unix platforms, they didn’t add that support &lt;strong&gt;&lt;a href=&quot;https://docs.python.org/3/library/multiprocessing.html#multiprocessing.set_executable&quot;&gt;until python 3.4&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;For OS X and other Unix platforms, they didn&amp;#39;t add that support &lt;strong&gt;&lt;a href=&quot;https://docs.python.org/3/library/multiprocessing.html#multiprocessing.set_executable&quot;&gt;until python 3.4&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;GAHHHH!&lt;/strong&gt; So annoying.&lt;/p&gt;
 
-&lt;p&gt;… So, I updated my code and added some capability to do that …&lt;/p&gt;
+&lt;p&gt;... So, I updated my code and added some capability to do that ...&lt;/p&gt;
 
 &lt;p&gt;In order to do this, I used the capability of the &lt;a href=&quot;https://docs.python.org/2/library/marshal.html&quot;&gt;marshal&lt;/a&gt; module to turn python code into a semi-portable (within same python builds on same architecture - not a problem in our situation) data stream that can be passed to another python instance and turned back into functional code.&lt;/p&gt;
 
@@ -82,11 +260,11 @@
 
 &lt;script src=&quot;https://gist.github.com/pudquick/bd98a589dbe0ddf17cd4.js&quot;&gt; &lt;/script&gt;
 
-&lt;p&gt;It’s crazy code. But the results are pretty awesome.&lt;/p&gt;
+&lt;p&gt;It&amp;#39;s crazy code. But the results are pretty awesome.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/2015-07-31-customized-python-app-bundles/running.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/2015-07-31-customized-python-app-bundles/running.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/2015-07-31-customized-python-app-bundles/temp_loc.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/2015-07-31-customized-python-app-bundles/temp_loc.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;As you can see, I have full control over the visual representation of python - in the Dock, menubar, and even in application switching and Force Quit dialogs.&lt;/p&gt;
 
@@ -101,7 +279,7 @@
     
       <item>
         <title>Exploring OS X Preview Signatures</title>
-        <description>&lt;p&gt;If you’ve never used it before, &lt;strong&gt;Preview.app&lt;/strong&gt; has an amazing ability to pull a
+        <description>&lt;p&gt;If you&amp;#39;ve never used it before, &lt;strong&gt;Preview.app&lt;/strong&gt; has an amazing ability to pull a
 signature from the trackpad on your Mac or from the video feed of your FaceTime
 camera. The feature is located under the menu &lt;em&gt;Tools -&amp;gt; Annotate -&amp;gt;
 Signature&lt;/em&gt;.&lt;/p&gt;
@@ -109,168 +287,150 @@ Signature&lt;/em&gt;.&lt;/p&gt;
 &lt;p&gt;The capture experience is pretty magical, second only to (in my opinion) iTunes
 using your camera to capture your iTunes gift card codes.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/2015-07-26-exploring-os-x-preview-signatures/signature.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/2015-07-26-exploring-os-x-preview-signatures/signature.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
-&lt;p&gt;Once it has your signature stored, you can then use the same menu to place your signature into electronic documents like PDFs as transparent image overlays, allowing you to “sign” them.&lt;/p&gt;
+&lt;p&gt;Once it has your signature stored, you can then use the same menu to place your signature into electronic documents like PDFs as transparent image overlays, allowing you to &amp;quot;sign&amp;quot; them.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/2015-07-26-exploring-os-x-preview-signatures/award.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/2015-07-26-exploring-os-x-preview-signatures/award.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
-&lt;p&gt;Now that you’ve stored your signature in your computer, one would hope that Apple spent some time protecting others from accessing it.&lt;/p&gt;
+&lt;p&gt;Now that you&amp;#39;ve stored your signature in your computer, one would hope that Apple spent some time protecting others from accessing it.&lt;/p&gt;
 
 &lt;p&gt;Fortunately they did.&lt;/p&gt;
 
 &lt;p&gt;In OS X 10.9 Mavericks, when you create a signature, two primary pieces of data are configured.&lt;/p&gt;
 
-&lt;p&gt;In the user’s login.keychain, an application password keychain item called “Preview Signature Privacy” is created, with the following notes:&lt;/p&gt;
+&lt;p&gt;In the user&amp;#39;s login.keychain, an application password keychain item called &amp;quot;Preview Signature Privacy&amp;quot; is created, with the following notes:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/2015-07-26-exploring-os-x-preview-signatures/keychain_notes.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/2015-07-26-exploring-os-x-preview-signatures/keychain_notes.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;small&gt;* &lt;em&gt;(yes, I know this is a 10.10 screenshot - it’s prettier this way)&lt;/em&gt;&lt;/small&gt;&lt;/p&gt;
+&lt;p&gt;&lt;small&gt;* &lt;em&gt;(yes, I know this is a 10.10 screenshot - it&amp;#39;s prettier this way)&lt;/em&gt;&lt;/small&gt;&lt;/p&gt;
 
 &lt;p&gt;The password contents of this keychain item are a hexadecimal string, representing 16 raw bytes of information.&lt;/p&gt;
 
-&lt;p&gt;The second item that’s created is an application preference in the domain com.apple.Preview.signatures for the key “items-1”, which contains an array of data objects. The backend storage for this domain is located in the user’s application containers at:&lt;/p&gt;
+&lt;p&gt;The second item that&amp;#39;s created is an application preference in the domain com.apple.Preview.signatures for the key &amp;quot;items-1&amp;quot;, which contains an array of data objects. The backend storage for this domain is located in the user&amp;#39;s application containers at:&lt;/p&gt;
 
 &lt;pre&gt;~/Library/Containers/com.apple.Preview/Data/Library/Preferences/com.apple.Preview.signatures.plist&lt;/pre&gt;
 
-&lt;p&gt;If you didn’t know me already, I’ll just warn you now that my code here will be in &lt;a href=&quot;http://python.org/&quot;&gt;python&lt;/a&gt;. Since we’re going to be working a lot with plists, let’s get a few helper functions defined.&lt;/p&gt;
+&lt;p&gt;If you didn&amp;#39;t know me already, I&amp;#39;ll just warn you now that my code here will be in &lt;a href=&quot;http://python.org/&quot;&gt;python&lt;/a&gt;. Since we&amp;#39;re going to be working a lot with plists, let&amp;#39;s get a few helper functions defined.&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=01_snip.py&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;This has an advantage over the plistlib module included with python in that it can support binary plists as well as just XML.&lt;/p&gt;
 
-&lt;p&gt;Next, let’s read the com.apple.Preview.signatures preference for the key “item-1”.&lt;/p&gt;
+&lt;p&gt;Next, let&amp;#39;s read the com.apple.Preview.signatures preference for the key &amp;quot;item-1&amp;quot;.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Never. Ever. Read. Preferences. From. Plist. Files. Directly.&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;em&gt;(… Unless you want to. I mean, I’m not your dad. Go for it if you really want to. But &lt;a href=&quot;https://developer.apple.com/library/mac/releasenotes/DataManagement/RN-CoreFoundationOlderNotes/#//apple_ref/doc/uid/TP40012903-TRANSLATED_CHAPTER_965-SW5&quot;&gt;Apple hates you for it&lt;/a&gt;.)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;(... Unless you want to. I mean, I&amp;#39;m not your dad. Go for it if you really want to. But &lt;a href=&quot;https://developer.apple.com/library/mac/releasenotes/DataManagement/RN-CoreFoundationOlderNotes/#//apple_ref/doc/uid/TP40012903-TRANSLATED_CHAPTER_965-SW5&quot;&gt;Apple hates you for it&lt;/a&gt;.)&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;However - following my own advice is a little tricky here! The location of the preference is stored on-disk within ~/Library/Containers, indicating this is a sandboxed application preference and isn’t normally meant to be accessed by other apps outside of Preview.app itself.&lt;/p&gt;
+&lt;p&gt;However - following my own advice is a little tricky here! The location of the preference is stored on-disk within ~/Library/Containers, indicating this is a sandboxed application preference and isn&amp;#39;t normally meant to be accessed by other apps outside of Preview.app itself.&lt;/p&gt;
 
-&lt;p&gt;… But OS X will still let you read the preference, if you provide the full path to it.&lt;/p&gt;
+&lt;p&gt;... But OS X will still let you read the preference, if you provide the full path to it.&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=02_snip.py&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;The contents of the array is a data object, which if you try to look at it directly, you just see the hex encoding of it.&lt;/p&gt;
 
 &lt;p&gt;But if you look at the first few characters in it, you might see something recognizable:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; str(first_sig)[:50]
-&#39;bplist00\xd4\x01\x02\x03\x04\x05\x06\x1e\x1fX$versionX$objectsY$archiverT$top&#39;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The first few characters “bplist00” are an indicator that the contents of the array are binary plists themselves. So let’s unpack it.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; str(first_sig)[:50]
+&amp;#39;bplist00\xd4\x01\x02\x03\x04\x05\x06\x1e\x1fX$versionX$objectsY$archiverT$top&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The first few characters &amp;quot;bplist00&amp;quot; are an indicator that the contents of the array are binary plists themselves. So let&amp;#39;s unpack it.&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=03_snip.py&quot;&gt; &lt;/script&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sig_plist
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; sig_plist
 {
-    &quot;$archiver&quot; = NSKeyedArchiver;
-    &quot;$objects&quot; =     (
-        &quot;$null&quot;,
+    &amp;quot;$archiver&amp;quot; = NSKeyedArchiver;
+    &amp;quot;$objects&amp;quot; =     (
+        &amp;quot;$null&amp;quot;,
                 {
 [...]
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now we&amp;#39;ve got something new - an &lt;a href=&quot;https://developer.apple.com/library/prerelease/mac/documentation/Cocoa/Reference/Foundation/Classes/NSKeyedArchiver_Class/index.html&quot;&gt;NSKeyedArchiver&lt;/a&gt; object. This is a way for OS X (and iOS) to store data objects in a file-friendly format.&lt;/p&gt;
 
-&lt;p&gt;Now we’ve got something new - an &lt;a href=&quot;https://developer.apple.com/library/prerelease/mac/documentation/Cocoa/Reference/Foundation/Classes/NSKeyedArchiver_Class/index.html&quot;&gt;NSKeyedArchiver&lt;/a&gt; object. This is a way for OS X (and iOS) to store data objects in a file-friendly format.&lt;/p&gt;
-
-&lt;p&gt;So we need to decode the object. Let’s try!&lt;/p&gt;
+&lt;p&gt;So we need to decode the object. Let&amp;#39;s try!&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=04_snip.py&quot;&gt; &lt;/script&gt;
-
-&lt;pre&gt;&lt;code&gt;Traceback (most recent call last):
-  File &quot;&amp;lt;stdin&amp;gt;&quot;, line 1, in &amp;lt;module&amp;gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;Traceback (most recent call last):
+  File &amp;quot;&amp;lt;stdin&amp;gt;&amp;quot;, line 1, in &amp;lt;module&amp;gt;
 objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decodeObjectForKey:]: cannot decode object of class (PVSignature)
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Whoops. Looks like OS X doesn&amp;#39;t know how to natively handle a &amp;quot;PVSignature&amp;quot; file - so where do we learn about it?&lt;/p&gt;
 
-&lt;p&gt;Whoops. Looks like OS X doesn’t know how to natively handle a “PVSignature” file - so where do we learn about it?&lt;/p&gt;
+&lt;p&gt;We&amp;#39;ll need to compare two different pieces of information: what&amp;#39;s stored in the NSKeyedArchiver object and what exactly is a PVSignature object?&lt;/p&gt;
 
-&lt;p&gt;We’ll need to compare two different pieces of information: what’s stored in the NSKeyedArchiver object and what exactly is a PVSignature object?&lt;/p&gt;
+&lt;p&gt;For the PVSignature structure, we&amp;#39;ll need the help of a great tool: &lt;a href=&quot;http://stevenygard.com/projects/class-dump/&quot;&gt;class-dump&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;For the PVSignature structure, we’ll need the help of a great tool: &lt;a href=&quot;http://stevenygard.com/projects/class-dump/&quot;&gt;class-dump&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;It can dump the signature of Objective-C objects defined within applications and frameworks (... hopefully PVSignature is within Preview.app itself!)&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;class-dump -H /Applications/Preview.app/Contents/MacOS/Preview
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Yay, our output includes a &amp;quot;PVSignature.h&amp;quot; file.&lt;/p&gt;
 
-&lt;p&gt;It can dump the signature of Objective-C objects defined within applications and frameworks (… hopefully PVSignature is within Preview.app itself!)&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;class-dump -H /Applications/Preview.app/Contents/MacOS/Preview
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Yay, our output includes a “PVSignature.h” file.&lt;/p&gt;
-
-&lt;p&gt;Let’s see what’s inside:&lt;/p&gt;
+&lt;p&gt;Let&amp;#39;s see what&amp;#39;s inside:&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=05_snip.m&quot;&gt; &lt;/script&gt;
 
-&lt;p&gt;Now let’s compare that against what’s &lt;em&gt;actually&lt;/em&gt; stored in the encoded object.&lt;/p&gt;
+&lt;p&gt;Now let&amp;#39;s compare that against what&amp;#39;s &lt;em&gt;actually&lt;/em&gt; stored in the encoded object.&lt;/p&gt;
 
-&lt;p&gt;When storing a single object, NSKeyedArchiver object stores the object attributes in the 2nd item of the “$objects” key:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sig_plist[&#39;$objects&#39;][1]
+&lt;p&gt;When storing a single object, NSKeyedArchiver object stores the object attributes in the 2nd item of the &amp;quot;$objects&amp;quot; key:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; sig_plist[&amp;#39;$objects&amp;#39;][1]
 {
-    &quot;$class&quot; = &quot;&amp;lt;CFKeyedArchiverUID 0x7fd3ada65f80 [0x7fff7951bed0]&amp;gt;{value = 4}&quot;;
-    data = &quot;&amp;lt;CFKeyedArchiverUID 0x7fd3ada98480 [0x7fff7951bed0]&amp;gt;{value = 2}&quot;;
+    &amp;quot;$class&amp;quot; = &amp;quot;&amp;lt;CFKeyedArchiverUID 0x7fd3ada65f80 [0x7fff7951bed0]&amp;gt;{value = 4}&amp;quot;;
+    data = &amp;quot;&amp;lt;CFKeyedArchiverUID 0x7fd3ada98480 [0x7fff7951bed0]&amp;gt;{value = 2}&amp;quot;;
     uid = 1000;
 }
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;So it looks like we have a &amp;quot;data&amp;quot; and &amp;quot;uid&amp;quot; values only, unlike everything listed above.&lt;/p&gt;
 
-&lt;p&gt;So it looks like we have a “data” and “uid” values only, unlike everything listed above.&lt;/p&gt;
+&lt;p&gt;Enter my next favorite tool: &lt;a href=&quot;http://www.hopperapp.com&quot;&gt;Hopper&lt;/a&gt; (&lt;em&gt;a reverser&amp;#39;s best friend!&lt;/em&gt;)&lt;/p&gt;
 
-&lt;p&gt;Enter my next favorite tool: &lt;a href=&quot;http://www.hopperapp.com&quot;&gt;Hopper&lt;/a&gt; (&lt;em&gt;a reverser’s best friend!&lt;/em&gt;)&lt;/p&gt;
+&lt;p&gt;With Hopper, we&amp;#39;ll read the executable to disassemble located at: /Applications/Preview.app/Contents/MacOS/Preview&lt;/p&gt;
 
-&lt;p&gt;With Hopper, we’ll read the executable to disassemble located at: /Applications/Preview.app/Contents/MacOS/Preview&lt;/p&gt;
-
-&lt;p&gt;Once loaded up, we’re going to look under “Labels” for &lt;em&gt;PVSignature initWithCoder&lt;/em&gt; (the method that’s called when unarchiving an instance of a class).&lt;/p&gt;
+&lt;p&gt;Once loaded up, we&amp;#39;re going to look under &amp;quot;Labels&amp;quot; for &lt;em&gt;PVSignature initWithCoder&lt;/em&gt; (the method that&amp;#39;s called when unarchiving an instance of a class).&lt;/p&gt;
 
 &lt;p&gt;Once we find it, we can use &lt;em&gt;Window -&amp;gt; Show Psuedo Code of Procedure&lt;/em&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;[...]
-rbx-&amp;gt;_undecryptedData = [[r14 decodeObjectForKey:@&quot;data&quot;] retain];
-rbx-&amp;gt;_uid = [r14 decodeInt32ForKey:@&quot;uid&quot;];
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;[...]
+rbx-&amp;gt;_undecryptedData = [[r14 decodeObjectForKey:@&amp;quot;data&amp;quot;] retain];
+rbx-&amp;gt;_uid = [r14 decodeInt32ForKey:@&amp;quot;uid&amp;quot;];
 rbx-&amp;gt;_cannotDecrypt = 0x0;
 rbx-&amp;gt;_shouldPersist = 0x1;
 rbx-&amp;gt;_largeThumbnail = 0x0;
 rbx-&amp;gt;_smallThumbnail = 0x0;
 rbx-&amp;gt;_payload = 0x0;
 [...]
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Pretty staight forward to immitate:&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=06_snip.py&quot;&gt; &lt;/script&gt;
 
-&lt;p&gt;Yay, no errors! Let’s see what our object looks like:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sig_decoded._uid
+&lt;p&gt;Yay, no errors! Let&amp;#39;s see what our object looks like:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; sig_decoded._uid
 1000
 
 &amp;gt;&amp;gt;&amp;gt; sig_decoded._undecryptedData
 &amp;lt;458e1def 5434c5ab 94094049 dfd2424d 0ebe7ff6 c79c7b82 463d6d56 ...
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Cool. Let’s try the trick we did before for checking out if the raw data is anything we recognize:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; str(sig_decoded._undecryptedData)[:50]
-&#39;E\x8e\x1d\xefT4\xc5\xab\x94\t@I\xdf\xd2BM\x0e\xbe\x7f\xf6\xc7\x9c{\x82F=mV\xac\xee\x1c\xda8\xe357|\xbb\xa9\xf9\xdc\xbd\x16\x1a+6\x16\x90Z\xfc&#39;
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Cool. Let&amp;#39;s try the trick we did before for checking out if the raw data is anything we recognize:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; str(sig_decoded._undecryptedData)[:50]
+&amp;#39;E\x8e\x1d\xefT4\xc5\xab\x94\t@I\xdf\xd2BM\x0e\xbe\x7f\xf6\xc7\x9c{\x82F=mV\xac\xee\x1c\xda8\xe357|\xbb\xa9\xf9\xdc\xbd\x16\x1a+6\x16\x90Z\xfc&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Hmm. Nope. Not ringing any bells.&lt;/p&gt;
 
-&lt;p&gt;&lt;em&gt;… It’s like it’s encrypted or something …&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;... It&amp;#39;s like it&amp;#39;s encrypted or something ...&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;But hey, we have that other piece of data - the password value for “Preview Signature Privacy”:&lt;/p&gt;
+&lt;p&gt;But hey, we have that other piece of data - the password value for &amp;quot;Preview Signature Privacy&amp;quot;:&lt;/p&gt;
 
-&lt;p&gt;&lt;em&gt;“Used by Preview to encrypt stored signatures. If modified or deleted, any existing signatures will become unusable.”&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&amp;quot;Used by Preview to encrypt stored signatures. If modified or deleted, any existing signatures will become unusable.&amp;quot;&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;Sounds like it’s a decryption key to me!&lt;/p&gt;
+&lt;p&gt;Sounds like it&amp;#39;s a decryption key to me!&lt;/p&gt;
 
-&lt;p&gt;I’m going to cheat here and just raw copy the value using Keychain Access (just clicking on “Show Password” and copying out the value). &lt;em&gt;(I have code for reading from the keychain, but that’s for another post.)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;I&amp;#39;m going to cheat here and just raw copy the value using Keychain Access (just clicking on &amp;quot;Show Password&amp;quot; and copying out the value). &lt;em&gt;(I have code for reading from the keychain, but that&amp;#39;s for another post.)&lt;/em&gt;&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=07_snip.py&quot;&gt; &lt;/script&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; len(binary_key)
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; len(binary_key)
 16
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;A 16 byte key. If you know anything about encryption, that’s a pretty common key length for many common &lt;a href=&quot;https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation&quot;&gt;block cipher (ECB and CBC) algorithms&lt;/a&gt;.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;A 16 byte key. If you know anything about encryption, that&amp;#39;s a pretty common key length for many common &lt;a href=&quot;https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation&quot;&gt;block cipher (ECB and CBC) algorithms&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;But we need to know exactly what algorithm was used here.&lt;/p&gt;
 
@@ -278,81 +438,67 @@ rbx-&amp;gt;_payload = 0x0;
 
 &lt;p&gt;Searching through PVSignature code, this would seem key: &lt;strong&gt;-[PVSignature decrypt]:&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;Looking at the pseudocode for it, it generates an instance of a new class “PVSignatureEncryptor”:&lt;/p&gt;
+&lt;p&gt;Looking at the pseudocode for it, it generates an instance of a new class &amp;quot;PVSignatureEncryptor&amp;quot;:&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;rax = [PVSignatureEncryptor sharedInstance];&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;Based on that, we find: &lt;strong&gt;-[PVSignatureEncryptor decryptedData:]:&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;This code has exactly what we’re looking for - information about how it decrypts the data:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;if (CCCrypt(0x1, 0x0, 0x1, r12, 0x10, 0x0, var_68, r14, r15, rax, var_58) == 0x0) {
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;p&gt;This code has exactly what we&amp;#39;re looking for - information about how it decrypts the data:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;if (CCCrypt(0x1, 0x0, 0x1, r12, 0x10, 0x0, var_68, r14, r15, rax, var_58) == 0x0) {
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;And in this instance, we want to look at not just the pseudocode, but also the assembly for a little more clarity:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;   mov edi, 0x1    ; argument &quot;op&quot; for method imp___stubs__CCCrypt
-   mov esi, 0x0    ; argument &quot;alg&quot; for method imp___stubs__CCCrypt
-   mov edx, 0x1    ; argument &quot;options&quot; for method imp___stubs__CCCrypt
-   mov rcx, r12    ; argument &quot;key&quot; for method imp___stubs__CCCrypt
-   mov r8d, 0x10   ; argument &quot;keyLength&quot; for method imp___stubs__CCCrypt
-   xor r9d, r9d    ; argument &quot;iv&quot; for method imp___stubs__CCCrypt
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;   mov edi, 0x1    ; argument &amp;quot;op&amp;quot; for method imp___stubs__CCCrypt
+   mov esi, 0x0    ; argument &amp;quot;alg&amp;quot; for method imp___stubs__CCCrypt
+   mov edx, 0x1    ; argument &amp;quot;options&amp;quot; for method imp___stubs__CCCrypt
+   mov rcx, r12    ; argument &amp;quot;key&amp;quot; for method imp___stubs__CCCrypt
+   mov r8d, 0x10   ; argument &amp;quot;keyLength&amp;quot; for method imp___stubs__CCCrypt
+   xor r9d, r9d    ; argument &amp;quot;iv&amp;quot; for method imp___stubs__CCCrypt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Looking at the &lt;a href=&quot;https://developer.apple.com/library/ios/documentation/System/Conceptual/ManPages_iPhoneOS/man3/CCCrypt.3cc.html&quot;&gt;documentation for CCCrypt&lt;/a&gt;, we get:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;CCCrypt(CCOperation op, CCAlgorithm alg, CCOptions options,
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CCCrypt(CCOperation op, CCAlgorithm alg, CCOptions options,
          const void *key, size_t keyLength, const void *iv,
          const void *dataIn, size_t dataInLength, void *dataOut,
          size_t dataOutAvailable, size_t *dataOutMoved);
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Now we can figure out the arguments that were passed, with a little help from the &lt;a href=&quot;http://www.opensource.apple.com/source/CommonCrypto/CommonCrypto-36064/CommonCrypto/CommonCryptor.h&quot;&gt;CommonCryptor.h header file&lt;/a&gt; and the above:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;operation/”op”: &lt;strong&gt;0x1&lt;/strong&gt; (&lt;em&gt;kCCDecrypt&lt;/em&gt;, from &amp;lt;CommonCryptor.h&amp;gt;)&lt;/li&gt;
-  &lt;li&gt;algorithm/”alg”: &lt;strong&gt;0x0&lt;/strong&gt;   (&lt;em&gt;kCCAlgorithmAES128&lt;/em&gt;)&lt;/li&gt;
-  &lt;li&gt;“options”: &lt;strong&gt;0x1&lt;/strong&gt;   (&lt;em&gt;kCCOptionPKCS7Padding&lt;/em&gt; in this context)&lt;/li&gt;
-  &lt;li&gt;“key” is probably our “binary_key” from above&lt;/li&gt;
-  &lt;li&gt;“keyLength”: &lt;strong&gt;0x10&lt;/strong&gt; which is hex for 16 - a length that matches the length of our “binary_key” 😀&lt;/li&gt;
-  &lt;li&gt;“iv”: &lt;strong&gt;0&lt;/strong&gt;, aka null pointer / empty value in this context&lt;/li&gt;
+&lt;li&gt;operation/&amp;quot;op&amp;quot;: &lt;strong&gt;0x1&lt;/strong&gt; (&lt;em&gt;kCCDecrypt&lt;/em&gt;, from &amp;lt;CommonCryptor.h&amp;gt;)&lt;/li&gt;
+&lt;li&gt;algorithm/&amp;quot;alg&amp;quot;: &lt;strong&gt;0x0&lt;/strong&gt;   (&lt;em&gt;kCCAlgorithmAES128&lt;/em&gt;)&lt;/li&gt;
+&lt;li&gt;&amp;quot;options&amp;quot;: &lt;strong&gt;0x1&lt;/strong&gt;   (&lt;em&gt;kCCOptionPKCS7Padding&lt;/em&gt; in this context)&lt;/li&gt;
+&lt;li&gt;&amp;quot;key&amp;quot; is probably our &amp;quot;binary_key&amp;quot; from above&lt;/li&gt;
+&lt;li&gt;&amp;quot;keyLength&amp;quot;: &lt;strong&gt;0x10&lt;/strong&gt; which is hex for 16 - a length that matches the length of our &amp;quot;binary_key&amp;quot; 😀&lt;/li&gt;
+&lt;li&gt;&amp;quot;iv&amp;quot;: &lt;strong&gt;0&lt;/strong&gt;, aka null pointer / empty value in this context&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;The rest of the arguments we don’t care so much about as they’re for handling getting data into/out of the decryption.&lt;/p&gt;
+&lt;p&gt;The rest of the arguments we don&amp;#39;t care so much about as they&amp;#39;re for handling getting data into/out of the decryption.&lt;/p&gt;
 
 &lt;p&gt;With one last bit from the documentation on CCCrypt, we have everything we need:&lt;/p&gt;
 
-&lt;p&gt;&lt;em&gt;“If CBC mode is selected and no IV is provided, an IV of all zeroes will be used”&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&amp;quot;If CBC mode is selected and no IV is provided, an IV of all zeroes will be used&amp;quot;&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;Ok, now to try decrypting. We’re going to use the python Crypto module for this part:&lt;/p&gt;
+&lt;p&gt;Ok, now to try decrypting. We&amp;#39;re going to use the python Crypto module for this part:&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=08_snip.py&quot;&gt; &lt;/script&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_data[:50]
-&quot;\xe4\x9c\x0f\xff\xd2\xee`\x0e\xbe8w8\xef\xaaT\xf1\x07\xeas\xe0Z\x96&#39;6\xfc\x95\x9e\xa9\xce\xb5&amp;gt;\xd4bplist00\xd4\x01\x02\x03\x04\x05\x06,-X&quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;em&gt;Oh ho ho!&lt;/em&gt; I see a &lt;strong&gt;bplist00&lt;/strong&gt; …&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_data.index(&#39;bplist00&#39;)
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_data[:50]
+&amp;quot;\xe4\x9c\x0f\xff\xd2\xee`\x0e\xbe8w8\xef\xaaT\xf1\x07\xeas\xe0Z\x96&amp;#39;6\xfc\x95\x9e\xa9\xce\xb5&amp;gt;\xd4bplist00\xd4\x01\x02\x03\x04\x05\x06,-X&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;em&gt;Oh ho ho!&lt;/em&gt; I see a &lt;strong&gt;bplist00&lt;/strong&gt; ...&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_data.index(&amp;#39;bplist00&amp;#39;)
 32
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Looks like there’s a 32 byte prefix - looking back at the code of &lt;strong&gt;-[PVSignatureEncryptor decryptedData:]&lt;/strong&gt;, we can see:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;CC_SHA256(rbx, rsi, var_50);
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Looks like there&amp;#39;s a 32 byte prefix - looking back at the code of &lt;strong&gt;-[PVSignatureEncryptor decryptedData:]&lt;/strong&gt;, we can see:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CC_SHA256(rbx, rsi, var_50);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;SHA-256 is a 32-byte CRC. Likely the decrypted data is prefixed with its CRC hash so that the code can tell easily if it decrypted the signature correctly by validating the hash of the binary plist data matches the hash in the 32 byte prefix.&lt;/p&gt;
 
-&lt;p&gt;So let’s skip the first 32 bytes and try to parse it directly as a plist.&lt;/p&gt;
+&lt;p&gt;So let&amp;#39;s skip the first 32 bytes and try to parse it directly as a plist.&lt;/p&gt;
 
-&lt;p&gt;… But before we do that, the &lt;em&gt;“kCCOptionPKCS7Padding”&lt;/em&gt; option that was mentioned earlier means that this data is padded out to a multiple of 16 bytes:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; len(decrypted_data)/16.
+&lt;p&gt;... But before we do that, the &lt;em&gt;&amp;quot;kCCOptionPKCS7Padding&amp;quot;&lt;/em&gt; option that was mentioned earlier means that this data is padded out to a multiple of 16 bytes:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; len(decrypted_data)/16.
 120.0
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;So we have to remove the padding per the PKCS7 standard. We can do that with this bit of code:&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=09_snip.py&quot;&gt; &lt;/script&gt;
@@ -360,40 +506,34 @@ rbx-&amp;gt;_payload = 0x0;
 &lt;p&gt;Now we can attempt parsing the plist data for bytes 33+&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=10_snip.py&quot;&gt; &lt;/script&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_plist
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_plist
 {
-    &quot;$archiver&quot; = NSKeyedArchiver;
-    &quot;$objects&quot; =     (
-        &quot;$null&quot;,
+    &amp;quot;$archiver&amp;quot; = NSKeyedArchiver;
+    &amp;quot;$objects&amp;quot; =     (
+        &amp;quot;$null&amp;quot;,
 [...]
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;Success!!&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;What do we have this time? Let’s try to decode it. But since we decrypted with python, our data is a string - need to wrap it into an NSData object first.&lt;/p&gt;
+&lt;p&gt;What do we have this time? Let&amp;#39;s try to decode it. But since we decrypted with python, our data is a string - need to wrap it into an NSData object first.&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=11_snip.py&quot;&gt; &lt;/script&gt;
-
-&lt;pre&gt;&lt;code&gt;Traceback (most recent call last):
-  File &quot;&amp;lt;stdin&amp;gt;&quot;, line 1, in &amp;lt;module&amp;gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;Traceback (most recent call last):
+  File &amp;quot;&amp;lt;stdin&amp;gt;&amp;quot;, line 1, in &amp;lt;module&amp;gt;
 objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decodeObjectForKey:]: cannot decode object of class (PVSignaturePayload)
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Progress - now we&amp;#39;re working with a &amp;quot;PVSignaturePayload&amp;quot;.&lt;/p&gt;
 
-&lt;p&gt;Progress - now we’re working with a “PVSignaturePayload”.&lt;/p&gt;
-
-&lt;p&gt;Again, let’s look at what data we have, and then compare that against the contents of “PVSignaturePayload.h” from our earlier class-dump run:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_plist[&#39;$objects&#39;][1]
+&lt;p&gt;Again, let&amp;#39;s look at what data we have, and then compare that against the contents of &amp;quot;PVSignaturePayload.h&amp;quot; from our earlier class-dump run:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_plist[&amp;#39;$objects&amp;#39;][1]
 {
-    &quot;$class&quot; = &quot;&amp;lt;CFKeyedArchiverUID 0x7fba02522bd0 [0x7fff7951bed0]&amp;gt;{value = 7}&quot;;
-    baselineHeight = &quot;0.1176470592617989&quot;;
-    creationDate = &quot;&amp;lt;CFKeyedArchiverUID 0x7fba025203d0 [0x7fff7951bed0]&amp;gt;{value = 4}&quot;;
-    lastUsedDate = &quot;&amp;lt;CFKeyedArchiverUID 0x7fba025203f0 [0x7fff7951bed0]&amp;gt;{value = 6}&quot;;
-    path = &quot;&amp;lt;CFKeyedArchiverUID 0x7fba02520350 [0x7fff7951bed0]&amp;gt;{value = 2}&quot;;
+    &amp;quot;$class&amp;quot; = &amp;quot;&amp;lt;CFKeyedArchiverUID 0x7fba02522bd0 [0x7fff7951bed0]&amp;gt;{value = 7}&amp;quot;;
+    baselineHeight = &amp;quot;0.1176470592617989&amp;quot;;
+    creationDate = &amp;quot;&amp;lt;CFKeyedArchiverUID 0x7fba025203d0 [0x7fff7951bed0]&amp;gt;{value = 4}&amp;quot;;
+    lastUsedDate = &amp;quot;&amp;lt;CFKeyedArchiverUID 0x7fba025203f0 [0x7fff7951bed0]&amp;gt;{value = 6}&amp;quot;;
+    path = &amp;quot;&amp;lt;CFKeyedArchiverUID 0x7fba02520350 [0x7fff7951bed0]&amp;gt;{value = 2}&amp;quot;;
 }
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;vs.&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=12_snip.m&quot;&gt; &lt;/script&gt;
@@ -402,13 +542,12 @@ objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decod
 
 &lt;p&gt;We are &lt;strong&gt;SOOOO&lt;/strong&gt; close.&lt;/p&gt;
 
-&lt;p&gt;That’s vector information, very likely our actual signature!&lt;/p&gt;
+&lt;p&gt;That&amp;#39;s vector information, very likely our actual signature!&lt;/p&gt;
 
-&lt;p&gt;We could look back at the code in &lt;strong&gt;Preview.app&lt;/strong&gt; for PVSignaturePayload - but we appear to have a match for a match on everything, &lt;em&gt;let’s just wing it!&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;We could look back at the code in &lt;strong&gt;Preview.app&lt;/strong&gt; for PVSignaturePayload - but we appear to have a match for a match on everything, &lt;em&gt;let&amp;#39;s just wing it!&lt;/em&gt;&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=13_snip.py&quot;&gt; &lt;/script&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; real_sig_decoded.baselineHeight
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; real_sig_decoded.baselineHeight
 0.11764705926179886
 &amp;gt;&amp;gt;&amp;gt; real_sig_decoded.path
 Path &amp;lt;0x7fba0251bb90&amp;gt;
@@ -418,36 +557,33 @@ Path &amp;lt;0x7fba0251bb90&amp;gt;
     204.099686 58.862499 201.597519 49.750000 198.925385 41.500000 curveto
     196.253250 33.250000 193.444489 24.025000 192.683685 21.000000 curveto
 [...]
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;YAY!&lt;/strong&gt; We&amp;#39;ve got our vector information!&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;YAY!&lt;/strong&gt; We’ve got our vector information!&lt;/p&gt;
+&lt;p&gt;Now, to verify this is what it is, let&amp;#39;s kick it out to an image file.&lt;/p&gt;
 
-&lt;p&gt;Now, to verify this is what it is, let’s kick it out to an image file.&lt;/p&gt;
-
-&lt;p&gt;But &lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSBezierPath_Class/index.html&quot;&gt;NSBezierPath&lt;/a&gt; doesn’t have to start at a (0,0) coordinate origin. In fact, the “Bounds” values above indicate it’s offset. So let’s make a transform and shift it back to something more reasonable before we draw it.&lt;/p&gt;
+&lt;p&gt;But &lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSBezierPath_Class/index.html&quot;&gt;NSBezierPath&lt;/a&gt; doesn&amp;#39;t have to start at a (0,0) coordinate origin. In fact, the &amp;quot;Bounds&amp;quot; values above indicate it&amp;#39;s offset. So let&amp;#39;s make a transform and shift it back to something more reasonable before we draw it.&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=14_snip.py&quot;&gt; &lt;/script&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sig_path_shifted
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; sig_path_shifted
 Path &amp;lt;0x7fba04ef0000&amp;gt;
   Bounds: {{0.10000000000000142, 0.10000000000000001}, {271.91783064182891, 67}}
   Control point bounds: {{-0.64194097622566915, -1.8758532047271763}, {274.53815460205078, 68.975853204727173}}
     97.483219 61.850000 moveto
     97.097157 58.962499 94.594990 49.850000 91.922855 41.600000 curveto
     89.250721 33.350000 86.441959 24.125000 85.681156 21.100000 curveto
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Much better. Now we’re just inside (0,0).&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Much better. Now we&amp;#39;re just inside (0,0).&lt;/p&gt;
 
 &lt;p&gt;Now to build an image and draw the path onto it.&lt;/p&gt;
 
-&lt;p&gt;&lt;em&gt;(I’m gonna race through this a bit here because we’re so close to the end!)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;(I&amp;#39;m gonna race through this a bit here because we&amp;#39;re so close to the end!)&lt;/em&gt;&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=15_snip.py&quot;&gt; &lt;/script&gt;
 
 &lt;h2 id=&quot;veni-vidi-vici&quot;&gt;veni, vidi, vici!&lt;/h2&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/2015-07-26-exploring-os-x-preview-signatures/winnar_is_you.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/2015-07-26-exploring-os-x-preview-signatures/winnar_is_you.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;final-notes&quot;&gt;final notes&lt;/h2&gt;
 
@@ -455,21 +591,21 @@ Path &amp;lt;0x7fba04ef0000&amp;gt;
 
 &lt;p&gt;Signatures in 10.10+ have taken a new turn.&lt;/p&gt;
 
-&lt;p&gt;Now the com.apple.Preview.signatures preference domain appears to be legacy: when you upgrade 10.9 to 10.10, OS X appears to perform a one-time conversion of your signatures into the new format. &lt;em&gt;(Speculation on my part - calling &lt;a href=&quot;http://twitter.com/rtrouton/&quot;&gt;Rich&lt;/a&gt;, master of OS X VMs, to verify …)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Now the com.apple.Preview.signatures preference domain appears to be legacy: when you upgrade 10.9 to 10.10, OS X appears to perform a one-time conversion of your signatures into the new format. &lt;em&gt;(Speculation on my part - calling &lt;a href=&quot;http://twitter.com/rtrouton/&quot;&gt;Rich&lt;/a&gt;, master of OS X VMs, to verify ...)&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;In 10.10+, signatures appear to be stored entirely in the keychain - but not your login.keychain.&lt;/p&gt;
 
-&lt;p&gt;Now every signature gets a “Signature Annotation Privacy” item in your “Local Items” keychain (which may be named “iCloud Keychain”, if you’ve enabled that function with your iCloud account).&lt;/p&gt;
+&lt;p&gt;Now every signature gets a &amp;quot;Signature Annotation Privacy&amp;quot; item in your &amp;quot;Local Items&amp;quot; keychain (which may be named &amp;quot;iCloud Keychain&amp;quot;, if you&amp;#39;ve enabled that function with your iCloud account).&lt;/p&gt;
 
 &lt;p&gt;Instead of an encryption key stored in the password value, &lt;em&gt;an entire binary plist appears to be there.&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;Additionally, the note has changed:&lt;/p&gt;
 
-&lt;p&gt;&lt;em&gt;“Signatures for AnnotationKit (shared by e.g. Sketch &amp;amp; Preview). Deletion will remove all signatures from the list.”&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&amp;quot;Signatures for AnnotationKit (shared by e.g. Sketch &amp;amp; Preview). Deletion will remove all signatures from the list.&amp;quot;&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;I’ve done some initial investigations into this binary plist value and as expected, the contents are not like they used to be.&lt;/p&gt;
+&lt;p&gt;I&amp;#39;ve done some initial investigations into this binary plist value and as expected, the contents are not like they used to be.&lt;/p&gt;
 
-&lt;p&gt;I’ll continue looking into it (and maybe write about what I find at some point …)&lt;/p&gt;
+&lt;p&gt;I&amp;#39;ll continue looking into it (and maybe write about what I find at some point ...)&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;- mike&lt;/em&gt;&lt;/p&gt;
 </description>
