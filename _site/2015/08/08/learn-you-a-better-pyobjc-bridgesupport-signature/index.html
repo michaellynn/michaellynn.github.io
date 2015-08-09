@@ -12,7 +12,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for mikeymikey blogs here" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201508081820" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201508081839" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -148,7 +148,7 @@
 
 <p>The only arguments AppleScript passes are <em>url</em>, <em>open_options</em>, <em>mount_options</em>, and a placeholder for getting the returned mountpoint after it succeeds.</p>
 
-<p>So let&#39;s look at <em>open_options</em> and <em>mount_options</em> to see AppleScript put in them.</p>
+<p>So let&#39;s look at <em>open_options</em> and <em>mount_options</em> to see what AppleScript put in them.</p>
 <div class="highlight"><pre><code class="language-asm" data-lang="asm"><span class="err">00014</span><span class="nf">a1b</span>         <span class="no">lea</span>        <span class="no">eax</span><span class="p">,</span> <span class="no">dword</span> <span class="err">[</span><span class="no">ds</span><span class="p">:</span><span class="no">eax-0x14621</span><span class="err">+</span><span class="no">cfstring_AllowSubMounts</span><span class="err">]</span> <span class="err">;</span> <span class="err">@&quot;</span><span class="no">AllowSubMounts</span><span class="err">&quot;</span>
 </code></pre></div>
 <p>From the same NetFS.h file above, we can find out what this means:</p>

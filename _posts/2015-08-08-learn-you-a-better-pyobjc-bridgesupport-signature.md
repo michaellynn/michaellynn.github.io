@@ -66,7 +66,7 @@ Looking at the pseudocode, ```0x0``` (null pointer) is used in place of the user
 
 The only arguments AppleScript passes are _url_, _open_options_, _mount_options_, and a placeholder for getting the returned mountpoint after it succeeds.
 
-So let's look at _open_options_ and _mount_options_ to see AppleScript put in them.
+So let's look at _open_options_ and _mount_options_ to see what AppleScript put in them.
 
 ```asm
 00014a1b         lea        eax, dword [ds:eax-0x14621+cfstring_AllowSubMounts] ; @"AllowSubMounts"

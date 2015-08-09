@@ -64,7 +64,7 @@
 
 &lt;p&gt;The only arguments AppleScript passes are &lt;em&gt;url&lt;/em&gt;, &lt;em&gt;open_options&lt;/em&gt;, &lt;em&gt;mount_options&lt;/em&gt;, and a placeholder for getting the returned mountpoint after it succeeds.&lt;/p&gt;
 
-&lt;p&gt;So let&amp;#39;s look at &lt;em&gt;open_options&lt;/em&gt; and &lt;em&gt;mount_options&lt;/em&gt; to see AppleScript put in them.&lt;/p&gt;
+&lt;p&gt;So let&amp;#39;s look at &lt;em&gt;open_options&lt;/em&gt; and &lt;em&gt;mount_options&lt;/em&gt; to see what AppleScript put in them.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-asm&quot; data-lang=&quot;asm&quot;&gt;&lt;span class=&quot;err&quot;&gt;00014&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;a1b&lt;/span&gt;         &lt;span class=&quot;no&quot;&gt;lea&lt;/span&gt;        &lt;span class=&quot;no&quot;&gt;eax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;dword&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;eax-0x14621&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;cfstring_AllowSubMounts&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;@&amp;quot;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;AllowSubMounts&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;quot;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;From the same NetFS.h file above, we can find out what this means:&lt;/p&gt;
