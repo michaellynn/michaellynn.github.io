@@ -198,7 +198,7 @@ u'/Volumes/sharename'
 
 _Holy cow - IT WORKED AND IT MOUNTED - how freaking cool is that???_
 
-If you'd like a more polished version of the code in this article, including the ability the mount shares at an arbitrary mount path (the directory has to exist in advance) and the use of some of the open and mount options listed above, [you can find it here](https://gist.github.com/pudquick/1362a8908be01e23041d).
+If you'd like a more polished version of the code in this article, including the ability to mount shares at an arbitrary mount path (the directory has to exist in advance) and the use of some of the open and mount options listed above, [you can find it here](https://gist.github.com/pudquick/1362a8908be01e23041d).
 
 It still lacks %-style encoding (like %20 for a space) for username and password portions of the URL. Exercise is left up to the reader to implement 😄
 
