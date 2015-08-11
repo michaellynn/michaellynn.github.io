@@ -3,12 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>A Home for my Long-form Rambling &#8211; mikeymikey blogs here</title>
+    <title>Even More Oracle Java Compatibility (Minecraft!) &#8211; mikeymikey blogs here</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="You maniacs, you blogged it up.">
+    <meta name="description" content="Make Minecraft (and more) run as-is on OS X without Apple Java">
     <meta name="author" content="Michael Lynn">
     <meta name="keywords" content="">
-    <link rel="canonical" href="http://michaellynn.github.io/2015/07/19/your-fault/">
+    <link rel="canonical" href="http://michaellynn.github.io/2015/08/10/even-more-oracle-java-compatibility/">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for mikeymikey blogs here" href="/feed.xml" />
 
     <!-- Custom CSS -->
@@ -24,17 +24,17 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="en_US">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="A Home for my Long-form Rambling">
+    <meta property="og:title" content="Even More Oracle Java Compatibility (Minecraft!)">
     <meta property="og:description" content="the vent for my mind">
-    <meta property="og:url" content="http://michaellynn.github.io/2015/07/19/your-fault/">
+    <meta property="og:url" content="http://michaellynn.github.io/2015/08/10/even-more-oracle-java-compatibility/">
     <meta property="og:site_name" content="mikeymikey blogs here">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     
-    <meta name="twitter:title" content="A Home for my Long-form Rambling" />
-    <meta name="twitter:description" content="You maniacs, you blogged it up." />
-    <meta name="twitter:url" content="http://michaellynn.github.io/2015/07/19/your-fault/" />
+    <meta name="twitter:title" content="Even More Oracle Java Compatibility (Minecraft!)" />
+    <meta name="twitter:description" content="Make Minecraft (and more) run as-is on OS X without Apple Java" />
+    <meta name="twitter:url" content="http://michaellynn.github.io/2015/08/10/even-more-oracle-java-compatibility/" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -76,40 +76,43 @@
         
 
 
-
-
 <div class="post-header mb2">
-  <span class="post-meta">Jul 19, 2015</span>
+  <span class="post-meta">Aug 10, 2015</span>
     
-  <h1>A Home for my Long-form Rambling</h1>
+  <h1>Even More Oracle Java Compatibility (Minecraft!)</h1>
   
   <small><span class="post-meta">tags:
   
-  <a href="/tag/hello">hello</a>
+  <a href="/tag/python">python</a>
+  
+  <a href="/tag/osx">osx</a>
   </span></small><p/><p/>
 </div>
 
 <article class="post-content">
-  <p>For quite some time, my friends have been <a href="https://twitter.com/tvsutton/status/565118553809235968">nagging
-me</a> <a href="https://twitter.com/Vaughn_E_Miller/status/603232042772516866">to put
-together</a> <a href="https://twitter.com/foigus/status/608800195707564032">a
-blog</a>.</p>
+  <p><a href="https://twitter.com/rtrouton">Rich Trouton</a> kindly wrote <a href="https://derflounder.wordpress.com/2015/08/08/modifying-oracles-java-sdk-to-run-java-applications-on-os-x/">a wonderful blog post</a> covering <a href="https://gist.github.com/pudquick/349f063c242239952a2e/64c295fc4576d7df9b8632e6ddecbe6165fd7663">a python script of mine</a> (<em>note: this is the old version, don&#39;t use it!</em>) which modifies installations of Oracle&#39;s Java JDK to extend its capabilities to allow it to run JavaApplicationStub .app bundles as was <a href="https://forums.developer.apple.com/message/6741">discussed</a> on Apple&#39;s Developer forums (go ahead and read it, Apple has made the forum open to the public for now). </p>
 
-<p>Blame this site on them.</p>
+<p>One thing that annoyed me a bit about the fix though was that it didn&#39;t seem to work with <em>everything</em> (read: <a href="http://minecraft.net/">Minecraft</a>), just a large number of Java .apps.</p>
 
-<p>I’ve been sharing code and tips in random <a href="https://gist.github.com/pudquick">Github
-gists</a> for several years via
-<a href="https://twitter.com/mikeymikey">tweets</a> and online chats.</p>
+<p>After it was posted, a Twitter friend of mine <a href="https://twitter.com/morningwoodspor/status/630886277538258945">asked for a little more help</a> with one of these more problematic apps.</p>
 
-<p>I’ll probably keep doing that.</p>
+<p>I was able to confirm that the app in question could run if I provided the right arguments to <code>/usr/bin/java</code>, so why couldn&#39;t JavaApplicationStub launching work?</p>
 
-<p>But now if it’s interesting enough to write about but I can’t fit it into 140
-characters, it’ll probably end up here.</p>
+<p>A little more research (aka Google) turned up <a href="http://apple.stackexchange.com/a/136976">this marvelous additional tidbit</a>.</p>
 
-<p>And if it doesn’t - now I have no excuse to avoid blogging about it when you nag
-me.</p>
+<p>Basically the problematic Java .apps in question had their .jar files coded to look for <code>libserver.dylib</code>, which isn&#39;t part of the current JDK distribution.</p>
 
-<p>Happy now?</p>
+<p>This fix involves creating the original directory structure it expects it at and symlinking <code>libjvm.dylib</code> to the old location.</p>
+
+<p>It worked, it fixed the launching! (<strong><em>and Minecraft works as-is for me now, no more modifying the .app bundle!!</em></strong>)</p>
+
+<p>I&#39;ve since <a href="https://gist.github.com/pudquick/349f063c242239952a2e">updated the original code</a>, so that both Rich&#39;s blog post and this one here provide an all-in-one solution.</p>
+
+<p>As always, hope this helps you 😄</p>
+
+<script src="https://gist.github.com/pudquick/349f063c242239952a2e.js"> </script>
+
+<p><em>- mike</em></p>
 
 </article>
 
@@ -121,7 +124,7 @@ me.</p>
   <div id="disqus_thread"></div>
   <script type="text/javascript">
     var disqus_shortname  = 'michaellynnblog';
-    var disqus_identifier = '/2015/07/19/your-fault';
+    var disqus_identifier = '/2015/08/10/even-more-oracle-java-compatibility';
     var disqus_title      = '';
 
     (function() {

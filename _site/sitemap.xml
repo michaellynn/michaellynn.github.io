@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://michaellynn.github.io/2015/08/10/even-more-oracle-java-compatibility/</loc>
+    <lastmod>2015-08-10T18:15:00-07:00</lastmod>
+  </url>
+  <url>
     <loc>http://michaellynn.github.io/2015/08/08/learn-you-a-better-pyobjc-bridgesupport-signature/</loc>
     <lastmod>2015-08-08T16:15:00-07:00</lastmod>
   </url>
