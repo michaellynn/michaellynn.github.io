@@ -7,6 +7,277 @@
     <atom:link href="http://michaellynn.github.io/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Apple&#39;s BookmarkData - exposed!</title>
+        <description>&lt;p&gt;&lt;em&gt;(And we&amp;#39;ll cover &lt;code&gt;.sfl&lt;/code&gt; files while we&amp;#39;re at it!)&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;A good friend of mine, &lt;a href=&quot;https://twitter.com/Sacrilicious&quot;&gt;Allister&lt;/a&gt;, had an interesting question on the &lt;a href=&quot;http://macadmins.org/&quot;&gt;MacAdmins Slack&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;@allister: zero hits on developer.apple.com for this file extension: Library/Application Support/com.apple.sharedfilelist/com.apple.LSSharedFileList.RecentServers.sfl&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;To wit: What &lt;em&gt;are&lt;/em&gt; the &lt;code&gt;.sfl&lt;/code&gt; files that are appearing in OS X 10.11 El Capitan? There sure are a lot of them!&lt;/p&gt;
+
+&lt;p&gt;Diving into the file format, it was pretty obvious it was a binary plist - and with a little more digging, an &lt;a href=&quot;https://developer.apple.com/library/watchos/documentation/Cocoa/Reference/Foundation/Classes/NSKeyedArchiver_Class/index.html&quot;&gt;NSKeyedArchiver&lt;/a&gt; file at that.&lt;/p&gt;
+
+&lt;p&gt;Being &lt;a href=&quot;http://michaellynn.github.io/2015/07/26/exploring-os-x-preview-signatures/&quot;&gt;very familiar&lt;/a&gt; with NSKeyedArchiver formats now, it didn&amp;#39;t take a whole lot of effort to come up with a script that allowed me to extract the contents of the com.apple.LSSharedFileList.RecentServers.sfl file.&lt;/p&gt;
+
+&lt;p&gt;That is - it didn&amp;#39;t take a lot of effort to extract the &lt;strong&gt;initial&lt;/strong&gt; layer of contents.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=01_snip.py&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;At its heart, it&amp;#39;s a dictionary with 3 keys, the most interesting key being &lt;code&gt;items&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;items&lt;/code&gt; array is made up of &lt;code&gt;SFLListItem&lt;/code&gt;, a new internal object in 10.11, with the following properties:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;name&lt;/code&gt;: Display name in the list (in this case, the name of the volume)&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;order&lt;/code&gt;: Number representing order within the list&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;uniqueIdentifier&lt;/code&gt;: A NSUUID generated to uniquely represent the entry in the list&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;properties&lt;/code&gt;: A dictionary with one or more keys (all of these only had &amp;quot;com.apple.LSSharedFileList.OverrideIcon.OSType&amp;quot; with the value &amp;quot;srvr&amp;quot;)&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;bookmark&lt;/code&gt;: An NSURL BookmarkData object containing information to reach the file/shares&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;If you look up &lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSURL_Class/#//apple_ref/doc/uid/20000301-SW34&quot;&gt;Apple&amp;#39;s documentation about BookmarkData&lt;/a&gt;, you&amp;#39;ll find details about how to make them, how to open them, and how to get some &lt;em&gt;very&lt;/em&gt; basic details from them.&lt;/p&gt;
+
+&lt;p&gt;Unfortunately, if you want to just get the share URL that was used to create the BookmarkData in the first place, the only API call Apple offers is &lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSURL_Class/#//apple_ref/occ/clm/NSURL/URLByResolvingBookmarkData:options:relativeToURL:bookmarkDataIsStale:error:&quot;&gt;this rather unsavory one&lt;/a&gt;:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=02_snip.m&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;I say &amp;quot;unsavory&amp;quot; because of the implementation details:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;&amp;quot;&lt;span style=&quot;color:red&quot;&gt;This method fails&lt;/span&gt; if the original file or directory could not be located or is on a volume that could not be mounted.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;If this method fails, you can use the resourceValuesForKeys:fromBookmarkData: method to obtain information about the bookmark, such as the last known path (NSURLPathKey) to help the user decide how to proceed.&amp;quot;&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Even with the options &lt;code&gt;NSURLBookmarkResolutionWithoutMounting&lt;/code&gt; and &lt;code&gt;NSURLBookmarkResolutionWithoutUI&lt;/code&gt;, you&amp;#39;ll find &lt;a href=&quot;http://tangent405.com/dealing-with-slow-security-scoped-bookmarks&quot;&gt;articles like this one&lt;/a&gt; which indicate that the OS is going to attempt to resolve the resource, even if it doesn&amp;#39;t pop up anything to the user when it can&amp;#39;t find it.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;And yet&lt;/em&gt;, if you open up the BookmarkData in a &lt;a href=&quot;http://ridiculousfish.com/hexfiend/&quot;&gt;hex editor&lt;/a&gt;, it&amp;#39;s &lt;strong&gt;obvious&lt;/strong&gt; the URL information is there in a form it should be directly extractable from. For something like a normal network share, there is absolutely &lt;strong&gt;no reason&lt;/strong&gt; to need to do any sort of resolving to be able to return this data. We should be able to just say &amp;quot;Give me the URL&amp;quot; and it should instantly return the value (instead of failing because the server isn&amp;#39;t visible on the current network).&lt;/p&gt;
+
+&lt;p&gt;So what about the aforementioned &lt;code&gt;resourceValuesForKeys:fromBookmarkData:&lt;/code&gt; ?&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;USELESS!&lt;/span&gt; The NSURLPathKey for server shares appears to return the mounted volume path (&lt;code&gt;/Volumes/whatever&lt;/code&gt;) - &lt;strong&gt;not the URL of the server share itself&lt;/strong&gt;!&lt;/p&gt;
+
+&lt;p&gt;… Maybe it&amp;#39;s a resource value in a different key?&lt;/p&gt;
+
+&lt;p&gt;But suddenly - &lt;em&gt;more&lt;/em&gt; horrible implementation details: &lt;em&gt;You can&amp;#39;t get the list of available keys!&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Everywhere you search, everyone just recommends &lt;a href=&quot;http://www.cocoabuilder.com/archive/cocoa/313438-how-to-get-bookmarks-data-for-non-existing-files.html&quot;&gt;&amp;quot;try all the keys&amp;quot;&lt;/a&gt; or &amp;quot;try the keys you want values for&amp;quot;.&lt;/p&gt;
+
+&lt;p&gt;… But &lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSURL_Class/#//apple_ref/doc/uid/20000301-DontLinkElementID_1&quot;&gt;none of the keys&lt;/a&gt; Apple has documented return just the simple share URL. They apparently want you to only use &lt;code&gt;URLByResolvingBookmarkData&lt;/code&gt; for that.&lt;/p&gt;
+
+&lt;h1 id=&quot;to-hell-with-that&quot;&gt;To hell with that!&lt;/h1&gt;
+
+&lt;p&gt;So instead, let&amp;#39;s go exploring with &lt;a href=&quot;http://www.hopperapp.com&quot;&gt;my favorite disassembler&lt;/a&gt; 😁&lt;/p&gt;
+
+&lt;p&gt;According to Apple&amp;#39;s documentation, NSURL is part of Foundation and sure enough we can find the &lt;code&gt;NSURL.h&lt;/code&gt; header file within &lt;code&gt;Foundation.framework&lt;/code&gt;. Let&amp;#39;s see what Hopper tells us &lt;code&gt;URLByResolvingBookmarkData&lt;/code&gt; is doing:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=03_snip.m&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;A quick inspection shows this to be a wrapper around &lt;code&gt;initByResolvingBookmarkData&lt;/code&gt;, on with the hunt!&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=04_snip.c&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;That CF looks like we&amp;#39;re skipping on over to &lt;code&gt;CoreFoundation.framework&lt;/code&gt;.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=05_snip.c&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;&lt;strong&gt;Ruh roh!&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This function isn&amp;#39;t defined here, it&amp;#39;s apparently a &amp;quot;CFCoreServicesInternal&amp;quot; bit of code. Now where could that be defined? …&lt;/p&gt;
+
+&lt;p&gt;… Let&amp;#39;s check our good friends over at &lt;code&gt;/System/Library/PrivateFrameworks&lt;/code&gt; 😆&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Oh my&lt;/em&gt;, there appears to be a &lt;code&gt;CoreServicesInternal.framework&lt;/code&gt; there!&lt;/p&gt;
+
+&lt;p&gt;Imagine my surprise.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;#39;s look inside.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2015-10-24-apples-bookmarkdata-exposed/BookmarkData1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Wow.&lt;/strong&gt; This looks like the place to be!&lt;/p&gt;
+
+&lt;p&gt;While we&amp;#39;re here, let&amp;#39;s take a glance at all the internal things Apple does with BookmarkData …&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2015-10-24-apples-bookmarkdata-exposed/BookmarkData2.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;OH &lt;em&gt;HELLLLLLOOoo… what do we have here???&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;returnAllPropertiesInBookmark&lt;/code&gt;, &lt;code&gt;returnAllPropertyKeysInBookmark&lt;/code&gt;, and &lt;code&gt;returnDetailedDump&lt;/code&gt; you say? &lt;em&gt;Fascinating&lt;/em&gt; function names.&lt;/p&gt;
+
+&lt;p&gt;Visiting any one of those functions, I&amp;#39;m extremely curious to see how they get &lt;strong&gt;called&lt;/strong&gt;. So we use Hopper&amp;#39;s helpful &amp;quot;Show Places Calling This Procedure…&amp;quot; and all 3 take us to &lt;code&gt;BookmarkResourcePropertyKeyToInfoStructInit()&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2015-10-24-apples-bookmarkdata-exposed/BookmarkData3.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;😱 😭 😱&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Do my eyes deceive me?&lt;/em&gt; Are these &lt;strong&gt;secret undocumented NSURL&lt;/strong&gt; &lt;code&gt;resourceValuesForKeys:&lt;/code&gt; keys !??!&lt;/p&gt;
+
+&lt;p&gt;They sure as hell look like it! Let&amp;#39;s try ‘em out!!&lt;/p&gt;
+
+&lt;p&gt;How about we try &lt;code&gt;NSURLBookmarkAllPropertiesKey&lt;/code&gt;, first?&lt;/p&gt;
+
+&lt;p&gt;&lt;small&gt;&lt;em&gt;(*insert magical handwaving, skipping over the boring part to get to the amazing part*)&lt;/em&gt;&lt;/small&gt;&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=06_snip.py&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;Good god. It worked. It&amp;#39;s &lt;em&gt;all&lt;/em&gt; there.&lt;/p&gt;
+
+&lt;p&gt;All the keys Apple lists - and &lt;strong&gt;a ton that they don&amp;#39;t&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;… and yet … none of them are what I&amp;#39;m looking for: just the plain URL to the share.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;NSURLBookmarkAllPropertyKeysKey&lt;/code&gt; turns out to be a bit of a repeat, listing only the keys (but without values).&lt;/p&gt;
+
+&lt;p&gt;Want to guess what &lt;code&gt;NSURLBookmarkDetailedDescription&lt;/code&gt; does?&lt;/p&gt;
+
+&lt;p&gt;It &lt;span style=&quot;color:red&quot;&gt;knocked my socks off&lt;/span&gt;, that&amp;#39;s what it does.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=07_snip.txt&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;I&amp;#39;ve clipped bits out here, but it&amp;#39;s a &lt;strong&gt;programmer&amp;#39;s debug output&lt;/strong&gt; for the entire BookmarkData structure, giving all of the offset values within the data and breaking down &lt;em&gt;what&amp;#39;s actually contained in it&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Simply amazing. Everything I could have asked for.&lt;/p&gt;
+
+&lt;p&gt;The URL of the share itself shows up like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;11) itemType=0x2050 flags=0x0 dataOffset=0x148 volMountURL:&amp;quot;&amp;lt;CFURL 0x7fb2b1691d30 [0x7fff767fbed0]&amp;gt;{string = smb://username@192.168.0.1/shares, encoding = 134217984, base = (null)}&amp;quot;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;With the information this undocumented debug output provides, I was able to determine the entire structure of the BookmarkData format, which I&amp;#39;ll now document here 😄&lt;/p&gt;
+
+&lt;h2 id=&quot;the-bookmarkdata-structure&quot;&gt;The BookmarkData Structure&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2015-10-24-apples-bookmarkdata-exposed/BookmarkExample.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;Here we&amp;#39;ll go over this simple 260 byte version of a BookmarkData structure which contains only a single TOC with a single data record. The details I give here were collected after looking at quite a few samples.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;(Note: Unless specified otherwise, all integers are unsigned and little endian)&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;bookmarkdata-header&quot;&gt;BookmarkData Header&lt;/h3&gt;
+
+&lt;p&gt;&lt;em&gt;(all examples appeared to be 48 bytes in length)&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2015-10-24-apples-bookmarkdata-exposed/Structure_01_Header.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;■&lt;/span&gt; 4 byte string: &lt;strong&gt;BookmarkData signature&lt;/strong&gt; (can be &lt;code&gt;book&lt;/code&gt;, the new style, or &lt;code&gt;alis&lt;/code&gt;, the original alias record of Mac OS)&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:lightgreen&quot;&gt;■&lt;/span&gt; 32-bit integer: &lt;strong&gt;Total length of BookmarkData&lt;/strong&gt; structure (including header)&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:blue&quot;&gt;■&lt;/span&gt; 4 bytes: &lt;strong&gt;Version&lt;/strong&gt; &lt;em&gt;(might be a big endian int&lt;/em&gt;? &lt;code&gt;1040&lt;/code&gt;&lt;em&gt;)&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:yellow&quot;&gt;■&lt;/span&gt; 32-bit integer: &lt;strong&gt;Offset of BookmarkData data&lt;/strong&gt; payload from beginning of BookmarkData structure (always &lt;code&gt;48&lt;/code&gt; currently)&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:cyan&quot;&gt;■&lt;/span&gt; N-bytes: null / &lt;code&gt;0x00&lt;/code&gt; bytes used as &lt;strong&gt;filler&lt;/strong&gt; until the beginning of BookmarkData data payload&lt;/p&gt;
+
+&lt;h3 id=&quot;bookmarkdata-data&quot;&gt;BookmarkData Data&lt;/h3&gt;
+
+&lt;p&gt;The data portion is a combination of several things: TOC (table of contents) records, data records (of various kinds), and most importantly the pointer to the first TOC. The &amp;quot;Offset of BookmarkData data&amp;quot; value points to the beginning of this data structure.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2015-10-24-apples-bookmarkdata-exposed/Structure_02_Data.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:orange&quot;&gt;■&lt;/span&gt; 32-bit integer: &lt;strong&gt;Offset of first TOC&lt;/strong&gt;, measured from the start of the BookmarkData data payload (example: an offset of &lt;code&gt;100&lt;/code&gt; is actually &lt;code&gt;148&lt;/code&gt; bytes from the beginning. &lt;code&gt;48&lt;/code&gt; byte header + &lt;code&gt;100&lt;/code&gt; bytes from start of data payload)&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:lightgray&quot;&gt;■&lt;/span&gt; N-bytes: The remainder of the data section is composed of TOC records (which tell where to find the data records) and the data records themselves.&lt;/p&gt;
+
+&lt;h3 id=&quot;bookmarkdata-toc&quot;&gt;BookmarkData TOC&lt;/h3&gt;
+
+&lt;p&gt;BookmarkData has the concept of a &amp;quot;first TOC&amp;quot;, the one pointed to by the beginning of the BookmarkData data payload. Each TOC has information about a number of data records as well as information on the offset of the &amp;quot;next TOC&amp;quot;. If there is no next TOC, the offset for &amp;quot;next TOC&amp;quot; will be 0. Each TOC is comprised of a header and a data section.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2015-10-24-apples-bookmarkdata-exposed/Structure_03_TOC.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;toc-header&quot;&gt;TOC Header&lt;/h3&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;■&lt;/span&gt; 32-bit integer: &lt;strong&gt;Length of TOC data&lt;/strong&gt; segment after the header&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:lightgreen&quot;&gt;■&lt;/span&gt; 16-bit integer: &lt;strong&gt;Record type (TOC)&lt;/strong&gt; (&lt;code&gt;0xFEFF&lt;/code&gt; / &lt;code&gt;65279&lt;/code&gt;. Might be signed? In which case the value would be &lt;code&gt;-2&lt;/code&gt;)&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:blue&quot;&gt;■&lt;/span&gt; 16-bit integer: &lt;strong&gt;Flags&lt;/strong&gt; (unused for TOC, always set to &lt;code&gt;0xFFFF&lt;/code&gt;)&lt;/p&gt;
+
+&lt;h3 id=&quot;toc-data&quot;&gt;TOC Data&lt;/h3&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:yellow&quot;&gt;■&lt;/span&gt; 32-bit integer: &lt;strong&gt;Level&lt;/strong&gt; (for a server mount, the value seems to be &lt;code&gt;1&lt;/code&gt;)&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:cyan&quot;&gt;■&lt;/span&gt; 32-bit integer: &lt;strong&gt;Offset of next TOC&lt;/strong&gt; record, measured from beginning of BookmarkData data section&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:magenta&quot;&gt;■&lt;/span&gt; 32-bit integer: &lt;strong&gt;Number of records&lt;/strong&gt; in this TOC&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;[BEGIN: N number of TOC data records]&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;toc-data-record&quot;&gt;TOC Data Record&lt;/h3&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:orange&quot;&gt;■&lt;/span&gt; 16-bit integer: &lt;strong&gt;Record type&lt;/strong&gt; - varies (examples: &lt;code&gt;8272&lt;/code&gt;: &amp;quot;volMountURL&amp;quot;, &lt;code&gt;8208&lt;/code&gt;: &amp;quot;volName&amp;quot;)&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:salmon&quot;&gt;■&lt;/span&gt; 16-bit integer: &lt;strong&gt;Flags&lt;/strong&gt; (always seems to be &lt;code&gt;0x0000&lt;/code&gt;)&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:lightblue&quot;&gt;■&lt;/span&gt; 64-bit integer: &lt;strong&gt;Offset of record data&lt;/strong&gt;, measured from beginning of BookmarkData data portion&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;(Note: That may actually be a 32-bit integer, followed by 4 null bytes - I would be surprised to see 64-bit offsets here when TOC offsets are 32-bit)&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;[END TOC data records]&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;standard-data-record&quot;&gt;Standard Data Record&lt;/h3&gt;
+
+&lt;p&gt;These are the records pointed to by TOCs. They represent the bulk of the contents of BookmarkData and are where the real data is stored.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2015-10-24-apples-bookmarkdata-exposed/Structure_04_Records.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;■&lt;/span&gt; 32-bit integer: &lt;strong&gt;Length of data&lt;/strong&gt; payload, the actual data stored here&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:blue&quot;&gt;■&lt;/span&gt; 32-bit integer: &lt;strong&gt;Data type&lt;/strong&gt; - varies (examples: &lt;code&gt;2305&lt;/code&gt;: CFURL, &lt;code&gt;257&lt;/code&gt;: string)&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:lightgreen&quot;&gt;■&lt;/span&gt; N-bytes: &lt;strong&gt;Record data&lt;/strong&gt;, padded with &lt;code&gt;0x00&lt;/code&gt; on the end if necessary to reach a multiple of 4 bytes in length&lt;/p&gt;
+
+&lt;p&gt;(… wow, you made it this far? Yay! 🎉)&lt;/p&gt;
+
+&lt;p&gt;Some of you readers with a keen eye may have recognized the data coloring abilities of &lt;a href=&quot;http://www.synalysis.net&quot;&gt;Synalyze It!&lt;/a&gt; and maybe you&amp;#39;re secretly hoping I&amp;#39;ve written up a formal grammar for BookmarkData using it … sadly I have not 😞. I&amp;#39;m brand new to the software and unfortunately the interface is not very intuitive when it comes to interactively creating a new grammar. I haven&amp;#39;t decided yet whether I&amp;#39;m to blame or poor UI is.&lt;/p&gt;
+
+&lt;p&gt;… The &lt;em&gt;even sharper&lt;/em&gt; readers which have persisted this far may have noticed that the standard data record in my example doesn&amp;#39;t appear to be something you can easily extract a share URL from. There&amp;#39;s a reason for that!&lt;/p&gt;
+
+&lt;p&gt;I picked the older &lt;code&gt;alis&lt;/code&gt; BookmarkData structure as an example because of its size (260 bytes for this one). Your average &lt;code&gt;book&lt;/code&gt; modern style BookmarkData structure is well over a megabyte in size (!) because one of the records it contains is &lt;code&gt;icns&lt;/code&gt; icon information for how your share&amp;#39;s icon should look.&lt;/p&gt;
+
+&lt;p&gt;Unfortunately, the &lt;code&gt;alis&lt;/code&gt;-style is literally the thinnest of wrappers around what&amp;#39;s actually an original Mac OS (pre OS X) &lt;code&gt;alis&lt;/code&gt; resource fork fileshare record.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2015-10-24-apples-bookmarkdata-exposed/ResEdit.gif&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;The newer &lt;code&gt;book&lt;/code&gt; variant contains the record types (like &lt;code&gt;8272&lt;/code&gt; aka &amp;quot;volMountURL&amp;quot;) I mentioned earlier.&lt;/p&gt;
+
+&lt;p&gt;So - what to do?&lt;/p&gt;
+
+&lt;p&gt;Well. &lt;/p&gt;
+
+&lt;h2 id=&quot;back-to-where-we-started&quot;&gt;Back to Where We Started&lt;/h2&gt;
+
+&lt;p&gt;If you have records that are &lt;code&gt;book&lt;/code&gt; type, &lt;a href=&quot;https://gist.github.com/pudquick/4776b4b2075bf9b7e512&quot;&gt;I have posted quick and dirty code here&lt;/a&gt; that will give you the &amp;quot;volMountURL&amp;quot; information instantly for the &lt;code&gt;.sfl&lt;/code&gt; files that started this wild ride.&lt;/p&gt;
+
+&lt;p&gt;I&amp;#39;m working on more formal code for BookmarkData parsing as I write this. But now that the information is out there, maybe someone will beat me to the punch 😊&lt;/p&gt;
+
+&lt;p&gt;If you have &lt;code&gt;alis&lt;/code&gt;-style information, you can can attempt to use code like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;url,isStale,err = NSURL.URLByResolvingBookmarkData_options_relativeToURL_bookmarkDataIsStale_error_(bookmark_data, NSURLBookmarkResolutionWithoutMounting+NSURLBookmarkResolutionWithoutUI, None, None, None)&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;… But don&amp;#39;t be surprised if you get back results like this if the resource no longer exists:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=08_snip.py&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;But worry not, friend readers - I&amp;#39;ve &lt;em&gt;also&lt;/em&gt; completely decoded &lt;code&gt;alis&lt;/code&gt; records in python, &lt;a href=&quot;https://bitbucket.org/al45tair/mac_alias&quot;&gt;as have others&lt;/a&gt;!&lt;/p&gt;
+
+&lt;p&gt;And the AFPX mount records they can contain.&lt;/p&gt;
+
+&lt;p&gt;And even resource forks!&lt;/p&gt;
+
+&lt;p&gt;We&amp;#39;ll get to it in another blog post 😆&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;- mike&lt;/em&gt;&lt;/p&gt;
+</description>
+        <pubDate>Sat, 24 Oct 2015 09:00:00 -0700</pubDate>
+        <link>http://michaellynn.github.io/2015/10/24/apples-bookmarkdata-exposed/</link>
+        <guid isPermaLink="true">http://michaellynn.github.io/2015/10/24/apples-bookmarkdata-exposed/</guid>
+      </item>
+    
+      <item>
         <title>Even More Oracle Java Compatibility (Minecraft!)</title>
         <description>&lt;p&gt;&lt;a href=&quot;https://twitter.com/rtrouton&quot;&gt;Rich Trouton&lt;/a&gt; kindly wrote &lt;a href=&quot;https://derflounder.wordpress.com/2015/08/08/modifying-oracles-java-sdk-to-run-java-applications-on-os-x/&quot;&gt;a wonderful blog post&lt;/a&gt; covering &lt;a href=&quot;https://gist.github.com/pudquick/349f063c242239952a2e/64c295fc4576d7df9b8632e6ddecbe6165fd7663&quot;&gt;a python script of mine&lt;/a&gt; (&lt;em&gt;note: this is the old version, don&amp;#39;t use it!&lt;/em&gt;) which modifies installations of Oracle&amp;#39;s Java JDK to extend its capabilities to allow it to run JavaApplicationStub .app bundles as was &lt;a href=&quot;https://forums.developer.apple.com/message/6741&quot;&gt;discussed&lt;/a&gt; on Apple&amp;#39;s Developer forums (go ahead and read it, Apple has made the forum open to the public for now). &lt;/p&gt;
 

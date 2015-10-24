@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://michaellynn.github.io/2015/10/24/apples-bookmarkdata-exposed/</loc>
+    <lastmod>2015-10-24T09:00:00-07:00</lastmod>
+  </url>
+  <url>
     <loc>http://michaellynn.github.io/2015/08/10/even-more-oracle-java-compatibility/</loc>
     <lastmod>2015-08-10T18:15:00-07:00</lastmod>
   </url>
@@ -46,18 +50,18 @@
   </url>
   <url>
     <loc>http://michaellynn.github.io/tag/hello/index.html</loc>
-    <lastmod>2015-08-08T18:21:35-07:00</lastmod>
+    <lastmod>2015-10-24T09:35:41-07:00</lastmod>
   </url>
   <url>
     <loc>http://michaellynn.github.io/tag/hopper/index.html</loc>
-    <lastmod>2015-08-08T18:21:35-07:00</lastmod>
+    <lastmod>2015-10-24T09:35:41-07:00</lastmod>
   </url>
   <url>
     <loc>http://michaellynn.github.io/tag/osx/index.html</loc>
-    <lastmod>2015-08-08T18:21:35-07:00</lastmod>
+    <lastmod>2015-10-24T09:35:41-07:00</lastmod>
   </url>
   <url>
     <loc>http://michaellynn.github.io/tag/python/index.html</loc>
-    <lastmod>2015-08-08T18:21:35-07:00</lastmod>
+    <lastmod>2015-10-24T09:35:41-07:00</lastmod>
   </url>
 </urlset>
