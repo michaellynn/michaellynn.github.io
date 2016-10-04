@@ -12,7 +12,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for mikeymikey blogs here" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201510240936" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201610040741" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -110,7 +110,56 @@
 
 <p>As always, hope this helps you 😄</p>
 
-<script src="https://gist.github.com/pudquick/349f063c242239952a2e.js"> </script>
+<p><noscript><pre>#!/usr/bin/python
+import plistlib, os.path, os</p>
+
+<h1 id="based-off-of-https-forums-developer-apple-com-message-6741">Based off of <a href="https://forums.developer.apple.com/message/6741">https://forums.developer.apple.com/message/6741</a></h1>
+
+<h1 id="and-http-apple-stackexchange-com-a-136976">and <a href="http://apple.stackexchange.com/a/136976">http://apple.stackexchange.com/a/136976</a></h1>
+
+<p>def jdk_info_plists():
+    # Find all the JDK Info.plist files
+    JDK_ROOT = &quot;/Library/Java/JavaVirtualMachines&quot;
+    if (os.path.exists(JDK_ROOT) and os.path.isdir(JDK_ROOT)):
+        # It&#39;s present, let&#39;s look for installs
+        for file in os.listdir(JDK_ROOT):
+            jdk_dir = os.path.join(JDK_ROOT, file)
+            if (os.path.isdir(jdk_dir)):
+                # Check for Info.plist
+                info_plist = os.path.join(jdk_dir, &quot;Contents&quot;, &quot;Info.plist&quot;)
+                if (os.path.isfile(info_plist)):
+                    yield info_plist</p>
+
+<p>for info_plist in jdk_info_plists():
+    # Change all the plists of all the installed JDKs
+    info = plistlib.readPlist(info_plist)
+    # Convert the capabilities into a set
+    capabilities = set(info[&#39;JavaVM&#39;][&#39;JVMCapabilities&#39;])
+    capabilities.add(&#39;JNI&#39;)
+    capabilities.add(&#39;BundledApp&#39;)
+    # Update our changes
+    info[&#39;JavaVM&#39;][&#39;JVMCapabilities&#39;] = sorted(capabilities)
+    # Write back our changes
+    plistlib.writePlist(info, info_plist)
+    # Create a symlink to fix legacy applications
+    # Find the Contents directory
+    contents_path = os.path.dirname(info_plist)
+    # make the bundle/Libraries subpath
+    bundle_libraries = os.path.join(contents_path, &quot;Home&quot;, &quot;bundle&quot;, &quot;Libraries&quot;)
+    try:
+        # Just in case you run this script multiple times, we&#39;ll fail if the directory already exists
+        os.makedirs(os.path.join(bundle_libraries))
+    except:
+        pass
+    # create the symlink between libjvm.dylib and libserver.dylib
+    libjvm_dylib = os.path.join(contents_path, &quot;Home&quot;, &quot;jre&quot;, &quot;lib&quot;, &quot;server&quot;, &quot;libjvm.dylib&quot;)
+    libserver_dylib = os.path.join(bundle_libraries, &quot;libserver.dylib&quot;)
+    try:
+        # Just in case you run this script multiple times, we&#39;ll fail if the file already exists
+        os.symlink(libjvm_dylib, libserver_dylib)
+    except:
+        pass
+</pre></noscript><script src="https://gist.github.com/pudquick/349f063c242239952a2e.js"> </script></p>
 
 <p><em>- mike</em></p>
 

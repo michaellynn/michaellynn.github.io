@@ -7,7 +7,294 @@
     <atom:link href="http://michaellynn.github.io/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
-        <title>Apple&#39;s BookmarkData - exposed!</title>
+        <title>m(DM)acOS</title>
+        <description>&lt;p&gt;Howdy.&lt;/p&gt;
+
+&lt;p&gt;It&amp;#39;s been almost a year or so since my last blog post.&lt;/p&gt;
+
+&lt;p&gt;I&amp;#39;ve been kinda busy with my fun new job.&lt;/p&gt;
+
+&lt;p&gt;I&amp;#39;ll try to do more fun posts soon-ish (did you see this neat thing I did at the &lt;a href=&quot;http://macadmins.psu.edu&quot;&gt;PSU Macadmins&lt;/a&gt; hackathon called &lt;a href=&quot;https://github.com/pudquick/nibbler&quot;&gt;nibbler&lt;/a&gt;?)&lt;/p&gt;
+
+&lt;p&gt;But I wanted to take some time to write this out, since it&amp;#39;s been rattling in my head since WWDC: &lt;strong&gt;MDM is&lt;/strong&gt; &lt;em&gt;(probably)&lt;/em&gt; &lt;strong&gt;coming&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Maybe. I&amp;#39;m guessing. But I think all the clues are there.&lt;/p&gt;
+
+&lt;p&gt;If you didn&amp;#39;t pay much attention to the last WWDC Apple held, there was some &lt;em&gt;amazing&lt;/em&gt; information about the things to come.&lt;/p&gt;
+
+&lt;p&gt;The best part is that it&amp;#39;s &lt;strong&gt;ok to talk about it&lt;/strong&gt;, because they updated their Developer License agreement section &amp;quot;Information Deemed Apple Confidential&amp;quot; to include the following words:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Further, Apple agrees that You will not be bound by the foregoing confidentiality terms with regard to technical information about pre-release Apple Software and services disclosed by Apple at WWDC (Apple’s Worldwide Developers Conference), except that You may not post screen shots of, write public reviews of, or redistribute any pre-release Apple Software, Apple Services or hardware.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;What I will be discussing here is a theoretical connect-the-dots with only two main components: Technical details &lt;u&gt;that Apple has disclosed at WWDC&lt;/u&gt; and existing features in currently shipping Apple operating systems.&lt;/p&gt;
+
+&lt;p&gt;So what did Apple talk about at WWDC that was so amazing?&lt;/p&gt;
+
+&lt;h2 id=&quot;the-apple-file-system-apfs&quot;&gt;The Apple File System (APFS)&lt;/h2&gt;
+
+&lt;p&gt;&lt;br /&gt;
+Apple had &lt;a href=&quot;https://developer.apple.com/videos/play/wwdc2016/701/&quot;&gt;an entire session on it&lt;/a&gt; (which you can watch without a Developer ID).&lt;/p&gt;
+
+&lt;p&gt;At WWDC, they also made available &lt;a href=&quot;https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/APFS_Guide/Introduction/Introduction.html&quot;&gt;technical documentation on APFS&lt;/a&gt; (again, available without a Developer ID, even shows up in Google results).&lt;/p&gt;
+
+&lt;p&gt;The biggest bombshell in both of those products are these lines from the technical documents:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Apple File System is a new, modern file system for iOS, macOS, tvOS, and watchOS. […]&lt;/p&gt;
+
+&lt;p&gt;Apple plans to release Apple File System as a bootable file system in 2017.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;and these words from the video session:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;[34:36]&lt;/strong&gt; So to summarize, Apple File System will be &lt;strong&gt;the default file system for all Apple products [in] 2017&lt;/strong&gt;, it&amp;#39;s ultra-modern, it&amp;#39;s crash protected, it supports Space Sharing, we support cloning and snapshots.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This is Apple talking at WWDC about the next family of operating systems to be released after Sierra. Apple is stating that the new default filesystem will be APFS across &lt;em&gt;everything&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;At this point you may be asking: &lt;strong&gt;&lt;em&gt;How does that apply to MDM and why did you even make this blog post in the first place?&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Almost there, just need to set the stage a tad bit more 😄&lt;/p&gt;
+
+&lt;p&gt;Let&amp;#39;s take one other statement from the video session:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;[33:28]&lt;/strong&gt; Instead, Apple will provide an in-place upgrade path from HFS+ to Apple File System.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;For all the other devices besides Macs, they&amp;#39;re already running on a modified form of HFS+ with security features that you don&amp;#39;t see in macOS. APFS for these devices is basically a 2.0 filesystem of what they&amp;#39;re already doing, the next generation meant to replace and improve the existing situation. To me, this last quote feels like they&amp;#39;re saying: &lt;em&gt;&amp;quot;While we&amp;#39;re upgrading everything, we&amp;#39;re going to be bringing the Macs in line with everything else.&amp;quot;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;… So what do the OSes running on these filesystems on iOS/tvOS/watchOS look like right now?&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;You can&amp;#39;t use open source tools or third-party tools to install them&lt;/li&gt;
+&lt;li&gt;The OS is cryptographically signed&lt;/li&gt;
+&lt;li&gt;The OS is effectively separate from user content&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Apple &lt;a href=&quot;https://www.apple.com/business/docs/iOS_Security_Guide.pdf&quot;&gt;touts these as security features&lt;/a&gt; - and I agree 100% they are and I love them.&lt;/p&gt;
+
+&lt;p&gt;Apple has been on a direct path towards increased user privacy and OS security (see their &lt;a href=&quot;https://www.youtube.com/watch?v=BLGFriOKz6U&quot;&gt;BlackHat talk&lt;/a&gt;, watch for the &amp;quot;Physical One-Way Hash Function&amp;quot;) and I appreciate their efforts.&lt;/p&gt;
+
+&lt;p&gt;But they don&amp;#39;t have it on macOS.&lt;/p&gt;
+
+&lt;p&gt;So why wouldn&amp;#39;t they try to bring it over?&lt;/p&gt;
+
+&lt;p&gt;… I&amp;#39;m pretty sure they&amp;#39;re going to. Very very soon.&lt;/p&gt;
+
+&lt;p&gt;In fact, here&amp;#39;s Apple&amp;#39;s own words on it, from their session video:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;[23:44]&lt;/strong&gt; In addition, this allows us to unify our encryption story across all of our platforms.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Already, with Sierra, Apple has given a considerable number of indicators that their OS and OS update delivery mechanism is changing:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Sierra now downloads from the App Store even without being signed in&lt;/li&gt;
+&lt;li&gt;It no longer shows up in your Apple ID&amp;#39;s purchase history, even if signed in&lt;/li&gt;
+&lt;li&gt;It will &lt;a href=&quot;http://www.loopinsight.com/2016/10/03/apple-to-make-macos-sierra-available-as-automatic-download-beginning-today/&quot;&gt;automatically download to your machine&lt;/a&gt; if you have &amp;quot;download newly available updates&amp;quot; enabled&lt;/li&gt;
+&lt;li&gt;The Software Update Service is deprecated (see the bottom of &lt;a href=&quot;https://support.apple.com/en-us/HT206871&quot;&gt;this article&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Again I hear you asking: &lt;strong&gt;&lt;em&gt;What does this all have to do with MDM?&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Apple looks to be rapidly shifting how OS delivery works on macOS.&lt;/p&gt;
+
+&lt;p&gt;What if they&amp;#39;re changing OS installation to &amp;quot;unify our OS story&amp;quot;?&lt;/p&gt;
+
+&lt;p&gt;What would you do if the entire OS that is macOS - if &lt;em&gt;all&lt;/em&gt; of it was protected, like it is on iOS/tvOS/watchOS?&lt;/p&gt;
+
+&lt;p&gt;I don&amp;#39;t just mean &lt;code&gt;/System&lt;/code&gt; and the things that SIP protects now.&lt;/p&gt;
+
+&lt;p&gt;I mean &lt;em&gt;everything&lt;/em&gt; that the &amp;quot;Install macOS Sierra.app&amp;quot; installs on your machine now.&lt;/p&gt;
+
+&lt;p&gt;We&amp;#39;re talking &lt;code&gt;/etc&lt;/code&gt;, &lt;code&gt;/var&lt;/code&gt;, portions of &lt;code&gt;/Library&lt;/code&gt;, etc. in addition to everything SIP already protects in Sierra now.&lt;/p&gt;
+
+&lt;p&gt;Are you an administrator of Macs like I am?&lt;/p&gt;
+
+&lt;p&gt;What if you couldn&amp;#39;t change &lt;code&gt;ntp.conf&lt;/code&gt;?&lt;/p&gt;
+
+&lt;p&gt;Or &lt;code&gt;ssh_config&lt;/code&gt;?&lt;/p&gt;
+
+&lt;p&gt;Or mess with the default User Template? &lt;em&gt;(I can&amp;#39;t stand it if you do this, but it &lt;strong&gt;is&lt;/strong&gt; supported by Apple right now)&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;What if &lt;em&gt;everything&lt;/em&gt; that is macOS was locked away?&lt;/p&gt;
+
+&lt;p&gt;How would you manage it?
+&lt;br /&gt;
+&lt;br /&gt;
+&lt;br /&gt;
+&lt;strong&gt;Question:&lt;/strong&gt; How does Apple offer the ability to do that now with iOS and tvOS?&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Answer:&lt;/strong&gt; Profiles!
+&lt;br /&gt;
+&lt;br /&gt;
+&lt;br /&gt;
+&lt;strong&gt;Question:&lt;/strong&gt; How do you get those on your iOS devices in an automated fashion?&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Answer:&lt;/strong&gt; MDM! (or Configurator, in some cases)
+&lt;br /&gt;
+&lt;br /&gt;
+&lt;br /&gt;
+If APFS is the gateway that makes macOS immutable, the road to it is being paved in whatever OS comes after Sierra, where it will be landing as the default filesystem (if they keep to their goals).&lt;/p&gt;
+
+&lt;p&gt;That is &lt;em&gt;extremely&lt;/em&gt; fast movement on Apple&amp;#39;s part:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Public testing of a &lt;em&gt;brand new&lt;/em&gt; filesystem APFS in Sierra&lt;/li&gt;
+&lt;li&gt;APFS now default filesystem in Sierra+1, with conversion of existing HFS+ filesystems to APFS&lt;/li&gt;
+&lt;li&gt;... road paved for locked down OS delivery by Sierra+2 ? (Maybe +3 at the latest?)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;And with the goal of a unified filesystem making the goal of a unified OS protection scheme within tantalizing reach - I wouldn&amp;#39;t be surprised to see Apple take from their existing playbook and attempt to unify their OS management model as well, offering profiles as &amp;quot;the solution&amp;quot; for everything OS management related on macOS.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-39-s-the-impact-of-a-change-like-this&quot;&gt;What&amp;#39;s the impact of a change like this?&lt;/h2&gt;
+
+&lt;p&gt;For the average computer user with .apps installed, web browsing, etc. they honestly might not notice a thing.&lt;/p&gt;
+
+&lt;p&gt;… But for a Mac administrator in a large organization?&lt;/p&gt;
+
+&lt;p&gt;What good is a root-running LaunchDaemon or client agent when everything that came with the OS is immutable?&lt;/p&gt;
+
+&lt;p&gt;What does root even mean anymore in that situation?&lt;/p&gt;
+
+&lt;p&gt;Are you running chef? puppet? munki? Casper?&lt;/p&gt;
+
+&lt;p&gt;Are your management tools performing security-oriented or legally-required customizations to your systems with custom scripts/logic you designed?&lt;/p&gt;
+
+&lt;p&gt;What if they couldn&amp;#39;t?&lt;/p&gt;
+
+&lt;p&gt;When all that&amp;#39;s left is userspace, will local administrators even need to exist? Do you have admin rights on your iOS devices right now?&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;This is part of why I &lt;a href=&quot;https://twitter.com/mikeymikey/status/781621965920489472&quot;&gt;tweeted&lt;/a&gt;&lt;/strong&gt;, asking my fellow Mac administrator followers what they&amp;#39;re doing right now that they can&amp;#39;t do with a profile at the moment on macOS.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;If everything you&amp;#39;re managing right now&lt;/em&gt; isn&amp;#39;t filed in a radar to Apple asking for an officially approved mechanism to manage this aspect of their OS, how will Apple know to give you a handle on wrangling these settings when they change the security model of macOS to &amp;quot;unify their OS story&amp;quot;?&lt;/p&gt;
+
+&lt;p&gt;I got a lot of responses. I&amp;#39;ll be writing them up and filing them as radars. I hope you do the same.&lt;/p&gt;
+
+&lt;h2 id=&quot;there-39-s-more-though&quot;&gt;There&amp;#39;s more, though&lt;/h2&gt;
+
+&lt;p&gt;For a Mac administrator, the impact of such a change as this would be much more than just settings management.&lt;/p&gt;
+
+&lt;p&gt;Do you &amp;quot;golden master&amp;quot; / block level restore your iOS devices with tools like AutoDMG, Imagr, DeployStudio, or Casper Imaging?&lt;/p&gt;
+
+&lt;p&gt;Or do you use Apple Configurator because that&amp;#39;s the only choice that&amp;#39;s available?&lt;/p&gt;
+
+&lt;p&gt;If Apple is going to &amp;quot;unify [their] encryption story&amp;quot; on macOS, do you think any of the tools you have now will be able to install this new style of OS deployment?&lt;/p&gt;
+
+&lt;p&gt;Do you NetBoot image iPhones and iPads?&lt;/p&gt;
+
+&lt;p&gt;… &lt;em&gt;I know, I know,&lt;/em&gt; I&amp;#39;m reallllly stretching the comparisons &lt;em&gt;quite a bit&lt;/em&gt; here - the technological history of these families of devices were vastly different and resulted in different technology management chains and solutions …&lt;/p&gt;
+
+&lt;p&gt;… But Apple is in a unifying phase now, and the dates they promise seem like they&amp;#39;re &lt;strong&gt;accelerating it&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;If they&amp;#39;re willing to kill off a very mature filesystem like HFS+, why wouldn&amp;#39;t they be willing to kill off NetBoot (FYI: introduced a year &lt;em&gt;after&lt;/em&gt; HFS+)?&lt;/p&gt;
+
+&lt;p&gt;The story I paint here is quite possibly the death of most management and imaging workflows in enterprise existence today for macOS (or, at best, the ignition for the firey phoenix-like rebirth of the existing tools we have today).&lt;/p&gt;
+
+&lt;p&gt;For some, this will feel like a bleak story.&lt;/p&gt;
+
+&lt;p&gt;Or even a scary one.&lt;/p&gt;
+
+&lt;p&gt;In the name of security.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;I personally think it&amp;#39;s a worthy goal.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;But there will be &lt;em&gt;a lot of blood, sweat, and toil&lt;/em&gt; for the administrators trying to get their environments compatible should this new future come to be.&lt;/p&gt;
+
+&lt;p&gt;And if this is the future, Apple &lt;em&gt;really really really&lt;/em&gt; needs to engage more organizations directly and plainly about this future. We would need their help in making this a successful transition as much as Apple would need our help keeping our organizations from being so overwhelmed they&amp;#39;d consider moving to Linux or Windows to avoid the pain of such a major revamp.&lt;/p&gt;
+
+&lt;p&gt;We all have undocumented internal changes in the name of security.&lt;/p&gt;
+
+&lt;p&gt;Workarounds for &lt;em&gt;bad bad bad&lt;/em&gt; experiences (automated GarageBand and Xcode installs with all the components, anyone? I mean &lt;strong&gt;come on&lt;/strong&gt;, this isn&amp;#39;t even third-party software !!)&lt;/p&gt;
+
+&lt;p&gt;Script after script after script (reordering wifi networks? trying to get certs working with third-party VPN clients?)&lt;/p&gt;
+
+&lt;p&gt;… But if Apple doesn&amp;#39;t know about them and hasn&amp;#39;t heard about them from us, they might assume that they&amp;#39;ve provided us (the administrative community) with 95%+ of the tools that we need. Instead of the closer to 15-25% (or less) reality you feel you&amp;#39;re successfully &amp;quot;mitigating&amp;quot; with internal solutions.&lt;/p&gt;
+
+&lt;h2 id=&quot;and-what-about-reliability&quot;&gt;And what about reliability?&lt;/h2&gt;
+
+&lt;p&gt;What if Apple followed the model they have in iOS right now and the advanced &amp;quot;enterprise&amp;quot; management profiles required DEP / supervision?&lt;/p&gt;
+
+&lt;p&gt;There are &lt;em&gt;lots&lt;/em&gt; of those settings on iOS. I wouldn&amp;#39;t be surprised to see more of them appear on macOS.&lt;/p&gt;
+
+&lt;p&gt;What if DEP was critical to the management settings you needed - and …&lt;/p&gt;
+
+&lt;p&gt;… &lt;strong&gt;DEP&lt;/strong&gt; …&lt;/p&gt;
+
+&lt;p&gt;… &lt;strong&gt;went&lt;/strong&gt; …&lt;/p&gt;
+
+&lt;p&gt;… &lt;strong&gt;down?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;It&amp;#39;s happened already.&lt;/p&gt;
+
+&lt;p&gt;Now spinning up new devices for your organization is &lt;strong&gt;stopped&lt;/strong&gt; because DEP has an outage - and there&amp;#39;s &lt;em&gt;literally nothing you can do but wait&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Literally no amount of money your organization can spend on engineers to reduce the time of this problem to an equivalent-to-zero value.&lt;/p&gt;
+
+&lt;p&gt;Is DEP as a purchasing and/or network service even available in all the markets where your organization currently purchases devices? Do you know?&lt;/p&gt;
+
+&lt;h2 id=&quot;or-how-about-apns&quot;&gt;Or how about APNS?&lt;/h2&gt;
+
+&lt;p&gt;MDM uses APNS to push a trigger to clients to check in sooner for updated management instructions.&lt;/p&gt;
+
+&lt;p&gt;What if APNS fails? Your clients would still check in ... eventually ... sometime ... maybe in 6 hours-ish? Is that fast enough? Is that level of configuration responsiveness compatible with your enterprise environment?&lt;/p&gt;
+
+&lt;h2 id=&quot;how-about-cost&quot;&gt;How about cost?&lt;/h2&gt;
+
+&lt;p&gt;Right now I know of a grand total of 2 open source MDM projects that specifically target macOS. And they are brand new - the oldest is a year old. And being brand new, they are raw tools for people who know what they&amp;#39;re doing and to experiment on. You would be hard-pressed to enroll your organization of 500+ devices into them today and expect to be able to manage all the things you want (even if all the profiles you needed magically already existed).&lt;/p&gt;
+
+&lt;p&gt;This means you&amp;#39;re almost mandatorily looking at a pay-for MDM vendor solution when you may not currently have one (common when your organization relies on open source tools).&lt;/p&gt;
+
+&lt;p&gt;This is a cost your organization hasn&amp;#39;t currently budgeted for your Macs. And it&amp;#39;s also a product that any engineers you had working on your open source tools won&amp;#39;t necessarily be able to have as much of an instant impact on, as the MDM solution will be closed source and you&amp;#39;ll be restricted in what you can do by the product&amp;#39;s API.&lt;/p&gt;
+
+&lt;p&gt;Would your engineers even be able to work on open source MDM?&lt;/p&gt;
+
+&lt;p&gt;Apple has &lt;a href=&quot;https://developer.apple.com/library/content/documentation/Miscellaneous/Reference/MobileDeviceManagementProtocolRef/3-MDM_Protocol/MDM_Protocol.html&quot;&gt;some of the MDM specs published&lt;/a&gt; but this isn&amp;#39;t all of the documentation they have. Some of the documentation is gated behind their MDM Vendor program, which is only available to Apple Enterprise customers. Additionally, an open source MDM would need an Apple signed MDM cert to function correctly, also available through members of the MDM Vendor program. Apple hasn&amp;#39;t made it easy for open source MDM to exist, let alone functionally run.&lt;/p&gt;
+
+&lt;p&gt;Are you a school? Do you even have engineers? Do you even have a budget for something like this? Or at all?&lt;/p&gt;
+
+&lt;h2 id=&quot;how-likely-is-this&quot;&gt;How likely is this?&lt;/h2&gt;
+
+&lt;p&gt;Did you see that &lt;a href=&quot;https://www.bushel.com/rename&quot;&gt;JAMF just renamed their MDM solution Bushel&lt;/a&gt; to &amp;quot;JAMF Now&amp;quot;?&lt;/p&gt;
+
+&lt;p&gt;… Does that make Casper &amp;quot;JAMF Then&amp;quot;?&lt;/p&gt;
+
+&lt;p&gt;Maybe ask someone at Apple.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-could-one-do-to-prepare&quot;&gt;What could one do to prepare?&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Inventory your existing management settings&lt;/li&gt;
+&lt;li&gt;Attempt to find configuration profile solutions for all of them&lt;/li&gt;
+&lt;li&gt;If they don&amp;#39;t exist, file radars with Apple listing the following things:
+
+&lt;ul&gt;
+&lt;li&gt;Identify the setting and configuration options you need&lt;/li&gt;
+&lt;li&gt;Explain why the setting is important&lt;/li&gt;
+&lt;li&gt;Explain the impact of being unable to change this setting&lt;/li&gt;
+&lt;li&gt;Explain whether alternative methods exist currently to change it&lt;/li&gt;
+&lt;li&gt;Explicitly identify the number of impacted Macs / possible sales this could impact&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;If your organization has an Apple business contact, you should talk to them about the feasibility of managing your organization&amp;#39;s Macs with MDM&lt;/li&gt;
+&lt;li&gt;If you do business in countries other than the US, you should check with Apple on the availability of DEP-enrolled Mac purchasing and service globally&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Don&amp;#39;t boo, &lt;a href=&quot;https://bugreport.apple.com/&quot;&gt;radar&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;- mike&lt;/em&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 04 Oct 2016 01:00:00 -0700</pubDate>
+        <link>http://michaellynn.github.io/2016/10/04/mDMacOS/</link>
+        <guid isPermaLink="true">http://michaellynn.github.io/2016/10/04/mDMacOS/</guid>
+      </item>
+    
+      <item>
+        <title>Apple's BookmarkData - exposed!</title>
         <description>&lt;p&gt;&lt;em&gt;(And we&amp;#39;ll cover &lt;code&gt;.sfl&lt;/code&gt; files while we&amp;#39;re at it!)&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;A good friend of mine, &lt;a href=&quot;https://twitter.com/Sacrilicious&quot;&gt;Allister&lt;/a&gt;, had an interesting question on the &lt;a href=&quot;http://macadmins.org/&quot;&gt;MacAdmins Slack&lt;/a&gt;:&lt;/p&gt;
@@ -24,7 +311,20 @@
 
 &lt;p&gt;That is - it didn&amp;#39;t take a lot of effort to extract the &lt;strong&gt;initial&lt;/strong&gt; layer of contents.&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=01_snip.py&quot;&gt; &lt;/script&gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;{
+    items =     (
+        &amp;quot;&amp;lt;SFLListItem: 0x7faf19dac350&amp;gt;&amp;quot;,
+        &amp;quot;&amp;lt;SFLListItem: 0x7faf19cc5430&amp;gt;&amp;quot;,
+        &amp;quot;&amp;lt;SFLListItem: 0x7faf19cca510&amp;gt;&amp;quot;,
+        &amp;quot;&amp;lt;SFLListItem: 0x7faf19dac5a0&amp;gt;&amp;quot;,
+        &amp;quot;&amp;lt;SFLListItem: 0x7faf19da92e0&amp;gt;&amp;quot;
+    );
+    properties =     {
+        &amp;quot;com.apple.LSSharedFileList.MaxAmount&amp;quot; = 10;
+    };
+    version = 1;
+}
+&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=01_snip.py&quot;&gt; &lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;At its heart, it&amp;#39;s a dictionary with 3 keys, the most interesting key being &lt;code&gt;items&lt;/code&gt;.&lt;/p&gt;
 
@@ -42,7 +342,12 @@
 
 &lt;p&gt;Unfortunately, if you want to just get the share URL that was used to create the BookmarkData in the first place, the only API call Apple offers is &lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSURL_Class/#//apple_ref/occ/clm/NSURL/URLByResolvingBookmarkData:options:relativeToURL:bookmarkDataIsStale:error:&quot;&gt;this rather unsavory one&lt;/a&gt;:&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=02_snip.m&quot;&gt; &lt;/script&gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;NSURL
++(instancetype)URLByResolvingBookmarkData:(NSData *)bookmarkData&lt;br&gt;
+                                  options:(NSURLBookmarkResolutionOptions)options&lt;br&gt;
+                            relativeToURL:(NSURL *)relativeURL&lt;br&gt;
+                      bookmarkDataIsStale:(BOOL *)isStale&lt;br&gt;
+                                    error:(NSError * &lt;em&gt;Nullable *)error&lt;/pre&gt;&lt;/noscript&gt;&amp;lt;script src=&amp;quot;&lt;a href=&quot;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=02&quot;&gt;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=02&lt;/a&gt;&lt;/em&gt;snip.m&amp;quot;&amp;gt; &lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;I say &amp;quot;unsavory&amp;quot; because of the implementation details:&lt;/p&gt;
 
@@ -74,15 +379,33 @@
 
 &lt;p&gt;According to Apple&amp;#39;s documentation, NSURL is part of Foundation and sure enough we can find the &lt;code&gt;NSURL.h&lt;/code&gt; header file within &lt;code&gt;Foundation.framework&lt;/code&gt;. Let&amp;#39;s see what Hopper tells us &lt;code&gt;URLByResolvingBookmarkData&lt;/code&gt; is doing:&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=03_snip.m&quot;&gt; &lt;/script&gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;void * +&lt;a href=&quot;void%20*%20self,%20void%20*%20_cmd,%20void%20*%20arg_8,%20unsigned%20int%20arg_C,%20void%20*%20arg_10,%20char%20*%20arg_14,%20void%20*%20*%20arg_18&quot;&gt;NSURL(NSURL) URLByResolvingBookmarkData:options:relativeToURL:bookmarkDataIsStale:error:&lt;/a&gt; {
+    eax = [self allocWithZone:0x0];
+    eax = [eax initByResolvingBookmarkData:arg_8 options:arg_C relativeToURL:arg_10 bookmarkDataIsStale:arg_14 error:arg_18];
+    eax = [eax autorelease];
+    return eax;
+}
+&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=03_snip.m&quot;&gt; &lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;A quick inspection shows this to be a wrapper around &lt;code&gt;initByResolvingBookmarkData&lt;/code&gt;, on with the hunt!&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=04_snip.c&quot;&gt; &lt;/script&gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;edi = CFURLCreateByResolvingBookmarkData(*&lt;em&gt;kCFAllocatorDefault, arg_8, arg_C, edi, 0x0, arg_14, arg_18);
+&lt;/pre&gt;&lt;/noscript&gt;&amp;lt;script src=&amp;quot;&lt;a href=&quot;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=04&quot;&gt;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=04&lt;/a&gt;&lt;/em&gt;snip.c&amp;quot;&amp;gt; &lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;That CF looks like we&amp;#39;re skipping on over to &lt;code&gt;CoreFoundation.framework&lt;/code&gt;.&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=05_snip.c&quot;&gt; &lt;/script&gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;int &lt;em&gt;CFURLCreateByResolvingBookmarkData(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {&lt;br&gt;
+    r9 = arg5;&lt;br&gt;
+    r15 = arg4;&lt;br&gt;
+    r12 = arg3;&lt;br&gt;
+    r13 = arg2;&lt;br&gt;
+    rbx = arg1;&lt;br&gt;
+    r14 = arg0;&lt;br&gt;
+    rax = *&lt;/em&gt;&lt;strong&gt;CFCoreServicesInternal&lt;/strong&gt;CFURLCreateByResolvingBookmarkData.dyfunc;&lt;br&gt;
+    if (rax == 0xff) {&lt;br&gt;
+            rax = &lt;strong&gt;_CFLookupCoreServicesInternalFunction(&amp;quot;_CFURLCreateByResolvingBookmarkData&amp;quot;);&lt;br&gt;
+            *&lt;/strong&gt;&lt;em&gt;CFCoreServicesInternal&lt;/em&gt;&lt;em&gt;CFURLCreateByResolvingBookmarkData.dyfunc = rax;&lt;br&gt;
+    }&lt;/pre&gt;&lt;/noscript&gt;&amp;lt;script src=&amp;quot;&lt;a href=&quot;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=05&quot;&gt;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=05&lt;/a&gt;&lt;/em&gt;snip.c&amp;quot;&amp;gt; &lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Ruh roh!&lt;/strong&gt;&lt;/p&gt;
 
@@ -122,7 +445,47 @@
 
 &lt;p&gt;&lt;small&gt;&lt;em&gt;(*insert magical handwaving, skipping over the boring part to get to the amazing part*)&lt;/em&gt;&lt;/small&gt;&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=06_snip.py&quot;&gt; &lt;/script&gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;&amp;gt;&amp;gt;&amp;gt; NSURL.resourceValuesForKeys_fromBookmarkData_([&amp;#39;NSURLBookmarkAllPropertiesKey&amp;#39;], some_bookmark_data)&lt;/p&gt;
+
+&lt;p&gt;{
+    NSURLBookmarkAllPropertiesKey =     {
+        NSURLBookmarkOriginalRelativePathComponentsArrayKey =         (
+            Volumes,
+            &amp;quot;shares-1&amp;quot;
+        );
+        NSURLBookmarkOriginalRelativePathKey = &amp;quot;&amp;quot;;
+        NSURLBookmarkOriginalVolumeNameKey = &amp;quot;shares-1&amp;quot;;
+        NSURLCreationDateKey = &amp;quot;2014-04-07 14:41:38 +0000&amp;quot;;
+        NSURLIsDirectoryKey = 1;
+        NSURLIsPackageKey = 0;
+        NSURLIsRegularFileKey = 0;
+        NSURLIsSymbolicLinkKey = 0;
+        NSURLIsVolumeKey = 1;
+        NSURLLocalizedNameKey = shares;
+        NSURLNameKey = &amp;quot;shares-1&amp;quot;;
+        NSURLVolumeCreationDateKey = &amp;quot;2014-04-07 14:41:38 +0000&amp;quot;;
+        NSURLVolumeIsAutomountedKey = 0;
+        NSURLVolumeIsBrowsableKey = 1;
+        NSURLVolumeIsEjectableKey = 0;
+        NSURLVolumeIsInternalKey = 0;
+        NSURLVolumeIsLocalKey = 0;
+        NSURLVolumeIsReadOnlyKey = 0;
+        NSURLVolumeIsRemovableKey = 0;
+        NSURLVolumeNameKey = &amp;quot;shares-1&amp;quot;;
+        NSURLVolumeSupportsPersistentIDsKey = 1;
+        NSURLVolumeTotalCapacityKey = 249199591424;
+        NSURLVolumeURLKey = &amp;quot;file:///Volumes/shares-1/&amp;quot;;
+        &amp;quot;&lt;em&gt;NSURLBookmarkSecurityScopeCryptoKeyKey&amp;quot; = &amp;lt;00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000&amp;gt;;
+        &amp;quot;_NSURLFileIDKey&amp;quot; = 2;
+        &amp;quot;_NSURLPathKey&amp;quot; = &amp;quot;/Volumes/shares-1&amp;quot;;
+        &amp;quot;_NSURLTypeBindingKey&amp;quot; = &amp;lt;646e6962 00000000 09000000 00000000 00000000 00000000 00000000 72767273 00000000 00000000 00000000 00000000&amp;gt;;
+        &amp;quot;&lt;/em&gt;NSURLVolumeDontBrowseKey&amp;quot; = 0;
+        &amp;quot;&lt;em&gt;NSURLVolumeIsDiskImageKey&amp;quot; = 0;
+        &amp;quot;_NSURLVolumeIsExternalKey&amp;quot; = 0;
+        &amp;quot;_NSURLVolumeIsiPodKey&amp;quot; = 0;
+    };
+}
+&lt;/pre&gt;&lt;/noscript&gt;&amp;lt;script src=&amp;quot;&lt;a href=&quot;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=06&quot;&gt;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=06&lt;/a&gt;&lt;/em&gt;snip.py&amp;quot;&amp;gt; &lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;Good god. It worked. It&amp;#39;s &lt;em&gt;all&lt;/em&gt; there.&lt;/p&gt;
 
@@ -136,7 +499,30 @@
 
 &lt;p&gt;It &lt;span style=&quot;color:red&quot;&gt;knocked my socks off&lt;/span&gt;, that&amp;#39;s what it does.&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=07_snip.txt&quot;&gt; &lt;/script&gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;Bookmark: dataRef=0x106672000 len=1229264
+  signature = 0x6b6f6f62
+  length = 0x12c1d0
+  version = 0x10040000
+  bookmarkDataSectionOffset = 0x30
+  bookmarkDataSectionFirstTOCOffset = 0x12c0b4
+ 0x00000:626f6f6b d0c11200 00000410 30000000   | book .... .... 0...&lt;br&gt;
+ 0x00010:00000000 00000000 00000000 00000000   | .... .... .... ....&lt;br&gt;
+ 0x00020:00000000 00000000 00000000 00000000   | .... .... .... ....&lt;br&gt;
+ 0x00030:b4c01200 04000000 03030000 00040000   | .... .... .... ....&lt;br&gt;
+ 0x00040:07000000 01010000 566f6c75 6d657300   | .... .... Volu mes.&lt;br&gt;
+ 0x00050:08000000 01010000 73686172 65732d31   | .... .... shar es-1&lt;br&gt;
+[... snipped ...]
+ scopeCrytoKey = &amp;lt;CFData 0x7fb2b1690ba0 [0x7fff767fbed0]&amp;gt;{length = 32, capacity = 32, bytes = 0x00000000000000000000000000000000 ... 0000000000000000}
+ toc @ offset:0x12c0e4 ( 0x0x10679e0e4 ) level=1 count=18 next=0x476
+   0) itemType=0x1004 flags=0x0 dataOffset=0x60 pathComponents:[ &amp;quot;Volumes&amp;quot;, &amp;quot;shares-1&amp;quot;]&lt;br&gt;
+   1) itemType=0x1005 flags=0x0 dataOffset=0x90 fileIDs:[  13686/0x3576 ,  2/0x2 ]&lt;br&gt;
+   2) itemType=0x1010 flags=0x0 dataOffset=0xb0 resourceProps:Props:[!file** dir** !sym** vol** !pkg** !app** ] 
+   3) itemType=0x1040 flags=0x0 dataOffset=0xa0 creationDate: 2014/04/07 14:41:38.0000&lt;br&gt;
+   4) itemType=0x2000 flags=0x0 dataOffset=0x298 volInfoDepths:[  61440/0xf000 ,  0/0x0 ,  1/0x1 ]&lt;br&gt;
+   5) itemType=0x2002 flags=0x0 dataOffset=0x12c volPath:&amp;quot;/Volumes/shares-1&amp;quot; 
+   6) itemType=0x2005 flags=0x0 dataOffset=0xd8 volURL:&amp;quot;&amp;lt;CFURL 0x7fb2b1670e40 [0x7fff767fbed0]&amp;gt;{string = file:///Volumes/shares-1/, encoding = 134217984, base = (null)}&amp;quot; 
+[... snipped ...]
+&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=07_snip.txt&quot;&gt; &lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;I&amp;#39;ve clipped bits out here, but it&amp;#39;s a &lt;strong&gt;programmer&amp;#39;s debug output&lt;/strong&gt; for the entire BookmarkData structure, giving all of the offset values within the data and breaking down &lt;em&gt;what&amp;#39;s actually contained in it&lt;/em&gt;.&lt;/p&gt;
 
@@ -260,7 +646,13 @@
 
 &lt;p&gt;… But don&amp;#39;t be surprised if you get back results like this if the resource no longer exists:&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=08_snip.py&quot;&gt; &lt;/script&gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;&amp;gt;&amp;gt;&amp;gt; url is None
+True
+&amp;gt;&amp;gt;&amp;gt; isStale
+False
+&amp;gt;&amp;gt;&amp;gt; print err.&lt;strong&gt;repr&lt;/strong&gt;()
+Error Domain=NSOSStatusErrorDomain Code=-43 &amp;quot;The operation couldn’t be completed. (OSStatus error -43.)&amp;quot; (fnfErr: File not found)
+&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=08_snip.py&quot;&gt; &lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;But worry not, friend readers - I&amp;#39;ve &lt;em&gt;also&lt;/em&gt; completely decoded &lt;code&gt;alis&lt;/code&gt; records in python, &lt;a href=&quot;https://bitbucket.org/al45tair/mac_alias&quot;&gt;as have others&lt;/a&gt;!&lt;/p&gt;
 
@@ -299,7 +691,56 @@
 
 &lt;p&gt;As always, hope this helps you 😄&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/349f063c242239952a2e.js&quot;&gt; &lt;/script&gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;#!/usr/bin/python
+import plistlib, os.path, os&lt;/p&gt;
+
+&lt;h1 id=&quot;based-off-of-https-forums-developer-apple-com-message-6741&quot;&gt;Based off of &lt;a href=&quot;https://forums.developer.apple.com/message/6741&quot;&gt;https://forums.developer.apple.com/message/6741&lt;/a&gt;&lt;/h1&gt;
+
+&lt;h1 id=&quot;and-http-apple-stackexchange-com-a-136976&quot;&gt;and &lt;a href=&quot;http://apple.stackexchange.com/a/136976&quot;&gt;http://apple.stackexchange.com/a/136976&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;def jdk_info_plists():
+    # Find all the JDK Info.plist files
+    JDK_ROOT = &amp;quot;/Library/Java/JavaVirtualMachines&amp;quot;
+    if (os.path.exists(JDK_ROOT) and os.path.isdir(JDK_ROOT)):
+        # It&amp;#39;s present, let&amp;#39;s look for installs
+        for file in os.listdir(JDK_ROOT):
+            jdk_dir = os.path.join(JDK_ROOT, file)
+            if (os.path.isdir(jdk_dir)):
+                # Check for Info.plist
+                info_plist = os.path.join(jdk_dir, &amp;quot;Contents&amp;quot;, &amp;quot;Info.plist&amp;quot;)
+                if (os.path.isfile(info_plist)):
+                    yield info_plist&lt;/p&gt;
+
+&lt;p&gt;for info_plist in jdk_info_plists():
+    # Change all the plists of all the installed JDKs
+    info = plistlib.readPlist(info_plist)
+    # Convert the capabilities into a set
+    capabilities = set(info[&amp;#39;JavaVM&amp;#39;][&amp;#39;JVMCapabilities&amp;#39;])
+    capabilities.add(&amp;#39;JNI&amp;#39;)
+    capabilities.add(&amp;#39;BundledApp&amp;#39;)
+    # Update our changes
+    info[&amp;#39;JavaVM&amp;#39;][&amp;#39;JVMCapabilities&amp;#39;] = sorted(capabilities)
+    # Write back our changes
+    plistlib.writePlist(info, info_plist)
+    # Create a symlink to fix legacy applications
+    # Find the Contents directory
+    contents_path = os.path.dirname(info_plist)
+    # make the bundle/Libraries subpath
+    bundle_libraries = os.path.join(contents_path, &amp;quot;Home&amp;quot;, &amp;quot;bundle&amp;quot;, &amp;quot;Libraries&amp;quot;)
+    try:
+        # Just in case you run this script multiple times, we&amp;#39;ll fail if the directory already exists
+        os.makedirs(os.path.join(bundle_libraries))
+    except:
+        pass
+    # create the symlink between libjvm.dylib and libserver.dylib
+    libjvm_dylib = os.path.join(contents_path, &amp;quot;Home&amp;quot;, &amp;quot;jre&amp;quot;, &amp;quot;lib&amp;quot;, &amp;quot;server&amp;quot;, &amp;quot;libjvm.dylib&amp;quot;)
+    libserver_dylib = os.path.join(bundle_libraries, &amp;quot;libserver.dylib&amp;quot;)
+    try:
+        # Just in case you run this script multiple times, we&amp;#39;ll fail if the file already exists
+        os.symlink(libjvm_dylib, libserver_dylib)
+    except:
+        pass
+&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/pudquick/349f063c242239952a2e.js&quot;&gt; &lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;- mike&lt;/em&gt;&lt;/p&gt;
 </description>
@@ -341,10 +782,10 @@
 &lt;p&gt;Opening the executable in Hopper, unfortunately you can&amp;#39;t just search for &amp;quot;mount volume&amp;quot; and find the relevant code. This is because AppleScript additions have a translation layer called a &lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ScriptableCocoaApplications/SApps_creating_sdef/SAppsCreateSdef.html&quot;&gt;Scripting Definition File&lt;/a&gt; that maps the AppleScript language syntax to the code behind it.&lt;/p&gt;
 
 &lt;p&gt;Inside the &amp;quot;StandardAdditions.osax&amp;quot; bundle, within /Contents/Resources you&amp;#39;ll find the &amp;quot;StandardAdditions.sdef&amp;quot; scripting definition file and the relevant definition line within it:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;command&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;mount volume&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;code=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;aevtmvol&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;description=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Mount the specified server volume&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;command&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;mount volume&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;code=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;aevtmvol&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;description=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Mount the specified server volume&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Searching in Hopper for &amp;quot;aevtmvol&amp;quot; reveals the function &amp;quot;_AEVTaevtmvol&amp;quot;, which has this bit of pseudocode:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-asm&quot; data-lang=&quot;asm&quot;&gt;&lt;span class=&quot;nf&quot;&gt;eax&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;NetFSMountURLSync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;var_38&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0x0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0x0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0x0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;var_3C&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;esi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;var_10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-asm&quot; data-lang=&quot;asm&quot;&gt;eax = NetFSMountURLSync(var_38, 0x0, 0x0, 0x0, var_3C, esi, var_10);
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;That looks promising!&lt;/p&gt;
 
@@ -358,7 +799,15 @@
 
 &lt;p&gt;Within the file mentioned above, we find:&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/8f09a0b8893c01637b74.js?file=01_snip.c&quot;&gt; &lt;/script&gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;int
+NetFSMountURLSync(
+    CFURLRef url,                           // URL to mount, e.g. nfs://server/path
+    CFURLRef mountpath,                     // Path for the mountpoint
+    CFStringRef user,                       // Auth user name (overrides URL)
+    CFStringRef passwd,                     // Auth password (overrides URL)
+    CFMutableDictionaryRef open_options,    // Options for session open (see below)
+    CFMutableDictionaryRef mount_options,   // Options for mounting (see below)
+    CFArrayRef *mountpoints)                // Array of mountpoints&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/pudquick/8f09a0b8893c01637b74.js?file=01_snip.c&quot;&gt; &lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;That&amp;#39;s a bingo.&lt;/p&gt;
 
@@ -367,23 +816,23 @@
 &lt;p&gt;The only arguments AppleScript passes are &lt;em&gt;url&lt;/em&gt;, &lt;em&gt;open_options&lt;/em&gt;, &lt;em&gt;mount_options&lt;/em&gt;, and a placeholder for getting the returned mountpoint after it succeeds.&lt;/p&gt;
 
 &lt;p&gt;So let&amp;#39;s look at &lt;em&gt;open_options&lt;/em&gt; and &lt;em&gt;mount_options&lt;/em&gt; to see what AppleScript put in them.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-asm&quot; data-lang=&quot;asm&quot;&gt;&lt;span class=&quot;err&quot;&gt;00014&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;a1b&lt;/span&gt;         &lt;span class=&quot;no&quot;&gt;lea&lt;/span&gt;        &lt;span class=&quot;no&quot;&gt;eax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;dword&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;eax-0x14621&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;cfstring_AllowSubMounts&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;@&amp;quot;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;AllowSubMounts&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;quot;&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-asm&quot; data-lang=&quot;asm&quot;&gt;00014a1b         lea        eax, dword [ds:eax-0x14621+cfstring_AllowSubMounts] ; @&quot;AllowSubMounts&quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;From the same NetFS.h file above, we can find out what this means:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-C&quot; data-lang=&quot;C&quot;&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;kNetFSAllowSubMountsKey&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;Allow&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mount&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dir&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;beneath&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;share&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;point&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#define kNetFSAllowSubMountsKey         CFSTR(&amp;quot;AllowSubMounts&amp;quot;)&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-C&quot; data-lang=&quot;C&quot;&gt;* kNetFSAllowSubMountsKey = true        Allow a mount from a dir beneath the share point.
+#define kNetFSAllowSubMountsKey         CFSTR(&quot;AllowSubMounts&quot;)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Allowing mounting subdirectories sounds like an important setting. Are there any other good ones in there?&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-C&quot; data-lang=&quot;C&quot;&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;kNAUIOptionKey&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UIOption&lt;/span&gt;             &lt;span class=&quot;n&quot;&gt;Suppress&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;authentication&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dialog&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UI&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#define kNAUIOptionKey                  CFSTR(&amp;quot;UIOption&amp;quot;)&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;// UIOption values                      CFStringRef&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#define kNAUIOptionNoUI                 CFSTR(&amp;quot;NoUI&amp;quot;)&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#define kNAUIOptionAllowUI              CFSTR(&amp;quot;AllowUI&amp;quot;)&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#define kNAUIOptionForceUI              CFSTR(&amp;quot;ForceUI&amp;quot;)&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-C&quot; data-lang=&quot;C&quot;&gt;* kNAUIOptionKey = UIOption             Suppress authentication dialog UI.
+#define kNAUIOptionKey                  CFSTR(&quot;UIOption&quot;)
+// UIOption values                      CFStringRef
+#define kNAUIOptionNoUI                 CFSTR(&quot;NoUI&quot;)
+#define kNAUIOptionAllowUI              CFSTR(&quot;AllowUI&quot;)
+#define kNAUIOptionForceUI              CFSTR(&quot;ForceUI&quot;)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Useful!&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-C&quot; data-lang=&quot;C&quot;&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;kNetFSMountAtMountDirKey&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;       &lt;span class=&quot;n&quot;&gt;Mount&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;on&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;specified&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mountpath&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;instead&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;below&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#define kNetFSMountAtMountDirKey        CFSTR(&amp;quot;MountAtMountDir&amp;quot;)&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-C&quot; data-lang=&quot;C&quot;&gt;* kNetFSMountAtMountDirKey = true       Mount on the specified mountpath instead of below it.
+#define kNetFSMountAtMountDirKey        CFSTR(&quot;MountAtMountDir&quot;)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Could come in handy!&lt;/p&gt;
 
@@ -400,20 +849,31 @@
 &lt;p&gt;Let&amp;#39;s see how NetFS handles in this regard:&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;NetFS&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;Traceback&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;most&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;recent&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;call&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;last&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;lt;stdin&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;ne&quot;&gt;ImportError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;No&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;named&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NetFS&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;stdin&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;ImportError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;No&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;named&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NetFS&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;So let&amp;#39;s take a suggestion from that second article as to how to fix this:&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/8f09a0b8893c01637b74.js?file=02_snip.py&quot;&gt; &lt;/script&gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;import objc
+from CoreFoundation import CFURLCreateWithString&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;bundle&lt;/strong&gt; = objc.initFrameworkWrapper(&amp;quot;NetFS&amp;quot;,
+    frameworkIdentifier=&amp;quot;com.apple.NetFS&amp;quot;,
+    frameworkPath=objc.pathForFramework(&amp;quot;/System/Library/Frameworks/NetFS.framework&amp;quot;),
+    globals=globals())&lt;/p&gt;
+
+&lt;p&gt;share_url = CFURLCreateWithString(None, &amp;#39;afp://servername.local/sharename&amp;#39;, None)&lt;/p&gt;
+
+&lt;p&gt;&amp;gt;&amp;gt;&amp;gt; NetFSMountURLSync
+&amp;lt;objc.function &amp;#39;NetFSMountURLSync&amp;#39; at 0x10f458270&amp;gt;&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/pudquick/8f09a0b8893c01637b74.js?file=02_snip.py&quot;&gt; &lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;No errors, very promising! Let&amp;#39;s take it for a spin.&lt;/p&gt;
 
 &lt;p&gt;We won&amp;#39;t define any custom options, we&amp;#39;ll just provide a URL to mount and a list (to match the CFArrayRef for our return mountpath).&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NetFSMountURLSync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;share_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[])&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;Traceback&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;most&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;recent&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;call&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;last&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;lt;stdin&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;ne&quot;&gt;ValueError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;depythonifying&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;pointer&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;got&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;list&amp;#39;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;stdin&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;ValueError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;depythonifying&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'pointer'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;got&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'list'&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Ruh roh. It apparently didn&amp;#39;t like my list argument.&lt;/p&gt;
 
@@ -429,7 +889,16 @@
 
 &lt;p&gt;The real problem boils down to how &lt;code&gt;NetFSMountURLSync&lt;/code&gt; is defined in the bridgesupport file that shipped with OS X, located at: /System/Library/Frameworks/NetFS.framework/Resources/BridgeSupport/NetFS.bridgesupport&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/8f09a0b8893c01637b74.js?file=03_snip.xml&quot;&gt; &lt;/script&gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;&amp;lt;function name=&amp;#39;NetFSMountURLSync&amp;#39;&amp;gt;
+&amp;lt;arg type=&amp;#39;&lt;sup&gt;{__CFURL=}&amp;#39;/&amp;gt;&lt;/sup&gt;
+&amp;lt;arg type=&amp;#39;&lt;sup&gt;{__CFURL=}&amp;#39;/&amp;gt;&lt;/sup&gt;
+&amp;lt;arg type=&amp;#39;&lt;sup&gt;{__CFString=}&amp;#39;/&amp;gt;&lt;/sup&gt;
+&amp;lt;arg type=&amp;#39;&lt;sup&gt;{__CFString=}&amp;#39;/&amp;gt;&lt;/sup&gt;
+&amp;lt;arg type=&amp;#39;&lt;sup&gt;{__CFDictionary=}&amp;#39;/&amp;gt;&lt;/sup&gt;
+&amp;lt;arg type=&amp;#39;&lt;sup&gt;{__CFDictionary=}&amp;#39;/&amp;gt;&lt;/sup&gt;
+&amp;lt;arg type=&amp;#39;&lt;sup&gt;&lt;sup&gt;{__CFArray}&amp;#39;/&amp;gt;&lt;/sup&gt;&lt;/sup&gt;
+&amp;lt;retval type=&amp;#39;i&amp;#39;/&amp;gt;
+&amp;lt;/function&amp;gt;&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/pudquick/8f09a0b8893c01637b74.js?file=03_snip.xml&quot;&gt; &lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;That last argument is what&amp;#39;s killing us: &lt;code&gt;&amp;lt;arg type=&amp;#39;^^{__CFArray}&amp;#39;/&amp;gt;&lt;/code&gt;&lt;/p&gt;
 
@@ -453,7 +922,23 @@
 
 &lt;p&gt;By changing the signature from &lt;code&gt;^^{__CFArray}&lt;/code&gt; (aka &lt;em&gt;pointer to a CFArrayRef&lt;/em&gt; aka &lt;em&gt;pointer to a NSArray&lt;/em&gt;) to &lt;code&gt;^@&lt;/code&gt; (&lt;em&gt;pointer to an object&lt;/em&gt;), pyobjc becomes able to handle it with ease! Just needed to get from &lt;code&gt;^^&lt;/code&gt; to &lt;code&gt;^&lt;/code&gt;.&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/8f09a0b8893c01637b74.js?file=04_snip.py&quot;&gt; &lt;/script&gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;import objc
+from CoreFoundation import CFURLCreateWithString&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;bundle&lt;/strong&gt; = objc.initFrameworkWrapper(&amp;quot;NetFS&amp;quot;,
+    frameworkIdentifier=&amp;quot;com.apple.NetFS&amp;quot;,
+    frameworkPath=objc.pathForFramework(&amp;quot;/System/Library/Frameworks/NetFS.framework&amp;quot;),
+    globals=globals())&lt;/p&gt;
+
+&lt;p&gt;share_url = CFURLCreateWithString(None, &amp;#39;afp://servername.local/sharename&amp;#39;, None)&lt;/p&gt;
+
+&lt;h1 id=&quot;delete-the-imported-netfsmounturlsync-so-we-can-rewrite-it&quot;&gt;delete the imported NetFSMountURLSync so we can rewrite it&lt;/h1&gt;
+
+&lt;h1 id=&quot;while-keeping-everything-else-from-netfs-framework&quot;&gt;while keeping everything else from NetFS.framework&lt;/h1&gt;
+
+&lt;p&gt;del NetFSMountURLSync&lt;/p&gt;
+
+&lt;p&gt;objc.loadBundleFunctions(&lt;strong&gt;bundle&lt;/strong&gt;, globals(), [(&amp;#39;NetFSMountURLSync&amp;#39;, &amp;#39;i@@@@@@o&lt;sup&gt;@&amp;#39;)])&lt;/pre&gt;&lt;/noscript&gt;&amp;lt;script&lt;/sup&gt; src=&amp;quot;&lt;a href=&quot;https://gist.github.com/pudquick/8f09a0b8893c01637b74.js?file=04_snip.py%22%3E&quot;&gt;https://gist.github.com/pudquick/8f09a0b8893c01637b74.js?file=04_snip.py&amp;quot;&amp;gt;&lt;/a&gt; &lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;Let&amp;#39;s break down that signature: &lt;code&gt;i@@@@@@o^@&lt;/code&gt;&lt;/p&gt;
 
@@ -471,7 +956,8 @@
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mountpaths&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NetFSMountURLSync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;share_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
 &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mountpaths&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;u&amp;#39;/Volumes/sharename&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;u'/Volumes/sharename'&lt;/span&gt;
+
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;em&gt;Holy cow - IT WORKED AND IT MOUNTED - how freaking cool is that???&lt;/em&gt;&lt;/p&gt;
 
@@ -530,11 +1016,101 @@
 
 &lt;p&gt;So, to that effect, I wrote a piece of code that quickly stubs out a new Python.app bundle to a location of your choice, complete with icon customization and Info.plist overrides:&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/8e8e09b8c1f5ceb5020b.js?file=01_snip.py&quot;&gt; &lt;/script&gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;import sys, os, os.path, tempfile, plistlib, shutil&lt;/p&gt;
+
+&lt;p&gt;class TempApp(object):
+    def &lt;strong&gt;init&lt;/strong&gt;(self, infoPlist_dict, app_path=None, bundle_name=&amp;#39;TempApp&amp;#39;, cleanup=True, app_icon=None):
+        # infoPlist_dict: A dict containing key values that should be set/overridden
+        #                 vs. the normal Python.app keys.
+        #       app_path: The path to where your app should go. Example: &amp;#39;/usr/local/myOrgStuff&amp;#39;
+        #                 This directory needs to pre-exist. If app_path is left at None,
+        #                 a temporary directory will be created and used and the value of
+        #                 cleanup will be forced to True
+        #    bundle_name: The name of your .app. This tends to be what shows in the Dock.
+        #                 Spaces in the name are ok, but keep it short.
+        #        cleanup: If app_path is provided, cleanup set to False will leave the .app
+        #                 bundle behind rather than removing it on object destruction.
+        #       app_icon: Set to the path of a .icns file if you wish to have a custom app icon
+        #
+        # Setup our defaults
+        super(type(self), self).&lt;strong&gt;init&lt;/strong&gt;()
+        self.path           = None
+        self.cleanup_parent = False
+        self.cleanup        = cleanup
+        self.returncode     = 0
+        # First we look up which python we&amp;#39;re running with so we know which Python.app to clone
+        # ... We&amp;#39;ll just cheat and use the path of &amp;#39;os&amp;#39; which we already imported.
+        base_python = os.&lt;strong&gt;file&lt;/strong&gt;.split(os.path.join(&amp;#39;lib&amp;#39;, &amp;#39;python2&amp;#39;),1)[0]
+        python_app  = os.path.join(base_python, &amp;#39;Resources&amp;#39;, &amp;#39;Python.app&amp;#39;)
+        app_name = &amp;#39;%s.app&amp;#39; % (os.path.basename(bundle_name))
+        # Now we setup where we want the new Python.app clone to go
+        if app_path is None:
+            # Dynamically generate a path and force the value of cleanup
+            self.cleanup        = True
+            # Also need to cleanup the temp directory we made
+            self.cleanup_parent = True
+            app_path  = tempfile.mkdtemp()
+        else:
+            # Verify the parent path exists
+            # Trim trailing slashes
+            tmp_path = os.path.normpath(app_path)
+            if not os.path.exists(tmp_path):
+                raise Exception(&amp;#39;app_path supplied &amp;quot;%s&amp;quot; does not exist&amp;#39; % app_path)
+            elif not os.path.isdir(tmp_path):
+                raise Exception(&amp;#39;app_path supplied &amp;quot;%s&amp;quot; does not appear to be a directory&amp;#39; % app_path)
+            app_path = tmp_path
+        if app_icon is not None:
+            if not os.path.exists(app_icon):
+                raise Exception(&amp;#39;app_icon supplied &amp;quot;%s&amp;quot; does not exist&amp;#39; % app_icon)
+            elif not os.path.isfile(app_icon):
+                raise Exception(&amp;#39;app_icon supplied &amp;quot;%s&amp;quot; does not appear to be a file&amp;#39; % app_icon)
+        self.path = os.path.join(app_path, app_name)
+        # Make the bundle directory
+        os.mkdir(self.path)
+        os.makedirs(os.path.join(self.path, &amp;#39;Contents&amp;#39;, &amp;#39;MacOS&amp;#39;))
+        # Set up symlink contents
+        os.symlink(os.path.join(python_app, &amp;#39;Contents&amp;#39;, &amp;#39;MacOS&amp;#39;, &amp;#39;Python&amp;#39;), os.path.join(self.path, &amp;#39;Contents&amp;#39;, &amp;#39;MacOS&amp;#39;, &amp;#39;Python&amp;#39;))
+        os.symlink(os.path.join(python_app, &amp;#39;Contents&amp;#39;, &amp;#39;PkgInfo&amp;#39;), os.path.join(self.path, &amp;#39;Contents&amp;#39;, &amp;#39;PkgInfo&amp;#39;))
+        if app_icon is not None:
+            # We create a custom Resources folder and copy the .icns file to the default &amp;#39;PythonInterpreter.icns&amp;#39; inside
+            os.makedirs(os.path.join(self.path, &amp;#39;Contents&amp;#39;, &amp;#39;Resources&amp;#39;))
+            shutil.copyfile(app_icon, os.path.join(self.path, &amp;#39;Contents&amp;#39;, &amp;#39;Resources&amp;#39;, &amp;#39;PythonInterpreter.icns&amp;#39;))
+        else:
+            # No app_icon provided, just use the default resources
+            os.symlink(os.path.join(python_app, &amp;#39;Contents&amp;#39;, &amp;#39;Resources&amp;#39;), os.path.join(self.path, &amp;#39;Contents&amp;#39;, &amp;#39;Resources&amp;#39;))
+        os.symlink(os.path.join(python_app, &amp;#39;Contents&amp;#39;, &amp;#39;version.plist&amp;#39;), os.path.join(self.path, &amp;#39;Contents&amp;#39;, &amp;#39;version.plist&amp;#39;))
+        # Grab the contents of the existing Info.plist ... yes, using plistlib - this Info.plist is so far only XML ...
+        original_infoPlist = plistlib.readPlist(os.path.join(python_app, &amp;#39;Contents&amp;#39;, &amp;#39;Info.plist&amp;#39;))
+        # Make our changes from infoPlist_dict
+        original_infoPlist.update(infoPlist_dict)
+        # Write the contents back to the new location
+        plistlib.writePlist(original_infoPlist, os.path.join(self.path, &amp;#39;Contents&amp;#39;, &amp;#39;Info.plist&amp;#39;))
+    def cleanup_app(self):
+        # Kill the process if it&amp;#39;s still running
+        if self.cleanup:
+            # Delete the .app bundle, best effort
+            try:
+                shutil.rmtree(self.path, True)
+            except:
+                pass
+        if self.cleanup_parent:
+            # This was an auto-generated directory, remove it as well
+            try:
+                shutil.rmtree(os.path.dirname(self.path), True)
+            except:
+                pass
+    def &lt;strong&gt;del&lt;/strong&gt;(self):
+        self.cleanup_app()&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/pudquick/8e8e09b8c1f5ceb5020b.js?file=01_snip.py&quot;&gt; &lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;To use it as it&amp;#39;s written here, you&amp;#39;d create a TempApp instance with your customizations and then call it like a normal external executable with &lt;a href=&quot;https://docs.python.org/2/library/subprocess.html&quot;&gt;subprocess&lt;/a&gt; and the appropriate arguments (like some code.py file, etc.):&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/8e8e09b8c1f5ceb5020b.js?file=02_snip.py&quot;&gt; &lt;/script&gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;# How to use it, assuming it&amp;#39;s saved to a file named tempapp.py
+from tempapp import *
+import subprocess&lt;/p&gt;
+
+&lt;p&gt;infoPlist_overrides = {&amp;#39;CFBundleName&amp;#39;: &amp;#39;Menu Name&amp;#39;}
+myApp  = TempApp(infoPlist_overrides, bundle_name=&amp;#39;Dock Name&amp;#39;, app_icon=&amp;#39;/Users/mike/Desktop/tinker.icns&amp;#39;)
+output = subprocess.check_output([myApp.path + &amp;#39;/Contents/MacOS/Python&amp;#39;, path_to_py_file])&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/pudquick/8e8e09b8c1f5ceb5020b.js?file=02_snip.py&quot;&gt; &lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;... but this is me writing this, so you &lt;em&gt;know&lt;/em&gt; I didn&amp;#39;t stop there.&lt;/p&gt;
 
@@ -560,7 +1136,167 @@
 
 &lt;p&gt;This allowed me to pass my python code to the child process over stdin (which keeps the code out of the argument list, keeping the output of tools like &lt;code&gt;ps&lt;/code&gt; and &lt;code&gt;top&lt;/code&gt; uncluttered).&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/bd98a589dbe0ddf17cd4.js&quot;&gt; &lt;/script&gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;import sys, os, os.path, tempfile, plistlib, shutil, marshal, subprocess, pickle, textwrap&lt;/p&gt;
+
+&lt;p&gt;class TempApp(object):
+    &lt;em&gt;skeleton_app = textwrap.dedent(&amp;quot;&amp;quot;&amp;quot;
+                      import sys, marshal, types, pickle
+                      main_func_marshal = %s
+                      args_pickle       = %s
+                      code = marshal.loads(main_func_marshal)
+                      main_func = types.FunctionType(code, globals(), &amp;quot;main_func&amp;quot;)
+                      args = dict(pickle.loads(args_pickle))
+                      returncode, result = main_func(args)
+                      print pickle.dumps(result)
+                      sys.exit(returncode)
+                      &amp;quot;&amp;quot;&amp;quot;)
+    def __init&lt;/em&gt;&lt;em&gt;(self, infoPlist_dict, app_path=None, bundle_name=&amp;#39;TempApp&amp;#39;, cleanup=True, app_icon=None):
+        # infoPlist_dict: A dict containing key values that should be set/overridden
+        #                 vs. the normal Python.app keys.
+        #       app_path: The path to where your app should go. Example: &amp;#39;/usr/local/myOrgStuff&amp;#39;
+        #                 This directory needs to pre-exist. If app_path is left at None,
+        #                 a temporary directory will be created and used and the value of
+        #                 cleanup will be forced to True
+        #    bundle_name: The name of your .app. This tends to be what shows in the Dock.
+        #                 Spaces in the name are ok, but keep it short.
+        #        cleanup: If app_path is provided, cleanup set to False will leave the .app
+        #                 bundle behind rather than removing it on object destruction.
+        #       app_icon: Set to the path of a .icns file if you wish to have a custom app icon
+        #
+        # Setup our defaults
+        super(type(self), self).&lt;/em&gt;&lt;em&gt;init&lt;/em&gt;&lt;em&gt;()
+        self.path           = None
+        self.cleanup_parent = False
+        self.cleanup        = cleanup
+        self.returncode     = 0
+        # First we look up which python we&amp;#39;re running with so we know which Python.app to clone
+        # ... We&amp;#39;ll just cheat and use the path of &amp;#39;os&amp;#39; which we already imported.
+        base_python = os.&lt;/em&gt;&lt;em&gt;file&lt;/em&gt;&lt;em&gt;.split(os.path.join(&amp;#39;lib&amp;#39;, &amp;#39;python2&amp;#39;),1)[0]
+        python_app  = os.path.join(base_python, &amp;#39;Resources&amp;#39;, &amp;#39;Python.app&amp;#39;)
+        app_name = &amp;#39;%s.app&amp;#39; % (os.path.basename(bundle_name))
+        # Now we setup where we want the new Python.app clone to go
+        if app_path is None:
+            # Dynamically generate a path and force the value of cleanup
+            self.cleanup        = True
+            # Also need to cleanup the temp directory we made
+            self.cleanup_parent = True
+            app_path  = tempfile.mkdtemp()
+        else:
+            # Verify the parent path exists
+            # Trim trailing slashes
+            tmp_path = os.path.normpath(app_path)
+            if not os.path.exists(tmp_path):
+                raise Exception(&amp;#39;app_path supplied &amp;quot;%s&amp;quot; does not exist&amp;#39; % app_path)
+            elif not os.path.isdir(tmp_path):
+                raise Exception(&amp;#39;app_path supplied &amp;quot;%s&amp;quot; does not appear to be a directory&amp;#39; % app_path)
+            app_path = tmp_path
+        if app_icon is not None:
+            if not os.path.exists(app_icon):
+                raise Exception(&amp;#39;app_icon supplied &amp;quot;%s&amp;quot; does not exist&amp;#39; % app_icon)
+            elif not os.path.isfile(app_icon):
+                raise Exception(&amp;#39;app_icon supplied &amp;quot;%s&amp;quot; does not appear to be a file&amp;#39; % app_icon)
+        self.path = os.path.join(app_path, app_name)
+        # Make the bundle directory
+        os.mkdir(self.path)
+        os.makedirs(os.path.join(self.path, &amp;#39;Contents&amp;#39;, &amp;#39;MacOS&amp;#39;))
+        # Set up symlink contents
+        os.symlink(os.path.join(python_app, &amp;#39;Contents&amp;#39;, &amp;#39;MacOS&amp;#39;, &amp;#39;Python&amp;#39;), os.path.join(self.path, &amp;#39;Contents&amp;#39;, &amp;#39;MacOS&amp;#39;, &amp;#39;Python&amp;#39;))
+        os.symlink(os.path.join(python_app, &amp;#39;Contents&amp;#39;, &amp;#39;PkgInfo&amp;#39;), os.path.join(self.path, &amp;#39;Contents&amp;#39;, &amp;#39;PkgInfo&amp;#39;))
+        if app_icon is not None:
+            # We create a custom Resources folder and copy the .icns file to the default &amp;#39;PythonInterpreter.icns&amp;#39; inside
+            os.makedirs(os.path.join(self.path, &amp;#39;Contents&amp;#39;, &amp;#39;Resources&amp;#39;))
+            shutil.copyfile(app_icon, os.path.join(self.path, &amp;#39;Contents&amp;#39;, &amp;#39;Resources&amp;#39;, &amp;#39;PythonInterpreter.icns&amp;#39;))
+        else:
+            # No app_icon provided, just use the default resources
+            os.symlink(os.path.join(python&lt;/em&gt;app, &amp;#39;Contents&amp;#39;, &amp;#39;Resources&amp;#39;), os.path.join(self.path, &amp;#39;Contents&amp;#39;, &amp;#39;Resources&amp;#39;))
+        os.symlink(os.path.join(python_app, &amp;#39;Contents&amp;#39;, &amp;#39;version.plist&amp;#39;), os.path.join(self.path, &amp;#39;Contents&amp;#39;, &amp;#39;version.plist&amp;#39;))
+        # Grab the contents of the existing Info.plist ... yes, using plistlib - this Info.plist is so far only XML ...
+        original_infoPlist = plistlib.readPlist(os.path.join(python_app, &amp;#39;Contents&amp;#39;, &amp;#39;Info.plist&amp;#39;))
+        # Make our changes from infoPlist_dict
+        original_infoPlist.update(infoPlist_dict)
+        # Write the contents back to the new location
+        plistlib.writePlist(original_infoPlist, os.path.join(self.path, &amp;#39;Contents&amp;#39;, &amp;#39;Info.plist&amp;#39;))
+    def cleanup_app(self):
+        # Kill the process if it&amp;#39;s still running
+        if self.cleanup:
+            # Delete the .app bundle, best effort
+            try:
+                shutil.rmtree(self.path, True)
+            except:
+                pass
+        if self.cleanup_parent:
+            # This was an auto-generated directory, remove it as well
+            try:
+                shutil.rmtree(os.path.dirname(self.path), True)
+            except:
+                pass
+    def &lt;strong&gt;del&lt;/strong&gt;(self):
+        self.cleanup_app()
+    def run(self, func, **kwargs):
+        # Spawn an instance of this app bundle, passing func as the core of the new process.
+        # Keyword arguments are passed as a dictionary to the new process&amp;#39;s core function.
+        # marshal up the function
+        main_func_marshal = marshal.dumps(func.func_code).&lt;strong&gt;repr&lt;/strong&gt;()
+        # pickle up the args
+        args_pickle = pickle.dumps(kwargs.items()).&lt;strong&gt;repr&lt;/strong&gt;()
+        # build the core code
+        new_app = self.&lt;em&gt;skeleton_app % (main_func_marshal, args_pickle)
+        # Spawn the new process
+        proc = subprocess.Popen([os.path.join(self.path, &amp;#39;Contents&amp;#39;, &amp;#39;MacOS&amp;#39;, &amp;#39;Python&amp;#39;), &amp;#39;-&amp;#39;], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        # Give it the code
+        proc.stdin.write(new&lt;/em&gt;app)
+        # Let it run to completion, record output
+        sout, serr = proc.communicate()
+        # Record returncode
+        self.returncode = proc.returncode
+        result = None
+        try:
+            result = pickle.loads(sout)
+        except:
+            pass
+        return result&lt;/p&gt;
+
+&lt;p&gt;def example_main_function(args_dict):
+    # Do all your imports, classes, functions, etc. internal to your this application core function
+    # Everything needs to be defined here
+    # The return value from it should be a tuple: (process returncode [0 = success], pickle-able return result data)
+    from AppKit import NSApp, NSApplication, NSAlert, NSInformationalAlertStyle, NSTimer
+    class OKAlert(object):
+        def &lt;strong&gt;init&lt;/strong&gt;(self, message, buttons=None):
+            super(type(self), self).&lt;strong&gt;init&lt;/strong&gt;()
+            self.alert = None
+            self.message = message
+            self.buttons = buttons
+            self.result_code = None
+        def runAndStop_(self, timer):
+            self.alert = NSAlert.alloc().init()
+            self.alert.setAlertStyle_(NSInformationalAlertStyle)
+            self.alert.setMessageText_(self.message)
+            if self.buttons is None:
+                self.alert.addButtonWithTitle_(&amp;#39;OK&amp;#39;)
+            else:
+                for x in self.buttons:
+                    self.alert.addButtonWithTitle_(x)
+            NSApp.activateIgnoringOtherApps_(True)
+            self.result_code = self.alert.runModal()
+            NSApp.stop_(None)
+        def run(self):
+            NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(0.1, self, &amp;#39;runAndStop:&amp;#39;, &amp;#39;&amp;#39;, False)
+            NSApplication.sharedApplication()
+            NSApp.run()
+    # Create our dialog
+    dialog = OKAlert(args_dict.get(&amp;#39;message&amp;#39;), args_dict.get(&amp;#39;buttons&amp;#39;))
+    # Run our dialog
+    dialog.run()
+    # (returncode [0 = success], results)
+    return (0, dialog.result_code)&lt;/p&gt;
+
+&lt;h1 id=&quot;how-to-use-it&quot;&gt;How to use it&lt;/h1&gt;
+
+&lt;p&gt;infoPlist_overrides = {&amp;#39;CFBundleName&amp;#39;: &amp;#39;Menu Name&amp;#39;}
+myApp  = TempApp(infoPlist_overrides, bundle_name=&amp;#39;Dock Name&amp;#39;, app_icon=&amp;#39;/Users/mike/Desktop/tinker.icns&amp;#39;)
+result = myApp.run(example_main_function, message=&amp;#39;The message was Hello!&amp;#39;, buttons=[&amp;#39;1st Button&amp;#39;])
+&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/pudquick/bd98a589dbe0ddf17cd4.js&quot;&gt; &lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;It&amp;#39;s crazy code. But the results are pretty awesome.&lt;/p&gt;
 
@@ -615,7 +1351,16 @@ using your camera to capture your iTunes gift card codes.&lt;/p&gt;
 
 &lt;p&gt;If you didn&amp;#39;t know me already, I&amp;#39;ll just warn you now that my code here will be in &lt;a href=&quot;http://python.org/&quot;&gt;python&lt;/a&gt;. Since we&amp;#39;re going to be working a lot with plists, let&amp;#39;s get a few helper functions defined.&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=01_snip.py&quot;&gt; &lt;/script&gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;from Foundation import *&lt;/p&gt;
+
+&lt;p&gt;def readPlistFromData(data_obj):
+    # Reads binary and XML plists from a NSData object / python string / raw bytes
+    every_byte = &amp;#39;&amp;#39;.join([x for x in data_obj])
+    nsdata_obj = NSData.dataWithBytes_length_(every_byte, len(every_byte))
+    data, p_format, error = NSPropertyListSerialization.propertyListFromData_mutabilityOption_format_errorDescription_(nsdata_obj, \
+                                                        NSPropertyListMutableContainersAndLeaves, None, None)
+    return data
+&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=01_snip.py&quot;&gt; &lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;This has an advantage over the plistlib module included with python in that it can support binary plists as well as just XML.&lt;/p&gt;
 
@@ -629,22 +1374,30 @@ using your camera to capture your iTunes gift card codes.&lt;/p&gt;
 
 &lt;p&gt;... But OS X will still let you read the preference, if you provide the full path to it.&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=02_snip.py&quot;&gt; &lt;/script&gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;from Foundation import *
+import os.path&lt;/p&gt;
+
+&lt;p&gt;signature_array = CFPreferencesCopyValue(&amp;#39;items-1&amp;#39;, \
+                     os.path.expanduser(&amp;#39;~/Library/Containers/com.apple.Preview/Data/Library/Preferences/com.apple.Preview.signatures.plist&amp;#39;), \
+                     kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
+first_sig = signature_array[0]
+&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=02_snip.py&quot;&gt; &lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;The contents of the array is a data object, which if you try to look at it directly, you just see the hex encoding of it.&lt;/p&gt;
 
 &lt;p&gt;But if you look at the first few characters in it, you might see something recognizable:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; str(first_sig)[:50]
-&amp;#39;bplist00\xd4\x01\x02\x03\x04\x05\x06\x1e\x1fX$versionX$objectsY$archiverT$top&amp;#39;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&amp;gt;&amp;gt;&amp;gt; str(first_sig)[:50]
+'bplist00\xd4\x01\x02\x03\x04\x05\x06\x1e\x1fX$versionX$objectsY$archiverT$top'
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;The first few characters &amp;quot;bplist00&amp;quot; are an indicator that the contents of the array are binary plists themselves. So let&amp;#39;s unpack it.&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=03_snip.py&quot;&gt; &lt;/script&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; sig_plist
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;sig_plist = readPlistFromData(first_sig)
+&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=03_snip.py&quot;&gt; &lt;/script&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&amp;gt;&amp;gt;&amp;gt; sig_plist
 {
-    &amp;quot;$archiver&amp;quot; = NSKeyedArchiver;
-    &amp;quot;$objects&amp;quot; =     (
-        &amp;quot;$null&amp;quot;,
+    &quot;$archiver&quot; = NSKeyedArchiver;
+    &quot;$objects&quot; =     (
+        &quot;$null&quot;,
                 {
 [...]
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -652,9 +1405,11 @@ using your camera to capture your iTunes gift card codes.&lt;/p&gt;
 
 &lt;p&gt;So we need to decode the object. Let&amp;#39;s try!&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=04_snip.py&quot;&gt; &lt;/script&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;Traceback (most recent call last):
-  File &amp;quot;&amp;lt;stdin&amp;gt;&amp;quot;, line 1, in &amp;lt;module&amp;gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;from Foundation import *
+sig_decoded = NSKeyedUnarchiver.unarchiveObjectWithData_(first_sig)
+&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=04_snip.py&quot;&gt; &lt;/script&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;Traceback (most recent call last):
+  File &quot;&amp;lt;stdin&amp;gt;&quot;, line 1, in &amp;lt;module&amp;gt;
 objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decodeObjectForKey:]: cannot decode object of class (PVSignature)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Whoops. Looks like OS X doesn&amp;#39;t know how to natively handle a &amp;quot;PVSignature&amp;quot; file - so where do we learn about it?&lt;/p&gt;
@@ -664,21 +1419,33 @@ objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decod
 &lt;p&gt;For the PVSignature structure, we&amp;#39;ll need the help of a great tool: &lt;a href=&quot;http://stevenygard.com/projects/class-dump/&quot;&gt;class-dump&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;It can dump the signature of Objective-C objects defined within applications and frameworks (... hopefully PVSignature is within Preview.app itself!)&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;class-dump -H /Applications/Preview.app/Contents/MacOS/Preview
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;class-dump -H /Applications/Preview.app/Contents/MacOS/Preview
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Yay, our output includes a &amp;quot;PVSignature.h&amp;quot; file.&lt;/p&gt;
 
 &lt;p&gt;Let&amp;#39;s see what&amp;#39;s inside:&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=05_snip.m&quot;&gt; &lt;/script&gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;@interface PVSignature : NSObject &amp;lt;NSCoding&amp;gt;
+{
+    NSData *&lt;em&gt;undecryptedData;
+    BOOL _cannotDecrypt;
+    PVSignaturePayload *_payload;
+    NSImage *_largeThumbnail;
+    NSImage *_largeWhiteThumbnail;
+    NSImage *_smallThumbnail;
+    BOOL _thumbnailsGenerated;
+    int _uid;
+    BOOL _shouldPersist;
+}
+&lt;/pre&gt;&lt;/noscript&gt;&amp;lt;script src=&amp;quot;&lt;a href=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=05&quot;&gt;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=05&lt;/a&gt;&lt;/em&gt;snip.m&amp;quot;&amp;gt; &lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;Now let&amp;#39;s compare that against what&amp;#39;s &lt;em&gt;actually&lt;/em&gt; stored in the encoded object.&lt;/p&gt;
 
 &lt;p&gt;When storing a single object, NSKeyedArchiver object stores the object attributes in the 2nd item of the &amp;quot;$objects&amp;quot; key:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; sig_plist[&amp;#39;$objects&amp;#39;][1]
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&amp;gt;&amp;gt;&amp;gt; sig_plist['$objects'][1]
 {
-    &amp;quot;$class&amp;quot; = &amp;quot;&amp;lt;CFKeyedArchiverUID 0x7fd3ada65f80 [0x7fff7951bed0]&amp;gt;{value = 4}&amp;quot;;
-    data = &amp;quot;&amp;lt;CFKeyedArchiverUID 0x7fd3ada98480 [0x7fff7951bed0]&amp;gt;{value = 2}&amp;quot;;
+    &quot;$class&quot; = &quot;&amp;lt;CFKeyedArchiverUID 0x7fd3ada65f80 [0x7fff7951bed0]&amp;gt;{value = 4}&quot;;
+    data = &quot;&amp;lt;CFKeyedArchiverUID 0x7fd3ada98480 [0x7fff7951bed0]&amp;gt;{value = 2}&quot;;
     uid = 1000;
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -691,9 +1458,9 @@ objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decod
 &lt;p&gt;Once loaded up, we&amp;#39;re going to look under &amp;quot;Labels&amp;quot; for &lt;em&gt;PVSignature initWithCoder&lt;/em&gt; (the method that&amp;#39;s called when unarchiving an instance of a class).&lt;/p&gt;
 
 &lt;p&gt;Once we find it, we can use &lt;em&gt;Window -&amp;gt; Show Psuedo Code of Procedure&lt;/em&gt;&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;[...]
-rbx-&amp;gt;_undecryptedData = [[r14 decodeObjectForKey:@&amp;quot;data&amp;quot;] retain];
-rbx-&amp;gt;_uid = [r14 decodeInt32ForKey:@&amp;quot;uid&amp;quot;];
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;[...]
+rbx-&amp;gt;_undecryptedData = [[r14 decodeObjectForKey:@&quot;data&quot;] retain];
+rbx-&amp;gt;_uid = [r14 decodeInt32ForKey:@&quot;uid&quot;];
 rbx-&amp;gt;_cannotDecrypt = 0x0;
 rbx-&amp;gt;_shouldPersist = 0x1;
 rbx-&amp;gt;_largeThumbnail = 0x0;
@@ -703,18 +1470,55 @@ rbx-&amp;gt;_payload = 0x0;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Pretty staight forward to immitate:&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=06_snip.py&quot;&gt; &lt;/script&gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;from Foundation import *&lt;/p&gt;
+
+&lt;p&gt;class PVSignature(NSObject):
+    &lt;em&gt;undecryptedData = None
+    &lt;em&gt;uid = None
+    &lt;em&gt;cannotDecrypt = None
+    _shouldPersist = None
+    _largeThumbnail = None
+    _smallThumbnail = None
+    _payload = None
+    def init(self):
+        self = super(PVSignature, self).init()
+        if self == None: return None
+        self.&lt;/em&gt;undecryptedData = None
+        self.&lt;/em&gt;uid = None
+        self.&lt;em&gt;cannotDecrypt = None
+        self._shouldPersist = None
+        self._largeThumbnail = None
+        self.&lt;/em&gt;smallThumbnail = None
+        self._payload = None
+        return self
+    def initWithCoder&lt;/em&gt;(self, coder):
+        # use decodeObjectForKey when the key value could be something other than a primitive data type (looks like NSData here...)
+        self.&lt;em&gt;undecryptedData = coder.decodeObjectForKey&lt;/em&gt;(u&amp;quot;data&amp;quot;)
+        # use decodeIntForKey because it&amp;#39;s pretty obvious from sig_plist[&amp;#39;$objects&amp;#39;][1]
+        self.&lt;em&gt;uid = coder.decodeInt32ForKey&lt;/em&gt;(u&amp;quot;uid&amp;quot;)
+        self._shouldPersist = 1
+        # We won&amp;#39;t set the other values to 0, because in this context that&amp;#39;s actually a null pointer for them
+        return self&lt;/p&gt;
+
+&lt;h1 id=&quot;define-our-class-for-itself&quot;&gt;Define our class for itself&lt;/h1&gt;
+
+&lt;p&gt;NSKeyedUnarchiver.setClass_forClassName_(PVSignature, &amp;quot;PVSignature&amp;quot;)&lt;/p&gt;
+
+&lt;h1 id=&quot;attempt-to-decode-again&quot;&gt;Attempt to decode again!&lt;/h1&gt;
+
+&lt;p&gt;sig_decoded = NSKeyedUnarchiver.unarchiveObjectWithData_(first_sig)
+&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=06_snip.py&quot;&gt; &lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;Yay, no errors! Let&amp;#39;s see what our object looks like:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; sig_decoded._uid
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&amp;gt;&amp;gt;&amp;gt; sig_decoded._uid
 1000
 
 &amp;gt;&amp;gt;&amp;gt; sig_decoded._undecryptedData
 &amp;lt;458e1def 5434c5ab 94094049 dfd2424d 0ebe7ff6 c79c7b82 463d6d56 ...
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Cool. Let&amp;#39;s try the trick we did before for checking out if the raw data is anything we recognize:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; str(sig_decoded._undecryptedData)[:50]
-&amp;#39;E\x8e\x1d\xefT4\xc5\xab\x94\t@I\xdf\xd2BM\x0e\xbe\x7f\xf6\xc7\x9c{\x82F=mV\xac\xee\x1c\xda8\xe357|\xbb\xa9\xf9\xdc\xbd\x16\x1a+6\x16\x90Z\xfc&amp;#39;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&amp;gt;&amp;gt;&amp;gt; str(sig_decoded._undecryptedData)[:50]
+'E\x8e\x1d\xefT4\xc5\xab\x94\t@I\xdf\xd2BM\x0e\xbe\x7f\xf6\xc7\x9c{\x82F=mV\xac\xee\x1c\xda8\xe357|\xbb\xa9\xf9\xdc\xbd\x16\x1a+6\x16\x90Z\xfc'
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Hmm. Nope. Not ringing any bells.&lt;/p&gt;
 
@@ -728,8 +1532,11 @@ rbx-&amp;gt;_payload = 0x0;
 
 &lt;p&gt;I&amp;#39;m going to cheat here and just raw copy the value using Keychain Access (just clicking on &amp;quot;Show Password&amp;quot; and copying out the value). &lt;em&gt;(I have code for reading from the keychain, but that&amp;#39;s for another post.)&lt;/em&gt;&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=07_snip.py&quot;&gt; &lt;/script&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; len(binary_key)
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;import binascii
+hex_key = &amp;#39;E29D5B36A433C4E592B7A3991EF8691C&amp;#39;
+binary_key = binascii.unhexlify(hex_key)
+&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=07_snip.py&quot;&gt; &lt;/script&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&amp;gt;&amp;gt;&amp;gt; len(binary_key)
 16
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;A 16 byte key. If you know anything about encryption, that&amp;#39;s a pretty common key length for many common &lt;a href=&quot;https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation&quot;&gt;block cipher (ECB and CBC) algorithms&lt;/a&gt;.&lt;/p&gt;
@@ -747,18 +1554,18 @@ rbx-&amp;gt;_payload = 0x0;
 &lt;p&gt;Based on that, we find: &lt;strong&gt;-[PVSignatureEncryptor decryptedData:]:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;This code has exactly what we&amp;#39;re looking for - information about how it decrypts the data:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;if (CCCrypt(0x1, 0x0, 0x1, r12, 0x10, 0x0, var_68, r14, r15, rax, var_58) == 0x0) {
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;if (CCCrypt(0x1, 0x0, 0x1, r12, 0x10, 0x0, var_68, r14, r15, rax, var_58) == 0x0) {
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;And in this instance, we want to look at not just the pseudocode, but also the assembly for a little more clarity:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;   mov edi, 0x1    ; argument &amp;quot;op&amp;quot; for method imp___stubs__CCCrypt
-   mov esi, 0x0    ; argument &amp;quot;alg&amp;quot; for method imp___stubs__CCCrypt
-   mov edx, 0x1    ; argument &amp;quot;options&amp;quot; for method imp___stubs__CCCrypt
-   mov rcx, r12    ; argument &amp;quot;key&amp;quot; for method imp___stubs__CCCrypt
-   mov r8d, 0x10   ; argument &amp;quot;keyLength&amp;quot; for method imp___stubs__CCCrypt
-   xor r9d, r9d    ; argument &amp;quot;iv&amp;quot; for method imp___stubs__CCCrypt
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;   mov edi, 0x1    ; argument &quot;op&quot; for method imp___stubs__CCCrypt
+   mov esi, 0x0    ; argument &quot;alg&quot; for method imp___stubs__CCCrypt
+   mov edx, 0x1    ; argument &quot;options&quot; for method imp___stubs__CCCrypt
+   mov rcx, r12    ; argument &quot;key&quot; for method imp___stubs__CCCrypt
+   mov r8d, 0x10   ; argument &quot;keyLength&quot; for method imp___stubs__CCCrypt
+   xor r9d, r9d    ; argument &quot;iv&quot; for method imp___stubs__CCCrypt
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Looking at the &lt;a href=&quot;https://developer.apple.com/library/ios/documentation/System/Conceptual/ManPages_iPhoneOS/man3/CCCrypt.3cc.html&quot;&gt;documentation for CCCrypt&lt;/a&gt;, we get:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CCCrypt(CCOperation op, CCAlgorithm alg, CCOptions options,
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;CCCrypt(CCOperation op, CCAlgorithm alg, CCOptions options,
          const void *key, size_t keyLength, const void *iv,
          const void *dataIn, size_t dataInLength, void *dataOut,
          size_t dataOutAvailable, size_t *dataOutMoved);
@@ -782,63 +1589,101 @@ rbx-&amp;gt;_payload = 0x0;
 
 &lt;p&gt;Ok, now to try decrypting. We&amp;#39;re going to use the python Crypto module for this part:&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=08_snip.py&quot;&gt; &lt;/script&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_data[:50]
-&amp;quot;\xe4\x9c\x0f\xff\xd2\xee`\x0e\xbe8w8\xef\xaaT\xf1\x07\xeas\xe0Z\x96&amp;#39;6\xfc\x95\x9e\xa9\xce\xb5&amp;gt;\xd4bplist00\xd4\x01\x02\x03\x04\x05\x06,-X&amp;quot;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;from Crypto.Cipher import AES
+iv = &amp;#39;\x00&amp;#39;*16  # 16 byte character array of zeroes
+cipher = AES.new(binary_key, AES.MODE_CBC, IV=iv)
+decrypted_data = cipher.decrypt(str(sig_decoded.&lt;em&gt;undecryptedData))
+&lt;/pre&gt;&lt;/noscript&gt;&amp;lt;script src=&amp;quot;&lt;a href=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=08&quot;&gt;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=08&lt;/a&gt;&lt;/em&gt;snip.py&amp;quot;&amp;gt; &lt;/script&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_data[:50]
+&quot;\xe4\x9c\x0f\xff\xd2\xee`\x0e\xbe8w8\xef\xaaT\xf1\x07\xeas\xe0Z\x96'6\xfc\x95\x9e\xa9\xce\xb5&amp;gt;\xd4bplist00\xd4\x01\x02\x03\x04\x05\x06,-X&quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;em&gt;Oh ho ho!&lt;/em&gt; I see a &lt;strong&gt;bplist00&lt;/strong&gt; ...&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_data.index(&amp;#39;bplist00&amp;#39;)
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_data.index('bplist00')
 32
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Looks like there&amp;#39;s a 32 byte prefix - looking back at the code of &lt;strong&gt;-[PVSignatureEncryptor decryptedData:]&lt;/strong&gt;, we can see:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CC_SHA256(rbx, rsi, var_50);
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;CC_SHA256(rbx, rsi, var_50);
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;SHA-256 is a 32-byte CRC. Likely the decrypted data is prefixed with its CRC hash so that the code can tell easily if it decrypted the signature correctly by validating the hash of the binary plist data matches the hash in the 32 byte prefix.&lt;/p&gt;
 
 &lt;p&gt;So let&amp;#39;s skip the first 32 bytes and try to parse it directly as a plist.&lt;/p&gt;
 
 &lt;p&gt;... But before we do that, the &lt;em&gt;&amp;quot;kCCOptionPKCS7Padding&amp;quot;&lt;/em&gt; option that was mentioned earlier means that this data is padded out to a multiple of 16 bytes:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; len(decrypted_data)/16.
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&amp;gt;&amp;gt;&amp;gt; len(decrypted_data)/16.
 120.0
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;So we have to remove the padding per the PKCS7 standard. We can do that with this bit of code:&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=09_snip.py&quot;&gt; &lt;/script&gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;class PKCS7Encoder():
+    class InvalidBlockSizeError(Exception):
+        &amp;quot;&amp;quot;&amp;quot;Raised for invalid block sizes&amp;quot;&amp;quot;&amp;quot;
+        pass
+    def &lt;strong&gt;init&lt;/strong&gt;(self, block_size=16):
+        if block_size &amp;lt; 2 or block_size &amp;gt; 255:
+            raise PKCS7Encoder.InvalidBlockSizeError(&amp;#39;The block size must be &amp;#39; \
+                    &amp;#39;between 2 and 255, inclusive&amp;#39;)
+        self.block_size = block_size
+    def encode(self, text):
+        text_length = len(text)
+        amount_to_pad = self.block_size - (text_length % self.block_size)
+        if amount_to_pad == 0:
+            amount_to_pad = self.block_size
+        pad = chr(amount_to_pad)
+        return text + pad * amount_to_pad
+    def decode(self, text):
+        pad = ord(text[-1])
+        return text[:-pad]&lt;/p&gt;
+
+&lt;p&gt;encoder = PKCS7Encoder()
+unpadded_decrypted_data = encoder.decode(decrypted_data)
+&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=09_snip.py&quot;&gt; &lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;Now we can attempt parsing the plist data for bytes 33+&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=10_snip.py&quot;&gt; &lt;/script&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_plist
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;decrypted_plist = readPlistFromData(unpadded_decrypted_data[32:])
+&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=10_snip.py&quot;&gt; &lt;/script&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_plist
 {
-    &amp;quot;$archiver&amp;quot; = NSKeyedArchiver;
-    &amp;quot;$objects&amp;quot; =     (
-        &amp;quot;$null&amp;quot;,
+    &quot;$archiver&quot; = NSKeyedArchiver;
+    &quot;$objects&quot; =     (
+        &quot;$null&quot;,
 [...]
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;Success!!&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;What do we have this time? Let&amp;#39;s try to decode it. But since we decrypted with python, our data is a string - need to wrap it into an NSData object first.&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=11_snip.py&quot;&gt; &lt;/script&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;Traceback (most recent call last):
-  File &amp;quot;&amp;lt;stdin&amp;gt;&amp;quot;, line 1, in &amp;lt;module&amp;gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;from Foundation import *&lt;/p&gt;
+
+&lt;p&gt;nsdata_decrypted_plist = NSData.dataWithBytes_length_(unpadded_decrypted_data[32:], len(unpadded_decrypted_data[32:]))
+real_sig_decoded = NSKeyedUnarchiver.unarchiveObjectWithData_(nsdata_decrypted_plist)
+&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=11_snip.py&quot;&gt; &lt;/script&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;Traceback (most recent call last):
+  File &quot;&amp;lt;stdin&amp;gt;&quot;, line 1, in &amp;lt;module&amp;gt;
 objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decodeObjectForKey:]: cannot decode object of class (PVSignaturePayload)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Progress - now we&amp;#39;re working with a &amp;quot;PVSignaturePayload&amp;quot;.&lt;/p&gt;
 
 &lt;p&gt;Again, let&amp;#39;s look at what data we have, and then compare that against the contents of &amp;quot;PVSignaturePayload.h&amp;quot; from our earlier class-dump run:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_plist[&amp;#39;$objects&amp;#39;][1]
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_plist['$objects'][1]
 {
-    &amp;quot;$class&amp;quot; = &amp;quot;&amp;lt;CFKeyedArchiverUID 0x7fba02522bd0 [0x7fff7951bed0]&amp;gt;{value = 7}&amp;quot;;
-    baselineHeight = &amp;quot;0.1176470592617989&amp;quot;;
-    creationDate = &amp;quot;&amp;lt;CFKeyedArchiverUID 0x7fba025203d0 [0x7fff7951bed0]&amp;gt;{value = 4}&amp;quot;;
-    lastUsedDate = &amp;quot;&amp;lt;CFKeyedArchiverUID 0x7fba025203f0 [0x7fff7951bed0]&amp;gt;{value = 6}&amp;quot;;
-    path = &amp;quot;&amp;lt;CFKeyedArchiverUID 0x7fba02520350 [0x7fff7951bed0]&amp;gt;{value = 2}&amp;quot;;
+    &quot;$class&quot; = &quot;&amp;lt;CFKeyedArchiverUID 0x7fba02522bd0 [0x7fff7951bed0]&amp;gt;{value = 7}&quot;;
+    baselineHeight = &quot;0.1176470592617989&quot;;
+    creationDate = &quot;&amp;lt;CFKeyedArchiverUID 0x7fba025203d0 [0x7fff7951bed0]&amp;gt;{value = 4}&quot;;
+    lastUsedDate = &quot;&amp;lt;CFKeyedArchiverUID 0x7fba025203f0 [0x7fff7951bed0]&amp;gt;{value = 6}&quot;;
+    path = &quot;&amp;lt;CFKeyedArchiverUID 0x7fba02520350 [0x7fff7951bed0]&amp;gt;{value = 2}&quot;;
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;vs.&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=12_snip.m&quot;&gt; &lt;/script&gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;@interface PVSignaturePayload : NSObject &amp;lt;NSCoding&amp;gt;
+{
+    NSBezierPath *path;
+    double baselineHeight;
+    NSDate *creationDate;
+    NSDate *lastUsedDate;
+}
+&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=12_snip.m&quot;&gt; &lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;Oh goodness - &lt;em&gt;NSBezierPath??&lt;/em&gt;&lt;/p&gt;
 
@@ -848,8 +1693,50 @@ objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decod
 
 &lt;p&gt;We could look back at the code in &lt;strong&gt;Preview.app&lt;/strong&gt; for PVSignaturePayload - but we appear to have a match for a match on everything, &lt;em&gt;let&amp;#39;s just wing it!&lt;/em&gt;&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=13_snip.py&quot;&gt; &lt;/script&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; real_sig_decoded.baselineHeight
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;from Foundation import *&lt;/p&gt;
+
+&lt;h1 id=&quot;this-one-isn-39-t-defined-in-foundation&quot;&gt;This one isn&amp;#39;t defined in Foundation&lt;/h1&gt;
+
+&lt;p&gt;from AppKit import NSBezierPath&lt;/p&gt;
+
+&lt;p&gt;class PVSignaturePayload(NSObject):
+    path = None
+    baselineHeight = None
+    creationDate   = None
+    lastUsedDate   = None
+    def init(self):
+        self = super(PVSignaturePayload, self).init()
+        if self == None: return None
+        self.path = None
+        self.baselineHeight = None
+        self.creationDate   = None
+        self.lastUsedDate   = None
+        return self
+    def initWithCoder_(self, coder):
+        # use decodeObjectForKey when the key value could be something other than a primitive data type (looks like NSData here...)
+        self.&lt;em&gt;undecryptedData = coder.decodeObjectForKey&lt;/em&gt;(u&amp;quot;data&amp;quot;)
+        # use decodeIntForKey because it&amp;#39;s pretty obvious from sig_plist[&amp;#39;$objects&amp;#39;][1]
+        self.&lt;em&gt;uid = coder.decodeInt32ForKey&lt;/em&gt;(u&amp;quot;uid&amp;quot;)
+        self.&lt;em&gt;shouldPersist = 1
+        # We won&amp;#39;t set the other values to 0, because in this context that&amp;#39;s actually a null pointer for them
+        self.path = coder.decodeObjectForKey&lt;/em&gt;(u&amp;quot;path&amp;quot;)
+        self.baselineHeight = coder.decodeFloatForKey_(u&amp;quot;baselineHeight&amp;quot;)
+        self.creationDate   = coder.decodeObjectForKey_(u&amp;quot;creationDate&amp;quot;)
+        self.creationDate   = coder.decodeObjectForKey_(u&amp;quot;creationDate&amp;quot;)
+        return self&lt;/p&gt;
+
+&lt;h1 id=&quot;define-our-class-for-itself&quot;&gt;Define our class for itself&lt;/h1&gt;
+
+&lt;p&gt;NSKeyedUnarchiver.setClass_forClassName_(PVSignaturePayload, &amp;quot;PVSignaturePayload&amp;quot;)&lt;/p&gt;
+
+&lt;h1 id=&quot;define-some-of-the-other-classes-that-come-out&quot;&gt;Define some of the other classes that come out&lt;/h1&gt;
+
+&lt;p&gt;NSKeyedUnarchiver.setClass_forClassName_(NSDate, &amp;quot;NSDate&amp;quot;)
+NSKeyedUnarchiver.setClass_forClassName_(NSBezierPath, &amp;quot;NSBezierPath&amp;quot;)&lt;/p&gt;
+
+&lt;p&gt;real_sig_decoded = NSKeyedUnarchiver.unarchiveObjectWithData_(nsdata_decrypted_plist)
+&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=13_snip.py&quot;&gt; &lt;/script&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&amp;gt;&amp;gt;&amp;gt; real_sig_decoded.baselineHeight
 0.11764705926179886
 &amp;gt;&amp;gt;&amp;gt; real_sig_decoded.path
 Path &amp;lt;0x7fba0251bb90&amp;gt;
@@ -866,8 +1753,21 @@ Path &amp;lt;0x7fba0251bb90&amp;gt;
 
 &lt;p&gt;But &lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSBezierPath_Class/index.html&quot;&gt;NSBezierPath&lt;/a&gt; doesn&amp;#39;t have to start at a (0,0) coordinate origin. In fact, the &amp;quot;Bounds&amp;quot; values above indicate it&amp;#39;s offset. So let&amp;#39;s make a transform and shift it back to something more reasonable before we draw it.&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=14_snip.py&quot;&gt; &lt;/script&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; sig_path_shifted
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;from Foundation import *
+from AppKit import *
+import math&lt;/p&gt;
+
+&lt;p&gt;sig_path = real_sig_decoded.path
+shift_path = NSAffineTransform.alloc().init()
+origin = sig_path.bounds().origin&lt;/p&gt;
+
+&lt;h1 id=&quot;we-translate-by-the-opposite-x-and-y-values-with-0-1-to-nudge-it-into-the-positive&quot;&gt;We translate by the opposite X and Y values - with +0.1 to nudge it into the positive&lt;/h1&gt;
+
+&lt;p&gt;shift_path.translateXBy_yBy_(origin.x * -1. + 0.1, origin.y * -1. + 0.1)
+sig_path_shifted = sig_path.copy()
+sig_path_shifted.transformUsingAffineTransform_(shift_path)
+&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=14_snip.py&quot;&gt; &lt;/script&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&amp;gt;&amp;gt;&amp;gt; sig_path_shifted
 Path &amp;lt;0x7fba04ef0000&amp;gt;
   Bounds: {{0.10000000000000142, 0.10000000000000001}, {271.91783064182891, 67}}
   Control point bounds: {{-0.64194097622566915, -1.8758532047271763}, {274.53815460205078, 68.975853204727173}}
@@ -881,7 +1781,44 @@ Path &amp;lt;0x7fba04ef0000&amp;gt;
 
 &lt;p&gt;&lt;em&gt;(I&amp;#39;m gonna race through this a bit here because we&amp;#39;re so close to the end!)&lt;/em&gt;&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=15_snip.py&quot;&gt; &lt;/script&gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;import os.path&lt;/p&gt;
+
+&lt;p&gt;bounds = sig_path_shifted.bounds()
+width = int(math.ceil(bounds.origin.x + bounds.size.width))
+height = int(math.ceil(bounds.origin.y + bounds.size.height))&lt;/p&gt;
+
+&lt;h1 id=&quot;build-a-pixels-bitmap-to-draw-onto&quot;&gt;Build a pixels bitmap to draw onto&lt;/h1&gt;
+
+&lt;p&gt;signature_bitmap = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(None, width, height, 8, 4, True, False, NSDeviceRGBColorSpace, 0, 0)&lt;/p&gt;
+
+&lt;h1 id=&quot;save-our-current-graphic-information-we-really-don-39-t-care-but-it-39-s-polite&quot;&gt;Save our current graphic information (we really don&amp;#39;t care, but it&amp;#39;s polite)&lt;/h1&gt;
+
+&lt;p&gt;NSGraphicsContext.saveGraphicsState()&lt;/p&gt;
+
+&lt;h1 id=&quot;set-the-focus-to-our-bitmap&quot;&gt;Set the focus to our bitmap&lt;/h1&gt;
+
+&lt;p&gt;NSGraphicsContext.setCurrentContext_(NSGraphicsContext.graphicsContextWithBitmapImageRep_(signature_bitmap))&lt;/p&gt;
+
+&lt;h1 id=&quot;set-the-color-to-black&quot;&gt;Set the color to black&lt;/h1&gt;
+
+&lt;p&gt;NSColor.blackColor().setFill()&lt;/p&gt;
+
+&lt;h1 id=&quot;fill-our-signature-on-the-bitmap-with-black&quot;&gt;Fill our signature on the bitmap with black&lt;/h1&gt;
+
+&lt;p&gt;sig_path_shifted.fill()&lt;/p&gt;
+
+&lt;h1 id=&quot;restore-our-previous-graphics-state&quot;&gt;Restore our previous graphics state&lt;/h1&gt;
+
+&lt;p&gt;NSGraphicsContext.restoreGraphicsState()&lt;/p&gt;
+
+&lt;h1 id=&quot;build-a-data-stream-of-a-png-from-our-bitmap&quot;&gt;Build a data stream of a PNG from our bitmap&lt;/h1&gt;
+
+&lt;p&gt;data = signature_bitmap.representationUsingType_properties_(NSPNGFileType, None)&lt;/p&gt;
+
+&lt;h1 id=&quot;save-it-to-a-file&quot;&gt;Save it to a file&lt;/h1&gt;
+
+&lt;p&gt;result = data.writeToFile_atomically_(os.path.expanduser(&amp;quot;~/Desktop/my_signature.png&amp;quot;), True)
+&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=15_snip.py&quot;&gt; &lt;/script&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;veni-vidi-vici&quot;&gt;veni, vidi, vici!&lt;/h2&gt;
 

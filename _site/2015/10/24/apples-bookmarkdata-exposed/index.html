@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Apple's BookmarkData - exposed! &#8211; mikeymikey blogs here</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Ever wonder what&#39;s inside NSURL BookmarkData? I sure did. Found some secrets!">
+    <meta name="description" content="Ever wonder what's inside NSURL BookmarkData? I sure did. Found some secrets!">
     <meta name="author" content="Michael Lynn">
     <meta name="keywords" content="">
     <link rel="canonical" href="http://michaellynn.github.io/2015/10/24/apples-bookmarkdata-exposed/">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for mikeymikey blogs here" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201510240936" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201610040741" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -24,7 +24,7 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="en_US">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Apple&#39;s BookmarkData - exposed!">
+    <meta property="og:title" content="Apple's BookmarkData - exposed!">
     <meta property="og:description" content="the vent for my mind">
     <meta property="og:url" content="http://michaellynn.github.io/2015/10/24/apples-bookmarkdata-exposed/">
     <meta property="og:site_name" content="mikeymikey blogs here">
@@ -108,7 +108,20 @@
 
 <p>That is - it didn&#39;t take a lot of effort to extract the <strong>initial</strong> layer of contents.</p>
 
-<script src="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=01_snip.py"> </script>
+<p><noscript><pre>{
+    items =     (
+        &quot;&lt;SFLListItem: 0x7faf19dac350&gt;&quot;,
+        &quot;&lt;SFLListItem: 0x7faf19cc5430&gt;&quot;,
+        &quot;&lt;SFLListItem: 0x7faf19cca510&gt;&quot;,
+        &quot;&lt;SFLListItem: 0x7faf19dac5a0&gt;&quot;,
+        &quot;&lt;SFLListItem: 0x7faf19da92e0&gt;&quot;
+    );
+    properties =     {
+        &quot;com.apple.LSSharedFileList.MaxAmount&quot; = 10;
+    };
+    version = 1;
+}
+</pre></noscript><script src="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=01_snip.py"> </script></p>
 
 <p>At its heart, it&#39;s a dictionary with 3 keys, the most interesting key being <code>items</code>.</p>
 
@@ -126,7 +139,12 @@
 
 <p>Unfortunately, if you want to just get the share URL that was used to create the BookmarkData in the first place, the only API call Apple offers is <a href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSURL_Class/#//apple_ref/occ/clm/NSURL/URLByResolvingBookmarkData:options:relativeToURL:bookmarkDataIsStale:error:">this rather unsavory one</a>:</p>
 
-<script src="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=02_snip.m"> </script>
+<p><noscript><pre>NSURL
++(instancetype)URLByResolvingBookmarkData:(NSData *)bookmarkData<br>
+                                  options:(NSURLBookmarkResolutionOptions)options<br>
+                            relativeToURL:(NSURL *)relativeURL<br>
+                      bookmarkDataIsStale:(BOOL *)isStale<br>
+                                    error:(NSError * <em>Nullable *)error</pre></noscript>&lt;script src=&quot;<a href="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=02">https://gist.github.com/pudquick/c089771fd8196f449662.js?file=02</a></em>snip.m&quot;&gt; </script></p>
 
 <p>I say &quot;unsavory&quot; because of the implementation details:</p>
 
@@ -158,15 +176,33 @@
 
 <p>According to Apple&#39;s documentation, NSURL is part of Foundation and sure enough we can find the <code>NSURL.h</code> header file within <code>Foundation.framework</code>. Let&#39;s see what Hopper tells us <code>URLByResolvingBookmarkData</code> is doing:</p>
 
-<script src="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=03_snip.m"> </script>
+<p><noscript><pre>void * +<a href="void%20*%20self,%20void%20*%20_cmd,%20void%20*%20arg_8,%20unsigned%20int%20arg_C,%20void%20*%20arg_10,%20char%20*%20arg_14,%20void%20*%20*%20arg_18">NSURL(NSURL) URLByResolvingBookmarkData:options:relativeToURL:bookmarkDataIsStale:error:</a> {
+    eax = [self allocWithZone:0x0];
+    eax = [eax initByResolvingBookmarkData:arg_8 options:arg_C relativeToURL:arg_10 bookmarkDataIsStale:arg_14 error:arg_18];
+    eax = [eax autorelease];
+    return eax;
+}
+</pre></noscript><script src="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=03_snip.m"> </script></p>
 
 <p>A quick inspection shows this to be a wrapper around <code>initByResolvingBookmarkData</code>, on with the hunt!</p>
 
-<script src="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=04_snip.c"> </script>
+<p><noscript><pre>edi = CFURLCreateByResolvingBookmarkData(*<em>kCFAllocatorDefault, arg_8, arg_C, edi, 0x0, arg_14, arg_18);
+</pre></noscript>&lt;script src=&quot;<a href="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=04">https://gist.github.com/pudquick/c089771fd8196f449662.js?file=04</a></em>snip.c&quot;&gt; </script></p>
 
 <p>That CF looks like we&#39;re skipping on over to <code>CoreFoundation.framework</code>.</p>
 
-<script src="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=05_snip.c"> </script>
+<p><noscript><pre>int <em>CFURLCreateByResolvingBookmarkData(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {<br>
+    r9 = arg5;<br>
+    r15 = arg4;<br>
+    r12 = arg3;<br>
+    r13 = arg2;<br>
+    rbx = arg1;<br>
+    r14 = arg0;<br>
+    rax = *</em><strong>CFCoreServicesInternal</strong>CFURLCreateByResolvingBookmarkData.dyfunc;<br>
+    if (rax == 0xff) {<br>
+            rax = <strong>_CFLookupCoreServicesInternalFunction(&quot;_CFURLCreateByResolvingBookmarkData&quot;);<br>
+            *</strong><em>CFCoreServicesInternal</em><em>CFURLCreateByResolvingBookmarkData.dyfunc = rax;<br>
+    }</pre></noscript>&lt;script src=&quot;<a href="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=05">https://gist.github.com/pudquick/c089771fd8196f449662.js?file=05</a></em>snip.c&quot;&gt; </script></p>
 
 <p><strong>Ruh roh!</strong></p>
 
@@ -206,7 +242,47 @@
 
 <p><small><em>(*insert magical handwaving, skipping over the boring part to get to the amazing part*)</em></small></p>
 
-<script src="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=06_snip.py"> </script>
+<p><noscript><pre>&gt;&gt;&gt; NSURL.resourceValuesForKeys_fromBookmarkData_([&#39;NSURLBookmarkAllPropertiesKey&#39;], some_bookmark_data)</p>
+
+<p>{
+    NSURLBookmarkAllPropertiesKey =     {
+        NSURLBookmarkOriginalRelativePathComponentsArrayKey =         (
+            Volumes,
+            &quot;shares-1&quot;
+        );
+        NSURLBookmarkOriginalRelativePathKey = &quot;&quot;;
+        NSURLBookmarkOriginalVolumeNameKey = &quot;shares-1&quot;;
+        NSURLCreationDateKey = &quot;2014-04-07 14:41:38 +0000&quot;;
+        NSURLIsDirectoryKey = 1;
+        NSURLIsPackageKey = 0;
+        NSURLIsRegularFileKey = 0;
+        NSURLIsSymbolicLinkKey = 0;
+        NSURLIsVolumeKey = 1;
+        NSURLLocalizedNameKey = shares;
+        NSURLNameKey = &quot;shares-1&quot;;
+        NSURLVolumeCreationDateKey = &quot;2014-04-07 14:41:38 +0000&quot;;
+        NSURLVolumeIsAutomountedKey = 0;
+        NSURLVolumeIsBrowsableKey = 1;
+        NSURLVolumeIsEjectableKey = 0;
+        NSURLVolumeIsInternalKey = 0;
+        NSURLVolumeIsLocalKey = 0;
+        NSURLVolumeIsReadOnlyKey = 0;
+        NSURLVolumeIsRemovableKey = 0;
+        NSURLVolumeNameKey = &quot;shares-1&quot;;
+        NSURLVolumeSupportsPersistentIDsKey = 1;
+        NSURLVolumeTotalCapacityKey = 249199591424;
+        NSURLVolumeURLKey = &quot;file:///Volumes/shares-1/&quot;;
+        &quot;<em>NSURLBookmarkSecurityScopeCryptoKeyKey&quot; = &lt;00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000&gt;;
+        &quot;_NSURLFileIDKey&quot; = 2;
+        &quot;_NSURLPathKey&quot; = &quot;/Volumes/shares-1&quot;;
+        &quot;_NSURLTypeBindingKey&quot; = &lt;646e6962 00000000 09000000 00000000 00000000 00000000 00000000 72767273 00000000 00000000 00000000 00000000&gt;;
+        &quot;</em>NSURLVolumeDontBrowseKey&quot; = 0;
+        &quot;<em>NSURLVolumeIsDiskImageKey&quot; = 0;
+        &quot;_NSURLVolumeIsExternalKey&quot; = 0;
+        &quot;_NSURLVolumeIsiPodKey&quot; = 0;
+    };
+}
+</pre></noscript>&lt;script src=&quot;<a href="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=06">https://gist.github.com/pudquick/c089771fd8196f449662.js?file=06</a></em>snip.py&quot;&gt; </script></p>
 
 <p>Good god. It worked. It&#39;s <em>all</em> there.</p>
 
@@ -220,7 +296,30 @@
 
 <p>It <span style="color:red">knocked my socks off</span>, that&#39;s what it does.</p>
 
-<script src="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=07_snip.txt"> </script>
+<p><noscript><pre>Bookmark: dataRef=0x106672000 len=1229264
+  signature = 0x6b6f6f62
+  length = 0x12c1d0
+  version = 0x10040000
+  bookmarkDataSectionOffset = 0x30
+  bookmarkDataSectionFirstTOCOffset = 0x12c0b4
+ 0x00000:626f6f6b d0c11200 00000410 30000000   | book .... .... 0...<br>
+ 0x00010:00000000 00000000 00000000 00000000   | .... .... .... ....<br>
+ 0x00020:00000000 00000000 00000000 00000000   | .... .... .... ....<br>
+ 0x00030:b4c01200 04000000 03030000 00040000   | .... .... .... ....<br>
+ 0x00040:07000000 01010000 566f6c75 6d657300   | .... .... Volu mes.<br>
+ 0x00050:08000000 01010000 73686172 65732d31   | .... .... shar es-1<br>
+[... snipped ...]
+ scopeCrytoKey = &lt;CFData 0x7fb2b1690ba0 [0x7fff767fbed0]&gt;{length = 32, capacity = 32, bytes = 0x00000000000000000000000000000000 ... 0000000000000000}
+ toc @ offset:0x12c0e4 ( 0x0x10679e0e4 ) level=1 count=18 next=0x476
+   0) itemType=0x1004 flags=0x0 dataOffset=0x60 pathComponents:[ &quot;Volumes&quot;, &quot;shares-1&quot;]<br>
+   1) itemType=0x1005 flags=0x0 dataOffset=0x90 fileIDs:[  13686/0x3576 ,  2/0x2 ]<br>
+   2) itemType=0x1010 flags=0x0 dataOffset=0xb0 resourceProps:Props:[!file** dir** !sym** vol** !pkg** !app** ] 
+   3) itemType=0x1040 flags=0x0 dataOffset=0xa0 creationDate: 2014/04/07 14:41:38.0000<br>
+   4) itemType=0x2000 flags=0x0 dataOffset=0x298 volInfoDepths:[  61440/0xf000 ,  0/0x0 ,  1/0x1 ]<br>
+   5) itemType=0x2002 flags=0x0 dataOffset=0x12c volPath:&quot;/Volumes/shares-1&quot; 
+   6) itemType=0x2005 flags=0x0 dataOffset=0xd8 volURL:&quot;&lt;CFURL 0x7fb2b1670e40 [0x7fff767fbed0]&gt;{string = file:///Volumes/shares-1/, encoding = 134217984, base = (null)}&quot; 
+[... snipped ...]
+</pre></noscript><script src="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=07_snip.txt"> </script></p>
 
 <p>I&#39;ve clipped bits out here, but it&#39;s a <strong>programmer&#39;s debug output</strong> for the entire BookmarkData structure, giving all of the offset values within the data and breaking down <em>what&#39;s actually contained in it</em>.</p>
 
@@ -344,7 +443,13 @@
 
 <p>… But don&#39;t be surprised if you get back results like this if the resource no longer exists:</p>
 
-<script src="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=08_snip.py"> </script>
+<p><noscript><pre>&gt;&gt;&gt; url is None
+True
+&gt;&gt;&gt; isStale
+False
+&gt;&gt;&gt; print err.<strong>repr</strong>()
+Error Domain=NSOSStatusErrorDomain Code=-43 &quot;The operation couldn’t be completed. (OSStatus error -43.)&quot; (fnfErr: File not found)
+</pre></noscript><script src="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=08_snip.py"> </script></p>
 
 <p>But worry not, friend readers - I&#39;ve <em>also</em> completely decoded <code>alis</code> records in python, <a href="https://bitbucket.org/al45tair/mac_alias">as have others</a>!</p>
 

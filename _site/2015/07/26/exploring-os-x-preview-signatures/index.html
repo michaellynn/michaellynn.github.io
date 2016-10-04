@@ -12,7 +12,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for mikeymikey blogs here" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201510240936" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201610040741" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -126,7 +126,16 @@ using your camera to capture your iTunes gift card codes.</p>
 
 <p>If you didn&#39;t know me already, I&#39;ll just warn you now that my code here will be in <a href="http://python.org/">python</a>. Since we&#39;re going to be working a lot with plists, let&#39;s get a few helper functions defined.</p>
 
-<script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=01_snip.py"> </script>
+<p><noscript><pre>from Foundation import *</p>
+
+<p>def readPlistFromData(data_obj):
+    # Reads binary and XML plists from a NSData object / python string / raw bytes
+    every_byte = &#39;&#39;.join([x for x in data_obj])
+    nsdata_obj = NSData.dataWithBytes_length_(every_byte, len(every_byte))
+    data, p_format, error = NSPropertyListSerialization.propertyListFromData_mutabilityOption_format_errorDescription_(nsdata_obj, \
+                                                        NSPropertyListMutableContainersAndLeaves, None, None)
+    return data
+</pre></noscript><script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=01_snip.py"> </script></p>
 
 <p>This has an advantage over the plistlib module included with python in that it can support binary plists as well as just XML.</p>
 
@@ -140,22 +149,30 @@ using your camera to capture your iTunes gift card codes.</p>
 
 <p>... But OS X will still let you read the preference, if you provide the full path to it.</p>
 
-<script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=02_snip.py"> </script>
+<p><noscript><pre>from Foundation import *
+import os.path</p>
+
+<p>signature_array = CFPreferencesCopyValue(&#39;items-1&#39;, \
+                     os.path.expanduser(&#39;~/Library/Containers/com.apple.Preview/Data/Library/Preferences/com.apple.Preview.signatures.plist&#39;), \
+                     kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
+first_sig = signature_array[0]
+</pre></noscript><script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=02_snip.py"> </script></p>
 
 <p>The contents of the array is a data object, which if you try to look at it directly, you just see the hex encoding of it.</p>
 
 <p>But if you look at the first few characters in it, you might see something recognizable:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">&gt;&gt;&gt; str(first_sig)[:50]
-&#39;bplist00\xd4\x01\x02\x03\x04\x05\x06\x1e\x1fX$versionX$objectsY$archiverT$top&#39;
+<div class="highlight"><pre><code class="language-" data-lang="">&gt;&gt;&gt; str(first_sig)[:50]
+'bplist00\xd4\x01\x02\x03\x04\x05\x06\x1e\x1fX$versionX$objectsY$archiverT$top'
 </code></pre></div>
 <p>The first few characters &quot;bplist00&quot; are an indicator that the contents of the array are binary plists themselves. So let&#39;s unpack it.</p>
 
-<script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=03_snip.py"> </script>
-<div class="highlight"><pre><code class="language-text" data-lang="text">&gt;&gt;&gt; sig_plist
+<p><noscript><pre>sig_plist = readPlistFromData(first_sig)
+</pre></noscript><script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=03_snip.py"> </script></p>
+<div class="highlight"><pre><code class="language-" data-lang="">&gt;&gt;&gt; sig_plist
 {
-    &quot;$archiver&quot; = NSKeyedArchiver;
-    &quot;$objects&quot; =     (
-        &quot;$null&quot;,
+    "$archiver" = NSKeyedArchiver;
+    "$objects" =     (
+        "$null",
                 {
 [...]
 </code></pre></div>
@@ -163,9 +180,11 @@ using your camera to capture your iTunes gift card codes.</p>
 
 <p>So we need to decode the object. Let&#39;s try!</p>
 
-<script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=04_snip.py"> </script>
-<div class="highlight"><pre><code class="language-text" data-lang="text">Traceback (most recent call last):
-  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+<p><noscript><pre>from Foundation import *
+sig_decoded = NSKeyedUnarchiver.unarchiveObjectWithData_(first_sig)
+</pre></noscript><script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=04_snip.py"> </script></p>
+<div class="highlight"><pre><code class="language-" data-lang="">Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
 objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decodeObjectForKey:]: cannot decode object of class (PVSignature)
 </code></pre></div>
 <p>Whoops. Looks like OS X doesn&#39;t know how to natively handle a &quot;PVSignature&quot; file - so where do we learn about it?</p>
@@ -175,21 +194,33 @@ objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decod
 <p>For the PVSignature structure, we&#39;ll need the help of a great tool: <a href="http://stevenygard.com/projects/class-dump/">class-dump</a></p>
 
 <p>It can dump the signature of Objective-C objects defined within applications and frameworks (... hopefully PVSignature is within Preview.app itself!)</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">class-dump -H /Applications/Preview.app/Contents/MacOS/Preview
+<div class="highlight"><pre><code class="language-" data-lang="">class-dump -H /Applications/Preview.app/Contents/MacOS/Preview
 </code></pre></div>
 <p>Yay, our output includes a &quot;PVSignature.h&quot; file.</p>
 
 <p>Let&#39;s see what&#39;s inside:</p>
 
-<script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=05_snip.m"> </script>
+<p><noscript><pre>@interface PVSignature : NSObject &lt;NSCoding&gt;
+{
+    NSData *<em>undecryptedData;
+    BOOL _cannotDecrypt;
+    PVSignaturePayload *_payload;
+    NSImage *_largeThumbnail;
+    NSImage *_largeWhiteThumbnail;
+    NSImage *_smallThumbnail;
+    BOOL _thumbnailsGenerated;
+    int _uid;
+    BOOL _shouldPersist;
+}
+</pre></noscript>&lt;script src=&quot;<a href="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=05">https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=05</a></em>snip.m&quot;&gt; </script></p>
 
 <p>Now let&#39;s compare that against what&#39;s <em>actually</em> stored in the encoded object.</p>
 
 <p>When storing a single object, NSKeyedArchiver object stores the object attributes in the 2nd item of the &quot;$objects&quot; key:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">&gt;&gt;&gt; sig_plist[&#39;$objects&#39;][1]
+<div class="highlight"><pre><code class="language-" data-lang="">&gt;&gt;&gt; sig_plist['$objects'][1]
 {
-    &quot;$class&quot; = &quot;&lt;CFKeyedArchiverUID 0x7fd3ada65f80 [0x7fff7951bed0]&gt;{value = 4}&quot;;
-    data = &quot;&lt;CFKeyedArchiverUID 0x7fd3ada98480 [0x7fff7951bed0]&gt;{value = 2}&quot;;
+    "$class" = "&lt;CFKeyedArchiverUID 0x7fd3ada65f80 [0x7fff7951bed0]&gt;{value = 4}";
+    data = "&lt;CFKeyedArchiverUID 0x7fd3ada98480 [0x7fff7951bed0]&gt;{value = 2}";
     uid = 1000;
 }
 </code></pre></div>
@@ -202,9 +233,9 @@ objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decod
 <p>Once loaded up, we&#39;re going to look under &quot;Labels&quot; for <em>PVSignature initWithCoder</em> (the method that&#39;s called when unarchiving an instance of a class).</p>
 
 <p>Once we find it, we can use <em>Window -&gt; Show Psuedo Code of Procedure</em></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">[...]
-rbx-&gt;_undecryptedData = [[r14 decodeObjectForKey:@&quot;data&quot;] retain];
-rbx-&gt;_uid = [r14 decodeInt32ForKey:@&quot;uid&quot;];
+<div class="highlight"><pre><code class="language-" data-lang="">[...]
+rbx-&gt;_undecryptedData = [[r14 decodeObjectForKey:@"data"] retain];
+rbx-&gt;_uid = [r14 decodeInt32ForKey:@"uid"];
 rbx-&gt;_cannotDecrypt = 0x0;
 rbx-&gt;_shouldPersist = 0x1;
 rbx-&gt;_largeThumbnail = 0x0;
@@ -214,18 +245,55 @@ rbx-&gt;_payload = 0x0;
 </code></pre></div>
 <p>Pretty staight forward to immitate:</p>
 
-<script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=06_snip.py"> </script>
+<p><noscript><pre>from Foundation import *</p>
+
+<p>class PVSignature(NSObject):
+    <em>undecryptedData = None
+    <em>uid = None
+    <em>cannotDecrypt = None
+    _shouldPersist = None
+    _largeThumbnail = None
+    _smallThumbnail = None
+    _payload = None
+    def init(self):
+        self = super(PVSignature, self).init()
+        if self == None: return None
+        self.</em>undecryptedData = None
+        self.</em>uid = None
+        self.<em>cannotDecrypt = None
+        self._shouldPersist = None
+        self._largeThumbnail = None
+        self.</em>smallThumbnail = None
+        self._payload = None
+        return self
+    def initWithCoder</em>(self, coder):
+        # use decodeObjectForKey when the key value could be something other than a primitive data type (looks like NSData here...)
+        self.<em>undecryptedData = coder.decodeObjectForKey</em>(u&quot;data&quot;)
+        # use decodeIntForKey because it&#39;s pretty obvious from sig_plist[&#39;$objects&#39;][1]
+        self.<em>uid = coder.decodeInt32ForKey</em>(u&quot;uid&quot;)
+        self._shouldPersist = 1
+        # We won&#39;t set the other values to 0, because in this context that&#39;s actually a null pointer for them
+        return self</p>
+
+<h1 id="define-our-class-for-itself">Define our class for itself</h1>
+
+<p>NSKeyedUnarchiver.setClass_forClassName_(PVSignature, &quot;PVSignature&quot;)</p>
+
+<h1 id="attempt-to-decode-again">Attempt to decode again!</h1>
+
+<p>sig_decoded = NSKeyedUnarchiver.unarchiveObjectWithData_(first_sig)
+</pre></noscript><script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=06_snip.py"> </script></p>
 
 <p>Yay, no errors! Let&#39;s see what our object looks like:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">&gt;&gt;&gt; sig_decoded._uid
+<div class="highlight"><pre><code class="language-" data-lang="">&gt;&gt;&gt; sig_decoded._uid
 1000
 
 &gt;&gt;&gt; sig_decoded._undecryptedData
 &lt;458e1def 5434c5ab 94094049 dfd2424d 0ebe7ff6 c79c7b82 463d6d56 ...
 </code></pre></div>
 <p>Cool. Let&#39;s try the trick we did before for checking out if the raw data is anything we recognize:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">&gt;&gt;&gt; str(sig_decoded._undecryptedData)[:50]
-&#39;E\x8e\x1d\xefT4\xc5\xab\x94\t@I\xdf\xd2BM\x0e\xbe\x7f\xf6\xc7\x9c{\x82F=mV\xac\xee\x1c\xda8\xe357|\xbb\xa9\xf9\xdc\xbd\x16\x1a+6\x16\x90Z\xfc&#39;
+<div class="highlight"><pre><code class="language-" data-lang="">&gt;&gt;&gt; str(sig_decoded._undecryptedData)[:50]
+'E\x8e\x1d\xefT4\xc5\xab\x94\t@I\xdf\xd2BM\x0e\xbe\x7f\xf6\xc7\x9c{\x82F=mV\xac\xee\x1c\xda8\xe357|\xbb\xa9\xf9\xdc\xbd\x16\x1a+6\x16\x90Z\xfc'
 </code></pre></div>
 <p>Hmm. Nope. Not ringing any bells.</p>
 
@@ -239,8 +307,11 @@ rbx-&gt;_payload = 0x0;
 
 <p>I&#39;m going to cheat here and just raw copy the value using Keychain Access (just clicking on &quot;Show Password&quot; and copying out the value). <em>(I have code for reading from the keychain, but that&#39;s for another post.)</em></p>
 
-<script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=07_snip.py"> </script>
-<div class="highlight"><pre><code class="language-text" data-lang="text">&gt;&gt;&gt; len(binary_key)
+<p><noscript><pre>import binascii
+hex_key = &#39;E29D5B36A433C4E592B7A3991EF8691C&#39;
+binary_key = binascii.unhexlify(hex_key)
+</pre></noscript><script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=07_snip.py"> </script></p>
+<div class="highlight"><pre><code class="language-" data-lang="">&gt;&gt;&gt; len(binary_key)
 16
 </code></pre></div>
 <p>A 16 byte key. If you know anything about encryption, that&#39;s a pretty common key length for many common <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation">block cipher (ECB and CBC) algorithms</a>.</p>
@@ -258,18 +329,18 @@ rbx-&gt;_payload = 0x0;
 <p>Based on that, we find: <strong>-[PVSignatureEncryptor decryptedData:]:</strong></p>
 
 <p>This code has exactly what we&#39;re looking for - information about how it decrypts the data:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">if (CCCrypt(0x1, 0x0, 0x1, r12, 0x10, 0x0, var_68, r14, r15, rax, var_58) == 0x0) {
+<div class="highlight"><pre><code class="language-" data-lang="">if (CCCrypt(0x1, 0x0, 0x1, r12, 0x10, 0x0, var_68, r14, r15, rax, var_58) == 0x0) {
 </code></pre></div>
 <p>And in this instance, we want to look at not just the pseudocode, but also the assembly for a little more clarity:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">   mov edi, 0x1    ; argument &quot;op&quot; for method imp___stubs__CCCrypt
-   mov esi, 0x0    ; argument &quot;alg&quot; for method imp___stubs__CCCrypt
-   mov edx, 0x1    ; argument &quot;options&quot; for method imp___stubs__CCCrypt
-   mov rcx, r12    ; argument &quot;key&quot; for method imp___stubs__CCCrypt
-   mov r8d, 0x10   ; argument &quot;keyLength&quot; for method imp___stubs__CCCrypt
-   xor r9d, r9d    ; argument &quot;iv&quot; for method imp___stubs__CCCrypt
+<div class="highlight"><pre><code class="language-" data-lang="">   mov edi, 0x1    ; argument "op" for method imp___stubs__CCCrypt
+   mov esi, 0x0    ; argument "alg" for method imp___stubs__CCCrypt
+   mov edx, 0x1    ; argument "options" for method imp___stubs__CCCrypt
+   mov rcx, r12    ; argument "key" for method imp___stubs__CCCrypt
+   mov r8d, 0x10   ; argument "keyLength" for method imp___stubs__CCCrypt
+   xor r9d, r9d    ; argument "iv" for method imp___stubs__CCCrypt
 </code></pre></div>
 <p>Looking at the <a href="https://developer.apple.com/library/ios/documentation/System/Conceptual/ManPages_iPhoneOS/man3/CCCrypt.3cc.html">documentation for CCCrypt</a>, we get:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">CCCrypt(CCOperation op, CCAlgorithm alg, CCOptions options,
+<div class="highlight"><pre><code class="language-" data-lang="">CCCrypt(CCOperation op, CCAlgorithm alg, CCOptions options,
          const void *key, size_t keyLength, const void *iv,
          const void *dataIn, size_t dataInLength, void *dataOut,
          size_t dataOutAvailable, size_t *dataOutMoved);
@@ -293,63 +364,101 @@ rbx-&gt;_payload = 0x0;
 
 <p>Ok, now to try decrypting. We&#39;re going to use the python Crypto module for this part:</p>
 
-<script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=08_snip.py"> </script>
-<div class="highlight"><pre><code class="language-text" data-lang="text">&gt;&gt;&gt; decrypted_data[:50]
-&quot;\xe4\x9c\x0f\xff\xd2\xee`\x0e\xbe8w8\xef\xaaT\xf1\x07\xeas\xe0Z\x96&#39;6\xfc\x95\x9e\xa9\xce\xb5&gt;\xd4bplist00\xd4\x01\x02\x03\x04\x05\x06,-X&quot;
+<p><noscript><pre>from Crypto.Cipher import AES
+iv = &#39;\x00&#39;*16  # 16 byte character array of zeroes
+cipher = AES.new(binary_key, AES.MODE_CBC, IV=iv)
+decrypted_data = cipher.decrypt(str(sig_decoded.<em>undecryptedData))
+</pre></noscript>&lt;script src=&quot;<a href="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=08">https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=08</a></em>snip.py&quot;&gt; </script></p>
+<div class="highlight"><pre><code class="language-" data-lang="">&gt;&gt;&gt; decrypted_data[:50]
+"\xe4\x9c\x0f\xff\xd2\xee`\x0e\xbe8w8\xef\xaaT\xf1\x07\xeas\xe0Z\x96'6\xfc\x95\x9e\xa9\xce\xb5&gt;\xd4bplist00\xd4\x01\x02\x03\x04\x05\x06,-X"
 </code></pre></div>
 <p><em>Oh ho ho!</em> I see a <strong>bplist00</strong> ...</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">&gt;&gt;&gt; decrypted_data.index(&#39;bplist00&#39;)
+<div class="highlight"><pre><code class="language-" data-lang="">&gt;&gt;&gt; decrypted_data.index('bplist00')
 32
 </code></pre></div>
 <p>Looks like there&#39;s a 32 byte prefix - looking back at the code of <strong>-[PVSignatureEncryptor decryptedData:]</strong>, we can see:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">CC_SHA256(rbx, rsi, var_50);
+<div class="highlight"><pre><code class="language-" data-lang="">CC_SHA256(rbx, rsi, var_50);
 </code></pre></div>
 <p>SHA-256 is a 32-byte CRC. Likely the decrypted data is prefixed with its CRC hash so that the code can tell easily if it decrypted the signature correctly by validating the hash of the binary plist data matches the hash in the 32 byte prefix.</p>
 
 <p>So let&#39;s skip the first 32 bytes and try to parse it directly as a plist.</p>
 
 <p>... But before we do that, the <em>&quot;kCCOptionPKCS7Padding&quot;</em> option that was mentioned earlier means that this data is padded out to a multiple of 16 bytes:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">&gt;&gt;&gt; len(decrypted_data)/16.
+<div class="highlight"><pre><code class="language-" data-lang="">&gt;&gt;&gt; len(decrypted_data)/16.
 120.0
 </code></pre></div>
 <p>So we have to remove the padding per the PKCS7 standard. We can do that with this bit of code:</p>
 
-<script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=09_snip.py"> </script>
+<p><noscript><pre>class PKCS7Encoder():
+    class InvalidBlockSizeError(Exception):
+        &quot;&quot;&quot;Raised for invalid block sizes&quot;&quot;&quot;
+        pass
+    def <strong>init</strong>(self, block_size=16):
+        if block_size &lt; 2 or block_size &gt; 255:
+            raise PKCS7Encoder.InvalidBlockSizeError(&#39;The block size must be &#39; \
+                    &#39;between 2 and 255, inclusive&#39;)
+        self.block_size = block_size
+    def encode(self, text):
+        text_length = len(text)
+        amount_to_pad = self.block_size - (text_length % self.block_size)
+        if amount_to_pad == 0:
+            amount_to_pad = self.block_size
+        pad = chr(amount_to_pad)
+        return text + pad * amount_to_pad
+    def decode(self, text):
+        pad = ord(text[-1])
+        return text[:-pad]</p>
+
+<p>encoder = PKCS7Encoder()
+unpadded_decrypted_data = encoder.decode(decrypted_data)
+</pre></noscript><script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=09_snip.py"> </script></p>
 
 <p>Now we can attempt parsing the plist data for bytes 33+</p>
 
-<script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=10_snip.py"> </script>
-<div class="highlight"><pre><code class="language-text" data-lang="text">&gt;&gt;&gt; decrypted_plist
+<p><noscript><pre>decrypted_plist = readPlistFromData(unpadded_decrypted_data[32:])
+</pre></noscript><script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=10_snip.py"> </script></p>
+<div class="highlight"><pre><code class="language-" data-lang="">&gt;&gt;&gt; decrypted_plist
 {
-    &quot;$archiver&quot; = NSKeyedArchiver;
-    &quot;$objects&quot; =     (
-        &quot;$null&quot;,
+    "$archiver" = NSKeyedArchiver;
+    "$objects" =     (
+        "$null",
 [...]
 </code></pre></div>
 <p><strong>Success!!</strong></p>
 
 <p>What do we have this time? Let&#39;s try to decode it. But since we decrypted with python, our data is a string - need to wrap it into an NSData object first.</p>
 
-<script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=11_snip.py"> </script>
-<div class="highlight"><pre><code class="language-text" data-lang="text">Traceback (most recent call last):
-  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+<p><noscript><pre>from Foundation import *</p>
+
+<p>nsdata_decrypted_plist = NSData.dataWithBytes_length_(unpadded_decrypted_data[32:], len(unpadded_decrypted_data[32:]))
+real_sig_decoded = NSKeyedUnarchiver.unarchiveObjectWithData_(nsdata_decrypted_plist)
+</pre></noscript><script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=11_snip.py"> </script></p>
+<div class="highlight"><pre><code class="language-" data-lang="">Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
 objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decodeObjectForKey:]: cannot decode object of class (PVSignaturePayload)
 </code></pre></div>
 <p>Progress - now we&#39;re working with a &quot;PVSignaturePayload&quot;.</p>
 
 <p>Again, let&#39;s look at what data we have, and then compare that against the contents of &quot;PVSignaturePayload.h&quot; from our earlier class-dump run:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">&gt;&gt;&gt; decrypted_plist[&#39;$objects&#39;][1]
+<div class="highlight"><pre><code class="language-" data-lang="">&gt;&gt;&gt; decrypted_plist['$objects'][1]
 {
-    &quot;$class&quot; = &quot;&lt;CFKeyedArchiverUID 0x7fba02522bd0 [0x7fff7951bed0]&gt;{value = 7}&quot;;
-    baselineHeight = &quot;0.1176470592617989&quot;;
-    creationDate = &quot;&lt;CFKeyedArchiverUID 0x7fba025203d0 [0x7fff7951bed0]&gt;{value = 4}&quot;;
-    lastUsedDate = &quot;&lt;CFKeyedArchiverUID 0x7fba025203f0 [0x7fff7951bed0]&gt;{value = 6}&quot;;
-    path = &quot;&lt;CFKeyedArchiverUID 0x7fba02520350 [0x7fff7951bed0]&gt;{value = 2}&quot;;
+    "$class" = "&lt;CFKeyedArchiverUID 0x7fba02522bd0 [0x7fff7951bed0]&gt;{value = 7}";
+    baselineHeight = "0.1176470592617989";
+    creationDate = "&lt;CFKeyedArchiverUID 0x7fba025203d0 [0x7fff7951bed0]&gt;{value = 4}";
+    lastUsedDate = "&lt;CFKeyedArchiverUID 0x7fba025203f0 [0x7fff7951bed0]&gt;{value = 6}";
+    path = "&lt;CFKeyedArchiverUID 0x7fba02520350 [0x7fff7951bed0]&gt;{value = 2}";
 }
 </code></pre></div>
 <p>vs.</p>
 
-<script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=12_snip.m"> </script>
+<p><noscript><pre>@interface PVSignaturePayload : NSObject &lt;NSCoding&gt;
+{
+    NSBezierPath *path;
+    double baselineHeight;
+    NSDate *creationDate;
+    NSDate *lastUsedDate;
+}
+</pre></noscript><script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=12_snip.m"> </script></p>
 
 <p>Oh goodness - <em>NSBezierPath??</em></p>
 
@@ -359,8 +468,50 @@ objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decod
 
 <p>We could look back at the code in <strong>Preview.app</strong> for PVSignaturePayload - but we appear to have a match for a match on everything, <em>let&#39;s just wing it!</em></p>
 
-<script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=13_snip.py"> </script>
-<div class="highlight"><pre><code class="language-text" data-lang="text">&gt;&gt;&gt; real_sig_decoded.baselineHeight
+<p><noscript><pre>from Foundation import *</p>
+
+<h1 id="this-one-isn-39-t-defined-in-foundation">This one isn&#39;t defined in Foundation</h1>
+
+<p>from AppKit import NSBezierPath</p>
+
+<p>class PVSignaturePayload(NSObject):
+    path = None
+    baselineHeight = None
+    creationDate   = None
+    lastUsedDate   = None
+    def init(self):
+        self = super(PVSignaturePayload, self).init()
+        if self == None: return None
+        self.path = None
+        self.baselineHeight = None
+        self.creationDate   = None
+        self.lastUsedDate   = None
+        return self
+    def initWithCoder_(self, coder):
+        # use decodeObjectForKey when the key value could be something other than a primitive data type (looks like NSData here...)
+        self.<em>undecryptedData = coder.decodeObjectForKey</em>(u&quot;data&quot;)
+        # use decodeIntForKey because it&#39;s pretty obvious from sig_plist[&#39;$objects&#39;][1]
+        self.<em>uid = coder.decodeInt32ForKey</em>(u&quot;uid&quot;)
+        self.<em>shouldPersist = 1
+        # We won&#39;t set the other values to 0, because in this context that&#39;s actually a null pointer for them
+        self.path = coder.decodeObjectForKey</em>(u&quot;path&quot;)
+        self.baselineHeight = coder.decodeFloatForKey_(u&quot;baselineHeight&quot;)
+        self.creationDate   = coder.decodeObjectForKey_(u&quot;creationDate&quot;)
+        self.creationDate   = coder.decodeObjectForKey_(u&quot;creationDate&quot;)
+        return self</p>
+
+<h1 id="define-our-class-for-itself">Define our class for itself</h1>
+
+<p>NSKeyedUnarchiver.setClass_forClassName_(PVSignaturePayload, &quot;PVSignaturePayload&quot;)</p>
+
+<h1 id="define-some-of-the-other-classes-that-come-out">Define some of the other classes that come out</h1>
+
+<p>NSKeyedUnarchiver.setClass_forClassName_(NSDate, &quot;NSDate&quot;)
+NSKeyedUnarchiver.setClass_forClassName_(NSBezierPath, &quot;NSBezierPath&quot;)</p>
+
+<p>real_sig_decoded = NSKeyedUnarchiver.unarchiveObjectWithData_(nsdata_decrypted_plist)
+</pre></noscript><script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=13_snip.py"> </script></p>
+<div class="highlight"><pre><code class="language-" data-lang="">&gt;&gt;&gt; real_sig_decoded.baselineHeight
 0.11764705926179886
 &gt;&gt;&gt; real_sig_decoded.path
 Path &lt;0x7fba0251bb90&gt;
@@ -377,8 +528,21 @@ Path &lt;0x7fba0251bb90&gt;
 
 <p>But <a href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSBezierPath_Class/index.html">NSBezierPath</a> doesn&#39;t have to start at a (0,0) coordinate origin. In fact, the &quot;Bounds&quot; values above indicate it&#39;s offset. So let&#39;s make a transform and shift it back to something more reasonable before we draw it.</p>
 
-<script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=14_snip.py"> </script>
-<div class="highlight"><pre><code class="language-text" data-lang="text">&gt;&gt;&gt; sig_path_shifted
+<p><noscript><pre>from Foundation import *
+from AppKit import *
+import math</p>
+
+<p>sig_path = real_sig_decoded.path
+shift_path = NSAffineTransform.alloc().init()
+origin = sig_path.bounds().origin</p>
+
+<h1 id="we-translate-by-the-opposite-x-and-y-values-with-0-1-to-nudge-it-into-the-positive">We translate by the opposite X and Y values - with +0.1 to nudge it into the positive</h1>
+
+<p>shift_path.translateXBy_yBy_(origin.x * -1. + 0.1, origin.y * -1. + 0.1)
+sig_path_shifted = sig_path.copy()
+sig_path_shifted.transformUsingAffineTransform_(shift_path)
+</pre></noscript><script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=14_snip.py"> </script></p>
+<div class="highlight"><pre><code class="language-" data-lang="">&gt;&gt;&gt; sig_path_shifted
 Path &lt;0x7fba04ef0000&gt;
   Bounds: {{0.10000000000000142, 0.10000000000000001}, {271.91783064182891, 67}}
   Control point bounds: {{-0.64194097622566915, -1.8758532047271763}, {274.53815460205078, 68.975853204727173}}
@@ -392,7 +556,44 @@ Path &lt;0x7fba04ef0000&gt;
 
 <p><em>(I&#39;m gonna race through this a bit here because we&#39;re so close to the end!)</em></p>
 
-<script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=15_snip.py"> </script>
+<p><noscript><pre>import os.path</p>
+
+<p>bounds = sig_path_shifted.bounds()
+width = int(math.ceil(bounds.origin.x + bounds.size.width))
+height = int(math.ceil(bounds.origin.y + bounds.size.height))</p>
+
+<h1 id="build-a-pixels-bitmap-to-draw-onto">Build a pixels bitmap to draw onto</h1>
+
+<p>signature_bitmap = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(None, width, height, 8, 4, True, False, NSDeviceRGBColorSpace, 0, 0)</p>
+
+<h1 id="save-our-current-graphic-information-we-really-don-39-t-care-but-it-39-s-polite">Save our current graphic information (we really don&#39;t care, but it&#39;s polite)</h1>
+
+<p>NSGraphicsContext.saveGraphicsState()</p>
+
+<h1 id="set-the-focus-to-our-bitmap">Set the focus to our bitmap</h1>
+
+<p>NSGraphicsContext.setCurrentContext_(NSGraphicsContext.graphicsContextWithBitmapImageRep_(signature_bitmap))</p>
+
+<h1 id="set-the-color-to-black">Set the color to black</h1>
+
+<p>NSColor.blackColor().setFill()</p>
+
+<h1 id="fill-our-signature-on-the-bitmap-with-black">Fill our signature on the bitmap with black</h1>
+
+<p>sig_path_shifted.fill()</p>
+
+<h1 id="restore-our-previous-graphics-state">Restore our previous graphics state</h1>
+
+<p>NSGraphicsContext.restoreGraphicsState()</p>
+
+<h1 id="build-a-data-stream-of-a-png-from-our-bitmap">Build a data stream of a PNG from our bitmap</h1>
+
+<p>data = signature_bitmap.representationUsingType_properties_(NSPNGFileType, None)</p>
+
+<h1 id="save-it-to-a-file">Save it to a file</h1>
+
+<p>result = data.writeToFile_atomically_(os.path.expanduser(&quot;~/Desktop/my_signature.png&quot;), True)
+</pre></noscript><script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=15_snip.py"> </script></p>
 
 <h2 id="veni-vidi-vici">veni, vidi, vici!</h2>
 
