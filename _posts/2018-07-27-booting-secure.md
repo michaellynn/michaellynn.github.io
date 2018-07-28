@@ -295,7 +295,7 @@ What happens if we delete it?
 
 So apparently devices that are not Secure Boot don't rely on (or check/validate) the .im4m files during the boot process at all.
 
-Let's take one last bit from the logs helps to confirm that these signatures are indeed the .im4m files:
+Let's take one last bit from the logs that helps to confirm that these signatures are indeed the .im4m files:
 
 {% gist pudquick/13a2b419416f8fd010a7c8fcda2a9b87 07_snip.txt %}
 
