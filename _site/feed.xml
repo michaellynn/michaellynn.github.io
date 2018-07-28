@@ -402,7 +402,7 @@ drwxr-xr-x  7 root  wheel  224 Jul 17 09:38 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
 
 &lt;p&gt;&lt;small&gt;[ &lt;strong&gt;Note:&lt;/strong&gt; I had to do it from Target Disk mode! Some fun filesystem protections here (if you want to play at home) &lt;em&gt;- mike&lt;/em&gt; ]&lt;/small&gt;&lt;/p&gt;
 
-&lt;p&gt;For extra grins, let’s poke at this comment make sure the network is disconnected before reboot:&lt;/p&gt;
+&lt;p&gt;For extra grins, let’s poke at this comment and make sure the network is disconnected before reboot:&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;If your Mac can’t connect to the Internet, it displays an alert that an Internet connection is required.&lt;/p&gt;
@@ -416,7 +416,7 @@ drwxr-xr-x  7 root  wheel  224 Jul 17 09:38 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
 
 &lt;p&gt;Reconnecting the device to the network and then later checking in Preboot, it would seem new &lt;code class=&quot;highlighter-rouge&quot;&gt;*.j137ap.15156C1879A0A6.im4m&lt;/code&gt; files have been recreated.&lt;/p&gt;
 
-&lt;p&gt;Interstingly, each one rebuilds a uniquely named file - but always with the same hex name for itself.&lt;/p&gt;
+&lt;p&gt;Interestingly, each one rebuilds a uniquely named file - but always with the same hex name for itself.&lt;/p&gt;
 
 &lt;p&gt;They appear to be different every time they’re remade because the checksums keep changing. So they’re not static records but instead are likely dynamic signatures, needing that network access in order to be created.&lt;/p&gt;
 
