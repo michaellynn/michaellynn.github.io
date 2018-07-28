@@ -12,7 +12,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for mikeymikey blogs here" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201807272123" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201807272127" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -90,34 +90,33 @@
 </div>
 
 <article class="post-content">
-  <p><a href="https://twitter.com/rtrouton">Rich Trouton</a> kindly wrote <a href="https://derflounder.wordpress.com/2015/08/08/modifying-oracles-java-sdk-to-run-java-applications-on-os-x/">a wonderful blog post</a> covering <a href="https://gist.github.com/pudquick/349f063c242239952a2e/64c295fc4576d7df9b8632e6ddecbe6165fd7663">a python script of mine</a> (<em>note: this is the old version, don&#39;t use it!</em>) which modifies installations of Oracle&#39;s Java JDK to extend its capabilities to allow it to run JavaApplicationStub .app bundles as was <a href="https://forums.developer.apple.com/message/6741">discussed</a> on Apple&#39;s Developer forums (go ahead and read it, Apple has made the forum open to the public for now). </p>
+  <p><a href="https://twitter.com/rtrouton">Rich Trouton</a> kindly wrote <a href="https://derflounder.wordpress.com/2015/08/08/modifying-oracles-java-sdk-to-run-java-applications-on-os-x/">a wonderful blog post</a> covering <a href="https://gist.github.com/pudquick/349f063c242239952a2e/64c295fc4576d7df9b8632e6ddecbe6165fd7663">a python script of mine</a> (<em>note: this is the old version, don’t use it!</em>) which modifies installations of Oracle’s Java JDK to extend its capabilities to allow it to run JavaApplicationStub .app bundles as was <a href="https://forums.developer.apple.com/message/6741">discussed</a> on Apple’s Developer forums (go ahead and read it, Apple has made the forum open to the public for now).</p>
 
-<p>One thing that annoyed me a bit about the fix though was that it didn&#39;t seem to work with <em>everything</em> (read: <a href="http://minecraft.net/">Minecraft</a>), just a large number of Java .apps.</p>
+<p>One thing that annoyed me a bit about the fix though was that it didn’t seem to work with <em>everything</em> (read: <a href="http://minecraft.net/">Minecraft</a>), just a large number of Java .apps.</p>
 
 <p>After it was posted, a Twitter friend of mine <a href="https://twitter.com/morningwoodspor/status/630886277538258945">asked for a little more help</a> with one of these more problematic apps.</p>
 
-<p>I was able to confirm that the app in question could run if I provided the right arguments to <code>/usr/bin/java</code>, so why couldn&#39;t JavaApplicationStub launching work?</p>
+<p>I was able to confirm that the app in question could run if I provided the right arguments to <code class="highlighter-rouge">/usr/bin/java</code>, so why couldn’t JavaApplicationStub launching work?</p>
 
 <p>A little more research (aka Google) turned up <a href="http://apple.stackexchange.com/a/136976">this marvelous additional tidbit</a>.</p>
 
-<p>Basically the problematic Java .apps in question had their .jar files coded to look for <code>libserver.dylib</code>, which isn&#39;t part of the current JDK distribution.</p>
+<p>Basically the problematic Java .apps in question had their .jar files coded to look for <code class="highlighter-rouge">libserver.dylib</code>, which isn’t part of the current JDK distribution.</p>
 
-<p>This fix involves creating the original directory structure it expects it at and symlinking <code>libjvm.dylib</code> to the old location.</p>
+<p>This fix involves creating the original directory structure it expects it at and symlinking <code class="highlighter-rouge">libjvm.dylib</code> to the old location.</p>
 
 <p>It worked, it fixed the launching! (<strong><em>and Minecraft works as-is for me now, no more modifying the .app bundle!!</em></strong>)</p>
 
-<p>I&#39;ve since <a href="https://gist.github.com/pudquick/349f063c242239952a2e">updated the original code</a>, so that both Rich&#39;s blog post and this one here provide an all-in-one solution.</p>
+<p>I’ve since <a href="https://gist.github.com/pudquick/349f063c242239952a2e">updated the original code</a>, so that both Rich’s blog post and this one here provide an all-in-one solution.</p>
 
 <p>As always, hope this helps you 😄</p>
 
-<p><noscript><pre>#!/usr/bin/python
-import plistlib, os.path, os</p>
+<noscript><pre>#!/usr/bin/python
+import plistlib, os.path, os
 
-<h1 id="based-off-of-https-forums-developer-apple-com-message-6741">Based off of <a href="https://forums.developer.apple.com/message/6741">https://forums.developer.apple.com/message/6741</a></h1>
+# Based off of https://forums.developer.apple.com/message/6741
+#          and http://apple.stackexchange.com/a/136976
 
-<h1 id="and-http-apple-stackexchange-com-a-136976">and <a href="http://apple.stackexchange.com/a/136976">http://apple.stackexchange.com/a/136976</a></h1>
-
-<p>def jdk_info_plists():
+def jdk_info_plists():
     # Find all the JDK Info.plist files
     JDK_ROOT = &quot;/Library/Java/JavaVirtualMachines&quot;
     if (os.path.exists(JDK_ROOT) and os.path.isdir(JDK_ROOT)):
@@ -128,9 +127,9 @@ import plistlib, os.path, os</p>
                 # Check for Info.plist
                 info_plist = os.path.join(jdk_dir, &quot;Contents&quot;, &quot;Info.plist&quot;)
                 if (os.path.isfile(info_plist)):
-                    yield info_plist</p>
+                    yield info_plist
 
-<p>for info_plist in jdk_info_plists():
+for info_plist in jdk_info_plists():
     # Change all the plists of all the installed JDKs
     info = plistlib.readPlist(info_plist)
     # Convert the capabilities into a set
@@ -159,7 +158,8 @@ import plistlib, os.path, os</p>
         os.symlink(libjvm_dylib, libserver_dylib)
     except:
         pass
-</pre></noscript><script src="https://gist.github.com/pudquick/349f063c242239952a2e.js"> </script></p>
+</pre></noscript>
+<script src="https://gist.github.com/pudquick/349f063c242239952a2e.js"> </script>
 
 <p><em>- mike</em></p>
 

@@ -307,7 +307,7 @@ But what about ..
 
 > Allows any version of signed operating system software ever trusted by Apple to run.
 
-<p>
+<p/>
 
 > During startup when Medium Security is turned on, your Mac verifies the OS on your startup disk only by making sure that it has been properly signed by Apple [...]
 

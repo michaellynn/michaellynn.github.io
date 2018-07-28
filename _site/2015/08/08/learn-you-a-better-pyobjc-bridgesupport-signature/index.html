@@ -12,7 +12,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for mikeymikey blogs here" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201807272123" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201807272127" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -99,14 +99,14 @@
 <p>Recently I received a challenge that was posed by <a href="https://twitter.com/shea_craig">Shea Craig</a> to me on the <a href="http://macadmins.org">Macadmins Slack</a> in the <strong>#autopkg</strong> channel:</p>
 
 <blockquote>
-<p>@sheagcraig: Also, it&#39;s possible that we could try to do a mount via PyObjC stuff (paging @frogor)</p>
+  <p>@sheagcraig: Also, it’s possible that we could try to do a mount via PyObjC stuff (paging @frogor)</p>
 </blockquote>
 
 <p><em><small>*(frogor is one of my <a href="/about">many names</a>)</small></em></p>
 
-<p>In the discussion, a few people were wondering if it was possible to mount network shares with python in OS X (<em>of course it is</em>) because using the command-line <code>mount</code> was running into some odd situations with Kerberos ticket handling.</p>
+<p>In the discussion, a few people were wondering if it was possible to mount network shares with python in OS X (<em>of course it is</em>) because using the command-line <code class="highlighter-rouge">mount</code> was running into some odd situations with Kerberos ticket handling.</p>
 
-<p>You could call out to AppleScript (<code>osascript</code>) to do it with &quot;mount volume&quot;, but the rest of the code involved was already written in python and there was interest in reducing the number of external tools used rather than replacing one with another.</p>
+<p>You could call out to AppleScript (<code class="highlighter-rouge">osascript</code>) to do it with “mount volume”, but the rest of the code involved was already written in python and there was interest in reducing the number of external tools used rather than replacing one with another.</p>
 
 <p>This sounded like a fun challenge!</p>
 
@@ -114,25 +114,30 @@
 
 <p>How did I find that, you might ask?</p>
 
-<p>Unless you&#39;re using AppleScript to speak to a particular application that has its own custom commands (aka dictionary), the built-in commands for AppleScript that aren&#39;t just part of the AppleScript language itself are mostly stored in the &quot;Standard Additions&quot; scripting addition.</p>
+<p>Unless you’re using AppleScript to speak to a particular application that has its own custom commands (aka dictionary), the built-in commands for AppleScript that aren’t just part of the AppleScript language itself are mostly stored in the “Standard Additions” scripting addition.</p>
 
-<p>If you open up Script Editor and select <em>File -&gt; Open Dictionary...</em> and select StandardAdditions.osax, you can see the &quot;mount volume&quot; command and its associated documentation.</p>
+<p>If you open up Script Editor and select <em>File -&gt; Open Dictionary…</em> and select StandardAdditions.osax, you can see the “mount volume” command and its associated documentation.</p>
 
-<p><img src="/images/2015-08-08-learn-you-a-better-pyobjc-bridgesupport-signature/StandardAdditions.png" alt=""></p>
+<p><img src="/images/2015-08-08-learn-you-a-better-pyobjc-bridgesupport-signature/StandardAdditions.png" alt="" /></p>
 
-<p>Opening the executable in Hopper, unfortunately you can&#39;t just search for &quot;mount volume&quot; and find the relevant code. This is because AppleScript additions have a translation layer called a <a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ScriptableCocoaApplications/SApps_creating_sdef/SAppsCreateSdef.html">Scripting Definition File</a> that maps the AppleScript language syntax to the code behind it.</p>
+<p>Opening the executable in Hopper, unfortunately you can’t just search for “mount volume” and find the relevant code. This is because AppleScript additions have a translation layer called a <a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ScriptableCocoaApplications/SApps_creating_sdef/SAppsCreateSdef.html">Scripting Definition File</a> that maps the AppleScript language syntax to the code behind it.</p>
 
-<p>Inside the &quot;StandardAdditions.osax&quot; bundle, within /Contents/Resources you&#39;ll find the &quot;StandardAdditions.sdef&quot; scripting definition file and the relevant definition line within it:</p>
-<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;command</span> <span class="na">name=</span><span class="s">"mount volume"</span> <span class="na">code=</span><span class="s">"aevtmvol"</span> <span class="na">description=</span><span class="s">"Mount the specified server volume"</span><span class="nt">&gt;</span>
-</code></pre></div>
-<p>Searching in Hopper for &quot;aevtmvol&quot; reveals the function &quot;_AEVTaevtmvol&quot;, which has this bit of pseudocode:</p>
-<div class="highlight"><pre><code class="language-asm" data-lang="asm">eax = NetFSMountURLSync(var_38, 0x0, 0x0, 0x0, var_3C, esi, var_10);
-</code></pre></div>
+<p>Inside the “StandardAdditions.osax” bundle, within /Contents/Resources you’ll find the “StandardAdditions.sdef” scripting definition file and the relevant definition line within it:</p>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;command</span> <span class="na">name=</span><span class="s">"mount volume"</span> <span class="na">code=</span><span class="s">"aevtmvol"</span> <span class="na">description=</span><span class="s">"Mount the specified server volume"</span><span class="nt">&gt;</span>
+</code></pre>
+</div>
+
+<p>Searching in Hopper for “aevtmvol” reveals the function “_AEVTaevtmvol”, which has this bit of pseudocode:</p>
+
+<pre><code class="language-asm">eax = NetFSMountURLSync(var_38, 0x0, 0x0, 0x0, var_3C, esi, var_10);
+</code></pre>
+
 <p>That looks promising!</p>
 
 <p>A Google search turns up documentation for this function via a note from Apple within the <a href="https://developer.apple.com/library/mac/documentation/Carbon/Reference/File_Manager/#//apple_ref/c/func/FSMountServerVolumeSync">File Manager legacy reference for FSMountServerVolumeSync</a> (<em>careful loading this page, <strong>tons</strong> of Javascript</em>), where it says:</p>
 
-<p><em>&quot;To mount local volumes and to eject and unmount all volumes, use Disk Arbitration API instead (for more information, see Disk Arbitration Framework Reference). To mount a network volume, use NetFSMountURLAsync instead (to cancel a pending mount request, use NetFSMountURLCancel). <strong>For more information, see NetFS.h in /System/Library/Frameworks/NetFS.framework/Headers</strong>.&quot;</em></p>
+<p><em>“To mount local volumes and to eject and unmount all volumes, use Disk Arbitration API instead (for more information, see Disk Arbitration Framework Reference). To mount a network volume, use NetFSMountURLAsync instead (to cancel a pending mount request, use NetFSMountURLCancel). <strong>For more information, see NetFS.h in /System/Library/Frameworks/NetFS.framework/Headers</strong>.”</em></p>
 
 <p><em><small>*(yes, it says NetFSMountURLAsync not NetFSMountURLsync, but just bear with me)</small></em></p>
 
@@ -140,169 +145,188 @@
 
 <p>Within the file mentioned above, we find:</p>
 
-<p><noscript><pre>int
+<noscript><pre>int
 NetFSMountURLSync(
-    CFURLRef url,                           // URL to mount, e.g. nfs://server/path
-    CFURLRef mountpath,                     // Path for the mountpoint
-    CFStringRef user,                       // Auth user name (overrides URL)
-    CFStringRef passwd,                     // Auth password (overrides URL)
-    CFMutableDictionaryRef open_options,    // Options for session open (see below)
-    CFMutableDictionaryRef mount_options,   // Options for mounting (see below)
-    CFArrayRef *mountpoints)                // Array of mountpoints</pre></noscript><script src="https://gist.github.com/pudquick/8f09a0b8893c01637b74.js?file=01_snip.c"> </script></p>
+	CFURLRef url,                           // URL to mount, e.g. nfs://server/path
+	CFURLRef mountpath,                     // Path for the mountpoint
+	CFStringRef user,                       // Auth user name (overrides URL)
+	CFStringRef passwd,                     // Auth password (overrides URL)
+	CFMutableDictionaryRef open_options,    // Options for session open (see below)
+	CFMutableDictionaryRef mount_options,   // Options for mounting (see below)
+	CFArrayRef *mountpoints)                // Array of mountpoints</pre></noscript>
+<script src="https://gist.github.com/pudquick/8f09a0b8893c01637b74.js?file=01_snip.c"> </script>
 
-<p>That&#39;s a bingo.</p>
+<p>That’s a bingo.</p>
 
-<p>Looking at the pseudocode, <code>0x0</code> (null pointer) is used in place of the user and password arguments which lines right up with the documentation <em>&quot;(overrides URL)&quot;</em> indicating that as long as someone provides the password within the URL (example: <code>afp://username:password@server/share</code>), then they&#39;re unnecessary.</p>
+<p>Looking at the pseudocode, <code class="highlighter-rouge">0x0</code> (null pointer) is used in place of the user and password arguments which lines right up with the documentation <em>“(overrides URL)”</em> indicating that as long as someone provides the password within the URL (example: <code class="highlighter-rouge">afp://username:password@server/share</code>), then they’re unnecessary.</p>
 
 <p>The only arguments AppleScript passes are <em>url</em>, <em>open_options</em>, <em>mount_options</em>, and a placeholder for getting the returned mountpoint after it succeeds.</p>
 
-<p>So let&#39;s look at <em>open_options</em> and <em>mount_options</em> to see what AppleScript put in them.</p>
-<div class="highlight"><pre><code class="language-asm" data-lang="asm">00014a1b         lea        eax, dword [ds:eax-0x14621+cfstring_AllowSubMounts] ; @"AllowSubMounts"
-</code></pre></div>
+<p>So let’s look at <em>open_options</em> and <em>mount_options</em> to see what AppleScript put in them.</p>
+
+<pre><code class="language-asm">00014a1b         lea        eax, dword [ds:eax-0x14621+cfstring_AllowSubMounts] ; @"AllowSubMounts"
+</code></pre>
+
 <p>From the same NetFS.h file above, we can find out what this means:</p>
-<div class="highlight"><pre><code class="language-C" data-lang="C">* kNetFSAllowSubMountsKey = true        Allow a mount from a dir beneath the share point.
+
+<pre><code class="language-C">* kNetFSAllowSubMountsKey = true        Allow a mount from a dir beneath the share point.
 #define kNetFSAllowSubMountsKey         CFSTR("AllowSubMounts")
-</code></pre></div>
+</code></pre>
+
 <p>Allowing mounting subdirectories sounds like an important setting. Are there any other good ones in there?</p>
-<div class="highlight"><pre><code class="language-C" data-lang="C">* kNAUIOptionKey = UIOption             Suppress authentication dialog UI.
+
+<pre><code class="language-C">* kNAUIOptionKey = UIOption             Suppress authentication dialog UI.
 #define kNAUIOptionKey                  CFSTR("UIOption")
 // UIOption values                      CFStringRef
 #define kNAUIOptionNoUI                 CFSTR("NoUI")
 #define kNAUIOptionAllowUI              CFSTR("AllowUI")
 #define kNAUIOptionForceUI              CFSTR("ForceUI")
-</code></pre></div>
+</code></pre>
+
 <p>Useful!</p>
-<div class="highlight"><pre><code class="language-C" data-lang="C">* kNetFSMountAtMountDirKey = true       Mount on the specified mountpath instead of below it.
+
+<pre><code class="language-C">* kNetFSMountAtMountDirKey = true       Mount on the specified mountpath instead of below it.
 #define kNetFSMountAtMountDirKey        CFSTR("MountAtMountDir")
-</code></pre></div>
+</code></pre>
+
 <p>Could come in handy!</p>
 
-<p>It&#39;s also interesting to note that the AppleScript code provides <code>0x0</code> for mountpath, which seems to imply that not defining it will make it mount in the standard dynamic fashion at /Volumes.</p>
+<p>It’s also interesting to note that the AppleScript code provides <code class="highlighter-rouge">0x0</code> for mountpath, which seems to imply that not defining it will make it mount in the standard dynamic fashion at /Volumes.</p>
 
 <p>So at what point do we start turning this into python code?</p>
 
-<p>... How about now? 😆</p>
+<p>… How about now? 😆</p>
 
-<p>If you&#39;ve not dealt with a lot of pyobjc, I feel a little concern as to why you&#39;re reading my blog since <a href="/tag/python">that&#39;s mostly what I write about</a>. But if you do find yourself in this boat, I can point you to two wonderful writeups about it written by the venerable <a href="http://twitter.com/gregneagle/">Greg Neagle</a>: <strong><a href="https://managingosx.wordpress.com/2015/02/02/command-line-tools-via-python-and-cocoa/">Command-line Tools via Python and Cocoa</a></strong> and <strong><a href="https://managingosx.wordpress.com/2015/02/05/accessing-more-frameworks-with-python-2/">Accessing More Frameworks with Python</a></strong></p>
+<p>If you’ve not dealt with a lot of pyobjc, I feel a little concern as to why you’re reading my blog since <a href="/tag/python">that’s mostly what I write about</a>. But if you do find yourself in this boat, I can point you to two wonderful writeups about it written by the venerable <a href="http://twitter.com/gregneagle/">Greg Neagle</a>: <strong><a href="https://managingosx.wordpress.com/2015/02/02/command-line-tools-via-python-and-cocoa/">Command-line Tools via Python and Cocoa</a></strong> and <strong><a href="https://managingosx.wordpress.com/2015/02/05/accessing-more-frameworks-with-python-2/">Accessing More Frameworks with Python</a></strong></p>
 
-<p>The second article I linked there is an important one in relation to this blog post as it&#39;s about extending pyobjc on OS X to support working with Frameworks that you can&#39;t directly import within python.</p>
+<p>The second article I linked there is an important one in relation to this blog post as it’s about extending pyobjc on OS X to support working with Frameworks that you can’t directly import within python.</p>
 
-<p>Let&#39;s see how NetFS handles in this regard:</p>
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">NetFS</span>
+<p>Let’s see how NetFS handles in this regard:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">NetFS</span>
 <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
   <span class="n">File</span> <span class="s">"&lt;stdin&gt;"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="nb">ImportError</span><span class="p">:</span> <span class="n">No</span> <span class="n">module</span> <span class="n">named</span> <span class="n">NetFS</span>
-</code></pre></div>
-<p>So let&#39;s take a suggestion from that second article as to how to fix this:</p>
+</code></pre>
+</div>
 
-<p><noscript><pre>import objc
-from CoreFoundation import CFURLCreateWithString</p>
+<p>So let’s take a suggestion from that second article as to how to fix this:</p>
 
-<p><strong>bundle</strong> = objc.initFrameworkWrapper(&quot;NetFS&quot;,
+<noscript><pre>import objc
+from CoreFoundation import CFURLCreateWithString
+
+__bundle__ = objc.initFrameworkWrapper(&quot;NetFS&quot;,
     frameworkIdentifier=&quot;com.apple.NetFS&quot;,
     frameworkPath=objc.pathForFramework(&quot;/System/Library/Frameworks/NetFS.framework&quot;),
-    globals=globals())</p>
+    globals=globals())
 
-<p>share_url = CFURLCreateWithString(None, &#39;afp://servername.local/sharename&#39;, None)</p>
+share_url = CFURLCreateWithString(None, &#39;afp://servername.local/sharename&#39;, None)
 
-<p>&gt;&gt;&gt; NetFSMountURLSync
-&lt;objc.function &#39;NetFSMountURLSync&#39; at 0x10f458270&gt;</pre></noscript><script src="https://gist.github.com/pudquick/8f09a0b8893c01637b74.js?file=02_snip.py"> </script></p>
+&gt;&gt;&gt; NetFSMountURLSync
+&lt;objc.function &#39;NetFSMountURLSync&#39; at 0x10f458270&gt;</pre></noscript>
+<script src="https://gist.github.com/pudquick/8f09a0b8893c01637b74.js?file=02_snip.py"> </script>
 
-<p>No errors, very promising! Let&#39;s take it for a spin.</p>
+<p>No errors, very promising! Let’s take it for a spin.</p>
 
-<p>We won&#39;t define any custom options, we&#39;ll just provide a URL to mount and a list (to match the CFArrayRef for our return mountpath).</p>
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">NetFSMountURLSync</span><span class="p">(</span><span class="n">share_url</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="p">[])</span>
+<p>We won’t define any custom options, we’ll just provide a URL to mount and a list (to match the CFArrayRef for our return mountpath).</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">NetFSMountURLSync</span><span class="p">(</span><span class="n">share_url</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="p">[])</span>
 <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
   <span class="n">File</span> <span class="s">"&lt;stdin&gt;"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="nb">ValueError</span><span class="p">:</span> <span class="n">depythonifying</span> <span class="s">'pointer'</span><span class="p">,</span> <span class="n">got</span> <span class="s">'list'</span>
-</code></pre></div>
-<p>Ruh roh. It apparently didn&#39;t like my list argument.</p>
+</code></pre>
+</div>
 
-<p>Swapping it to None doesn&#39;t help either.</p>
+<p>Ruh roh. It apparently didn’t like my list argument.</p>
 
-<p>It&#39;s expecting a pointer apparently. How do I get a pointer to a list (or an NSArray) in pyobjc? I know how to do it in ctypes - <em>but in pyojc???</em></p>
+<p>Swapping it to None doesn’t help either.</p>
+
+<p>It’s expecting a pointer apparently. How do I get a pointer to a list (or an NSArray) in pyobjc? I know how to do it in ctypes - <em>but in pyojc???</em></p>
 
 <p><strong>[INTERMISSION]</strong></p>
 
-<p><em>At this point I came up with a crazy workaround, which worked, but I&#39;m not putting it into this article, I&#39;ll save that for another one. The technique I developed is amazingly useful for other things but is too long to write in the margins here.</em></p>
+<p><em>At this point I came up with a crazy workaround, which worked, but I’m not putting it into this article, I’ll save that for another one. The technique I developed is amazingly useful for other things but is too long to write in the margins here.</em></p>
 
 <p><strong>[END OF INTERMISSION]</strong></p>
 
-<p>The real problem boils down to how <code>NetFSMountURLSync</code> is defined in the bridgesupport file that shipped with OS X, located at: /System/Library/Frameworks/NetFS.framework/Resources/BridgeSupport/NetFS.bridgesupport</p>
+<p>The real problem boils down to how <code class="highlighter-rouge">NetFSMountURLSync</code> is defined in the bridgesupport file that shipped with OS X, located at: /System/Library/Frameworks/NetFS.framework/Resources/BridgeSupport/NetFS.bridgesupport</p>
 
-<p><noscript><pre>&lt;function name=&#39;NetFSMountURLSync&#39;&gt;
-&lt;arg type=&#39;<sup>{__CFURL=}&#39;/&gt;</sup>
-&lt;arg type=&#39;<sup>{__CFURL=}&#39;/&gt;</sup>
-&lt;arg type=&#39;<sup>{__CFString=}&#39;/&gt;</sup>
-&lt;arg type=&#39;<sup>{__CFString=}&#39;/&gt;</sup>
-&lt;arg type=&#39;<sup>{__CFDictionary=}&#39;/&gt;</sup>
-&lt;arg type=&#39;<sup>{__CFDictionary=}&#39;/&gt;</sup>
-&lt;arg type=&#39;<sup><sup>{__CFArray}&#39;/&gt;</sup></sup>
+<noscript><pre>&lt;function name=&#39;NetFSMountURLSync&#39;&gt;
+&lt;arg type=&#39;^{__CFURL=}&#39;/&gt;
+&lt;arg type=&#39;^{__CFURL=}&#39;/&gt;
+&lt;arg type=&#39;^{__CFString=}&#39;/&gt;
+&lt;arg type=&#39;^{__CFString=}&#39;/&gt;
+&lt;arg type=&#39;^{__CFDictionary=}&#39;/&gt;
+&lt;arg type=&#39;^{__CFDictionary=}&#39;/&gt;
+&lt;arg type=&#39;^^{__CFArray}&#39;/&gt;
 &lt;retval type=&#39;i&#39;/&gt;
-&lt;/function&gt;</pre></noscript><script src="https://gist.github.com/pudquick/8f09a0b8893c01637b74.js?file=03_snip.xml"> </script></p>
+&lt;/function&gt;</pre></noscript>
+<script src="https://gist.github.com/pudquick/8f09a0b8893c01637b74.js?file=03_snip.xml"> </script>
 
-<p>That last argument is what&#39;s killing us: <code>&lt;arg type=&#39;^^{__CFArray}&#39;/&gt;</code></p>
+<p>That last argument is what’s killing us: <code class="highlighter-rouge">&lt;arg type='^^{__CFArray}'/&gt;</code></p>
 
-<p>... a pointer to a pointer to a CFArray ...</p>
+<p>… a pointer to a pointer to a CFArray …</p>
 
-<p>... aka a pointer to a CFArrayRef ...</p>
+<p>… aka a pointer to a CFArrayRef …</p>
 
-<p>... aka a pointer to a NSArray (<a href="https://developer.apple.com/library/ios/documentation/CoreFoundation/Conceptual/CFDesignConcepts/Articles/tollFreeBridgedTypes.html">via bridging</a>)</p>
+<p>… aka a pointer to a NSArray (<a href="https://developer.apple.com/library/ios/documentation/CoreFoundation/Conceptual/CFDesignConcepts/Articles/tollFreeBridgedTypes.html">via bridging</a>)</p>
 
-<p>Googling for countless examples on how to use <code>NetFSMountURLSync</code> show I can pass a null pointer by reference for this argument. OS X isn&#39;t expecting me to pass it a CFArrayRef (NSArray), it will <u>build one for me</u> and give me back a pointer to it.</p>
+<p>Googling for countless examples on how to use <code class="highlighter-rouge">NetFSMountURLSync</code> show I can pass a null pointer by reference for this argument. OS X isn’t expecting me to pass it a CFArrayRef (NSArray), it will <u>build one for me</u> and give me back a pointer to it.</p>
 
-<p>I don&#39;t really need to put anything of value <em>into</em> this function argument, I just need to get something <em>out</em> of it.</p>
+<p>I don’t really need to put anything of value <em>into</em> this function argument, I just need to get something <em>out</em> of it.</p>
 
 <p>So without any really good ideas on how to deal with this situation, I emailed the maintainer of the <a href="http://pythonhosted.org/pyobjc/">pyobjc project</a> - Ronald Oussoren.</p>
 
-<p>He is an <em>extremely</em> kind person and has responded to me the few times I&#39;ve done this to him before. He definitely came through again this time 😃</p>
+<p>He is an <em>extremely</em> kind person and has responded to me the few times I’ve done this to him before. He definitely came through again this time 😃</p>
 
 <p>His recommendation was that because all of the arguments were basically toll-free bridged types (<em>pointer to a CFURL</em> = <em>CFURLRef</em> = <em>NSURL</em>, etc.), it would be best to rewrite the signature as taking a series of object type arguments and then changing the last argument from an input argument into an output.</p>
 
-<p>While pyobjc has problems with double pointer signatures (<code>^^{__CFArray}</code> - each <code>^</code> indicates a pointer <a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html">per the documentation</a>), it has no problems with a single level of pointers.</p>
+<p>While pyobjc has problems with double pointer signatures (<code class="highlighter-rouge">^^{__CFArray}</code> - each <code class="highlighter-rouge">^</code> indicates a pointer <a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html">per the documentation</a>), it has no problems with a single level of pointers.</p>
 
-<p>By changing the signature from <code>^^{__CFArray}</code> (aka <em>pointer to a CFArrayRef</em> aka <em>pointer to a NSArray</em>) to <code>^@</code> (<em>pointer to an object</em>), pyobjc becomes able to handle it with ease! Just needed to get from <code>^^</code> to <code>^</code>.</p>
+<p>By changing the signature from <code class="highlighter-rouge">^^{__CFArray}</code> (aka <em>pointer to a CFArrayRef</em> aka <em>pointer to a NSArray</em>) to <code class="highlighter-rouge">^@</code> (<em>pointer to an object</em>), pyobjc becomes able to handle it with ease! Just needed to get from <code class="highlighter-rouge">^^</code> to <code class="highlighter-rouge">^</code>.</p>
 
-<p><noscript><pre>import objc
-from CoreFoundation import CFURLCreateWithString</p>
+<noscript><pre>import objc
+from CoreFoundation import CFURLCreateWithString
 
-<p><strong>bundle</strong> = objc.initFrameworkWrapper(&quot;NetFS&quot;,
+__bundle__ = objc.initFrameworkWrapper(&quot;NetFS&quot;,
     frameworkIdentifier=&quot;com.apple.NetFS&quot;,
     frameworkPath=objc.pathForFramework(&quot;/System/Library/Frameworks/NetFS.framework&quot;),
-    globals=globals())</p>
+    globals=globals())
 
-<p>share_url = CFURLCreateWithString(None, &#39;afp://servername.local/sharename&#39;, None)</p>
+share_url = CFURLCreateWithString(None, &#39;afp://servername.local/sharename&#39;, None)
 
-<h1 id="delete-the-imported-netfsmounturlsync-so-we-can-rewrite-it">delete the imported NetFSMountURLSync so we can rewrite it</h1>
+# delete the imported NetFSMountURLSync so we can rewrite it
+# while keeping everything else from NetFS.framework
+del NetFSMountURLSync
 
-<h1 id="while-keeping-everything-else-from-netfs-framework">while keeping everything else from NetFS.framework</h1>
+objc.loadBundleFunctions(__bundle__, globals(), [(&#39;NetFSMountURLSync&#39;, &#39;i@@@@@@o^@&#39;)])</pre></noscript>
+<script src="https://gist.github.com/pudquick/8f09a0b8893c01637b74.js?file=04_snip.py"> </script>
 
-<p>del NetFSMountURLSync</p>
-
-<p>objc.loadBundleFunctions(<strong>bundle</strong>, globals(), [(&#39;NetFSMountURLSync&#39;, &#39;i@@@@@@o<sup>@&#39;)])</pre></noscript>&lt;script</sup> src=&quot;<a href="https://gist.github.com/pudquick/8f09a0b8893c01637b74.js?file=04_snip.py%22%3E">https://gist.github.com/pudquick/8f09a0b8893c01637b74.js?file=04_snip.py&quot;&gt;</a> </script></p>
-
-<p>Let&#39;s break down that signature: <code>i@@@@@@o^@</code></p>
+<p>Let’s break down that signature: <code class="highlighter-rouge">i@@@@@@o^@</code></p>
 
 <p>The function has 1 return value and 7 input arguments.</p>
 
-<p><a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html">Per the documentation</a>, we start off by defining the return value as <code>i</code>, an <strong>int</strong> type, which is pretty common for functions (usually used for error codes).</p>
+<p><a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html">Per the documentation</a>, we start off by defining the return value as <code class="highlighter-rouge">i</code>, an <strong>int</strong> type, which is pretty common for functions (usually used for error codes).</p>
 
-<p>The arguments follow, starting with 6 <code>@</code> which indicates 6 <strong>object</strong> type arguments.</p>
+<p>The arguments follow, starting with 6 <code class="highlighter-rouge">@</code> which indicates 6 <strong>object</strong> type arguments.</p>
 
-<p>Then magic for the last argument: <code>o^@</code>: out-only pointer to an <strong>object</strong> type.</p>
+<p>Then magic for the last argument: <code class="highlighter-rouge">o^@</code>: out-only pointer to an <strong>object</strong> type.</p>
 
-<p>When you provide a signature like this to pyobjc, you still have to pass <code>None</code> (null pointer) for the argument, but instead of having to deal with dereferencing pointers it saves you the pain <em>and just moves it to a second return value</em>.</p>
+<p>When you provide a signature like this to pyobjc, you still have to pass <code class="highlighter-rouge">None</code> (null pointer) for the argument, but instead of having to deal with dereferencing pointers it saves you the pain <em>and just moves it to a second return value</em>.</p>
 
-<p>Here&#39;s how you use it:</p>
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">error</span><span class="p">,</span> <span class="n">mountpaths</span> <span class="o">=</span> <span class="n">NetFSMountURLSync</span><span class="p">(</span><span class="n">share_url</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+<p>Here’s how you use it:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">error</span><span class="p">,</span> <span class="n">mountpaths</span> <span class="o">=</span> <span class="n">NetFSMountURLSync</span><span class="p">(</span><span class="n">share_url</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
 
 <span class="o">&gt;&gt;&gt;</span> <span class="n">mountpaths</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="s">u'/Volumes/sharename'</span>
 
-</code></pre></div>
+</code></pre>
+</div>
+
 <p><em>Holy cow - IT WORKED AND IT MOUNTED - how freaking cool is that???</em></p>
 
-<p>If you&#39;d like a more polished version of the code in this article, including the ability to mount shares at an arbitrary mount path (the directory has to exist in advance) and the use of some of the open and mount options listed above, <a href="https://gist.github.com/pudquick/1362a8908be01e23041d">you can find it here</a>.</p>
+<p>If you’d like a more polished version of the code in this article, including the ability to mount shares at an arbitrary mount path (the directory has to exist in advance) and the use of some of the open and mount options listed above, <a href="https://gist.github.com/pudquick/1362a8908be01e23041d">you can find it here</a>.</p>
 
 <p>It still lacks %-style encoding (like %20 for a space) for username and password portions of the URL. Exercise is left up to the reader to implement 😄</p>
 

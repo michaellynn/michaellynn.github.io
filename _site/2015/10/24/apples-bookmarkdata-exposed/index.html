@@ -12,7 +12,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for mikeymikey blogs here" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201807272123" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201807272127" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -92,23 +92,23 @@
 </div>
 
 <article class="post-content">
-  <p><em>(And we&#39;ll cover <code>.sfl</code> files while we&#39;re at it!)</em></p>
+  <p><em>(And we’ll cover <code class="highlighter-rouge">.sfl</code> files while we’re at it!)</em></p>
 
 <p>A good friend of mine, <a href="https://twitter.com/Sacrilicious">Allister</a>, had an interesting question on the <a href="http://macadmins.org/">MacAdmins Slack</a>:</p>
 
 <blockquote>
-<p><em>@allister: zero hits on developer.apple.com for this file extension: Library/Application Support/com.apple.sharedfilelist/com.apple.LSSharedFileList.RecentServers.sfl</em></p>
+  <p><em>@allister: zero hits on developer.apple.com for this file extension: Library/Application Support/com.apple.sharedfilelist/com.apple.LSSharedFileList.RecentServers.sfl</em></p>
 </blockquote>
 
-<p>To wit: What <em>are</em> the <code>.sfl</code> files that are appearing in OS X 10.11 El Capitan? There sure are a lot of them!</p>
+<p>To wit: What <em>are</em> the <code class="highlighter-rouge">.sfl</code> files that are appearing in OS X 10.11 El Capitan? There sure are a lot of them!</p>
 
 <p>Diving into the file format, it was pretty obvious it was a binary plist - and with a little more digging, an <a href="https://developer.apple.com/library/watchos/documentation/Cocoa/Reference/Foundation/Classes/NSKeyedArchiver_Class/index.html">NSKeyedArchiver</a> file at that.</p>
 
-<p>Being <a href="http://michaellynn.github.io/2015/07/26/exploring-os-x-preview-signatures/">very familiar</a> with NSKeyedArchiver formats now, it didn&#39;t take a whole lot of effort to come up with a script that allowed me to extract the contents of the com.apple.LSSharedFileList.RecentServers.sfl file.</p>
+<p>Being <a href="http://michaellynn.github.io/2015/07/26/exploring-os-x-preview-signatures/">very familiar</a> with NSKeyedArchiver formats now, it didn’t take a whole lot of effort to come up with a script that allowed me to extract the contents of the com.apple.LSSharedFileList.RecentServers.sfl file.</p>
 
-<p>That is - it didn&#39;t take a lot of effort to extract the <strong>initial</strong> layer of contents.</p>
+<p>That is - it didn’t take a lot of effort to extract the <strong>initial</strong> layer of contents.</p>
 
-<p><noscript><pre>{
+<noscript><pre>{
     items =     (
         &quot;&lt;SFLListItem: 0x7faf19dac350&gt;&quot;,
         &quot;&lt;SFLListItem: 0x7faf19cc5430&gt;&quot;,
@@ -121,130 +121,147 @@
     };
     version = 1;
 }
-</pre></noscript><script src="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=01_snip.py"> </script></p>
+</pre></noscript>
+<script src="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=01_snip.py"> </script>
 
-<p>At its heart, it&#39;s a dictionary with 3 keys, the most interesting key being <code>items</code>.</p>
+<p>At its heart, it’s a dictionary with 3 keys, the most interesting key being <code class="highlighter-rouge">items</code>.</p>
 
-<p>The <code>items</code> array is made up of <code>SFLListItem</code>, a new internal object in 10.11, with the following properties:</p>
+<p>The <code class="highlighter-rouge">items</code> array is made up of <code class="highlighter-rouge">SFLListItem</code>, a new internal object in 10.11, with the following properties:</p>
 
 <ul>
-<li><p><code>name</code>: Display name in the list (in this case, the name of the volume)</p></li>
-<li><p><code>order</code>: Number representing order within the list</p></li>
-<li><p><code>uniqueIdentifier</code>: A NSUUID generated to uniquely represent the entry in the list</p></li>
-<li><p><code>properties</code>: A dictionary with one or more keys (all of these only had &quot;com.apple.LSSharedFileList.OverrideIcon.OSType&quot; with the value &quot;srvr&quot;)</p></li>
-<li><p><code>bookmark</code>: An NSURL BookmarkData object containing information to reach the file/shares</p></li>
+  <li>
+    <p><code class="highlighter-rouge">name</code>: Display name in the list (in this case, the name of the volume)</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">order</code>: Number representing order within the list</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">uniqueIdentifier</code>: A NSUUID generated to uniquely represent the entry in the list</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">properties</code>: A dictionary with one or more keys (all of these only had “com.apple.LSSharedFileList.OverrideIcon.OSType” with the value “srvr”)</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">bookmark</code>: An NSURL BookmarkData object containing information to reach the file/shares</p>
+  </li>
 </ul>
 
-<p>If you look up <a href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSURL_Class/#//apple_ref/doc/uid/20000301-SW34">Apple&#39;s documentation about BookmarkData</a>, you&#39;ll find details about how to make them, how to open them, and how to get some <em>very</em> basic details from them.</p>
+<p>If you look up <a href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSURL_Class/#//apple_ref/doc/uid/20000301-SW34">Apple’s documentation about BookmarkData</a>, you’ll find details about how to make them, how to open them, and how to get some <em>very</em> basic details from them.</p>
 
 <p>Unfortunately, if you want to just get the share URL that was used to create the BookmarkData in the first place, the only API call Apple offers is <a href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSURL_Class/#//apple_ref/occ/clm/NSURL/URLByResolvingBookmarkData:options:relativeToURL:bookmarkDataIsStale:error:">this rather unsavory one</a>:</p>
 
-<p><noscript><pre>NSURL
-+(instancetype)URLByResolvingBookmarkData:(NSData *)bookmarkData<br>
-                                  options:(NSURLBookmarkResolutionOptions)options<br>
-                            relativeToURL:(NSURL *)relativeURL<br>
-                      bookmarkDataIsStale:(BOOL *)isStale<br>
-                                    error:(NSError * <em>Nullable *)error</pre></noscript>&lt;script src=&quot;<a href="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=02">https://gist.github.com/pudquick/c089771fd8196f449662.js?file=02</a></em>snip.m&quot;&gt; </script></p>
+<noscript><pre>NSURL
++(instancetype)URLByResolvingBookmarkData:(NSData *)bookmarkData  
+                                  options:(NSURLBookmarkResolutionOptions)options  
+                            relativeToURL:(NSURL *)relativeURL  
+                      bookmarkDataIsStale:(BOOL *)isStale  
+                                    error:(NSError * _Nullable *)error</pre></noscript>
+<script src="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=02_snip.m"> </script>
 
-<p>I say &quot;unsavory&quot; because of the implementation details:</p>
+<p>I say “unsavory” because of the implementation details:</p>
 
 <blockquote>
-<p><em>&quot;<span style="color:red">This method fails</span> if the original file or directory could not be located or is on a volume that could not be mounted.</em></p>
-
-<p><em>If this method fails, you can use the resourceValuesForKeys:fromBookmarkData: method to obtain information about the bookmark, such as the last known path (NSURLPathKey) to help the user decide how to proceed.&quot;</em></p>
+  <p><em>“<span style="color:red">This method fails</span> if the original file or directory could not be located or is on a volume that could not be mounted.</em></p>
 </blockquote>
 
-<p>Even with the options <code>NSURLBookmarkResolutionWithoutMounting</code> and <code>NSURLBookmarkResolutionWithoutUI</code>, you&#39;ll find <a href="http://tangent405.com/dealing-with-slow-security-scoped-bookmarks">articles like this one</a> which indicate that the OS is going to attempt to resolve the resource, even if it doesn&#39;t pop up anything to the user when it can&#39;t find it.</p>
+<blockquote>
+  <p><em>If this method fails, you can use the resourceValuesForKeys:fromBookmarkData: method to obtain information about the bookmark, such as the last known path (NSURLPathKey) to help the user decide how to proceed.”</em></p>
+</blockquote>
 
-<p><em>And yet</em>, if you open up the BookmarkData in a <a href="http://ridiculousfish.com/hexfiend/">hex editor</a>, it&#39;s <strong>obvious</strong> the URL information is there in a form it should be directly extractable from. For something like a normal network share, there is absolutely <strong>no reason</strong> to need to do any sort of resolving to be able to return this data. We should be able to just say &quot;Give me the URL&quot; and it should instantly return the value (instead of failing because the server isn&#39;t visible on the current network).</p>
+<p>Even with the options <code class="highlighter-rouge">NSURLBookmarkResolutionWithoutMounting</code> and <code class="highlighter-rouge">NSURLBookmarkResolutionWithoutUI</code>, you’ll find <a href="http://tangent405.com/dealing-with-slow-security-scoped-bookmarks">articles like this one</a> which indicate that the OS is going to attempt to resolve the resource, even if it doesn’t pop up anything to the user when it can’t find it.</p>
 
-<p>So what about the aforementioned <code>resourceValuesForKeys:fromBookmarkData:</code> ?</p>
+<p><em>And yet</em>, if you open up the BookmarkData in a <a href="http://ridiculousfish.com/hexfiend/">hex editor</a>, it’s <strong>obvious</strong> the URL information is there in a form it should be directly extractable from. For something like a normal network share, there is absolutely <strong>no reason</strong> to need to do any sort of resolving to be able to return this data. We should be able to just say “Give me the URL” and it should instantly return the value (instead of failing because the server isn’t visible on the current network).</p>
 
-<p><span style="color:red">USELESS!</span> The NSURLPathKey for server shares appears to return the mounted volume path (<code>/Volumes/whatever</code>) - <strong>not the URL of the server share itself</strong>!</p>
+<p>So what about the aforementioned <code class="highlighter-rouge">resourceValuesForKeys:fromBookmarkData:</code> ?</p>
 
-<p>… Maybe it&#39;s a resource value in a different key?</p>
+<p><span style="color:red">USELESS!</span> The NSURLPathKey for server shares appears to return the mounted volume path (<code class="highlighter-rouge">/Volumes/whatever</code>) - <strong>not the URL of the server share itself</strong>!</p>
 
-<p>But suddenly - <em>more</em> horrible implementation details: <em>You can&#39;t get the list of available keys!</em></p>
+<p>… Maybe it’s a resource value in a different key?</p>
 
-<p>Everywhere you search, everyone just recommends <a href="http://www.cocoabuilder.com/archive/cocoa/313438-how-to-get-bookmarks-data-for-non-existing-files.html">&quot;try all the keys&quot;</a> or &quot;try the keys you want values for&quot;.</p>
+<p>But suddenly - <em>more</em> horrible implementation details: <em>You can’t get the list of available keys!</em></p>
 
-<p>… But <a href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSURL_Class/#//apple_ref/doc/uid/20000301-DontLinkElementID_1">none of the keys</a> Apple has documented return just the simple share URL. They apparently want you to only use <code>URLByResolvingBookmarkData</code> for that.</p>
+<p>Everywhere you search, everyone just recommends <a href="http://www.cocoabuilder.com/archive/cocoa/313438-how-to-get-bookmarks-data-for-non-existing-files.html">“try all the keys”</a> or “try the keys you want values for”.</p>
+
+<p>… But <a href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSURL_Class/#//apple_ref/doc/uid/20000301-DontLinkElementID_1">none of the keys</a> Apple has documented return just the simple share URL. They apparently want you to only use <code class="highlighter-rouge">URLByResolvingBookmarkData</code> for that.</p>
 
 <h1 id="to-hell-with-that">To hell with that!</h1>
 
-<p>So instead, let&#39;s go exploring with <a href="http://www.hopperapp.com">my favorite disassembler</a> 😁</p>
+<p>So instead, let’s go exploring with <a href="http://www.hopperapp.com">my favorite disassembler</a> 😁</p>
 
-<p>According to Apple&#39;s documentation, NSURL is part of Foundation and sure enough we can find the <code>NSURL.h</code> header file within <code>Foundation.framework</code>. Let&#39;s see what Hopper tells us <code>URLByResolvingBookmarkData</code> is doing:</p>
+<p>According to Apple’s documentation, NSURL is part of Foundation and sure enough we can find the <code class="highlighter-rouge">NSURL.h</code> header file within <code class="highlighter-rouge">Foundation.framework</code>. Let’s see what Hopper tells us <code class="highlighter-rouge">URLByResolvingBookmarkData</code> is doing:</p>
 
-<p><noscript><pre>void * +<a href="void%20*%20self,%20void%20*%20_cmd,%20void%20*%20arg_8,%20unsigned%20int%20arg_C,%20void%20*%20arg_10,%20char%20*%20arg_14,%20void%20*%20*%20arg_18">NSURL(NSURL) URLByResolvingBookmarkData:options:relativeToURL:bookmarkDataIsStale:error:</a> {
+<noscript><pre>void * +[NSURL(NSURL) URLByResolvingBookmarkData:options:relativeToURL:bookmarkDataIsStale:error:](void * self, void * _cmd, void * arg_8, unsigned int arg_C, void * arg_10, char * arg_14, void * * arg_18) {
     eax = [self allocWithZone:0x0];
     eax = [eax initByResolvingBookmarkData:arg_8 options:arg_C relativeToURL:arg_10 bookmarkDataIsStale:arg_14 error:arg_18];
     eax = [eax autorelease];
     return eax;
 }
-</pre></noscript><script src="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=03_snip.m"> </script></p>
+</pre></noscript>
+<script src="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=03_snip.m"> </script>
 
-<p>A quick inspection shows this to be a wrapper around <code>initByResolvingBookmarkData</code>, on with the hunt!</p>
+<p>A quick inspection shows this to be a wrapper around <code class="highlighter-rouge">initByResolvingBookmarkData</code>, on with the hunt!</p>
 
-<p><noscript><pre>edi = CFURLCreateByResolvingBookmarkData(*<em>kCFAllocatorDefault, arg_8, arg_C, edi, 0x0, arg_14, arg_18);
-</pre></noscript>&lt;script src=&quot;<a href="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=04">https://gist.github.com/pudquick/c089771fd8196f449662.js?file=04</a></em>snip.c&quot;&gt; </script></p>
+<noscript><pre>edi = CFURLCreateByResolvingBookmarkData(*_kCFAllocatorDefault, arg_8, arg_C, edi, 0x0, arg_14, arg_18);
+</pre></noscript>
+<script src="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=04_snip.c"> </script>
 
-<p>That CF looks like we&#39;re skipping on over to <code>CoreFoundation.framework</code>.</p>
+<p>That CF looks like we’re skipping on over to <code class="highlighter-rouge">CoreFoundation.framework</code>.</p>
 
-<p><noscript><pre>int <em>CFURLCreateByResolvingBookmarkData(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {<br>
-    r9 = arg5;<br>
-    r15 = arg4;<br>
-    r12 = arg3;<br>
-    r13 = arg2;<br>
-    rbx = arg1;<br>
-    r14 = arg0;<br>
-    rax = *</em><strong>CFCoreServicesInternal</strong>CFURLCreateByResolvingBookmarkData.dyfunc;<br>
-    if (rax == 0xff) {<br>
-            rax = <strong>_CFLookupCoreServicesInternalFunction(&quot;_CFURLCreateByResolvingBookmarkData&quot;);<br>
-            *</strong><em>CFCoreServicesInternal</em><em>CFURLCreateByResolvingBookmarkData.dyfunc = rax;<br>
-    }</pre></noscript>&lt;script src=&quot;<a href="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=05">https://gist.github.com/pudquick/c089771fd8196f449662.js?file=05</a></em>snip.c&quot;&gt; </script></p>
+<noscript><pre>int _CFURLCreateByResolvingBookmarkData(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {  
+    r9 = arg5;  
+    r15 = arg4;  
+    r12 = arg3;  
+    r13 = arg2;  
+    rbx = arg1;  
+    r14 = arg0;  
+    rax = *___CFCoreServicesInternal__CFURLCreateByResolvingBookmarkData.dyfunc;  
+    if (rax == 0xff) {  
+            rax = ___CFLookupCoreServicesInternalFunction(&quot;_CFURLCreateByResolvingBookmarkData&quot;);  
+            *___CFCoreServicesInternal__CFURLCreateByResolvingBookmarkData.dyfunc = rax;  
+    }</pre></noscript>
+<script src="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=05_snip.c"> </script>
 
 <p><strong>Ruh roh!</strong></p>
 
-<p>This function isn&#39;t defined here, it&#39;s apparently a &quot;CFCoreServicesInternal&quot; bit of code. Now where could that be defined? …</p>
+<p>This function isn’t defined here, it’s apparently a “CFCoreServicesInternal” bit of code. Now where could that be defined? …</p>
 
-<p>… Let&#39;s check our good friends over at <code>/System/Library/PrivateFrameworks</code> 😆</p>
+<p>… Let’s check our good friends over at <code class="highlighter-rouge">/System/Library/PrivateFrameworks</code> 😆</p>
 
-<p><em>Oh my</em>, there appears to be a <code>CoreServicesInternal.framework</code> there!</p>
+<p><em>Oh my</em>, there appears to be a <code class="highlighter-rouge">CoreServicesInternal.framework</code> there!</p>
 
 <p>Imagine my surprise.</p>
 
-<p>Let&#39;s look inside.</p>
+<p>Let’s look inside.</p>
 
-<p><img src="/images/2015-10-24-apples-bookmarkdata-exposed/BookmarkData1.png" alt=""></p>
+<p><img src="/images/2015-10-24-apples-bookmarkdata-exposed/BookmarkData1.png" alt="" /></p>
 
 <p><strong>Wow.</strong> This looks like the place to be!</p>
 
-<p>While we&#39;re here, let&#39;s take a glance at all the internal things Apple does with BookmarkData …</p>
+<p>While we’re here, let’s take a glance at all the internal things Apple does with BookmarkData …</p>
 
-<p><img src="/images/2015-10-24-apples-bookmarkdata-exposed/BookmarkData2.png" alt=""></p>
+<p><img src="/images/2015-10-24-apples-bookmarkdata-exposed/BookmarkData2.png" alt="" /></p>
 
 <p>OH <em>HELLLLLLOOoo… what do we have here???</em></p>
 
-<p><code>returnAllPropertiesInBookmark</code>, <code>returnAllPropertyKeysInBookmark</code>, and <code>returnDetailedDump</code> you say? <em>Fascinating</em> function names.</p>
+<p><code class="highlighter-rouge">returnAllPropertiesInBookmark</code>, <code class="highlighter-rouge">returnAllPropertyKeysInBookmark</code>, and <code class="highlighter-rouge">returnDetailedDump</code> you say? <em>Fascinating</em> function names.</p>
 
-<p>Visiting any one of those functions, I&#39;m extremely curious to see how they get <strong>called</strong>. So we use Hopper&#39;s helpful &quot;Show Places Calling This Procedure…&quot; and all 3 take us to <code>BookmarkResourcePropertyKeyToInfoStructInit()</code></p>
+<p>Visiting any one of those functions, I’m extremely curious to see how they get <strong>called</strong>. So we use Hopper’s helpful “Show Places Calling This Procedure…” and all 3 take us to <code class="highlighter-rouge">BookmarkResourcePropertyKeyToInfoStructInit()</code></p>
 
-<p><img src="/images/2015-10-24-apples-bookmarkdata-exposed/BookmarkData3.png" alt=""></p>
+<p><img src="/images/2015-10-24-apples-bookmarkdata-exposed/BookmarkData3.png" alt="" /></p>
 
 <p>😱 😭 😱</p>
 
-<p><em>Do my eyes deceive me?</em> Are these <strong>secret undocumented NSURL</strong> <code>resourceValuesForKeys:</code> keys !??!</p>
+<p><em>Do my eyes deceive me?</em> Are these <strong>secret undocumented NSURL</strong> <code class="highlighter-rouge">resourceValuesForKeys:</code> keys !??!</p>
 
-<p>They sure as hell look like it! Let&#39;s try ‘em out!!</p>
+<p>They sure as hell look like it! Let’s try ‘em out!!</p>
 
-<p>How about we try <code>NSURLBookmarkAllPropertiesKey</code>, first?</p>
+<p>How about we try <code class="highlighter-rouge">NSURLBookmarkAllPropertiesKey</code>, first?</p>
 
 <p><small><em>(*insert magical handwaving, skipping over the boring part to get to the amazing part*)</em></small></p>
 
-<p><noscript><pre>&gt;&gt;&gt; NSURL.resourceValuesForKeys_fromBookmarkData_([&#39;NSURLBookmarkAllPropertiesKey&#39;], some_bookmark_data)</p>
+<noscript><pre>&gt;&gt;&gt; NSURL.resourceValuesForKeys_fromBookmarkData_([&#39;NSURLBookmarkAllPropertiesKey&#39;], some_bookmark_data)
 
-<p>{
+{
     NSURLBookmarkAllPropertiesKey =     {
         NSURLBookmarkOriginalRelativePathComponentsArrayKey =         (
             Volumes,
@@ -272,70 +289,72 @@
         NSURLVolumeSupportsPersistentIDsKey = 1;
         NSURLVolumeTotalCapacityKey = 249199591424;
         NSURLVolumeURLKey = &quot;file:///Volumes/shares-1/&quot;;
-        &quot;<em>NSURLBookmarkSecurityScopeCryptoKeyKey&quot; = &lt;00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000&gt;;
+        &quot;_NSURLBookmarkSecurityScopeCryptoKeyKey&quot; = &lt;00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000&gt;;
         &quot;_NSURLFileIDKey&quot; = 2;
         &quot;_NSURLPathKey&quot; = &quot;/Volumes/shares-1&quot;;
         &quot;_NSURLTypeBindingKey&quot; = &lt;646e6962 00000000 09000000 00000000 00000000 00000000 00000000 72767273 00000000 00000000 00000000 00000000&gt;;
-        &quot;</em>NSURLVolumeDontBrowseKey&quot; = 0;
-        &quot;<em>NSURLVolumeIsDiskImageKey&quot; = 0;
+        &quot;_NSURLVolumeDontBrowseKey&quot; = 0;
+        &quot;_NSURLVolumeIsDiskImageKey&quot; = 0;
         &quot;_NSURLVolumeIsExternalKey&quot; = 0;
         &quot;_NSURLVolumeIsiPodKey&quot; = 0;
     };
 }
-</pre></noscript>&lt;script src=&quot;<a href="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=06">https://gist.github.com/pudquick/c089771fd8196f449662.js?file=06</a></em>snip.py&quot;&gt; </script></p>
+</pre></noscript>
+<script src="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=06_snip.py"> </script>
 
-<p>Good god. It worked. It&#39;s <em>all</em> there.</p>
+<p>Good god. It worked. It’s <em>all</em> there.</p>
 
-<p>All the keys Apple lists - and <strong>a ton that they don&#39;t</strong>.</p>
+<p>All the keys Apple lists - and <strong>a ton that they don’t</strong>.</p>
 
-<p>… and yet … none of them are what I&#39;m looking for: just the plain URL to the share.</p>
+<p>… and yet … none of them are what I’m looking for: just the plain URL to the share.</p>
 
-<p><code>NSURLBookmarkAllPropertyKeysKey</code> turns out to be a bit of a repeat, listing only the keys (but without values).</p>
+<p><code class="highlighter-rouge">NSURLBookmarkAllPropertyKeysKey</code> turns out to be a bit of a repeat, listing only the keys (but without values).</p>
 
-<p>Want to guess what <code>NSURLBookmarkDetailedDescription</code> does?</p>
+<p>Want to guess what <code class="highlighter-rouge">NSURLBookmarkDetailedDescription</code> does?</p>
 
-<p>It <span style="color:red">knocked my socks off</span>, that&#39;s what it does.</p>
+<p>It <span style="color:red">knocked my socks off</span>, that’s what it does.</p>
 
-<p><noscript><pre>Bookmark: dataRef=0x106672000 len=1229264
+<noscript><pre>Bookmark: dataRef=0x106672000 len=1229264
   signature = 0x6b6f6f62
   length = 0x12c1d0
   version = 0x10040000
   bookmarkDataSectionOffset = 0x30
   bookmarkDataSectionFirstTOCOffset = 0x12c0b4
- 0x00000:626f6f6b d0c11200 00000410 30000000   | book .... .... 0...<br>
- 0x00010:00000000 00000000 00000000 00000000   | .... .... .... ....<br>
- 0x00020:00000000 00000000 00000000 00000000   | .... .... .... ....<br>
- 0x00030:b4c01200 04000000 03030000 00040000   | .... .... .... ....<br>
- 0x00040:07000000 01010000 566f6c75 6d657300   | .... .... Volu mes.<br>
- 0x00050:08000000 01010000 73686172 65732d31   | .... .... shar es-1<br>
+ 0x00000:626f6f6b d0c11200 00000410 30000000   | book .... .... 0...  
+ 0x00010:00000000 00000000 00000000 00000000   | .... .... .... ....  
+ 0x00020:00000000 00000000 00000000 00000000   | .... .... .... ....  
+ 0x00030:b4c01200 04000000 03030000 00040000   | .... .... .... ....  
+ 0x00040:07000000 01010000 566f6c75 6d657300   | .... .... Volu mes.  
+ 0x00050:08000000 01010000 73686172 65732d31   | .... .... shar es-1  
 [... snipped ...]
  scopeCrytoKey = &lt;CFData 0x7fb2b1690ba0 [0x7fff767fbed0]&gt;{length = 32, capacity = 32, bytes = 0x00000000000000000000000000000000 ... 0000000000000000}
  toc @ offset:0x12c0e4 ( 0x0x10679e0e4 ) level=1 count=18 next=0x476
-   0) itemType=0x1004 flags=0x0 dataOffset=0x60 pathComponents:[ &quot;Volumes&quot;, &quot;shares-1&quot;]<br>
-   1) itemType=0x1005 flags=0x0 dataOffset=0x90 fileIDs:[  13686/0x3576 ,  2/0x2 ]<br>
+   0) itemType=0x1004 flags=0x0 dataOffset=0x60 pathComponents:[ &quot;Volumes&quot;, &quot;shares-1&quot;]  
+   1) itemType=0x1005 flags=0x0 dataOffset=0x90 fileIDs:[  13686/0x3576 ,  2/0x2 ]  
    2) itemType=0x1010 flags=0x0 dataOffset=0xb0 resourceProps:Props:[!file** dir** !sym** vol** !pkg** !app** ] 
-   3) itemType=0x1040 flags=0x0 dataOffset=0xa0 creationDate: 2014/04/07 14:41:38.0000<br>
-   4) itemType=0x2000 flags=0x0 dataOffset=0x298 volInfoDepths:[  61440/0xf000 ,  0/0x0 ,  1/0x1 ]<br>
+   3) itemType=0x1040 flags=0x0 dataOffset=0xa0 creationDate: 2014/04/07 14:41:38.0000  
+   4) itemType=0x2000 flags=0x0 dataOffset=0x298 volInfoDepths:[  61440/0xf000 ,  0/0x0 ,  1/0x1 ]  
    5) itemType=0x2002 flags=0x0 dataOffset=0x12c volPath:&quot;/Volumes/shares-1&quot; 
    6) itemType=0x2005 flags=0x0 dataOffset=0xd8 volURL:&quot;&lt;CFURL 0x7fb2b1670e40 [0x7fff767fbed0]&gt;{string = file:///Volumes/shares-1/, encoding = 134217984, base = (null)}&quot; 
 [... snipped ...]
-</pre></noscript><script src="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=07_snip.txt"> </script></p>
+</pre></noscript>
+<script src="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=07_snip.txt"> </script>
 
-<p>I&#39;ve clipped bits out here, but it&#39;s a <strong>programmer&#39;s debug output</strong> for the entire BookmarkData structure, giving all of the offset values within the data and breaking down <em>what&#39;s actually contained in it</em>.</p>
+<p>I’ve clipped bits out here, but it’s a <strong>programmer’s debug output</strong> for the entire BookmarkData structure, giving all of the offset values within the data and breaking down <em>what’s actually contained in it</em>.</p>
 
 <p>Simply amazing. Everything I could have asked for.</p>
 
 <p>The URL of the share itself shows up like this:</p>
 
-<p><code>11) itemType=0x2050 flags=0x0 dataOffset=0x148 volMountURL:&quot;&lt;CFURL 0x7fb2b1691d30 [0x7fff767fbed0]&gt;{string = smb://username@192.168.0.1/shares, encoding = 134217984, base = (null)}&quot;</code></p>
+<p><code class="highlighter-rouge">11) itemType=0x2050 flags=0x0 dataOffset=0x148 volMountURL:"&lt;CFURL 0x7fb2b1691d30 [0x7fff767fbed0]&gt;{string = smb://username@192.168.0.1/shares, encoding = 134217984, base = (null)}"</code></p>
 
-<p>With the information this undocumented debug output provides, I was able to determine the entire structure of the BookmarkData format, which I&#39;ll now document here 😄</p>
+<p>With the information this undocumented debug output provides, I was able to determine the entire structure of the BookmarkData format, which I’ll now document here 😄</p>
 
 <h2 id="the-bookmarkdata-structure">The BookmarkData Structure</h2>
 
-<p><img src="/images/2015-10-24-apples-bookmarkdata-exposed/BookmarkExample.png" alt=""></p>
+<p><img src="/images/2015-10-24-apples-bookmarkdata-exposed/BookmarkExample.png" alt="" /></p>
 
-<p>Here we&#39;ll go over this simple 260 byte version of a BookmarkData structure which contains only a single TOC with a single data record. The details I give here were collected after looking at quite a few samples.</p>
+<p>Here we’ll go over this simple 260 byte version of a BookmarkData structure which contains only a single TOC with a single data record. The details I give here were collected after looking at quite a few samples.</p>
 
 <p><em>(Note: Unless specified otherwise, all integers are unsigned and little endian)</em></p>
 
@@ -343,45 +362,45 @@
 
 <p><em>(all examples appeared to be 48 bytes in length)</em></p>
 
-<p><img src="/images/2015-10-24-apples-bookmarkdata-exposed/Structure_01_Header.png" alt=""></p>
+<p><img src="/images/2015-10-24-apples-bookmarkdata-exposed/Structure_01_Header.png" alt="" /></p>
 
-<p><span style="color:red">■</span> 4 byte string: <strong>BookmarkData signature</strong> (can be <code>book</code>, the new style, or <code>alis</code>, the original alias record of Mac OS)</p>
+<p><span style="color:red">■</span> 4 byte string: <strong>BookmarkData signature</strong> (can be <code class="highlighter-rouge">book</code>, the new style, or <code class="highlighter-rouge">alis</code>, the original alias record of Mac OS)</p>
 
 <p><span style="color:lightgreen">■</span> 32-bit integer: <strong>Total length of BookmarkData</strong> structure (including header)</p>
 
-<p><span style="color:blue">■</span> 4 bytes: <strong>Version</strong> <em>(might be a big endian int</em>? <code>1040</code><em>)</em></p>
+<p><span style="color:blue">■</span> 4 bytes: <strong>Version</strong> <em>(might be a big endian int</em>? <code class="highlighter-rouge">1040</code><em>)</em></p>
 
-<p><span style="color:yellow">■</span> 32-bit integer: <strong>Offset of BookmarkData data</strong> payload from beginning of BookmarkData structure (always <code>48</code> currently)</p>
+<p><span style="color:yellow">■</span> 32-bit integer: <strong>Offset of BookmarkData data</strong> payload from beginning of BookmarkData structure (always <code class="highlighter-rouge">48</code> currently)</p>
 
-<p><span style="color:cyan">■</span> N-bytes: null / <code>0x00</code> bytes used as <strong>filler</strong> until the beginning of BookmarkData data payload</p>
+<p><span style="color:cyan">■</span> N-bytes: null / <code class="highlighter-rouge">0x00</code> bytes used as <strong>filler</strong> until the beginning of BookmarkData data payload</p>
 
 <h3 id="bookmarkdata-data">BookmarkData Data</h3>
 
-<p>The data portion is a combination of several things: TOC (table of contents) records, data records (of various kinds), and most importantly the pointer to the first TOC. The &quot;Offset of BookmarkData data&quot; value points to the beginning of this data structure.</p>
+<p>The data portion is a combination of several things: TOC (table of contents) records, data records (of various kinds), and most importantly the pointer to the first TOC. The “Offset of BookmarkData data” value points to the beginning of this data structure.</p>
 
-<p><img src="/images/2015-10-24-apples-bookmarkdata-exposed/Structure_02_Data.png" alt=""></p>
+<p><img src="/images/2015-10-24-apples-bookmarkdata-exposed/Structure_02_Data.png" alt="" /></p>
 
-<p><span style="color:orange">■</span> 32-bit integer: <strong>Offset of first TOC</strong>, measured from the start of the BookmarkData data payload (example: an offset of <code>100</code> is actually <code>148</code> bytes from the beginning. <code>48</code> byte header + <code>100</code> bytes from start of data payload)</p>
+<p><span style="color:orange">■</span> 32-bit integer: <strong>Offset of first TOC</strong>, measured from the start of the BookmarkData data payload (example: an offset of <code class="highlighter-rouge">100</code> is actually <code class="highlighter-rouge">148</code> bytes from the beginning. <code class="highlighter-rouge">48</code> byte header + <code class="highlighter-rouge">100</code> bytes from start of data payload)</p>
 
 <p><span style="color:lightgray">■</span> N-bytes: The remainder of the data section is composed of TOC records (which tell where to find the data records) and the data records themselves.</p>
 
 <h3 id="bookmarkdata-toc">BookmarkData TOC</h3>
 
-<p>BookmarkData has the concept of a &quot;first TOC&quot;, the one pointed to by the beginning of the BookmarkData data payload. Each TOC has information about a number of data records as well as information on the offset of the &quot;next TOC&quot;. If there is no next TOC, the offset for &quot;next TOC&quot; will be 0. Each TOC is comprised of a header and a data section.</p>
+<p>BookmarkData has the concept of a “first TOC”, the one pointed to by the beginning of the BookmarkData data payload. Each TOC has information about a number of data records as well as information on the offset of the “next TOC”. If there is no next TOC, the offset for “next TOC” will be 0. Each TOC is comprised of a header and a data section.</p>
 
-<p><img src="/images/2015-10-24-apples-bookmarkdata-exposed/Structure_03_TOC.png" alt=""></p>
+<p><img src="/images/2015-10-24-apples-bookmarkdata-exposed/Structure_03_TOC.png" alt="" /></p>
 
 <h3 id="toc-header">TOC Header</h3>
 
 <p><span style="color:red">■</span> 32-bit integer: <strong>Length of TOC data</strong> segment after the header</p>
 
-<p><span style="color:lightgreen">■</span> 16-bit integer: <strong>Record type (TOC)</strong> (<code>0xFEFF</code> / <code>65279</code>. Might be signed? In which case the value would be <code>-2</code>)</p>
+<p><span style="color:lightgreen">■</span> 16-bit integer: <strong>Record type (TOC)</strong> (<code class="highlighter-rouge">0xFEFF</code> / <code class="highlighter-rouge">65279</code>. Might be signed? In which case the value would be <code class="highlighter-rouge">-2</code>)</p>
 
-<p><span style="color:blue">■</span> 16-bit integer: <strong>Flags</strong> (unused for TOC, always set to <code>0xFFFF</code>)</p>
+<p><span style="color:blue">■</span> 16-bit integer: <strong>Flags</strong> (unused for TOC, always set to <code class="highlighter-rouge">0xFFFF</code>)</p>
 
 <h3 id="toc-data">TOC Data</h3>
 
-<p><span style="color:yellow">■</span> 32-bit integer: <strong>Level</strong> (for a server mount, the value seems to be <code>1</code>)</p>
+<p><span style="color:yellow">■</span> 32-bit integer: <strong>Level</strong> (for a server mount, the value seems to be <code class="highlighter-rouge">1</code>)</p>
 
 <p><span style="color:cyan">■</span> 32-bit integer: <strong>Offset of next TOC</strong> record, measured from beginning of BookmarkData data section</p>
 
@@ -391,9 +410,9 @@
 
 <h3 id="toc-data-record">TOC Data Record</h3>
 
-<p><span style="color:orange">■</span> 16-bit integer: <strong>Record type</strong> - varies (examples: <code>8272</code>: &quot;volMountURL&quot;, <code>8208</code>: &quot;volName&quot;)</p>
+<p><span style="color:orange">■</span> 16-bit integer: <strong>Record type</strong> - varies (examples: <code class="highlighter-rouge">8272</code>: “volMountURL”, <code class="highlighter-rouge">8208</code>: “volName”)</p>
 
-<p><span style="color:salmon">■</span> 16-bit integer: <strong>Flags</strong> (always seems to be <code>0x0000</code>)</p>
+<p><span style="color:salmon">■</span> 16-bit integer: <strong>Flags</strong> (always seems to be <code class="highlighter-rouge">0x0000</code>)</p>
 
 <p><span style="color:lightblue">■</span> 64-bit integer: <strong>Offset of record data</strong>, measured from beginning of BookmarkData data portion</p>
 
@@ -405,59 +424,60 @@
 
 <p>These are the records pointed to by TOCs. They represent the bulk of the contents of BookmarkData and are where the real data is stored.</p>
 
-<p><img src="/images/2015-10-24-apples-bookmarkdata-exposed/Structure_04_Records.png" alt=""></p>
+<p><img src="/images/2015-10-24-apples-bookmarkdata-exposed/Structure_04_Records.png" alt="" /></p>
 
 <p><span style="color:red">■</span> 32-bit integer: <strong>Length of data</strong> payload, the actual data stored here</p>
 
-<p><span style="color:blue">■</span> 32-bit integer: <strong>Data type</strong> - varies (examples: <code>2305</code>: CFURL, <code>257</code>: string)</p>
+<p><span style="color:blue">■</span> 32-bit integer: <strong>Data type</strong> - varies (examples: <code class="highlighter-rouge">2305</code>: CFURL, <code class="highlighter-rouge">257</code>: string)</p>
 
-<p><span style="color:lightgreen">■</span> N-bytes: <strong>Record data</strong>, padded with <code>0x00</code> on the end if necessary to reach a multiple of 4 bytes in length</p>
+<p><span style="color:lightgreen">■</span> N-bytes: <strong>Record data</strong>, padded with <code class="highlighter-rouge">0x00</code> on the end if necessary to reach a multiple of 4 bytes in length</p>
 
 <p>(… wow, you made it this far? Yay! 🎉)</p>
 
-<p>Some of you readers with a keen eye may have recognized the data coloring abilities of <a href="http://www.synalysis.net">Synalyze It!</a> and maybe you&#39;re secretly hoping I&#39;ve written up a formal grammar for BookmarkData using it … sadly I have not 😞. I&#39;m brand new to the software and unfortunately the interface is not very intuitive when it comes to interactively creating a new grammar. I haven&#39;t decided yet whether I&#39;m to blame or poor UI is.</p>
+<p>Some of you readers with a keen eye may have recognized the data coloring abilities of <a href="http://www.synalysis.net">Synalyze It!</a> and maybe you’re secretly hoping I’ve written up a formal grammar for BookmarkData using it … sadly I have not 😞. I’m brand new to the software and unfortunately the interface is not very intuitive when it comes to interactively creating a new grammar. I haven’t decided yet whether I’m to blame or poor UI is.</p>
 
-<p>… The <em>even sharper</em> readers which have persisted this far may have noticed that the standard data record in my example doesn&#39;t appear to be something you can easily extract a share URL from. There&#39;s a reason for that!</p>
+<p>… The <em>even sharper</em> readers which have persisted this far may have noticed that the standard data record in my example doesn’t appear to be something you can easily extract a share URL from. There’s a reason for that!</p>
 
-<p>I picked the older <code>alis</code> BookmarkData structure as an example because of its size (260 bytes for this one). Your average <code>book</code> modern style BookmarkData structure is well over a megabyte in size (!) because one of the records it contains is <code>icns</code> icon information for how your share&#39;s icon should look.</p>
+<p>I picked the older <code class="highlighter-rouge">alis</code> BookmarkData structure as an example because of its size (260 bytes for this one). Your average <code class="highlighter-rouge">book</code> modern style BookmarkData structure is well over a megabyte in size (!) because one of the records it contains is <code class="highlighter-rouge">icns</code> icon information for how your share’s icon should look.</p>
 
-<p>Unfortunately, the <code>alis</code>-style is literally the thinnest of wrappers around what&#39;s actually an original Mac OS (pre OS X) <code>alis</code> resource fork fileshare record.</p>
+<p>Unfortunately, the <code class="highlighter-rouge">alis</code>-style is literally the thinnest of wrappers around what’s actually an original Mac OS (pre OS X) <code class="highlighter-rouge">alis</code> resource fork fileshare record.</p>
 
-<p><img src="/images/2015-10-24-apples-bookmarkdata-exposed/ResEdit.gif" alt=""></p>
+<p><img src="/images/2015-10-24-apples-bookmarkdata-exposed/ResEdit.gif" alt="" /></p>
 
-<p>The newer <code>book</code> variant contains the record types (like <code>8272</code> aka &quot;volMountURL&quot;) I mentioned earlier.</p>
+<p>The newer <code class="highlighter-rouge">book</code> variant contains the record types (like <code class="highlighter-rouge">8272</code> aka “volMountURL”) I mentioned earlier.</p>
 
 <p>So - what to do?</p>
 
-<p>Well. </p>
+<p>Well. 
+Back to Where We Started
+————————</p>
 
-<h2 id="back-to-where-we-started">Back to Where We Started</h2>
+<p>If you have records that are <code class="highlighter-rouge">book</code> type, <a href="https://gist.github.com/pudquick/4776b4b2075bf9b7e512">I have posted quick and dirty code here</a> that will give you the “volMountURL” information instantly for the <code class="highlighter-rouge">.sfl</code> files that started this wild ride.</p>
 
-<p>If you have records that are <code>book</code> type, <a href="https://gist.github.com/pudquick/4776b4b2075bf9b7e512">I have posted quick and dirty code here</a> that will give you the &quot;volMountURL&quot; information instantly for the <code>.sfl</code> files that started this wild ride.</p>
+<p>I’m working on more formal code for BookmarkData parsing as I write this. But now that the information is out there, maybe someone will beat me to the punch 😊</p>
 
-<p>I&#39;m working on more formal code for BookmarkData parsing as I write this. But now that the information is out there, maybe someone will beat me to the punch 😊</p>
+<p>If you have <code class="highlighter-rouge">alis</code>-style information, you can can attempt to use code like this:</p>
 
-<p>If you have <code>alis</code>-style information, you can can attempt to use code like this:</p>
+<p><code class="highlighter-rouge">url,isStale,err = NSURL.URLByResolvingBookmarkData_options_relativeToURL_bookmarkDataIsStale_error_(bookmark_data, NSURLBookmarkResolutionWithoutMounting+NSURLBookmarkResolutionWithoutUI, None, None, None)</code></p>
 
-<p><code>url,isStale,err = NSURL.URLByResolvingBookmarkData_options_relativeToURL_bookmarkDataIsStale_error_(bookmark_data, NSURLBookmarkResolutionWithoutMounting+NSURLBookmarkResolutionWithoutUI, None, None, None)</code></p>
+<p>… But don’t be surprised if you get back results like this if the resource no longer exists:</p>
 
-<p>… But don&#39;t be surprised if you get back results like this if the resource no longer exists:</p>
-
-<p><noscript><pre>&gt;&gt;&gt; url is None
+<noscript><pre>&gt;&gt;&gt; url is None
 True
 &gt;&gt;&gt; isStale
 False
-&gt;&gt;&gt; print err.<strong>repr</strong>()
+&gt;&gt;&gt; print err.__repr__()
 Error Domain=NSOSStatusErrorDomain Code=-43 &quot;The operation couldn’t be completed. (OSStatus error -43.)&quot; (fnfErr: File not found)
-</pre></noscript><script src="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=08_snip.py"> </script></p>
+</pre></noscript>
+<script src="https://gist.github.com/pudquick/c089771fd8196f449662.js?file=08_snip.py"> </script>
 
-<p>But worry not, friend readers - I&#39;ve <em>also</em> completely decoded <code>alis</code> records in python, <a href="https://bitbucket.org/al45tair/mac_alias">as have others</a>!</p>
+<p>But worry not, friend readers - I’ve <em>also</em> completely decoded <code class="highlighter-rouge">alis</code> records in python, <a href="https://bitbucket.org/al45tair/mac_alias">as have others</a>!</p>
 
 <p>And the AFPX mount records they can contain.</p>
 
 <p>And even resource forks!</p>
 
-<p>We&#39;ll get to it in another blog post 😆</p>
+<p>We’ll get to it in another blog post 😆</p>
 
 <p><em>- mike</em></p>
 

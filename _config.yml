@@ -49,7 +49,6 @@ share_hackernews: false
 # markdown:     kramdown
 # redcarpet:
 #   extensions: ['smart', 'tables', 'with_toc_data']
-markdown:    redcarpet
 redcarpet:
     extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "superscript", "with_toc_data"]
 permalink:    pretty
