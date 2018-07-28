@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Booting Secure &#8211; mikeymikey blogs here</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="oh crap, they shipped the T2 MBP">
+    <meta name="author" content="Michael Lynn">
+    <meta name="keywords" content="">
+    <link rel="canonical" href="http://michaellynn.github.io/2018/07/27/booting-secure/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for mikeymikey blogs here" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201807272118" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Booting Secure">
+    <meta property="og:description" content="the vent for my mind">
+    <meta property="og:url" content="http://michaellynn.github.io/2018/07/27/booting-secure/">
+    <meta property="og:site_name" content="mikeymikey blogs here">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+    <meta name="twitter:title" content="Booting Secure" />
+    <meta name="twitter:description" content="oh crap, they shipped the T2 MBP" />
+    <meta name="twitter:url" content="http://michaellynn.github.io/2018/07/27/booting-secure/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+        
+    
+</head>
+
+<body class="site">
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://michaellynn.github.io" class="site-title">mikeymikey blogs here</a>
+      <nav class="site-nav">
+        <a href="/about/">About</a>
+      </nav>
+      <div class="clearfix"></div>
+      
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+        
+
+
+<div class="post-header mb2">
+  <span class="post-meta">Jul 27, 2018</span>
+    
+  <h1>Booting Secure</h1>
+  
+  <small><span class="post-meta">tags:
+  
+  <a href="/tag/osx">osx</a>
+  
+  <a href="/tag/macos">macos</a>
+  
+  <a href="/tag/secureboot">secureboot</a>
+  
+  <a href="/tag/t2">t2</a>
+  </span></small><p/><p/>
+</div>
+
+<article class="post-content">
+  <p>Howdy, y&#39;all. Long time 😄</p>
+
+<p><a href="https://www.youtube.com/watch?v=4Qv8CE6D_Rc">I&#39;ve</a> <a href="https://www.youtube.com/watch?v=MjY9chs9c6o">been</a> <a href="https://www.youtube.com/watch?v=uQWH55yIgYU">somewhat</a> <a href="https://www.youtube.com/watch?v=BUClsxF1t3o">busy</a>.</p>
+
+<p>So now the 2018 MacBook Pro exists.</p>
+
+<p>If you didn&#39;t hear, it ships with Secure Boot. If you did hear, you might be freaking out about that.</p>
+
+<p>So I&#39;ve written this blog post for you to read. Mind you, I&#39;m not the only one that&#39;s written about Secure Boot devices.</p>
+
+<p>There are community and tech articles:</p>
+
+<ul>
+<li><a href="https://twocanoes.com/secureboot-imac-pro/">SecureBoot &amp; the 2017 iMac Pro</a> (by the wonderful <a href="https://twitter.com/tperfitt">Tim Perfitt</a> of the excellent <a href="https://twocanoes.com">Twocanoes</a>)</li>
+<li><a href="https://duo.com/blog/apple-imac-pro-and-secure-storage">Apple iMac Pro and Secure Storage</a> (by the wizardly <a href="https://twitter.com/bruienne/">Pepijn Bruienne</a>)</li>
+</ul>
+
+<p>There are <strong>new</strong> articles from Apple:</p>
+
+<ul>
+<li><a href="https://support.apple.com/en-us/HT208330">About Secure Boot</a></li>
+<li><a href="https://support.apple.com/en-us/HT208198">About Secure Startup Utility</a></li>
+<li><a href="https://support.apple.com/en-us/HT208862">Mac computers that have the Apple T2 chip</a></li>
+<li><a href="https://support.apple.com/en-us/HT208344">About encrypted storage on your new Mac</a></li>
+<li><a href="https://support.apple.com/en-us/HT208545">If your iMac Pro display turns off during startup or updates</a></li>
+<li><a href="https://support.apple.com/en-us/HT204463">If the fans in your Mac run at full speed when you turn it on</a></li>
+<li><a href="https://help.apple.com/configurator/mac/2.6/index.html?localePath=en.lproj#/apdebea5be51">Apple Configurator 2 Help - Restore iMac Pro</a> (pay attention to this one ...)</li>
+</ul>
+
+<p>Even older KB articles got updated.</p>
+
+<p>Some of them are trivia bits:</p>
+
+<ul>
+<li><a href="https://support.apple.com/en-us/HT204063">Reset NVRAM or PRAM on your Mac</a><br><em>On Mac computers that have the Apple T2 chip, you can release the keys after the Apple logo appears and disappears for the second time.</em></li>
+<li><a href="https://support.apple.com/en-us/HT202768">About Mac startup tones</a><br><em>Mac computers that have the Apple T2 chip don&#39;t have EFI ROM tones.</em></li>
+<li><a href="https://support.apple.com/en-us/HT201150">How to turn your Mac on or off</a><br><em>Additionally, MacBook Pro (2018) turns on when you press any key on the keyboard or press the trackpad.</em></li>
+</ul>
+
+<p>But more importantly, some of them may have just completely destroyed your entire macOS imaging / provisioning workflows:</p>
+
+<ul>
+<li><a href="https://support.apple.com/en-us/HT202770">Create a NetBoot, NetInstall, or NetRestore image</a><br><em>Mac computers that have the Apple T2 chip don&#39;t support starting up from network volumes.</em></li>
+<li><a href="https://support.apple.com/en-us/HT201255">Mac startup key combinations</a><br><em>[N key:] Computers that have the Apple T2 chip don&#39;t support this startup key.</em></li>
+<li><a href="https://support.apple.com/en-us/HT202796">How to select a different startup disk</a><br><em>If you&#39;re using a Mac that has the Apple T2 chip, check the settings in Startup Security Utility. These settings determine whether your Mac can start up from another disk.</em></li>
+</ul>
+
+<h2 id="your-new-provisioning-reality">Your new provisioning reality</h2>
+
+<p>What do the changes effectively mean to you - the person(s) responsible for Mac setup workflows?</p>
+
+<p>Secure Boot devices with T2 chips, fresh out of the box:</p>
+
+<ul>
+<li>Are configured at Full Security mode</li>
+<li>They <strong>do not netinstall / netboot</strong>. (NetSUS, bsdpy, Server.app&#39;s NetInstall service - none will work)</li>
+<li>You can&#39;t use the N key at startup to boot over the network to an imaging workflow</li>
+<li>You can&#39;t use the Option key at startup to select a network boot target</li>
+<li>They <strong>do not boot from external media</strong> (USB, Thunderbolt, etc.)</li>
+<li>You can&#39;t use the Option key at startup to select a different attached disk to boot from</li>
+</ul>
+
+<p>Unless your device provisioning/configuration workflow is <a href="https://www.apple.com/business/docs/DEP_Guide.pdf">based on the Device Enrollment Program (DEP)</a>, most of you with &quot;light touch&quot; automated provisioning workflows will find they&#39;re now incompatible with T2 devices. (There are a few exceptions, I&#39;ll cover them below.)</p>
+
+<p>If your workflow is based on bootable attached media (since network boot is really dead dead dead), here&#39;s what you have to go through to enable this:</p>
+
+<ul>
+<li>Make sure the external boot media you created will even boot the device (the 2018 MacBook Pro runs a custom 10.13.6 fork, for example)</li>
+<li>Boot the machine normally</li>
+<li>Complete the Setup Assistant first user creation process, setting a password</li>
+<li>Reboot into Recovery</li>
+<li>Open the Secure Startup Utility and allow booting from external media and either
+
+<ul>
+<li>Set it to No Security, or</li>
+<li>Leave it at Full / Medium (may require network connectivity to Apple, more on this below)</li>
+</ul></li>
+<li>Reboot to the external media</li>
+<li><strong>NOW</strong> you can begin your workflow</li>
+</ul>
+
+<p>... Not exactly &quot;light touch&quot; anymore, is it?</p>
+
+<p>But let&#39;s go over <em>why</em> this is. Let&#39;s talk about what Secure Boot requires of your machine.</p>
+
+<p><small>[ <strong>Note:</strong> This blog post doesn&#39;t cover <em>every</em> aspect of what Secure Boot is checking or doing, but it does cover some new useful technical details. <em>- mike</em> ]</small></p>
+
+<h2 id="let-39-s-talk-security-levels">Let&#39;s talk security levels</h2>
+
+<h3 id="no-security">No Security</h3>
+
+<p>I&#39;m putting this one first because it&#39;s the easiest to talk about. Simply put, this is closest to the classic boot model we knew before the T2. All the normal stuff applies.</p>
+
+<p>The device firmware has to be able to see a boot.efi it can use in a volume it can read and boot from and the OS inside the volume has to say it supports the hardware (which is foremost stored in <code>/System/Library/CoreServices/PlatformSupport.plist</code>, if you&#39;ve ever wondered) and provide all the necessary hardware kexts for talking to the bits of the computer.</p>
+
+<p>Secure Boot devices come with additional requirements in that the T2 chip runs its own OS (bridgeOS), but yadda yadda yadda this isn&#39;t the boot mode you&#39;re interested in reading about. This is your normal &quot;if the OS is compatible, it can boot the Mac&quot; situation.</p>
+
+<h3 id="full-security">Full Security</h3>
+
+<p>What&#39;s different about this mode? Let&#39;s investigage.</p>
+
+<p>We&#39;ll ask a Secure Boot device what it&#39;s booting. Let&#39;s start with the bless command:</p>
+
+<p><code>sudo bless --getBoot --verbose</code></p>
+
+<p><noscript><pre>EFI found at IODeviceTree:/efi
+Current EFI boot device string is: &#39;&lt;array&gt;&lt;dict&gt;&lt;key&gt;IOMatch&lt;/key&gt;&lt;dict&gt;&lt;key&gt;IOProviderClass
+&lt;/key&gt;&lt;string&gt;IOMedia&lt;/string&gt;&lt;key&gt;IOPropertyMatch&lt;/key&gt;&lt;dict&gt;&lt;key&gt;UUID&lt;/key&gt;&lt;string&gt;08A2DDE7
+-7A58-44F0-ABF6-B721AD7C31AF&lt;/string&gt;&lt;/dict&gt;&lt;/dict&gt;&lt;key&gt;BLLastBSDName&lt;/key&gt;&lt;string&gt;disk1s2&lt;/s
+tring&gt;&lt;/dict&gt;&lt;dict&gt;&lt;key&gt;IOEFIDevicePathType&lt;/key&gt;&lt;string&gt;MediaFilePath&lt;/string&gt;&lt;key&gt;Path&lt;/key
+&gt;&lt;string&gt;\FD77CA06-84E9-42D0-B5FE-6295D28CBB2F\System\Library\CoreServices\boot.efi&lt;/string&gt;&lt;
+/dict&gt;&lt;/array&gt;&#39;
+Boot option is 8BE4DF61-93CA-11D2-AA0D-00E098032B8C:Boot0080
+Processing boot option &#39;Mac OS X&#39;
+Boot option matches XML representation
+Found device: disk1s2
+Disk boot device detected
+Detected APFS volume.  Skipping Boot!=Root check.
+No auxiliary booter partition required
+System partition found
+Preferred system partition found: disk0s1
+Returning booter information dictionary:
+&lt;CFBasicHash 0x7feb7ac103a0 [0x7fff882dfaf0]&gt;{type = mutable dict, count = 4,
+entries =&gt;
+    0 : &lt;CFString 0x10c3a73c0 [0x7fff882dfaf0]&gt;{contents = &quot;Data Partitions&quot;} = (
+    disk1s2
+)
+    1 : &lt;CFString 0x10c3a69a0 [0x7fff882dfaf0]&gt;{contents = &quot;Preboot Volumes&quot;} = (
+    disk1s2
+)
+    2 : &lt;CFString 0x10c3a73e0 [0x7fff882dfaf0]&gt;{contents = &quot;Auxiliary Partitions&quot;} = (
+)
+    3 : &lt;CFString 0x10c3a6be0 [0x7fff882dfaf0]&gt;{contents = &quot;System Partitions&quot;} = (
+    disk0s1
+)
+}</p>
+
+<p>/dev/disk1s2 is a preboot volume
+Substituting found system volume /dev/disk1s1
+/dev/disk1s1</pre></noscript><script src="https://gist.github.com/pudquick/13a2b419416f8fd010a7c8fcda2a9b87.js?file=01_snip.txt"> </script></p>
+
+<p>There&#39;s a lot of information there.</p>
+
+<p>But if you&#39;ve never noticed this before on macOS devices that boot APFS (like all Secure Boot devices), macOS isn&#39;t booting a file off of the System volume (<code>/dev/disk1s1</code>), it&#39;s booting the <code>boot.efi</code> file from the new APFS Preboot volume (<code>/dev/disk1s2</code>) that you&#39;ll find inside APFS containers:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">&lt;key&gt;BLLastBSDName&lt;/key&gt;
+&lt;string&gt;disk1s2&lt;/string&gt;
+
+&lt;key&gt;Path&lt;/key&gt;
+&lt;string&gt;\FD77CA06-84E9-42D0-B5FE-6295D28CBB2F\System\Library\CoreServices\boot.efi&lt;/string&gt;
+</code></pre></div>
+<p>It doesn&#39;t matter if you&#39;ve encrypted the device or not. Every macOS device booting an APFS filesystem boots like this.</p>
+
+<p>You can see the container layout with this command: <code>diskutil apfs list</code></p>
+
+<p><noscript><pre>diskutil apfs list
+APFS Container (1 found)
+|
++-- Container disk1 7DAB37A1-C5F7-4E6D-AEF5-1F114200BF97
+    ====================================================
+    APFS Container Reference:     disk1
+    Size (Capacity Ceiling):      1000240963584 B (1.0 TB)
+    Minimum Size:                 12800237568 B (12.8 GB)
+    Capacity In Use By Volumes:   12327649280 B (12.3 GB) (1.2% used)
+    Capacity Not Allocated:       987913314304 B (987.9 GB) (98.8% free)
+    |
+    +-&lt; Physical Store disk0s2 33B53866-762C-468B-B270-53CD9B1A1D18
+    |   -----------------------------------------------------------
+    |   APFS Physical Store Disk:   disk0s2
+    |   Size:                       1000240963584 B (1.0 TB)
+    |
+    +-&gt; Volume disk1s1 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
+    |   ---------------------------------------------------
+    |   APFS Volume Disk (Role):   disk1s1 (No specific role)
+    |   Name:                      Macintosh HD (Case-insensitive)
+    |   Mount Point:               /
+    |   Capacity Consumed:         11026714624 B (11.0 GB)
+    |   FileVault:                 No (Encrypted at rest)
+    |
+    +-&gt; Volume disk1s2 08A2DDE7-7A58-44F0-ABF6-B721AD7C31AF
+    |   ---------------------------------------------------
+    |   APFS Volume Disk (Role):   disk1s2 (Preboot)
+    |   Name:                      Preboot (Case-insensitive)
+    |   Mount Point:               /Volumes/Preboot
+    |   Capacity Consumed:         48771072 B (48.8 MB)
+    |   FileVault:                 No
+    |
+    +-&gt; Volume disk1s3 AF2A7289-1CFE-4058-9048-FC89FE45B66F
+    |   ---------------------------------------------------
+    |   APFS Volume Disk (Role):   disk1s3 (Recovery)
+    |   Name:                      Recovery (Case-insensitive)
+    |   Mount Point:               Not Mounted
+    |   Capacity Consumed:         1044361216 B (1.0 GB)
+    |   FileVault:                 No
+    |
+    +-&gt; Volume disk1s4 76B04202-3499-4845-B685-64DA25B0CC82
+        ---------------------------------------------------
+        APFS Volume Disk (Role):   disk1s4 (VM)
+        Name:                      VM (Case-insensitive)
+        Mount Point:               /private/var/vm
+        Capacity Consumed:         20480 B (20.5 KB)
+        FileVault:                 No (Encrypted at rest)</pre></noscript><script src="https://gist.github.com/pudquick/13a2b419416f8fd010a7c8fcda2a9b87.js?file=02_snip.txt"> </script></p>
+
+<p>It comes in a triplet: OS/System volume, Preboot, and Recovery. If you&#39;re booted from a System volume within an APFS Container, you&#39;ll also see a (temporary) VM volume, which has taken the place of and is mounted at <code>/private/var/vm</code>.</p>
+
+<p>So we&#39;re booting from Preboot.</p>
+
+<p>Since we&#39;re trying to figure out what&#39;s different about a Secure Boot device, does the Preboot volume of an older Mac without a T2 chip look different in comparison?</p>
+
+<p>Let&#39;s mount them and see. For the running OS off the internal disk, that&#39;s usually:</p>
+
+<p><code>diskutil mount /dev/disk1s2</code></p>
+
+<p>It should mount at <code>/Volumes/Preboot</code></p>
+
+<p><noscript><pre>diskutil mount /dev/disk1s2
+Volume Preboot on /dev/disk1s2 mounted</p>
+
+<p>ls -l /Volumes/Preboot/
+total 0
+drwxr-xr-x  7 root  wheel  224 Jul 17 09:38 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F</pre></noscript><script src="https://gist.github.com/pudquick/13a2b419416f8fd010a7c8fcda2a9b87.js?file=03_snip.txt"> </script></p>
+
+<p>If you look at the top level of the disk, you&#39;ll see one (or more) folders that look like long hex strings with dashes in them. Those are <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier">GUIDs</a>. Not only are they GUIDs, but the GUIDs match some of the output that we saw before in <code>diskutil apfs list</code></p>
+
+<p>A System volume within an APFS Container has its own unique GUID. Within Preboot (and the Recovery volume as well), the top level folders will contain a folder with a name matching the GUID of the System volume it&#39;s paired with.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">    +-&gt; Volume disk1s1 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
+    |   ---------------------------------------------------
+    |   APFS Volume Disk (Role):   disk1s1 (No specific role)
+    |   Name:                      Macintosh HD (Case-insensitive)
+    |   Mount Point:               /
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">ls -l /Volumes/Preboot/
+total 0
+drwxr-xr-x  7 root  wheel  224 Jul 17 09:38 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
+</code></pre></div>
+<p>In the HFS+ boot model, the kernel is hardcoded to look for the Recovery partition at the partition id minus 1 of the associated System partition. With APFS, a single APFS container can now contain multiple System volumes - <strong>but only a single Recovery/Partition volume is required within the container</strong>, each of which can contain multiple GUID-named folders (one for each System volume).</p>
+
+<p>Looking back at the information we got from the bless command, we can see that the boot.efi is in a subfolder within the GUID folder: <code>System/Library/CoreServices/boot.efi</code></p>
+<div class="highlight"><pre><code class="language-" data-lang="">&lt;key&gt;Path&lt;/key&gt;
+&lt;string&gt;\FD77CA06-84E9-42D0-B5FE-6295D28CBB2F\System\Library\CoreServices\boot.efi&lt;/string&gt;
+</code></pre></div>
+<p>So, if this is the boot target of the Secure Boot device, maybe there&#39;s something in here related to the Secure Boot process.</p>
+
+<p>There&#39;s quite a few files in the Preboot volume.</p>
+
+<p><noscript><pre>find /Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F</p>
+
+<p>/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/usr
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/usr/standalone
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/usr/standalone/i386
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/usr/standalone/i386/EfiLoginUI
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/usr/standalone/i386/EfiLoginUI/appleLogo.efires
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/usr/standalone/i386/EfiLoginUI/flag_picker.efires
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/usr/standalone/i386/EfiLoginUI/unknown_userUI.efires
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/usr/standalone/i386/EfiLoginUI/sound.efires
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/usr/standalone/i386/EfiLoginUI/battery.efires
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/usr/standalone/i386/EfiLoginUI/recoveryUI.efires
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/usr/standalone/i386/EfiLoginUI/Lucida13.efires
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/usr/standalone/i386/EfiLoginUI/disk_passwordUI.efires
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/usr/standalone/i386/EfiLoginUI/recovery_user.efires
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/usr/standalone/i386/EfiLoginUI/Lucida13White.efires
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/usr/standalone/i386/EfiLoginUI/loginui.efires
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/usr/standalone/i386/EfiLoginUI/guest_userUI.efires
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/var
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/var/db
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/var/db/AdminUserRecoveryInfo.plist
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/var/db/CryptoUserInfo.plist
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/var/db/secureaccesstoken.plist
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/Library
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/Library/Preferences
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/Library/Preferences/SystemConfiguration
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/Library/Preferences/SystemConfiguration/com.apple.Boot.plist
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/System
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/System/Library
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/System/Library/CoreServices
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/System/Library/CoreServices/.disk_label_2x
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/System/Library/CoreServices/boot.efi
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/System/Library/CoreServices/.root_uuid
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/System/Library/CoreServices/boot.efi.j137ap.im4m
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/System/Library/CoreServices/.disk_label
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/System/Library/CoreServices/bootbase.efi.j137ap.im4m
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/System/Library/CoreServices/BridgeVersion.bin
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/System/Library/CoreServices/PlatformSupport.plist
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/System/Library/CoreServices/.contentDetails
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/System/Library/CoreServices/SystemVersion.plist
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/System/Library/CoreServices/boot.efi.j137ap.15156C1879A0A6.im4m
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/System/Library/Caches
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/System/Library/Caches/com.apple.corestorage
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/System/Library/Caches/com.apple.corestorage/EncryptedRoot.plist.wipekey
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/System/Library/Caches/com.apple.corestorage/EFILoginLocalizations
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/System/Library/Caches/com.apple.corestorage/EFILoginLocalizations/appleLogo.efires
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/System/Library/Caches/com.apple.corestorage/EFILoginLocalizations/flag_picker.efires
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/System/Library/Caches/com.apple.corestorage/EFILoginLocalizations/unknown_userUI.efires
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/System/Library/Caches/com.apple.corestorage/EFILoginLocalizations/sound.efires
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/System/Library/Caches/com.apple.corestorage/EFILoginLocalizations/battery.efires
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/System/Library/Caches/com.apple.corestorage/EFILoginLocalizations/Lucida13.efires
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/System/Library/Caches/com.apple.corestorage/EFILoginLocalizations/disk_passwordUI.efires
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/System/Library/Caches/com.apple.corestorage/EFILoginLocalizations/Lucida13White.efires
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/System/Library/Caches/com.apple.corestorage/EFILoginLocalizations/loginui.efires
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/System/Library/Caches/com.apple.corestorage/EFILoginLocalizations/guest_userUI.efires
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/System/Library/Caches/com.apple.corestorage/EFILoginLocalizations/preferences.efires
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/com.apple.installer
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/com.apple.installer/com.apple.Boot.plist
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/com.apple.installer/bootbase.efi.j137ap.15156C1879A0A6.im4m
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/com.apple.installer/.disk_label_2x
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/com.apple.installer/boot.efi
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/com.apple.installer/boot.efi.j137ap.im4m
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/com.apple.installer/BridgeVersion.plist
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/com.apple.installer/immutablekernel.j137ap.15156C1879A0A6.im4m
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/com.apple.installer/.disk_label.contentDetails
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/com.apple.installer/.disk_label
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/com.apple.installer/bootbase.efi.j137ap.im4m
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/com.apple.installer/BridgeVersion.bin
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/com.apple.installer/PlatformSupport.plist
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/com.apple.installer/SystemVersion.plist
+/Volumes/Preboot/FD77CA06-84E9-42D0-B5FE-6295D28CBB2F/com.apple.installer/boot.efi.j137ap.15156C1879A0A6.im4m</pre></noscript><script src="https://gist.github.com/pudquick/13a2b419416f8fd010a7c8fcda2a9b87.js?file=04_snip.txt"> </script></p>
+
+<p>Maybe we could compare them to a device running the same OS version without a T2 chip. For the record here, that means I&#39;m comparing an iMac Pro to a 2017 MacBook Pro running 10.13.6.</p>
+
+<p>Let&#39;s chop out the GUID names at the beginning (since they&#39;re unique to every System volume) and just compare the contents of the subdirectories. Sort the lines of each and run both of them against each other through the <code>diff</code> command:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">*** Standard-listing.txt
+--- SecureBoot-listing.txt
+***************
+*** 4,12 ****
+--- 4,15 ----
+  com.apple.installer/.disk_label_2x
+  com.apple.installer/boot.efi
++ com.apple.installer/boot.efi.j137ap.15156C1879A0A6.im4m
+  com.apple.installer/boot.efi.j137ap.im4m
++ com.apple.installer/bootbase.efi.j137ap.15156C1879A0A6.im4m
+  com.apple.installer/bootbase.efi.j137ap.im4m
+  com.apple.installer/BridgeVersion.bin
+  com.apple.installer/BridgeVersion.plist
+  com.apple.installer/com.apple.Boot.plist
++ com.apple.installer/immutablekernel.j137ap.15156C1879A0A6.im4m
+  com.apple.installer/PlatformSupport.plist
+  com.apple.installer/SystemVersion.plist
+***************
+*** 38,41 ****
+--- 41,45 ----
+  System/Library/CoreServices/.root_uuid
+  System/Library/CoreServices/boot.efi
++ System/Library/CoreServices/boot.efi.j137ap.15156C1879A0A6.im4m
+  System/Library/CoreServices/boot.efi.j137ap.im4m
+  System/Library/CoreServices/bootbase.efi.j137ap.im4m
+</code></pre></div>
+<p>Wow. The only different files are on the Secure Boot device.</p>
+
+<p>im4m files - what are those?</p>
+
+<p>Google has some interesting hits: <a href="https://www.theiphonewiki.com/wiki/IMG4_File_Format">IMG4 File Format</a></p>
+
+<p>A &quot;manifest&quot; file. A structured tag file that contains signatures for OS components. Used on some of Apple&#39;s other OSes, including iOS.</p>
+
+<p>Let&#39;s go back to Apple&#39;s description of what Full Security does:</p>
+
+<blockquote>
+<p>During startup, your Mac verifies the integrity of the operating system (OS) on your startup disk to make sure that it&#39;s legitimate.</p>
+</blockquote>
+
+<p>That sounds like something signatures would be useful for.</p>
+
+<blockquote>
+<p>This information is unique to your Mac, and it ensures that your Mac starts up from an OS that is trusted by Apple.</p>
+</blockquote>
+
+<p>Oh? So this might be different if we look at yet another iMac Pro? Good thing I access to a few to compare 😄</p>
+
+<p>And sure enough, there are the same additional files on the other device, but the hex string before the .im4m suffix (the <strong>15156C1879A0A6</strong> in <code>boot.efi.j137ap.15156C1879A0A6.im4m</code>) is different.</p>
+
+<p>Well.</p>
+
+<p>If we think this is part of the security signature, let&#39;s start with some basic experimentation and just rename (just in case we need it again ...) these files.</p>
+
+<p><small>[ <strong>Note:</strong> I had to do it from Target Disk mode! Some fun filesystem protections here (if you want to play at home) <em>- mike</em> ]</small></p>
+
+<p>For extra grins, let&#39;s poke at this comment make sure the network is disconnected before reboot:</p>
+
+<blockquote>
+<p>If your Mac can&#39;t connect to the Internet, it displays an alert that an Internet connection is required.</p>
+</blockquote>
+
+<p>Annnnnnd ....... ?</p>
+
+<p><img src="/images/2018-07-27-booting-secure/error.png" alt=""></p>
+
+<p>BINGO. It would seem we have part of the equation.</p>
+
+<p>Reconnecting the device to the network and then later checking in Preboot, it would seem new <code>*.j137ap.15156C1879A0A6.im4m</code> files have been recreated.</p>
+
+<p>Interstingly, each one rebuilds a uniquely named file - but always with the same hex name for itself.</p>
+
+<p>They appear to be different every time they&#39;re remade because the checksums keep changing. So they&#39;re not static records but instead are likely dynamic signatures, needing that network access in order to be created.</p>
+
+<p>So maybe the static hex string is a unique identifier of sorts.</p>
+
+<p>We should try searching the machine for the identifier - maybe we can find out what it is.</p>
+
+<p>Normally for this kind of thing, if I want to search through the entire contents of the machine I&#39;d reach out to my standard tools like <a href="https://geoff.greer.fm/ag/">the Silver Searcher</a> or <a href="https://blog.burntsushi.net/ripgrep/">RipGrep</a>. Both of these tools will gladly recursively search through both text and binary files to locate strings you&#39;re interested in. These guys get frequent shoutouts in my reverse engineering talks.</p>
+
+<p>However, in this case, I dumbly lucked out by trying the naive approach and checking to see if the output of <code>system_profiler</code> (which lists other unique identifiers like ethernet MAC addresses, serial numbers, etc.) happened to contain the hex string in question.</p>
+
+<p>It did!</p>
+
+<p>But <strong>only because I&#39;d freshly re-installed the OS</strong> and <code>system_profiler</code> tends to include recent portions of several log files. In this instance, it included <code>install.log</code>:</p>
+
+<p><noscript><pre>osinstallersetupd[598]: tss_submit_job: ----Begin request
+osinstallersetupd[598]: tss_submit_job: &lt;CFBasicHash 0x7fe8e067bd30 [0x106a7daf0]&gt;{type = mutable dict, count = 16,
+    entries =&gt;
+        0 : &lt;CFString 0x117cbe9b0 [0x106a7daf0]&gt;{contents = &quot;x86,SecurityMode&quot;} = &lt;CFBoolean 0x106a7e3e8 [0x106a7daf0]&gt;{value = true}
+        1 : &lt;CFString 0x117cbf830 [0x106a7daf0]&gt;{contents = &quot;@HostPlatformInfo&quot;} = &lt;CFString 0x117cbf950 [0x106a7daf0]&gt;{contents = &quot;mac&quot;}
+        2 : &lt;CFString 0x117cbe990 [0x106a7daf0]&gt;{contents = &quot;x86,ProductionMode&quot;} = &lt;CFBoolean 0x106a7e3e8 [0x106a7daf0]&gt;{value = true}
+        3 : &lt;CFString 0x117cb96f0 [0x106a7daf0]&gt;{contents = &quot;ApECID&quot;} = &lt;CFNumber 0x15156c1879a0a637 [0x106a7daf0]&gt;{value = +5934528522199206, type = kCFNumberSInt64Type}
+        4 : &lt;CFString 0x117cb96b0 [0x106a7daf0]&gt;{contents = &quot;ApBoardID&quot;} = &lt;CFNumber 0xa27 [0x106a7daf0]&gt;{value = +10, type = kCFNumberSInt32Type}
+        5 : &lt;CFString 0x117cbf850 [0x106a7daf0]&gt;{contents = &quot;@VersionInfo&quot;} = &lt;CFString 0x117cbf970 [0x106a7daf0]&gt;{contents = &quot;libauthinstall-521.50.21&quot;}
+        6 : &lt;CFString 0x117cbff30 [0x106a7daf0]&gt;{contents = &quot;UniqueBuildID&quot;} = &lt;CFData 0x7fe8e0671fc0 [0x106a7daf0]&gt;{length = 20, capacity = 64, bytes = 0x9be59ef7512563c1f8623b8d3bafa5ae37ee748b}
+        9 : &lt;CFString 0x7fe8e066f700 [0x106a7daf0]&gt;{contents = &quot;x86,x86MultiUpdater&quot;} = &lt;CFBasicHash 0x7fe8e06758b0 [0x106a7daf0]&gt;{type = mutable dict, count = 4,
+    entries =&gt;
+        0 : Digest = &lt;CFData 0x7fe8e065a090 [0x106a7daf0]&gt;{length = 48, capacity = 64, bytes = 0x2ca99430f622e4f7f57bd59a48dd8581 ... 2c5347f947cd9bab}
+        1 : ESEC = &lt;CFBoolean 0x106a7e3e8 [0x106a7daf0]&gt;{value = true}
+        5 : EPRO = &lt;CFBoolean 0x106a7e3e8 [0x106a7daf0]&gt;{value = true}
+        6 : Trusted = &lt;CFBoolean 0x106a7e3f8 [0x106a7daf0]&gt;{value = false}
+    }</pre></noscript><script src="https://gist.github.com/pudquick/13a2b419416f8fd010a7c8fcda2a9b87.js?file=05_snip.txt"> </script></p>
+
+<p>ApECID? There&#39;s also an ApBoardID. So maybe that&#39;s just EC? Or ECID?</p>
+
+<p>Let&#39;s try our good friends at the iPhone Wiki again, maybe they know.</p>
+
+<p><a href="https://www.theiphonewiki.com/wiki/ECID">ECID</a></p>
+
+<blockquote>
+<p>The ECID (possibly standing for Exclusive Chip ID or Electronic Chip ID) is an identifier unique to every unit.</p>
+</blockquote>
+
+<p>There&#39;s a ton of detail on that page. It&#39;s most likely lots of educated guesses from non-Apple people. Likely not all of it applies to Secure Boot Macs. But if you play around with some of the tools and suggestions they have, you&#39;ll find out that we&#39;re looking at basically the same thing.</p>
+
+<h2 id="growing-evidence-of-the-new-process">Growing evidence of the new process</h2>
+
+<p>So Secure Boot Macs have a new unique identifier which iOS devices have had for some time: the ECID.</p>
+
+<p>And it would appear that a signature manifest is generated as part of the Secure Boot process that, in Full Mode, makes a signature specific to the ECID of the device itself.</p>
+
+<p>... are there any other good tidbits in the log near there?</p>
+
+<p><noscript><pre>iMac-Pro osinstallersetupd[598]: ---- Checking for network reachability ----
+iMac-Pro osinstallersetupd[598]: Signing server is reachable: <a href="http://gs.apple.com:80">http://gs.apple.com:80</a>
+iMac-Pro osinstallersetupd[598]: ---- Starting personalization ----
+iMac-Pro osinstallersetupd[598]: Starting personalization with libauthinstall-521.50.21
+iMac-Pro osinstallersetupd[598]: Configuring amai
+iMac-Pro osinstallersetupd[598]: preferBuildManifest is set, will use measurements from build manifest
+iMac-Pro osinstallersetupd[598]: AMAuthInstallBundleCopyBuildIdentityForVariant: No baseband chipid reported. Will match Build Identity based on ap chipid and boardid only.
+iMac-Pro osinstallersetupd[598]: Personalizing to /var/tmp/OSPersonalizationTemp/A308C220-90B4-4DC3-927D-39A4919027FB-PersonalizedBundle
+...
+iMac-Pro osinstallersetupd[598]: tss_submit_job_with_retry: TSS Connection attempt 1 of 3.  (Will retry if TSS_ERR_SERVER_NOT_REACHABLE.)
+iMac-Pro osinstallersetupd[598]: AMAuthInstallHttpMessageSendSync: httpRequest=&lt;CFHTTPMessageRef 0x7fe8e067fa40(0x7fe8e067fa50)&gt; { POST request, url <a href="http://gs.apple.com:80/TSS/controller?action=2">http://gs.apple.com:80/TSS/controller?action=2</a> }</pre></noscript><script src="https://gist.github.com/pudquick/13a2b419416f8fd010a7c8fcda2a9b87.js?file=06_snip.txt"> </script></p>
+
+<p><strong>WHOA!</strong></p>
+
+<p>So we now know this entire new process is called &quot;personalization&quot; AND we know the URL that it&#39;s reaching out to: <a href="http://gs.apple.com:80/TSS/controller?action=2">http://gs.apple.com:80/TSS/controller?action=2</a></p>
+
+<p>Any more friendly hits on the wiki for that site or URL?</p>
+
+<p><a href="https://www.theiphonewiki.com/wiki/SHSH_Protocol">SHSH Protocol</a></p>
+
+<p>Wow, the &quot;Sending data (request)&quot; section there looks <em>very</em> similar to the details the Mac is sending: <code>@HostPlatformInfo</code>, <code>ApECID</code>, etc.</p>
+
+<p>This is locking it in pretty solid that Apple has leveraged this same technology for generating signatures for validated booting for Secure Boot on Mac.</p>
+
+<p>Knowing what we know now, we can play a little bit more to help confirm these files are unique to the devices they&#39;re generated for.</p>
+
+<p>Copying them between Secure Boot devices and renaming them to match the ECID of the other device still results in Secure Boot wanting to repair the signature.</p>
+
+<p>Going back to the 2017 MacBook Pro that does not have Secure Boot, it doesn&#39;t have a uniquely named .im4m file - but it does have a &quot;generic&quot; .im4m file for the boot.efi: <code>boot.efi.j137ap.im4m</code></p>
+
+<p>What happens if we delete it?</p>
+
+<p>... Still boots.</p>
+
+<p>So apparently devices that are not Secure Boot don&#39;t rely on (or check/validate) the .im4m files during the boot process at all.</p>
+
+<p>Let&#39;s take one last bit from the logs helps to confirm that these signatures are indeed the .im4m files:</p>
+
+<p><noscript><pre>iMac-Pro osinstallersetupd[598]: Copying AP ticket to /var/tmp/OSPersonalizationTemp/D1A04BCF-0305-4156-B576-156333850AA9-SignedManifestsSandbox/System/Library/PrelinkedKernels/immutablekernel.j137ap.15156C1879A0A6.im4m
+iMac-Pro osinstallersetupd[598]: Copying AP ticket to /var/tmp/OSPersonalizationTemp/D1A04BCF-0305-4156-B576-156333850AA9-SignedManifestsSandbox/usr/standalone/firmware/FUD/MultiUpdater/MultiUpdater.efi.j137ap.15156C1879A0A6.im4m
+iMac-Pro osinstallersetupd[598]: Copying AP ticket to /var/tmp/OSPersonalizationTemp/D1A04BCF-0305-4156-B576-156333850AA9-SignedManifestsSandbox/usr/standalone/i386/boot.efi.j137ap.15156C1879A0A6.im4m
+iMac-Pro osinstallersetupd[598]: Copying AP ticket to /var/tmp/OSPersonalizationTemp/D1A04BCF-0305-4156-B576-156333850AA9-SignedManifestsSandbox/System/Library/AccessoryUpdaterBundles/USBCAccessoryFirmwareUpdater.bundle/Contents/Resources/HPMUtil.efi.j137ap.15156C1879A0A6.im4m
+iMac-Pro osinstallersetupd[598]: Copying AP ticket to /var/tmp/OSPersonalizationTemp/D1A04BCF-0305-4156-B576-156333850AA9-SignedManifestsSandbox/System/Library/CoreServices/boot.efi.j137ap.15156C1879A0A6.im4m</pre></noscript><script src="https://gist.github.com/pudquick/13a2b419416f8fd010a7c8fcda2a9b87.js?file=07_snip.txt"> </script></p>
+
+<p>Pretty clear proof that the result of the personalization process is saved to these .im4m file paths.</p>
+
+<p>But what about ..</p>
+
+<h3 id="medium-security">Medium Security</h3>
+
+<blockquote>
+<p>Allows any version of signed operating system software ever trusted by Apple to run.</p>
+</blockquote>
+
+<p><p></p>
+
+<blockquote>
+<p>During startup when Medium Security is turned on, your Mac verifies the OS on your startup disk only by making sure that it has been properly signed by Apple [...]</p>
+</blockquote>
+
+<p>No mention of &quot;This information is unique to your Mac&quot;.</p>
+
+<p>So let&#39;s:</p>
+
+<ol>
+<li>Set it to Medium</li>
+<li>Delete those uniquely named .im4m files again, then </li>
+<li>Reboot!</li>
+</ol>
+
+<p>... <em>Hmmmmmmm</em>, it booted.</p>
+
+<p>Now my directory structure is an <em>exact match</em> for the 2017 MacBook Pro. I no longer have .im4m files with the ECID hex identifier.</p>
+
+<p>But what about these other .im4m files that are in there (the ones without the ECID names in them)?</p>
+
+<p>Maybe that&#39;s what we&#39;re relying on now?</p>
+
+<p><strong>Deleting .im4m files - ROUND 2!</strong></p>
+
+<p>And as soon as you do that, yes, you run into alert dialogs that the OS is no longer trusted or bootable and needs repair.</p>
+
+<p>Let&#39;s expand the thought process again.</p>
+
+<p>Because there was no statement that &quot;This information is unique to your Mac&quot; ... <strong>could we copy them</strong> from the 2017 MacBook Pro (which doesn&#39;t have Secure Boot) back to the iMac Pro (which does have Secure Boot) and get the iMac Pro booting again?</p>
+
+<p>Answer: <strong>YES</strong></p>
+
+<p>Repeating the experiment but this time copying .im4m files from a machine running 10.13.5, <strong>we get blocked at boot again</strong>.</p>
+
+<p>So we now know the &quot;generic&quot; .im4m files are <em>OS specific</em>.</p>
+
+<p>Knowing what we&#39;ve found so far, let&#39;s loop back and look at these .im4m files again and the wiki page we found mentioning them. There&#39;s some interesting notes at the bottom mentioning ASN.1.</p>
+
+<p>Are .im4m files just simply ASN.1 encoded?</p>
+
+<p>Let&#39;s run them against <code>openssl asn1parse</code> and find out:</p>
+
+<p><strong>boot.efi.j137ap.15156C1879A0A6.im4m:</strong></p>
+
+<p><noscript><pre>openssl asn1parse -inform DER -in boot.efi.j137ap.15156C1879A0A6.im4m</p>
+<div class="highlight"><pre><code class="language-" data-lang="">0:d=0  hl=4 l=3040 cons: SEQUENCE          
+4:d=1  hl=2 l=   4 prim: IA5STRING         :IM4M
+</code></pre></div>
+<p>10:d=1  hl=2 l=   1 prim: INTEGER           :00
+   13:d=1  hl=4 l= 811 cons: SET<br>
+   17:d=2  hl=9 l= 802 cons: priv [ 1296125506 ] 
+   26:d=3  hl=4 l= 798 cons: SEQUENCE<br>
+   30:d=4  hl=2 l=   4 prim: IA5STRING         :MANB
+   36:d=4  hl=4 l= 788 cons: SET<br>
+   40:d=5  hl=8 l= 232 cons: priv [ 1296125520 ] 
+   48:d=6  hl=3 l= 229 cons: SEQUENCE<br>
+   51:d=7  hl=2 l=   4 prim: IA5STRING         :MANP
+   57:d=7  hl=3 l= 220 cons: SET<br>
+   60:d=8  hl=7 l=  11 cons: priv [ 1112494660 ] 
+   67:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+   69:d=10 hl=2 l=   4 prim: IA5STRING         :BORD
+   75:d=10 hl=2 l=   1 prim: INTEGER           :0A
+   78:d=8  hl=7 l=  11 cons: priv [ 1128616015 ] 
+   85:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+   87:d=10 hl=2 l=   4 prim: IA5STRING         :CEPO
+   93:d=10 hl=2 l=   1 prim: INTEGER           :02
+   96:d=8  hl=7 l=  13 cons: priv [ 1128810832 ] 
+  103:d=9  hl=2 l=  11 cons: SEQUENCE<br>
+  105:d=10 hl=2 l=   4 prim: IA5STRING         :CHIP
+  111:d=10 hl=2 l=   3 prim: INTEGER           :8012
+  116:d=8  hl=7 l=  17 cons: priv [ 1162037572 ] 
+  123:d=9  hl=2 l=  15 cons: SEQUENCE<br>
+  125:d=10 hl=2 l=   4 prim: IA5STRING         :ECID
+  131:d=10 hl=2 l=   7 prim: INTEGER           :15156C1879A0A6
+  140:d=8  hl=7 l=  11 cons: priv [ 1396985677 ] 
+  147:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  149:d=10 hl=2 l=   4 prim: IA5STRING         :SDOM
+  155:d=10 hl=2 l=   1 prim: INTEGER           :01
+  158:d=8  hl=7 l=  11 cons: priv [ 1836085871 ] 
+  165:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  167:d=10 hl=2 l=   4 prim: IA5STRING         :mpro
+  173:d=10 hl=2 l=   1 prim: BOOLEAN           :255
+  176:d=8  hl=7 l=  11 cons: priv [ 1836279139 ] 
+  183:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  185:d=10 hl=2 l=   4 prim: IA5STRING         :msec
+  191:d=10 hl=2 l=   1 prim: BOOLEAN           :255
+  194:d=8  hl=7 l=  30 cons: priv [ 1936881262 ] 
+  201:d=9  hl=2 l=  28 cons: SEQUENCE<br>
+  203:d=10 hl=2 l=   4 prim: IA5STRING         :srvn
+  209:d=10 hl=2 l=  20 prim: OCTET STRING      [HEX DUMP]:33...
+  231:d=8  hl=7 l=  42 cons: priv [ 2020503406 ] 
+  238:d=9  hl=2 l=  40 cons: SEQUENCE<br>
+  240:d=10 hl=2 l=   4 prim: IA5STRING         :xnon
+  246:d=10 hl=2 l=  32 prim: OCTET STRING      [HEX DUMP]:C7...
+  280:d=5  hl=8 l= 129 cons: priv [ 1701210466 ] 
+  288:d=6  hl=2 l= 127 cons: SEQUENCE<br>
+  290:d=7  hl=2 l=   4 prim: IA5STRING         :efib
+  296:d=7  hl=2 l= 119 cons: SET<br>
+  298:d=8  hl=7 l=  58 cons: priv [ 1145525076 ] 
+  305:d=9  hl=2 l=  56 cons: SEQUENCE<br>
+  307:d=10 hl=2 l=   4 prim: IA5STRING         :DGST
+  313:d=10 hl=2 l=  48 prim: OCTET STRING      [HEX DUMP]:82...
+  363:d=8  hl=7 l=  11 cons: priv [ 1162560857 ] 
+  370:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  372:d=10 hl=2 l=   4 prim: IA5STRING         :EKEY
+  378:d=10 hl=2 l=   1 prim: BOOLEAN           :0
+  381:d=8  hl=7 l=  11 cons: priv [ 1162891855 ] 
+  388:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  390:d=10 hl=2 l=   4 prim: IA5STRING         :EPRO
+  396:d=10 hl=2 l=   1 prim: BOOLEAN           :255
+  399:d=8  hl=7 l=  11 cons: priv [ 1163085123 ] 
+  406:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  408:d=10 hl=2 l=   4 prim: IA5STRING         :ESEC
+  414:d=10 hl=2 l=   1 prim: BOOLEAN           :255
+  417:d=5  hl=8 l= 129 cons: priv [ 1752198517 ] 
+  425:d=6  hl=2 l= 127 cons: SEQUENCE<br>
+  427:d=7  hl=2 l=   4 prim: IA5STRING         :hpmu
+  433:d=7  hl=2 l= 119 cons: SET<br>
+  435:d=8  hl=7 l=  58 cons: priv [ 1145525076 ] 
+  442:d=9  hl=2 l=  56 cons: SEQUENCE<br>
+  444:d=10 hl=2 l=   4 prim: IA5STRING         :DGST
+  450:d=10 hl=2 l=  48 prim: OCTET STRING      [HEX DUMP]:C9...
+  500:d=8  hl=7 l=  11 cons: priv [ 1162560857 ] 
+  507:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  509:d=10 hl=2 l=   4 prim: IA5STRING         :EKEY
+  515:d=10 hl=2 l=   1 prim: BOOLEAN           :0
+  518:d=8  hl=7 l=  11 cons: priv [ 1162891855 ] 
+  525:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  527:d=10 hl=2 l=   4 prim: IA5STRING         :EPRO
+  533:d=10 hl=2 l=   1 prim: BOOLEAN           :255
+  536:d=8  hl=7 l=  11 cons: priv [ 1163085123 ] 
+  543:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  545:d=10 hl=2 l=   4 prim: IA5STRING         :ESEC
+  551:d=10 hl=2 l=   1 prim: BOOLEAN           :255
+  554:d=5  hl=8 l= 129 cons: priv [ 1835758190 ] 
+  562:d=6  hl=2 l= 127 cons: SEQUENCE<br>
+  564:d=7  hl=2 l=   4 prim: IA5STRING         :mkrn
+  570:d=7  hl=2 l= 119 cons: SET<br>
+  572:d=8  hl=7 l=  58 cons: priv [ 1145525076 ] 
+  579:d=9  hl=2 l=  56 cons: SEQUENCE<br>
+  581:d=10 hl=2 l=   4 prim: IA5STRING         :DGST
+  587:d=10 hl=2 l=  48 prim: OCTET STRING      [HEX DUMP]:EF...
+  637:d=8  hl=7 l=  11 cons: priv [ 1162560857 ] 
+  644:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  646:d=10 hl=2 l=   4 prim: IA5STRING         :EKEY
+  652:d=10 hl=2 l=   1 prim: BOOLEAN           :0
+  655:d=8  hl=7 l=  11 cons: priv [ 1162891855 ] 
+  662:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  664:d=10 hl=2 l=   4 prim: IA5STRING         :EPRO
+  670:d=10 hl=2 l=   1 prim: BOOLEAN           :255
+  673:d=8  hl=7 l=  11 cons: priv [ 1163085123 ] 
+  680:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  682:d=10 hl=2 l=   4 prim: IA5STRING         :ESEC
+  688:d=10 hl=2 l=   1 prim: BOOLEAN           :255
+  691:d=5  hl=8 l= 129 cons: priv [ 1836413028 ] 
+  699:d=6  hl=2 l= 127 cons: SEQUENCE<br>
+  701:d=7  hl=2 l=   4 prim: IA5STRING         :mupd
+  707:d=7  hl=2 l= 119 cons: SET<br>
+  709:d=8  hl=7 l=  58 cons: priv [ 1145525076 ] 
+  716:d=9  hl=2 l=  56 cons: SEQUENCE<br>
+  718:d=10 hl=2 l=   4 prim: IA5STRING         :DGST
+  724:d=10 hl=2 l=  48 prim: OCTET STRING      [HEX DUMP]:2C...
+  774:d=8  hl=7 l=  11 cons: priv [ 1162560857 ] 
+  781:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  783:d=10 hl=2 l=   4 prim: IA5STRING         :EKEY
+  789:d=10 hl=2 l=   1 prim: BOOLEAN           :0
+  792:d=8  hl=7 l=  11 cons: priv [ 1162891855 ] 
+  799:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  801:d=10 hl=2 l=   4 prim: IA5STRING         :EPRO
+  807:d=10 hl=2 l=   1 prim: BOOLEAN           :255
+  810:d=8  hl=7 l=  11 cons: priv [ 1163085123 ] 
+  817:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  819:d=10 hl=2 l=   4 prim: IA5STRING         :ESEC
+  825:d=10 hl=2 l=   1 prim: BOOLEAN           :255
+  828:d=1  hl=4 l= 512 prim: OCTET STRING      [HEX DUMP]:38...
+ 1344:d=1  hl=4 l=1696 cons: SEQUENCE<br>
+ 1348:d=2  hl=4 l=1692 cons: SEQUENCE<br>
+ 1352:d=3  hl=4 l=1156 cons: SEQUENCE<br>
+ 1356:d=4  hl=2 l=   3 cons: cont [ 0 ]<br>
+ 1358:d=5  hl=2 l=   1 prim: INTEGER           :02
+ 1361:d=4  hl=2 l=   8 prim: INTEGER           :1EE0DA0BB48E6AC7
+ 1371:d=4  hl=2 l=  13 cons: SEQUENCE<br>
+ 1373:d=5  hl=2 l=   9 prim: OBJECT            :sha384WithRSAEncryption
+ 1384:d=5  hl=2 l=   0 prim: NULL<br>
+ 1386:d=4  hl=2 l=  79 cons: SEQUENCE<br>
+ 1388:d=5  hl=2 l=  43 cons: SET<br>
+ 1390:d=6  hl=2 l=  41 cons: SEQUENCE<br>
+ 1392:d=7  hl=2 l=   3 prim: OBJECT            :commonName
+ 1397:d=7  hl=2 l=  34 prim: UTF8STRING        :Apple X86 Secure Boot Root CA - G1
+ 1433:d=5  hl=2 l=  19 cons: SET<br>
+ 1435:d=6  hl=2 l=  17 cons: SEQUENCE<br>
+ 1437:d=7  hl=2 l=   3 prim: OBJECT            :organizationName
+ 1442:d=7  hl=2 l=  10 prim: UTF8STRING        :Apple Inc.
+ 1454:d=5  hl=2 l=  11 cons: SET<br>
+ 1456:d=6  hl=2 l=   9 cons: SEQUENCE<br>
+ 1458:d=7  hl=2 l=   3 prim: OBJECT            :countryName
+ 1463:d=7  hl=2 l=   2 prim: PRINTABLESTRING   :US
+ 1467:d=4  hl=2 l=  30 cons: SEQUENCE<br>
+ 1469:d=5  hl=2 l=  13 prim: UTCTIME           :170323023003Z
+ 1484:d=5  hl=2 l=  13 prim: UTCTIME           :170323214243Z
+ 1499:d=4  hl=2 l=  89 cons: SEQUENCE<br>
+ 1501:d=5  hl=2 l=  53 cons: SET<br>
+ 1503:d=6  hl=2 l=  51 cons: SEQUENCE<br>
+ 1505:d=7  hl=2 l=   3 prim: OBJECT            :commonName
+ 1510:d=7  hl=2 l=  44 prim: UTF8STRING        :T8012Mac-TssLive-ManifestKey-RevB-DataCenter
+ 1556:d=5  hl=2 l=  19 cons: SET<br>
+ 1558:d=6  hl=2 l=  17 cons: SEQUENCE<br>
+ 1560:d=7  hl=2 l=   3 prim: OBJECT            :organizationName
+ 1565:d=7  hl=2 l=  10 prim: UTF8STRING        :Apple Inc.
+ 1577:d=5  hl=2 l=  11 cons: SET<br>
+ 1579:d=6  hl=2 l=   9 cons: SEQUENCE<br>
+ 1581:d=7  hl=2 l=   3 prim: OBJECT            :countryName
+ 1586:d=7  hl=2 l=   2 prim: PRINTABLESTRING   :US
+ 1590:d=4  hl=4 l= 546 cons: SEQUENCE<br>
+ 1594:d=5  hl=2 l=  13 cons: SEQUENCE<br>
+ 1596:d=6  hl=2 l=   9 prim: OBJECT            :rsaEncryption
+ 1607:d=6  hl=2 l=   0 prim: NULL<br>
+ 1609:d=5  hl=4 l= 527 prim: BIT STRING<br>
+ 2140:d=4  hl=4 l= 368 cons: cont [ 3 ]<br>
+ 2144:d=5  hl=4 l= 364 cons: SEQUENCE<br>
+ 2148:d=6  hl=2 l=  12 cons: SEQUENCE<br>
+ 2150:d=7  hl=2 l=   3 prim: OBJECT            :X509v3 Basic Constraints
+ 2155:d=7  hl=2 l=   1 prim: BOOLEAN           :255
+ 2158:d=7  hl=2 l=   2 prim: OCTET STRING      [HEX DUMP]:3000
+ 2162:d=6  hl=2 l=  31 cons: SEQUENCE<br>
+ 2164:d=7  hl=2 l=   3 prim: OBJECT            :X509v3 Authority Key Identifier
+ 2169:d=7  hl=2 l=  24 prim: OCTET STRING      [HEX DUMP]:301680147D73CE0A3B41A1A352D2B1141EF6F5B4DD76E6E8
+ 2195:d=6  hl=2 l=  29 cons: SEQUENCE<br>
+ 2197:d=7  hl=2 l=   3 prim: OBJECT            :X509v3 Subject Key Identifier
+ 2202:d=7  hl=2 l=  22 prim: OCTET STRING      [HEX DUMP]:04142875BCA84CDB09E7A079626F471A36E90A89CB9B
+ 2226:d=6  hl=2 l=  14 cons: SEQUENCE<br>
+ 2228:d=7  hl=2 l=   3 prim: OBJECT            :X509v3 Key Usage
+ 2233:d=7  hl=2 l=   1 prim: BOOLEAN           :255
+ 2236:d=7  hl=2 l=   4 prim: OCTET STRING      [HEX DUMP]:03020780
+ 2242:d=6  hl=4 l= 266 cons: SEQUENCE<br>
+ 2246:d=7  hl=2 l=  10 prim: OBJECT            :1.2.840.113635.100.6.1.15
+ 2258:d=7  hl=2 l=   1 prim: BOOLEAN           :255
+ 2261:d=7  hl=3 l= 248 prim: OCTET STRING      [HEX DUMP]:31...
+ 2512:d=3  hl=2 l=  13 cons: SEQUENCE<br>
+ 2514:d=4  hl=2 l=   9 prim: OBJECT            :sha384WithRSAEncryption
+ 2525:d=4  hl=2 l=   0 prim: NULL<br>
+ 2527:d=3  hl=4 l= 513 prim: BIT STRING                                              .</pre></noscript><script src="https://gist.github.com/pudquick/13a2b419416f8fd010a7c8fcda2a9b87.js?file=08_snip.txt"> </script></p>
+
+<p><strong>boot.efi.j137ap.im4m:</strong></p>
+
+<p><noscript><pre>openssl asn1parse -inform DER -in boot.efi.j137ap.im4m</p>
+<div class="highlight"><pre><code class="language-" data-lang="">0:d=0  hl=4 l=3008 cons: SEQUENCE          
+4:d=1  hl=2 l=   4 prim: IA5STRING         :IM4M
+</code></pre></div>
+<p>10:d=1  hl=2 l=   1 prim: INTEGER           :00
+   13:d=1  hl=4 l= 774 cons: SET<br>
+   17:d=2  hl=9 l= 765 cons: priv [ 1296125506 ] 
+   26:d=3  hl=4 l= 761 cons: SEQUENCE<br>
+   30:d=4  hl=2 l=   4 prim: IA5STRING         :MANB
+   36:d=4  hl=4 l= 751 cons: SET<br>
+   40:d=5  hl=8 l= 195 cons: priv [ 1296125520 ] 
+   48:d=6  hl=3 l= 192 cons: SEQUENCE<br>
+   51:d=7  hl=2 l=   4 prim: IA5STRING         :MANP
+   57:d=7  hl=3 l= 183 cons: SET<br>
+   60:d=8  hl=7 l=  11 cons: priv [ 1112494660 ] 
+   67:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+   69:d=10 hl=2 l=   4 prim: IA5STRING         :BORD
+   75:d=10 hl=2 l=   1 prim: INTEGER           :0A
+   78:d=8  hl=7 l=  11 cons: priv [ 1128616015 ] 
+   85:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+   87:d=10 hl=2 l=   4 prim: IA5STRING         :CEPO
+   93:d=10 hl=2 l=   1 prim: INTEGER           :02
+   96:d=8  hl=7 l=  13 cons: priv [ 1128810832 ] 
+  103:d=9  hl=2 l=  11 cons: SEQUENCE<br>
+  105:d=10 hl=2 l=   4 prim: IA5STRING         :CHIP
+  111:d=10 hl=2 l=   3 prim: INTEGER           :8012
+  116:d=8  hl=7 l=  11 cons: priv [ 1396985677 ] 
+  123:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  125:d=10 hl=2 l=   4 prim: IA5STRING         :SDOM
+  131:d=10 hl=2 l=   1 prim: INTEGER           :01
+  134:d=8  hl=7 l=  11 cons: priv [ 1769303906 ] 
+  141:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  143:d=10 hl=2 l=   4 prim: IA5STRING         :iuob
+  149:d=10 hl=2 l=   1 prim: BOOLEAN           :0
+  152:d=8  hl=7 l=  11 cons: priv [ 1836085871 ] 
+  159:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  161:d=10 hl=2 l=   4 prim: IA5STRING         :mpro
+  167:d=10 hl=2 l=   1 prim: BOOLEAN           :255
+  170:d=8  hl=7 l=  11 cons: priv [ 1836279139 ] 
+  177:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  179:d=10 hl=2 l=   4 prim: IA5STRING         :msec
+  185:d=10 hl=2 l=   1 prim: BOOLEAN           :255
+  188:d=8  hl=7 l=  30 cons: priv [ 1936881262 ] 
+  195:d=9  hl=2 l=  28 cons: SEQUENCE<br>
+  197:d=10 hl=2 l=   4 prim: IA5STRING         :srvn
+  203:d=10 hl=2 l=  20 prim: OCTET STRING      [HEX DUMP]:03...
+  225:d=8  hl=7 l=  11 cons: priv [ 2020960115 ] 
+  232:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  234:d=10 hl=2 l=   4 prim: IA5STRING         :xugs
+  240:d=10 hl=2 l=   1 prim: INTEGER           :01
+  243:d=5  hl=8 l= 129 cons: priv [ 1701210466 ] 
+  251:d=6  hl=2 l= 127 cons: SEQUENCE<br>
+  253:d=7  hl=2 l=   4 prim: IA5STRING         :efib
+  259:d=7  hl=2 l= 119 cons: SET<br>
+  261:d=8  hl=7 l=  58 cons: priv [ 1145525076 ] 
+  268:d=9  hl=2 l=  56 cons: SEQUENCE<br>
+  270:d=10 hl=2 l=   4 prim: IA5STRING         :DGST
+  276:d=10 hl=2 l=  48 prim: OCTET STRING      [HEX DUMP]:82...
+  326:d=8  hl=7 l=  11 cons: priv [ 1162560857 ] 
+  333:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  335:d=10 hl=2 l=   4 prim: IA5STRING         :EKEY
+  341:d=10 hl=2 l=   1 prim: BOOLEAN           :0
+  344:d=8  hl=7 l=  11 cons: priv [ 1162891855 ] 
+  351:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  353:d=10 hl=2 l=   4 prim: IA5STRING         :EPRO
+  359:d=10 hl=2 l=   1 prim: BOOLEAN           :255
+  362:d=8  hl=7 l=  11 cons: priv [ 1163085123 ] 
+  369:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  371:d=10 hl=2 l=   4 prim: IA5STRING         :ESEC
+  377:d=10 hl=2 l=   1 prim: BOOLEAN           :255
+  380:d=5  hl=8 l= 129 cons: priv [ 1752198517 ] 
+  388:d=6  hl=2 l= 127 cons: SEQUENCE<br>
+  390:d=7  hl=2 l=   4 prim: IA5STRING         :hpmu
+  396:d=7  hl=2 l= 119 cons: SET<br>
+  398:d=8  hl=7 l=  58 cons: priv [ 1145525076 ] 
+  405:d=9  hl=2 l=  56 cons: SEQUENCE<br>
+  407:d=10 hl=2 l=   4 prim: IA5STRING         :DGST
+  413:d=10 hl=2 l=  48 prim: OCTET STRING      [HEX DUMP]:C9...
+  463:d=8  hl=7 l=  11 cons: priv [ 1162560857 ] 
+  470:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  472:d=10 hl=2 l=   4 prim: IA5STRING         :EKEY
+  478:d=10 hl=2 l=   1 prim: BOOLEAN           :0
+  481:d=8  hl=7 l=  11 cons: priv [ 1162891855 ] 
+  488:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  490:d=10 hl=2 l=   4 prim: IA5STRING         :EPRO
+  496:d=10 hl=2 l=   1 prim: BOOLEAN           :255
+  499:d=8  hl=7 l=  11 cons: priv [ 1163085123 ] 
+  506:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  508:d=10 hl=2 l=   4 prim: IA5STRING         :ESEC
+  514:d=10 hl=2 l=   1 prim: BOOLEAN           :255
+  517:d=5  hl=8 l= 129 cons: priv [ 1835758190 ] 
+  525:d=6  hl=2 l= 127 cons: SEQUENCE<br>
+  527:d=7  hl=2 l=   4 prim: IA5STRING         :mkrn
+  533:d=7  hl=2 l= 119 cons: SET<br>
+  535:d=8  hl=7 l=  58 cons: priv [ 1145525076 ] 
+  542:d=9  hl=2 l=  56 cons: SEQUENCE<br>
+  544:d=10 hl=2 l=   4 prim: IA5STRING         :DGST
+  550:d=10 hl=2 l=  48 prim: OCTET STRING      [HEX DUMP]:EF...
+  600:d=8  hl=7 l=  11 cons: priv [ 1162560857 ] 
+  607:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  609:d=10 hl=2 l=   4 prim: IA5STRING         :EKEY
+  615:d=10 hl=2 l=   1 prim: BOOLEAN           :0
+  618:d=8  hl=7 l=  11 cons: priv [ 1162891855 ] 
+  625:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  627:d=10 hl=2 l=   4 prim: IA5STRING         :EPRO
+  633:d=10 hl=2 l=   1 prim: BOOLEAN           :255
+  636:d=8  hl=7 l=  11 cons: priv [ 1163085123 ] 
+  643:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  645:d=10 hl=2 l=   4 prim: IA5STRING         :ESEC
+  651:d=10 hl=2 l=   1 prim: BOOLEAN           :255
+  654:d=5  hl=8 l= 129 cons: priv [ 1836413028 ] 
+  662:d=6  hl=2 l= 127 cons: SEQUENCE<br>
+  664:d=7  hl=2 l=   4 prim: IA5STRING         :mupd
+  670:d=7  hl=2 l= 119 cons: SET<br>
+  672:d=8  hl=7 l=  58 cons: priv [ 1145525076 ] 
+  679:d=9  hl=2 l=  56 cons: SEQUENCE<br>
+  681:d=10 hl=2 l=   4 prim: IA5STRING         :DGST
+  687:d=10 hl=2 l=  48 prim: OCTET STRING      [HEX DUMP]:2C...
+  737:d=8  hl=7 l=  11 cons: priv [ 1162560857 ] 
+  744:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  746:d=10 hl=2 l=   4 prim: IA5STRING         :EKEY
+  752:d=10 hl=2 l=   1 prim: BOOLEAN           :0
+  755:d=8  hl=7 l=  11 cons: priv [ 1162891855 ] 
+  762:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  764:d=10 hl=2 l=   4 prim: IA5STRING         :EPRO
+  770:d=10 hl=2 l=   1 prim: BOOLEAN           :255
+  773:d=8  hl=7 l=  11 cons: priv [ 1163085123 ] 
+  780:d=9  hl=2 l=   9 cons: SEQUENCE<br>
+  782:d=10 hl=2 l=   4 prim: IA5STRING         :ESEC
+  788:d=10 hl=2 l=   1 prim: BOOLEAN           :255
+  791:d=1  hl=4 l= 512 prim: OCTET STRING      [HEX DUMP]:8E...
+ 1307:d=1  hl=4 l=1701 cons: SEQUENCE<br>
+ 1311:d=2  hl=4 l=1697 cons: SEQUENCE<br>
+ 1315:d=3  hl=4 l=1161 cons: SEQUENCE<br>
+ 1319:d=4  hl=2 l=   3 cons: cont [ 0 ]<br>
+ 1321:d=5  hl=2 l=   1 prim: INTEGER           :02
+ 1324:d=4  hl=2 l=   8 prim: INTEGER           :32A3D9F1951CCCCC
+ 1334:d=4  hl=2 l=  13 cons: SEQUENCE<br>
+ 1336:d=5  hl=2 l=   9 prim: OBJECT            :sha384WithRSAEncryption
+ 1347:d=5  hl=2 l=   0 prim: NULL<br>
+ 1349:d=4  hl=2 l=  79 cons: SEQUENCE<br>
+ 1351:d=5  hl=2 l=  43 cons: SET<br>
+ 1353:d=6  hl=2 l=  41 cons: SEQUENCE<br>
+ 1355:d=7  hl=2 l=   3 prim: OBJECT            :commonName
+ 1360:d=7  hl=2 l=  34 prim: UTF8STRING        :Apple X86 Secure Boot Root CA - G1
+ 1396:d=5  hl=2 l=  19 cons: SET<br>
+ 1398:d=6  hl=2 l=  17 cons: SEQUENCE<br>
+ 1400:d=7  hl=2 l=   3 prim: OBJECT            :organizationName
+ 1405:d=7  hl=2 l=  10 prim: UTF8STRING        :Apple Inc.
+ 1417:d=5  hl=2 l=  11 cons: SET<br>
+ 1419:d=6  hl=2 l=   9 cons: SEQUENCE<br>
+ 1421:d=7  hl=2 l=   3 prim: OBJECT            :countryName
+ 1426:d=7  hl=2 l=   2 prim: PRINTABLESTRING   :US
+ 1430:d=4  hl=2 l=  30 cons: SEQUENCE<br>
+ 1432:d=5  hl=2 l=  13 prim: UTCTIME           :170323023206Z
+ 1447:d=5  hl=2 l=  13 prim: UTCTIME           :170323214243Z
+ 1462:d=4  hl=2 l=  95 cons: SEQUENCE<br>
+ 1464:d=5  hl=2 l=  59 cons: SET<br>
+ 1466:d=6  hl=2 l=  57 cons: SEQUENCE<br>
+ 1468:d=7  hl=2 l=   3 prim: OBJECT            :commonName
+ 1473:d=7  hl=2 l=  50 prim: UTF8STRING        :T8012Mac-TssLive-ManifestKeyGlobal-RevB-DataCenter
+ 1525:d=5  hl=2 l=  19 cons: SET<br>
+ 1527:d=6  hl=2 l=  17 cons: SEQUENCE<br>
+ 1529:d=7  hl=2 l=   3 prim: OBJECT            :organizationName
+ 1534:d=7  hl=2 l=  10 prim: UTF8STRING        :Apple Inc.
+ 1546:d=5  hl=2 l=  11 cons: SET<br>
+ 1548:d=6  hl=2 l=   9 cons: SEQUENCE<br>
+ 1550:d=7  hl=2 l=   3 prim: OBJECT            :countryName
+ 1555:d=7  hl=2 l=   2 prim: PRINTABLESTRING   :US
+ 1559:d=4  hl=4 l= 546 cons: SEQUENCE<br>
+ 1563:d=5  hl=2 l=  13 cons: SEQUENCE<br>
+ 1565:d=6  hl=2 l=   9 prim: OBJECT            :rsaEncryption
+ 1576:d=6  hl=2 l=   0 prim: NULL<br>
+ 1578:d=5  hl=4 l= 527 prim: BIT STRING<br>
+ 2109:d=4  hl=4 l= 367 cons: cont [ 3 ]<br>
+ 2113:d=5  hl=4 l= 363 cons: SEQUENCE<br>
+ 2117:d=6  hl=2 l=  12 cons: SEQUENCE<br>
+ 2119:d=7  hl=2 l=   3 prim: OBJECT            :X509v3 Basic Constraints
+ 2124:d=7  hl=2 l=   1 prim: BOOLEAN           :255
+ 2127:d=7  hl=2 l=   2 prim: OCTET STRING      [HEX DUMP]:3000
+ 2131:d=6  hl=2 l=  31 cons: SEQUENCE<br>
+ 2133:d=7  hl=2 l=   3 prim: OBJECT            :X509v3 Authority Key Identifier
+ 2138:d=7  hl=2 l=  24 prim: OCTET STRING      [HEX DUMP]:301680147D73CE0A3B41A1A352D2B1141EF6F5B4DD76E6E8
+ 2164:d=6  hl=2 l=  29 cons: SEQUENCE<br>
+ 2166:d=7  hl=2 l=   3 prim: OBJECT            :X509v3 Subject Key Identifier
+ 2171:d=7  hl=2 l=  22 prim: OCTET STRING      [HEX DUMP]:0414345D0DE5ABC4C554E33A00548F9E53B037F87514
+ 2195:d=6  hl=2 l=  14 cons: SEQUENCE<br>
+ 2197:d=7  hl=2 l=   3 prim: OBJECT            :X509v3 Key Usage
+ 2202:d=7  hl=2 l=   1 prim: BOOLEAN           :255
+ 2205:d=7  hl=2 l=   4 prim: OCTET STRING      [HEX DUMP]:03020780
+ 2211:d=6  hl=4 l= 265 cons: SEQUENCE<br>
+ 2215:d=7  hl=2 l=  10 prim: OBJECT            :1.2.840.113635.100.6.1.15
+ 2227:d=7  hl=2 l=   1 prim: BOOLEAN           :255
+ 2230:d=7  hl=3 l= 247 prim: OCTET STRING      [HEX DUMP]:31...
+ 2480:d=3  hl=2 l=  13 cons: SEQUENCE<br>
+ 2482:d=4  hl=2 l=   9 prim: OBJECT            :sha384WithRSAEncryption
+ 2493:d=4  hl=2 l=   0 prim: NULL<br>
+ 2495:d=3  hl=4 l= 513 prim: BIT STRING        </pre></noscript><script src="https://gist.github.com/pudquick/13a2b419416f8fd010a7c8fcda2a9b87.js?file=09_snip.txt"> </script></p>
+
+<p><strong>Cool details!</strong></p>
+
+<p>There&#39;s an embedded x509 cert in there, coming from &quot;Apple X86 Secure Boot Root CA - G1&quot; and &quot;T8012Mac-TssLive-ManifestKeyGlobal-RevB-DataCenter&quot;, for validating the signature.</p>
+
+<p>And there&#39;s a lot of those 4 letter fields: BORD, CHIP, etc.</p>
+
+<p>Each of those is probably related to one of the attributes like we saw being supplied in the install.log to the personalization service.</p>
+
+<p>What&#39;s very interesting is that the ECID field is very definitely present in the Full Security mode manifest, but is <em>missing</em> in the Medium Security manifest. Yet again more confirmation that they&#39;re not tied to specific hardware.</p>
+
+<p>This would seem to imply that unlike Full Security mode, in Medium Security mode you could simply place already generated and correct .im4m manifests on disk - without access to the internet - as no device-specific personalization needs to occur.</p>
+
+<p>One complete set of .im4m signature files is good for that OS on whatever hardware it&#39;s compatible with.</p>
+
+<p>(The phrase &quot;air gapped imaging&quot; comes to mind ...)</p>
+
+<p>And now that I&#39;ve mentioned it - let&#39;s talk about all of this in the context of imaging.</p>
+
+<h2 id="the-lifespan-of-imaging-not-as-dead-as-we-thought-yet">The lifespan of imaging: not as dead as we thought, yet</h2>
+
+<p>Some of us in the community have spoken quite well about it already:</p>
+
+<ul>
+<li><a href="https://www.youtube.com/watch?v=pStw0zPZr_M">Imaging is Dead: Now What?</a> (by the masterful Greg Neagle)</li>
+<li><a href="https://derflounder.wordpress.com/2017/01/10/imaging-will-be-dead-soon-ish/">Imaging will be dead soonish</a> (by the Blogfather himself, Rich Trouton)</li>
+</ul>
+
+<p>In the early first release days of the iMac Pro, there was talk that you couldn&#39;t use <code>asr</code> to restore an OS image to the device and have it boot out of the box.</p>
+
+<p>However, if you were fortunate enough to have two iMac Pros (or brave enough to try from Internet Recovery), they could apparently image themselves.</p>
+
+<p>Did you bother to check back after this news? Have you tried it again recently?</p>
+
+<p>If you&#39;re making a never booted image with wonderful tools like <a href="https://github.com/MagerValp/AutoDMG">AutoDMG</a>, these days <code>asr</code> can very definitely restore a booting macOS onto these devices, even if the host device running the <code>asr</code> restore is <strong>not</strong> a Secure Boot device.</p>
+
+<p>So what changed?</p>
+
+<p>When the iMac Pro came out, it was running a special fork (not uncommon for new hardware builds) of the current OS at the time: macOS 10.13.3 build 17D2047</p>
+
+<p>When 10.13.4 was released, it was a unified build and the iMac Pro no longer ran its own fork.</p>
+
+<p>So, using the knowledge of &quot;perzonalization&quot; above, can we look at the <code>asr</code> command itself and see what may have changed?</p>
+
+<p>Let&#39;s try some of my most favorite (and built-in) tooling to peek at the binary - <code>strings</code> and <code>otool</code>:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">strings /usr/sbin/asr | grep -i personaliz
+no-personalization
+Couldn't personalize volume %s
+Personalization failed with error %d, line %d
+no-personalize
+personalizationRequiredForVolumeAtMountPoint:
+networkAvailableForPersonalizationWithOptions:
+personalizeVolumeAtMountPointForInstall:outputDirectory:options:completionHandler:
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">otool -L /usr/sbin/asr | grep -i personaliz
+    /System/Library/PrivateFrameworks/OSPersonalization.framework/Versions/A/OSPersonalization (compatibility version 1.0.0, current version 48.1.0)
+</code></pre></div>
+<p>It would appear <code>asr</code> gained a new trick!</p>
+
+<p>In fact, the <code>asr</code> in the iMac Pro&#39;s copy of 10.13.3 already had this new capability, which is why it worked from device to device <a href="https://managingosx.wordpress.com/2018/01/25/early-notes-on-deploying-images-to-imac-pro/">or from within Recovery to itself</a>.</p>
+
+<p><code>asr</code> on any 10.13.4+ macOS version now has the same capability without the need for special undocumented flags or tricks.</p>
+
+<p>If you tinker a little deeper (like I have), you&#39;ll find out that there&#39;s code in the OSPersonalization PrivateFramework to <strong>read the ECID of a target disk mode attached device</strong>. This allows it to personalize a device even in Full Security mode with the ECID-specific, device-specific manifest.</p>
+
+<h2 id="the-million-dollar-question">The Million Dollar Question</h2>
+
+<p>So. Should you image?</p>
+
+<p>Apple tells you blatantly: <strong>NO</strong></p>
+
+<p><a href="https://support.apple.com/en-us/HT208020">How to install macOS at your organization</a></p>
+
+<blockquote>
+<p>Apple doesn&#39;t recommend or support monolithic system imaging as an installation method, because the system image might not include model-specific information such as firmware updates.</p>
+</blockquote>
+
+<p>Or do they? Read it again.</p>
+
+<blockquote>
+<p>Apple doesn&#39;t recommend or support</p>
+</blockquote>
+
+<p>They don&#39;t say you <em>can&#39;t</em>. Just that they <em>don&#39;t recommend it</em>. That it&#39;s <em>not supported</em>.</p>
+
+<p>They quite obviously built the functionality into <code>asr</code>.</p>
+
+<h3 id="but-should-you">But - should you?</h3>
+
+<p>It&#39;s hard to beat the speed of target disk mode restore of an AutoDMG built image.</p>
+
+<p>And Secure Boot devices support Target Disk mode out of the box. This means you can restore a personalized image to a Secure Boot device and it will boot it first try. Suddenly a &quot;light touch&quot; (hold T at boot) workflow is back. And there are amazing tools starting to be available out there for this like <a href="https://github.com/google/restor">Google&#39;s Restor</a>.</p>
+
+<h3 id="but-should-you">But - should you?</h3>
+
+<p>Are you someone that needs to worry that a delivered device has been manipulated mid-shipment?</p>
+
+<p>If you try placing a simple LaunchDaemon on a Secure Boot device&#39;s System volume, it doesn&#39;t stop it from booting in Full Security mode. That&#39;s not one of the things in the signature manifest. Honestly there are a billion places the OS could be modified to auto-launch things as root at start up. Secure Boot checks <em>some</em> things. It doesn&#39;t check <em>all things</em> (yet?). It&#39;s focused right now on securing the core of the boot process.</p>
+
+<p>So what do you do in that situation instead? Internet Recovery?</p>
+
+<p>Guess how many machines you could have restored back to vanilla with something like Restor in the same amount of time.</p>
+
+<h3 id="but-should-you">But - should you?</h3>
+
+<blockquote>
+<p>because the system image might not include model-specific information such as firmware updates</p>
+</blockquote>
+
+<p>This warning is something to consider. There have been definite changes in how the OS installer works. If you were going to do image restoring workflows, you should consider that portions of your device may not have the necessary software if you&#39;re restoring anything other than the last OS version it ran. To make this effective, you&#39;d probably need to keep your fleet of devices on top of OS updates and make sure your restoration image is the latest OS version with patches at all times.</p>
+
+<h3 id="but-should-you">But - should you?</h3>
+
+<p>There are also alternative projects out there that are more than &quot;light touch&quot; but still drastically less than running through Setup Assistant just to create an account you&#39;ll destroy again. An example of this is <a href="https://managingosx.wordpress.com/2018/01/17/bootstrappr/">Greg Neagle&#39;s Bootstrappr</a>.</p>
+
+<p>Boot into recovery, type two commands, and you&#39;re off to the races.</p>
+
+<p>But this only works for provisioning clean machines. If you&#39;re bringing devices back from users to be redeployed, it won&#39;t wipe and restore the machines to a pristine state or deal with FileVault encrypted disks, etc. So you&#39;re still looking at something like Internet Recovery to return the device to a new state.</p>
+
+<h3 id="but-should-you">But - should you?</h3>
+
+<p>Secure Boot macOS devices are still very new! There are definitely corners and edges around the concept of imaging them that we surely haven&#39;t stumbled over yet.</p>
+
+<h3 id="but-should-you">But - should you?</h3>
+
+<blockquote>
+<p>Apple doesn&#39;t recommend or support</p>
+</blockquote>
+
+<p>I think if you read between the lines there, Apple understands that right now some organizations may feel they have the need for these workflows still.</p>
+
+<p>If Apple continues down similar paths to what it&#39;s done with iOS, they could eventually possibly split the OS into its own volume - possibly even in a read only image with all mutable and user data stored separately.</p>
+
+<p>If they ever get to that state, some of the security concerns above will just evaporate. The only OS on the device will be one that&#39;s trusted and verified to a deeper state than macOS is today. We could even gain the &quot;Erase All Content And Settings&quot; functionality.</p>
+
+<p>Nobody but Apple knows will be next. But they do, in the meantime, provide guidance.</p>
+
+<p>And their guidance is that you should be looking at DEP/MDM-based workflows for your provisioning. The latest operating system versions already include some features (like managing automatic kernel extension loading) that can only be done <em>remotely</em> and adjusted post-deployment <a href="https://support.apple.com/en-us/HT208019">via MDM deployed profiles</a>. SIU had the capability to make network bootable images that ran <code>scutil</code> to reconfigure the trust settings, but all of that is moot now that Secure Boot devices don&#39;t network boot at all. MDM is the only game.</p>
+
+<p><strong>If you or your organization feel the need to image devices, then do so.</strong></p>
+
+<p>Just know <em>why</em> you&#39;re doing it. <strong>Simply putting files on disk isn&#39;t a good enough reason.</strong> MDM or MDM-deployed agents can do that.</p>
+
+<p>And be aware it is very very <em>very</em> likely not a long term solution.</p>
+
+<p>You should definitely, in the meantime, be getting MDM going in your environment.</p>
+
+<p>As always, hope this helps.</p>
+
+<p><em>- mike</em></p>
+
+<p><strong>postscript -</strong></p>
+
+<p>With access to the 2018 MacBook Pro, if you look at the Preboot volume, you&#39;ll see two different but similar files for its version of macOS.</p>
+
+<p>Instead of just the &quot;j137ap&quot; .im4m files, you&#39;ll also see &quot;j680ap&quot; and &quot;j132ap&quot; files.</p>
+
+<p>Going back to the install.log again, you can find this line:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">        HardwareModel = j137ap;
+</code></pre></div>
+<p>Quick Google searches will suggest that &quot;j137ap&quot; is likely an internal model identifier of either the iMac Pro itself or the specific T2 chip inside it. &quot;j680ap&quot; and &quot;j132ap&quot;, with a little poking around, you&#39;ll find are for the new 13&quot; and 15&quot; 2018 MacBook Pro devices.</p>
+
+<p>This would indicate that the signatures, while &quot;generic&quot; in Medium mode, do still need to exist for the specific Secure Boot device model you&#39;re attempting to boot it on.</p>
+
+</article>
+
+
+
+
+
+
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname  = 'michaellynnblog';
+    var disqus_identifier = '/2018/07/27/booting-secure';
+    var disqus_title      = '';
+
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="center">
+  <div class="measure">
+    <small>
+      Michael Lynn hangs out at <a href="https://twitter.com/mikeymikey">@mikeymikey</a><br />
+      All content copyrighted where possible.<br />
+All rights reserved.
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>
