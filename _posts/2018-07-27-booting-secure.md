@@ -394,7 +394,7 @@ When the iMac Pro came out, it was running a special fork (not uncommon for new 
 
 When 10.13.4 was released, it was a unified build and the iMac Pro no longer ran its own fork.
 
-So, using the knowledge of "perzonalization" above, can we look at the `asr` command itself and see what may have changed?
+So, using the knowledge of "personalization" above, can we look at the `asr` command itself and see what may have changed?
 
 Let's try some of my most favorite (and built-in) tooling to peek at the binary - `strings` and `otool`:
 
