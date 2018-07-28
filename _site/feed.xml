@@ -1016,7 +1016,7 @@ iMac-Pro osinstallersetupd[598]: Copying AP ticket to /var/tmp/OSPersonalization
 
 &lt;p&gt;When 10.13.4 was released, it was a unified build and the iMac Pro no longer ran its own fork.&lt;/p&gt;
 
-&lt;p&gt;So, using the knowledge of “perzonalization” above, can we look at the &lt;code class=&quot;highlighter-rouge&quot;&gt;asr&lt;/code&gt; command itself and see what may have changed?&lt;/p&gt;
+&lt;p&gt;So, using the knowledge of “personalization” above, can we look at the &lt;code class=&quot;highlighter-rouge&quot;&gt;asr&lt;/code&gt; command itself and see what may have changed?&lt;/p&gt;
 
 &lt;p&gt;Let’s try some of my most favorite (and built-in) tooling to peek at the binary - &lt;code class=&quot;highlighter-rouge&quot;&gt;strings&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;otool&lt;/code&gt;:&lt;/p&gt;
 
