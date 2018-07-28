@@ -221,7 +221,7 @@ If we think this is part of the security signature, let's start with some basic 
 
 <small>[ **Note:** I had to do it from Target Disk mode! Some fun filesystem protections here (if you want to play at home) *- mike* ]</small>
 
-For extra grins, let's poke at this comment make sure the network is disconnected before reboot:
+For extra grins, let's poke at this comment and make sure the network is disconnected before reboot:
 
 > If your Mac can't connect to the Internet, it displays an alert that an Internet connection is required.
 
@@ -233,7 +233,7 @@ BINGO. It would seem we have part of the equation.
 
 Reconnecting the device to the network and then later checking in Preboot, it would seem new `*.j137ap.15156C1879A0A6.im4m` files have been recreated.
 
-Interstingly, each one rebuilds a uniquely named file - but always with the same hex name for itself.
+Interestingly, each one rebuilds a uniquely named file - but always with the same hex name for itself.
 
 They appear to be different every time they're remade because the checksums keep changing. So they're not static records but instead are likely dynamic signatures, needing that network access in order to be created.
 
