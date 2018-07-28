@@ -508,7 +508,7 @@ iMac-Pro osinstallersetupd[598]: AMAuthInstallHttpMessageSendSync: httpRequest=&
 
 &lt;p&gt;So apparently devices that are not Secure Boot don’t rely on (or check/validate) the .im4m files during the boot process at all.&lt;/p&gt;
 
-&lt;p&gt;Let’s take one last bit from the logs helps to confirm that these signatures are indeed the .im4m files:&lt;/p&gt;
+&lt;p&gt;Let’s take one last bit from the logs that helps to confirm that these signatures are indeed the .im4m files:&lt;/p&gt;
 
 &lt;noscript&gt;&lt;pre&gt;iMac-Pro osinstallersetupd[598]: Copying AP ticket to /var/tmp/OSPersonalizationTemp/D1A04BCF-0305-4156-B576-156333850AA9-SignedManifestsSandbox/System/Library/PrelinkedKernels/immutablekernel.j137ap.15156C1879A0A6.im4m
 iMac-Pro osinstallersetupd[598]: Copying AP ticket to /var/tmp/OSPersonalizationTemp/D1A04BCF-0305-4156-B576-156333850AA9-SignedManifestsSandbox/usr/standalone/firmware/FUD/MultiUpdater/MultiUpdater.efi.j137ap.15156C1879A0A6.im4m
