@@ -12,7 +12,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for mikeymikey blogs here" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201807281044" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201807291454" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -193,7 +193,7 @@
 
 <h3 id="full-security">Full Security</h3>
 
-<p>What’s different about this mode? Let’s investigage.</p>
+<p>What’s different about this mode? Let’s investigate.</p>
 
 <p>We’ll ask a Secure Boot device what it’s booting. Let’s start with the bless command:</p>
 
@@ -307,7 +307,7 @@ APFS Container (1 found)
 
 <p>Since we’re trying to figure out what’s different about a Secure Boot device, does the Preboot volume of an older Mac without a T2 chip look different in comparison?</p>
 
-<p>Let’s mount them and see. For the running OS off the internal disk, that’s usually:</p>
+<p>Let’s mount them and see. For the OS that’s booted off the internal disk, that’s usually:</p>
 
 <p><code class="highlighter-rouge">diskutil mount /dev/disk1s2</code></p>
 
@@ -339,7 +339,7 @@ drwxr-xr-x  7 root  wheel  224 Jul 17 09:38 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
 </code></pre>
 </div>
 
-<p>In the HFS+ boot model, the kernel is hardcoded to look for the Recovery partition at the partition id minus 1 of the associated System partition. With APFS, a single APFS container can now contain multiple System volumes - <strong>but only a single Recovery/Partition volume is required within the container</strong>, each of which can contain multiple GUID-named folders (one for each System volume).</p>
+<p>In the HFS+ boot model, the kernel is hardcoded to look for the Recovery partition at the partition id minus 1 of the associated System partition. With APFS, a single APFS container can now contain multiple System volumes - <strong>but only a single Recovery/Preboot volume is required within the container</strong>, each of which can contain multiple GUID-named folders (one for each System volume).</p>
 
 <p>Looking back at the information we got from the bless command, we can see that the boot.efi is in a subfolder within the GUID folder: <code class="highlighter-rouge">System/Library/CoreServices/boot.efi</code></p>
 

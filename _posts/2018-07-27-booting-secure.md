@@ -90,7 +90,7 @@ Secure Boot devices come with additional requirements in that the T2 chip runs i
 
 ### Full Security
 
-What's different about this mode? Let's investigage.
+What's different about this mode? Let's investigate.
 
 We'll ask a Secure Boot device what it's booting. Let's start with the bless command:
 
@@ -122,7 +122,7 @@ So we're booting from Preboot.
 
 Since we're trying to figure out what's different about a Secure Boot device, does the Preboot volume of an older Mac without a T2 chip look different in comparison?
 
-Let's mount them and see. For the running OS off the internal disk, that's usually:
+Let's mount them and see. For the OS that's booted off the internal disk, that's usually:
 
 `diskutil mount /dev/disk1s2`
 
@@ -148,7 +148,7 @@ total 0
 drwxr-xr-x  7 root  wheel  224 Jul 17 09:38 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
 ```
 
-In the HFS+ boot model, the kernel is hardcoded to look for the Recovery partition at the partition id minus 1 of the associated System partition. With APFS, a single APFS container can now contain multiple System volumes - **but only a single Recovery/Partition volume is required within the container**, each of which can contain multiple GUID-named folders (one for each System volume).
+In the HFS+ boot model, the kernel is hardcoded to look for the Recovery partition at the partition id minus 1 of the associated System partition. With APFS, a single APFS container can now contain multiple System volumes - **but only a single Recovery/Preboot volume is required within the container**, each of which can contain multiple GUID-named folders (one for each System volume).
 
 Looking back at the information we got from the bless command, we can see that the boot.efi is in a subfolder within the GUID folder: `System/Library/CoreServices/boot.efi`
 
