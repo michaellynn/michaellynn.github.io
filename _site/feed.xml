@@ -7,6 +7,263 @@
     <atom:link href="http://michaellynn.github.io/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Minecraft Harmony</title>
+        <description>&lt;p&gt;If you’re reading this, you may be one of the adults living in a household full of Minecraft fans who can’t agree on which version is better: Java edition (aka original flavor/classic Minecraft, played on a computer - the one you can mod like crazy) or Bedrock edition (available on iPhone, iPad, Switch, other gaming consoles, etc.).&lt;/p&gt;
+
+&lt;p&gt;… And if you’re cooped up in a house right now where everyone is a little on edge from not getting much of a break from each other, wouldn’t it be nice to be able to make both groups happy and able to play with each other at the same time.&lt;/p&gt;
+
+&lt;p&gt;As it turns out, you can do this! It’s not perfect, but it’s pretty great and it’s definitely better than nothing.&lt;/p&gt;
+
+&lt;p&gt;I’m documenting the information here for posterity and to hopefully provide a little sanity in a time of insanity.&lt;/p&gt;
+
+&lt;h2 id=&quot;here-are-the-requirements&quot;&gt;Here are the requirements:&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A computer to host the server (I’m using a Mac, so these instructions will be written with macOS as the host for the server - yes these instructions work with macOS 10.15 Catalina)&lt;/li&gt;
+  &lt;li&gt;When Java (computer) Minecraft players want to play with each other, they need a paid-for Mojang account.&lt;/li&gt;
+  &lt;li&gt;When Bedrock players want to play with each other, they need a Xbox Live account.&lt;/li&gt;
+  &lt;li&gt;… but when Bedrock players want to play with Java players, you will need an additional computer-style Mojang account for each Bedrock player.&lt;/li&gt;
+  &lt;li&gt;Since you’re reading a guide about having both types of players play with each other, you’ve probably gone through the sign up for this before. But if it’s been a while, you can get additional Java Minecraft accounts at: &lt;a href=&quot;https://my.minecraft.net/en-us/store/minecraft/#register&quot;&gt;minecraft.net&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;All of this is made possible with this wonderful tool: &lt;a href=&quot;https://github.com/GeyserMC/Geyser&quot;&gt;GeyserMC&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;GeyserMC is a proxy translator for the Minecraft Bedrock protocol. It runs separately from your Minecraft server and on-the-fly translates commands from Bedrock clients into Java client protocol as well as translating the Java server response back into Bedrock compatible information.&lt;/p&gt;
+
+&lt;p&gt;GeyserMC supports several different Minecraft server standards (there are &lt;em&gt;many&lt;/em&gt;), but for the purposes of this article I’m going with CraftBukkit.&lt;/p&gt;
+
+&lt;p&gt;Both GeyserMC and CraftBukkit are open source and free and require Java to run them.&lt;/p&gt;
+
+&lt;h2 id=&quot;things-you-need-to-download&quot;&gt;Things you need to download:&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://adoptopenjdk.net&quot;&gt;AdoptOpenJDK 8&lt;/a&gt; - use “OpenJDK 8 (LTS)” latest release. Even though Java is now up to version 14 or whatever, the entire Minecraft modding ecosystem is pinned very strictly to 8. This particular distribution is an easy to install, free, and legal to use distribution of OpenJDK.&lt;/li&gt;
+  &lt;li&gt;CraftBukkit server - I’d recommend downloading &lt;a href=&quot;https://cdn.getbukkit.org/craftbukkit/craftbukkit-1.15.2.jar&quot;&gt;this specific version (1.15.2)&lt;/a&gt;, as that’s what GeyserMC supports as of this blog post&lt;/li&gt;
+  &lt;li&gt;GeyserMC - specifically the &lt;a href=&quot;https://ci.nukkitx.com/job/GeyserMC/job/Geyser/job/inventory/&quot;&gt;“Geyser.jar” artefact file&lt;/a&gt; from branch &lt;strong&gt;“inventory”&lt;/strong&gt;, for now. This branch is where a lot of work is going on to make inventory for Bedrock players work better, especially if the players are in creative mode (like my youngest daughter adores playing). You can also build this from their Github repo directly if you like, but this is their continuous build server and any changes you see landing there show up here relatively quickly.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;how-to-set-it-up&quot;&gt;How to set it up:&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Install the AdoptOpenJDK pkg file you downloaded. This will install OpenJDK to a subdirectory in &lt;code class=&quot;highlighter-rouge&quot;&gt;/Library/Java/JavaVirtualMachines&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Note the name of this subfolder, it should be something like: &lt;code class=&quot;highlighter-rouge&quot;&gt;adoptopenjdk-8.jdk&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Make a folder for the CraftBukkit server .jar file you downloaded and put the .jar inside that folder (I called my folder &lt;code class=&quot;highlighter-rouge&quot;&gt;server&lt;/code&gt;)&lt;/li&gt;
+  &lt;li&gt;Make a (different) folder for the GeyserMC .jar file you downloaded and put the .jar inside that folder (I called my folder &lt;code class=&quot;highlighter-rouge&quot;&gt;proxy&lt;/code&gt;)&lt;/li&gt;
+  &lt;li&gt;I don’t know if separate folders are required, it’s just that each of these files will generate many other files when they run - so I just kept them separate.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Now you just need some helper scripts to make it easy to turn on the Minecraft server and the GeyserMC proxy.&lt;/p&gt;
+
+&lt;p&gt;In the server folder, I created a script (text) file named &lt;code class=&quot;highlighter-rouge&quot;&gt;server.sh&lt;/code&gt; and this is the contents:&lt;/p&gt;
+&lt;noscript&gt;&lt;pre&gt;#!/bin/bash
+export JAVA_HOME=&amp;quot;/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home&amp;quot;
+export PATH=&amp;quot;$JAVA_HOME/bin:$PATH&amp;quot;
+cd &amp;quot;$( dirname &amp;quot;$0&amp;quot; )&amp;quot;
+java -Xmx1024M -jar craftbukkit-1.15.2.jar -o true
+&lt;/pre&gt;&lt;/noscript&gt;
+&lt;script src=&quot;https://gist.github.com/pudquick/af8be79d6c1308fc430cac8d69757c43.js?file=server.sh&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;In the proxy folder, I created a script (text) file named &lt;code class=&quot;highlighter-rouge&quot;&gt;proxy.sh&lt;/code&gt; and this is the contents:&lt;/p&gt;
+&lt;noscript&gt;&lt;pre&gt;#!/bin/bash
+export JAVA_HOME=&amp;quot;/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home&amp;quot;
+export PATH=&amp;quot;$JAVA_HOME/bin:$PATH&amp;quot;
+cd &amp;quot;$( dirname &amp;quot;$0&amp;quot; )&amp;quot;
+java -Xmx1024M -jar Geyser.jar
+&lt;/pre&gt;&lt;/noscript&gt;
+&lt;script src=&quot;https://gist.github.com/pudquick/af8be79d6c1308fc430cac8d69757c43.js?file=proxy.sh&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;&lt;small&gt;[ &lt;strong&gt;Note:&lt;/strong&gt; If you’re not familiar or comfortable with how to make script files on macOS, you can &lt;a href=&quot;https://gist.github.com/pudquick/af8be79d6c1308fc430cac8d69757c43&quot;&gt;visit this page&lt;/a&gt; and click the “Download ZIP” button at the top right. The .zip file you download, when you open/expand it, will contain both of the scripts. Simply unzip the zip file and move the .sh files into their respective folders. ]&lt;/small&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;how-to-run-it&quot;&gt;How to run it:&lt;/h2&gt;
+
+&lt;p&gt;Now you will need to run both the server and the GeyserMC proxy. You’ll need to open Terminal app.&lt;/p&gt;
+
+&lt;p&gt;To run the server, after launching Terminal, you need to change directory (&lt;code class=&quot;highlighter-rouge&quot;&gt;cd&lt;/code&gt;) into the &lt;code class=&quot;highlighter-rouge&quot;&gt;server&lt;/code&gt; folder.&lt;/p&gt;
+
+&lt;p&gt;If you don’t know how to do this, type &lt;code class=&quot;highlighter-rouge&quot;&gt;cd(space)&lt;/code&gt; (that’s 2 letters, followed by the spacebar) and then drag the folder you made named &lt;code class=&quot;highlighter-rouge&quot;&gt;server&lt;/code&gt; and drop it right onto the Terminal window.&lt;/p&gt;
+
+&lt;p&gt;It will probably fill it out to look something like:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cd /Users/yourname/Desktop/server&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;After it fills out the path to the &lt;code class=&quot;highlighter-rouge&quot;&gt;server&lt;/code&gt; folder, simply hit Return on your keyboard and you’ll have successfully changed to the &lt;code class=&quot;highlighter-rouge&quot;&gt;server&lt;/code&gt; directory.&lt;/p&gt;
+
+&lt;p&gt;Now you’ll need to launch &lt;code class=&quot;highlighter-rouge&quot;&gt;server.sh&lt;/code&gt;. If you downloaded the copy via the .zip file tip above, you’ll need to type a few commands first:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xattr -c -r server.sh
+chmod a+x server.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;(These commands make it so your computer is ready to execute the &lt;code class=&quot;highlighter-rouge&quot;&gt;server.sh&lt;/code&gt; script without complaining.)&lt;/p&gt;
+
+&lt;p&gt;Once you’ve done that, the command to start up the server is: &lt;code class=&quot;highlighter-rouge&quot;&gt;./server.sh&lt;/code&gt;  (type that in and press Return)&lt;/p&gt;
+
+&lt;p&gt;You will (hopefully) see a series of messages come across the screen, like:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;*** Error, this build is outdated ***
+*** Please download a new build as per instructions from https://www.spigotmc.org/go/outdated-spigot ***
+*** Server will start in 20 seconds ***
+Loading libraries, please wait...
+[19:00:25] [main/ERROR]: Failed to load properties from file: server.properties
+[19:00:25] [main/WARN]: Failed to load eula.txt
+[19:00:25] [main/INFO]: You need to agree to the EULA in order to run the server. Go to eula.txt for more info.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;this-is-ok-this-is-expected&quot;&gt;THIS IS OK, THIS IS EXPECTED!&lt;/h2&gt;
+
+&lt;p&gt;Don’t worry about the outdated message if you see it. You should now see several new files inside the &lt;code class=&quot;highlighter-rouge&quot;&gt;server&lt;/code&gt; folder, including a &lt;code class=&quot;highlighter-rouge&quot;&gt;eula.txt&lt;/code&gt; file&lt;/p&gt;
+
+&lt;p&gt;Open/edit the &lt;code class=&quot;highlighter-rouge&quot;&gt;eula.txt&lt;/code&gt; file and look for the line that says &lt;code class=&quot;highlighter-rouge&quot;&gt;eula=false&lt;/code&gt; and change it to &lt;code class=&quot;highlighter-rouge&quot;&gt;eula=true&lt;/code&gt; and save your changes.&lt;/p&gt;
+
+&lt;p&gt;&lt;small&gt;[ &lt;strong&gt;Note:&lt;/strong&gt; If you’re using TextEdit on your Mac to do this, make sure you don’t accidentally save this as Rich Text. You can tell if you’re doing this if you can see things like the toolbar for making text bold, itallic, etc. at the top of the file while you’re working on it. If you see those tools, make sure you go to “Make Plain Text” under the Format menu before you save your changes. ]&lt;/small&gt;&lt;/p&gt;
+
+&lt;p&gt;Now that you’ve agreed to the EULA, assuming you have your Terminal still open, you can simply re-type / re-run the command: &lt;code class=&quot;highlighter-rouge&quot;&gt;./server.sh&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Now you should see some of the same messages as before - but after 20 seconds, you should see an interface appear for your (very own) Minecraft server:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2020-03-28-minecraft-harmony/server_ui.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;As well as a bit of a flashback of a Dock icon:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2020-03-28-minecraft-harmony/dock.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;yay-your-server-is-up---now-for-part-2&quot;&gt;YAY, your server is up - now for part 2:&lt;/h2&gt;
+
+&lt;p&gt;Your Minecraft server is running at this point. It will have the IP address of the computer that you’re running it on (which you can find in System Preferences -&amp;gt; Network -&amp;gt; Wi-Fi or Ethernet) and be listening on the default port number of 25565. You can adjust this port later by editing the &lt;code class=&quot;highlighter-rouge&quot;&gt;server.properties&lt;/code&gt; file it created, but for now, it’s easiest to just leave it alone.&lt;/p&gt;
+
+&lt;p&gt;Now let’s repeat what we did before, only now for the &lt;code class=&quot;highlighter-rouge&quot;&gt;proxy&lt;/code&gt; folder:&lt;/p&gt;
+
+&lt;p&gt;You’ll want to make a new tab (cmd+T) or new window (cmd+N) in Terminal to run this second piece of software. Only one can be running per window/tab at a time.&lt;/p&gt;
+
+&lt;p&gt;To run the proxy, after making the new tab/window, you need to change directory (&lt;code class=&quot;highlighter-rouge&quot;&gt;cd&lt;/code&gt;) into the &lt;code class=&quot;highlighter-rouge&quot;&gt;proxy&lt;/code&gt; folder.&lt;/p&gt;
+
+&lt;p&gt;If you don’t know how to do this, type &lt;code class=&quot;highlighter-rouge&quot;&gt;cd(space)&lt;/code&gt; (that’s 2 letters, followed by the spacebar) and then drag the folder you made named &lt;code class=&quot;highlighter-rouge&quot;&gt;proxy&lt;/code&gt; and drop it right onto the Terminal window.&lt;/p&gt;
+
+&lt;p&gt;It will probably fill it out to look something like:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cd /Users/yourname/Desktop/proxy&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;After it fills out the path to the &lt;code class=&quot;highlighter-rouge&quot;&gt;proxy&lt;/code&gt; folder, simply hit Return on your keyboard and you’ll have successfully changed to the &lt;code class=&quot;highlighter-rouge&quot;&gt;proxy&lt;/code&gt; directory.&lt;/p&gt;
+
+&lt;p&gt;Now you’ll need to launch &lt;code class=&quot;highlighter-rouge&quot;&gt;proxy.sh&lt;/code&gt;. If you downloaded the copy via the .zip file tip above, you’ll need to type a few commands first:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xattr -c -r proxy.sh
+chmod a+x proxy.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;(These commands make it so your computer is ready to execute the &lt;code class=&quot;highlighter-rouge&quot;&gt;proxy.sh&lt;/code&gt; script without complaining.)&lt;/p&gt;
+
+&lt;p&gt;Once you’ve done that, the command to start up the proxy is: &lt;code class=&quot;highlighter-rouge&quot;&gt;./proxy.sh&lt;/code&gt;  (type that in and press Return)&lt;/p&gt;
+
+&lt;p&gt;You should see some text like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[19:47:52 INFO] ******************************************
+[19:47:52 INFO] 
+[19:47:52 INFO] Loading Geyser version 1.0-SNAPSHOT
+[19:47:52 INFO] 
+[19:47:52 INFO] ******************************************
+[19:47:53 INFO] Started Geyser on 0.0.0.0:19132
+[19:47:53 INFO] Done (0.597s)! Run /geyser help for help!
+&amp;gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The version you see may differ from mine, but this means your proxy is up and running.&lt;/p&gt;
+
+&lt;h2 id=&quot;connecting-your-minecraft-java-clients&quot;&gt;Connecting your Minecraft Java clients:&lt;/h2&gt;
+
+&lt;p&gt;As of the posting of this article, GeyserMC expects Minecraft Java edition to be 1.15.2. Aside from the ability to do mods, Minecraft Java edition is also cool because you have the ability to play historical versions as well as upcoming “snapshot” previews of new features. We made sure that the server was version 1.15.2 earlier with CraftBukkit, but we need to do the same with the Minecraft Java clients themselves as well.&lt;/p&gt;
+
+&lt;p&gt;To play Minecraft 1.15.2, you may not have to do anything - just look to the left of the “PLAY” button and see if it says 1.15.2:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2020-03-28-minecraft-harmony/1.15.2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If it doesn’t, you may need to go to “Installations” at the top and hit “New”:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2020-03-28-minecraft-harmony/new.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;And then give your new configuration a name and select “1.15.2” for your version:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2020-03-28-minecraft-harmony/new_installation.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After launching with “Play”, you can connect to your new server by using Multiplayer -&amp;gt; Direct Connect. Enter your IP address like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2020-03-28-minecraft-harmony/server_address.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The format is IPADDRESS:PORT (where PORT should still be the default 25565 and IP address should be the IP of the computer running the server)&lt;/p&gt;
+
+&lt;p&gt;For Minecraft Java clients, they’re directly connecting to the server and this is a mostly vanilla experience for them.&lt;/p&gt;
+
+&lt;p&gt;… The same can’t be said of Bedrock / mobile clients!&lt;/p&gt;
+
+&lt;h2 id=&quot;connecting-your-minecraft-bedrock-clients&quot;&gt;Connecting your Minecraft Bedrock clients:&lt;/h2&gt;
+
+&lt;p&gt;When I did this, I was using Minecraft on the iPad, available in the app store.&lt;/p&gt;
+
+&lt;p&gt;If you’re using a different Bedrock client, you may experience something different here - consider this fair warning!&lt;/p&gt;
+
+&lt;p&gt;On the iPad, the client immediately notices there’s already a server available on the network:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2020-03-28-minecraft-harmony/ipad_server.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If yours doesn’t do this (because maybe you run multiple subnets in the house), you can still manually add the server under Servers -&amp;gt; Add Server:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2020-03-28-minecraft-harmony/add_server.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;and then give it a name and fill out the IP address (the port should already be set to the default for mobile, which is 19132):&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2020-03-28-minecraft-harmony/manual_server.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Hit Save and it should be in your Servers list to connect to.&lt;/p&gt;
+
+&lt;p&gt;&lt;small&gt;[ &lt;strong&gt;!Important Note!:&lt;/strong&gt; If you go the route of using the Servers tab, Minecraft will require “for safety” that you sign up with a free XBox Live account in order to connect. This is likely because servers in this tab are usually remotely hosted, as opposed to local. Using the automatic discovered local “Friends” connection does not require this. ]&lt;/small&gt;&lt;/p&gt;
+
+&lt;p&gt;Once you connect to the server … things will look a little strange. You’ll see a sky with nothing in it.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2020-03-28-minecraft-harmony/empty_sky.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You’re in a bit of an “inbetween” holding spot at this point, just try rotating your view by swiping your finger/with the controls and you should trigger a new dialog.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2020-03-28-minecraft-harmony/auth.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now’s the part where it’s asking you to provide the “Minecraft Java” paid account credentials, which I mentioned at the beginning of this blog post. In order to act like a Minecraft Java client, the proxy you’re running on your computer has to obtain an authentication token for a full fleged Java computer client for connections. The username and password you provide is not sent via any third-party services, it only goes from your proxy software out to Minecraft themselves to get a token which it can then use with the Minecraft Java server.&lt;/p&gt;
+
+&lt;p&gt;Authentication can be a little glitchy here. You’ll know you’ve done it right when the world starts filling in. If a second or third authentication window presents itself at that point, you can use the little &lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt; in the corner and just close it to dismiss it.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-next&quot;&gt;What next?&lt;/h2&gt;
+
+&lt;p&gt;I highly recommend “op”ing (promoting users to operator / admin) the users, so that they can use “slash” / typed commands via Bedrock or Java client connections. It’s hard to see it in the Java CraftBukkit server interface, but there’s a little typing area in the lower right of the UI where you can type &lt;code class=&quot;highlighter-rouge&quot;&gt;op usernamehere&lt;/code&gt; for connected users and press return to give them admin rights. The server will remember this for each username, you’ll likely only have to do this once.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2020-03-28-minecraft-harmony/op.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Java players will probably be familiar with these, but this will be a new experience for Bedrock players. The place to type the commands is the speech bubble at the top of the screen.&lt;/p&gt;
+
+&lt;p&gt;The main command you’ll probably want is &lt;code class=&quot;highlighter-rouge&quot;&gt;/gamemode&lt;/code&gt; with either &lt;code class=&quot;highlighter-rouge&quot;&gt;/gamemode survival&lt;/code&gt; (standard Minecraft) or &lt;code class=&quot;highlighter-rouge&quot;&gt;/gamemode creative&lt;/code&gt; (make whatever you want, Lego-style). By making every user an op, you’re giving them the ability to run any of the commands and change their own mode to suit their own play style.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-its-like&quot;&gt;What it’s like:&lt;/h2&gt;
+
+&lt;p&gt;Overally, the proxy is pretty good! There are some little glitches here and there, like right now spawn eggs for creative players on mobile all appear black in color, plus sometimes if you click too quickly the server doesn’t see your action and you may have to slow down / repeat yourself. If you’re building large intricate structures, Java Minecraft players may notice blocks missing from those placed by Bedrock players. The Java view of the world is the “definitive” view, with the proxy providing best effort for mobile clients. Bedrock clients can quit and rejoin and the world should be “fixed” to match what desktop players see.&lt;/p&gt;
+
+&lt;p&gt;GeyserMC appears to be very active right now! Lots of patches coming in, don’t be afraid to check back and look for updated versions with new bug fixes on a regular basis. Generally you won’t have to worry about the server portion.&lt;/p&gt;
+
+&lt;p&gt;If your machine isn’t too old, you can probably even spin up Minecraft Java client on the same machine running the server and connect and play. That’s what I’ve been doing and it’s worked great (though the fans tend to stay on).&lt;/p&gt;
+
+&lt;h2 id=&quot;saving-things-when-youre-done&quot;&gt;Saving things when you’re done:&lt;/h2&gt;
+
+&lt;p&gt;Once all the clients quit and are disconnected, quit the GeyserMC proxy - look for a second little “Java guy” icon on your Dock and click on it and if you see “GeyserBootstrap” in the menubar, you selected the right one. Just select “Quit GeyserBootstrap”. If you don’t see a java Dock icon (because a client never connected to the proxy), you can go back to the tab or window you were running the proxy in and simply type Ctrl+C to stop it.&lt;/p&gt;
+
+&lt;p&gt;Quitting the server is even easier - just hit the close button red circle at the top left of the server UI. It’ll save all your changes and shutdown for another day.&lt;/p&gt;
+
+&lt;p&gt;Once these things are shut down, you can quit Terminal.&lt;/p&gt;
+
+&lt;p&gt;Ideally you found this information useful. If you have any comments or corrections for me, feel free to &lt;a href=&quot;https://twitter.com/mikeymikey&quot;&gt;tweet at me&lt;/a&gt;. I had to turn off blog comments because I didn’t realize the Disqus “free” tier comment system put horrible ads at the bottom (I run an ad blocker).&lt;/p&gt;
+
+&lt;p&gt;As always, hope this helps.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;- mike&lt;/em&gt;&lt;/p&gt;
+</description>
+        <pubDate>Sat, 28 Mar 2020 12:00:00 -0700</pubDate>
+        <link>http://michaellynn.github.io/2020/03/28/minecraft-harmony/</link>
+        <guid isPermaLink="true">http://michaellynn.github.io/2020/03/28/minecraft-harmony/</guid>
+      </item>
+    
+      <item>
         <title>Booting Secure</title>
         <description>&lt;p&gt;Howdy, y’all. Long time 😄&lt;/p&gt;
 
@@ -154,13 +411,12 @@ Substituting found system volume /dev/disk1s1
 
 &lt;p&gt;But if you’ve never noticed this before on macOS devices that boot APFS (like all Secure Boot devices), macOS isn’t booting a file off of the System volume (&lt;code class=&quot;highlighter-rouge&quot;&gt;/dev/disk1s1&lt;/code&gt;), it’s booting the &lt;code class=&quot;highlighter-rouge&quot;&gt;boot.efi&lt;/code&gt; file from the new APFS Preboot volume (&lt;code class=&quot;highlighter-rouge&quot;&gt;/dev/disk1s2&lt;/code&gt;) that you’ll find inside APFS containers:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;key&amp;gt;BLLastBSDName&amp;lt;/key&amp;gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;key&amp;gt;BLLastBSDName&amp;lt;/key&amp;gt;
 &amp;lt;string&amp;gt;disk1s2&amp;lt;/string&amp;gt;
 
 &amp;lt;key&amp;gt;Path&amp;lt;/key&amp;gt;
 &amp;lt;string&amp;gt;\FD77CA06-84E9-42D0-B5FE-6295D28CBB2F\System\Library\CoreServices\boot.efi&amp;lt;/string&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;It doesn’t matter if you’ve encrypted the device or not. Every macOS device booting an APFS filesystem boots like this.&lt;/p&gt;
 
@@ -239,28 +495,25 @@ drwxr-xr-x  7 root  wheel  224 Jul 17 09:38 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
 
 &lt;p&gt;A System volume within an APFS Container has its own unique GUID. Within Preboot (and the Recovery volume as well), the top level folders will contain a folder with a name matching the GUID of the System volume it’s paired with.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    +-&amp;gt; Volume disk1s1 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    +-&amp;gt; Volume disk1s1 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
     |   ---------------------------------------------------
     |   APFS Volume Disk (Role):   disk1s1 (No specific role)
     |   Name:                      Macintosh HD (Case-insensitive)
     |   Mount Point:               /
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ls -l /Volumes/Preboot/
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ls -l /Volumes/Preboot/
 total 0
 drwxr-xr-x  7 root  wheel  224 Jul 17 09:38 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;In the HFS+ boot model, the kernel is hardcoded to look for the Recovery partition at the partition id minus 1 of the associated System partition. With APFS, a single APFS container can now contain multiple System volumes - &lt;strong&gt;but only a single Recovery/Preboot volume is required within the container&lt;/strong&gt;, each of which can contain multiple GUID-named folders (one for each System volume).&lt;/p&gt;
 
 &lt;p&gt;Looking back at the information we got from the bless command, we can see that the boot.efi is in a subfolder within the GUID folder: &lt;code class=&quot;highlighter-rouge&quot;&gt;System/Library/CoreServices/boot.efi&lt;/code&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;key&amp;gt;Path&amp;lt;/key&amp;gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;key&amp;gt;Path&amp;lt;/key&amp;gt;
 &amp;lt;string&amp;gt;\FD77CA06-84E9-42D0-B5FE-6295D28CBB2F\System\Library\CoreServices\boot.efi&amp;lt;/string&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;So, if this is the boot target of the Secure Boot device, maybe there’s something in here related to the Secure Boot process.&lt;/p&gt;
 
@@ -344,7 +597,7 @@ drwxr-xr-x  7 root  wheel  224 Jul 17 09:38 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
 
 &lt;p&gt;Let’s chop out the GUID names at the beginning (since they’re unique to every System volume) and just compare the contents of the subdirectories. Sort the lines of each and run both of them against each other through the &lt;code class=&quot;highlighter-rouge&quot;&gt;diff&lt;/code&gt; command:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;*** Standard-listing.txt
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;*** Standard-listing.txt
 --- SecureBoot-listing.txt
 ***************
 *** 4,12 ****
@@ -369,8 +622,7 @@ drwxr-xr-x  7 root  wheel  224 Jul 17 09:38 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
 + System/Library/CoreServices/boot.efi.j137ap.15156C1879A0A6.im4m
   System/Library/CoreServices/boot.efi.j137ap.im4m
   System/Library/CoreServices/bootbase.efi.j137ap.im4m
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Wow. The only different files are on the Secure Boot device.&lt;/p&gt;
 
@@ -1020,7 +1272,7 @@ iMac-Pro osinstallersetupd[598]: Copying AP ticket to /var/tmp/OSPersonalization
 
 &lt;p&gt;Let’s try some of my most favorite (and built-in) tooling to peek at the binary - &lt;code class=&quot;highlighter-rouge&quot;&gt;strings&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;otool&lt;/code&gt;:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;strings /usr/sbin/asr | grep -i personaliz
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;strings /usr/sbin/asr | grep -i personaliz
 no-personalization
 Couldn't personalize volume %s
 Personalization failed with error %d, line %d
@@ -1028,13 +1280,11 @@ no-personalize
 personalizationRequiredForVolumeAtMountPoint:
 networkAvailableForPersonalizationWithOptions:
 personalizeVolumeAtMountPointForInstall:outputDirectory:options:completionHandler:
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;otool -L /usr/sbin/asr | grep -i personaliz
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;otool -L /usr/sbin/asr | grep -i personaliz
 	/System/Library/PrivateFrameworks/OSPersonalization.framework/Versions/A/OSPersonalization (compatibility version 1.0.0, current version 48.1.0)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;It would appear &lt;code class=&quot;highlighter-rouge&quot;&gt;asr&lt;/code&gt; gained a new trick!&lt;/p&gt;
 
@@ -1138,9 +1388,8 @@ personalizeVolumeAtMountPointForInstall:outputDirectory:options:completionHandle
 
 &lt;p&gt;Going back to the install.log again, you can find this line:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;	    HardwareModel = j137ap;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;	    HardwareModel = j137ap;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Quick Google searches will suggest that “j137ap” is likely an internal model identifier of either the iMac Pro itself or the specific T2 chip inside it. “j680ap” and “j132ap”, with a little poking around, you’ll find are for the new 13” and 15” 2018 MacBook Pro devices.&lt;/p&gt;
 
@@ -1952,9 +2201,8 @@ for info_plist in jdk_info_plists():
 
 &lt;p&gt;Inside the “StandardAdditions.osax” bundle, within /Contents/Resources you’ll find the “StandardAdditions.sdef” scripting definition file and the relevant definition line within it:&lt;/p&gt;
 
-&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;command&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;mount volume&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;code=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;aevtmvol&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;description=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Mount the specified server volume&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;command&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;mount volume&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;code=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;aevtmvol&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;description=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Mount the specified server volume&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Searching in Hopper for “aevtmvol” reveals the function “_AEVTaevtmvol”, which has this bit of pseudocode:&lt;/p&gt;
 
@@ -2031,12 +2279,11 @@ NetFSMountURLSync(
 
 &lt;p&gt;Let’s see how NetFS handles in this regard:&lt;/p&gt;
 
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;NetFS&lt;/span&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;NetFS&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;Traceback&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;most&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;recent&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;call&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;last&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;stdin&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nb&quot;&gt;ImportError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;No&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;named&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NetFS&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;So let’s take a suggestion from that second article as to how to fix this:&lt;/p&gt;
 
@@ -2058,12 +2305,11 @@ share_url = CFURLCreateWithString(None, &amp;#39;afp://servername.local/sharenam
 
 &lt;p&gt;We won’t define any custom options, we’ll just provide a URL to mount and a list (to match the CFArrayRef for our return mountpath).&lt;/p&gt;
 
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NetFSMountURLSync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;share_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[])&lt;/span&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NetFSMountURLSync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;share_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[])&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;Traceback&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;most&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;recent&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;call&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;last&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;stdin&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nb&quot;&gt;ValueError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;depythonifying&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'pointer'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;got&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'list'&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Ruh roh. It apparently didn’t like my list argument.&lt;/p&gt;
 
@@ -2144,13 +2390,12 @@ objc.loadBundleFunctions(__bundle__, globals(), [(&amp;#39;NetFSMountURLSync&amp
 
 &lt;p&gt;Here’s how you use it:&lt;/p&gt;
 
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mountpaths&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NetFSMountURLSync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;share_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mountpaths&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NetFSMountURLSync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;share_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
 &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mountpaths&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
 &lt;span class=&quot;s&quot;&gt;u'/Volumes/sharename'&lt;/span&gt;
 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;em&gt;Holy cow - IT WORKED AND IT MOUNTED - how freaking cool is that???&lt;/em&gt;&lt;/p&gt;
 
@@ -2584,10 +2829,9 @@ first_sig = signature_array[0]
 
 &lt;p&gt;But if you look at the first few characters in it, you might see something recognizable:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; str(first_sig)[:50]
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; str(first_sig)[:50]
 'bplist00\xd4\x01\x02\x03\x04\x05\x06\x1e\x1fX$versionX$objectsY$archiverT$top'
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;The first few characters “bplist00” are an indicator that the contents of the array are binary plists themselves. So let’s unpack it.&lt;/p&gt;
 
@@ -2595,15 +2839,14 @@ first_sig = signature_array[0]
 &lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=03_snip.py&quot;&gt; &lt;/script&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sig_plist
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sig_plist
 {
     &quot;$archiver&quot; = NSKeyedArchiver;
     &quot;$objects&quot; =     (
         &quot;$null&quot;,
                 {
 [...]
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Now we’ve got something new - an &lt;a href=&quot;https://developer.apple.com/library/prerelease/mac/documentation/Cocoa/Reference/Foundation/Classes/NSKeyedArchiver_Class/index.html&quot;&gt;NSKeyedArchiver&lt;/a&gt; object. This is a way for OS X (and iOS) to store data objects in a file-friendly format.&lt;/p&gt;
 
@@ -2614,11 +2857,10 @@ sig_decoded = NSKeyedUnarchiver.unarchiveObjectWithData_(first_sig)
 &lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=04_snip.py&quot;&gt; &lt;/script&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Traceback (most recent call last):
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Traceback (most recent call last):
   File &quot;&amp;lt;stdin&amp;gt;&quot;, line 1, in &amp;lt;module&amp;gt;
 objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decodeObjectForKey:]: cannot decode object of class (PVSignature)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Whoops. Looks like OS X doesn’t know how to natively handle a “PVSignature” file - so where do we learn about it?&lt;/p&gt;
 
@@ -2628,9 +2870,8 @@ objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decod
 
 &lt;p&gt;It can dump the signature of Objective-C objects defined within applications and frameworks (… hopefully PVSignature is within Preview.app itself!)&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class-dump -H /Applications/Preview.app/Contents/MacOS/Preview
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class-dump -H /Applications/Preview.app/Contents/MacOS/Preview
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Yay, our output includes a “PVSignature.h” file.&lt;/p&gt;
 
@@ -2655,14 +2896,13 @@ objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decod
 
 &lt;p&gt;When storing a single object, NSKeyedArchiver object stores the object attributes in the 2nd item of the “$objects” key:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sig_plist['$objects'][1]
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sig_plist['$objects'][1]
 {
     &quot;$class&quot; = &quot;&amp;lt;CFKeyedArchiverUID 0x7fd3ada65f80 [0x7fff7951bed0]&amp;gt;{value = 4}&quot;;
     data = &quot;&amp;lt;CFKeyedArchiverUID 0x7fd3ada98480 [0x7fff7951bed0]&amp;gt;{value = 2}&quot;;
     uid = 1000;
 }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;So it looks like we have a “data” and “uid” values only, unlike everything listed above.&lt;/p&gt;
 
@@ -2674,7 +2914,7 @@ objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decod
 
 &lt;p&gt;Once we find it, we can use &lt;em&gt;Window -&amp;gt; Show Psuedo Code of Procedure&lt;/em&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[...]
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[...]
 rbx-&amp;gt;_undecryptedData = [[r14 decodeObjectForKey:@&quot;data&quot;] retain];
 rbx-&amp;gt;_uid = [r14 decodeInt32ForKey:@&quot;uid&quot;];
 rbx-&amp;gt;_cannotDecrypt = 0x0;
@@ -2683,8 +2923,7 @@ rbx-&amp;gt;_largeThumbnail = 0x0;
 rbx-&amp;gt;_smallThumbnail = 0x0;
 rbx-&amp;gt;_payload = 0x0;
 [...]
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Pretty staight forward to immitate:&lt;/p&gt;
 
@@ -2727,20 +2966,18 @@ sig_decoded = NSKeyedUnarchiver.unarchiveObjectWithData_(first_sig)
 
 &lt;p&gt;Yay, no errors! Let’s see what our object looks like:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sig_decoded._uid
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sig_decoded._uid
 1000
 
 &amp;gt;&amp;gt;&amp;gt; sig_decoded._undecryptedData
 &amp;lt;458e1def 5434c5ab 94094049 dfd2424d 0ebe7ff6 c79c7b82 463d6d56 ...
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Cool. Let’s try the trick we did before for checking out if the raw data is anything we recognize:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; str(sig_decoded._undecryptedData)[:50]
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; str(sig_decoded._undecryptedData)[:50]
 'E\x8e\x1d\xefT4\xc5\xab\x94\t@I\xdf\xd2BM\x0e\xbe\x7f\xf6\xc7\x9c{\x82F=mV\xac\xee\x1c\xda8\xe357|\xbb\xa9\xf9\xdc\xbd\x16\x1a+6\x16\x90Z\xfc'
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Hmm. Nope. Not ringing any bells.&lt;/p&gt;
 
@@ -2760,10 +2997,9 @@ binary_key = binascii.unhexlify(hex_key)
 &lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=07_snip.py&quot;&gt; &lt;/script&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; len(binary_key)
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; len(binary_key)
 16
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;A 16 byte key. If you know anything about encryption, that’s a pretty common key length for many common &lt;a href=&quot;https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation&quot;&gt;block cipher (ECB and CBC) algorithms&lt;/a&gt;.&lt;/p&gt;
 
@@ -2781,29 +3017,26 @@ binary_key = binascii.unhexlify(hex_key)
 
 &lt;p&gt;This code has exactly what we’re looking for - information about how it decrypts the data:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if (CCCrypt(0x1, 0x0, 0x1, r12, 0x10, 0x0, var_68, r14, r15, rax, var_58) == 0x0) {
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if (CCCrypt(0x1, 0x0, 0x1, r12, 0x10, 0x0, var_68, r14, r15, rax, var_58) == 0x0) {
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;And in this instance, we want to look at not just the pseudocode, but also the assembly for a little more clarity:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   mov edi, 0x1    ; argument &quot;op&quot; for method imp___stubs__CCCrypt
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   mov edi, 0x1    ; argument &quot;op&quot; for method imp___stubs__CCCrypt
    mov esi, 0x0    ; argument &quot;alg&quot; for method imp___stubs__CCCrypt
    mov edx, 0x1    ; argument &quot;options&quot; for method imp___stubs__CCCrypt
    mov rcx, r12    ; argument &quot;key&quot; for method imp___stubs__CCCrypt
    mov r8d, 0x10   ; argument &quot;keyLength&quot; for method imp___stubs__CCCrypt
    xor r9d, r9d    ; argument &quot;iv&quot; for method imp___stubs__CCCrypt
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Looking at the &lt;a href=&quot;https://developer.apple.com/library/ios/documentation/System/Conceptual/ManPages_iPhoneOS/man3/CCCrypt.3cc.html&quot;&gt;documentation for CCCrypt&lt;/a&gt;, we get:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;CCCrypt(CCOperation op, CCAlgorithm alg, CCOptions options,
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;CCCrypt(CCOperation op, CCAlgorithm alg, CCOptions options,
          const void *key, size_t keyLength, const void *iv,
          const void *dataIn, size_t dataInLength, void *dataOut,
          size_t dataOutAvailable, size_t *dataOutMoved);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Now we can figure out the arguments that were passed, with a little help from the &lt;a href=&quot;http://www.opensource.apple.com/source/CommonCrypto/CommonCrypto-36064/CommonCrypto/CommonCryptor.h&quot;&gt;CommonCryptor.h header file&lt;/a&gt; and the above:&lt;/p&gt;
 
@@ -2831,23 +3064,20 @@ decrypted_data = cipher.decrypt(str(sig_decoded._undecryptedData))
 &lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=08_snip.py&quot;&gt; &lt;/script&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_data[:50]
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_data[:50]
 &quot;\xe4\x9c\x0f\xff\xd2\xee`\x0e\xbe8w8\xef\xaaT\xf1\x07\xeas\xe0Z\x96'6\xfc\x95\x9e\xa9\xce\xb5&amp;gt;\xd4bplist00\xd4\x01\x02\x03\x04\x05\x06,-X&quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;em&gt;Oh ho ho!&lt;/em&gt; I see a &lt;strong&gt;bplist00&lt;/strong&gt; …&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_data.index('bplist00')
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_data.index('bplist00')
 32
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Looks like there’s a 32 byte prefix - looking back at the code of &lt;strong&gt;-[PVSignatureEncryptor decryptedData:]&lt;/strong&gt;, we can see:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;CC_SHA256(rbx, rsi, var_50);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;CC_SHA256(rbx, rsi, var_50);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;SHA-256 is a 32-byte CRC. Likely the decrypted data is prefixed with its CRC hash so that the code can tell easily if it decrypted the signature correctly by validating the hash of the binary plist data matches the hash in the 32 byte prefix.&lt;/p&gt;
 
@@ -2855,10 +3085,9 @@ decrypted_data = cipher.decrypt(str(sig_decoded._undecryptedData))
 
 &lt;p&gt;… But before we do that, the &lt;em&gt;“kCCOptionPKCS7Padding”&lt;/em&gt; option that was mentioned earlier means that this data is padded out to a multiple of 16 bytes:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; len(decrypted_data)/16.
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; len(decrypted_data)/16.
 120.0
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;So we have to remove the padding per the PKCS7 standard. We can do that with this bit of code:&lt;/p&gt;
 
@@ -2893,14 +3122,13 @@ unpadded_decrypted_data = encoder.decode(decrypted_data)
 &lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=10_snip.py&quot;&gt; &lt;/script&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_plist
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_plist
 {
     &quot;$archiver&quot; = NSKeyedArchiver;
     &quot;$objects&quot; =     (
         &quot;$null&quot;,
 [...]
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;strong&gt;Success!!&lt;/strong&gt;&lt;/p&gt;
 
@@ -2913,17 +3141,16 @@ real_sig_decoded = NSKeyedUnarchiver.unarchiveObjectWithData_(nsdata_decrypted_p
 &lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=11_snip.py&quot;&gt; &lt;/script&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Traceback (most recent call last):
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Traceback (most recent call last):
   File &quot;&amp;lt;stdin&amp;gt;&quot;, line 1, in &amp;lt;module&amp;gt;
 objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decodeObjectForKey:]: cannot decode object of class (PVSignaturePayload)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Progress - now we’re working with a “PVSignaturePayload”.&lt;/p&gt;
 
 &lt;p&gt;Again, let’s look at what data we have, and then compare that against the contents of “PVSignaturePayload.h” from our earlier class-dump run:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_plist['$objects'][1]
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_plist['$objects'][1]
 {
     &quot;$class&quot; = &quot;&amp;lt;CFKeyedArchiverUID 0x7fba02522bd0 [0x7fff7951bed0]&amp;gt;{value = 7}&quot;;
     baselineHeight = &quot;0.1176470592617989&quot;;
@@ -2931,8 +3158,7 @@ objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decod
     lastUsedDate = &quot;&amp;lt;CFKeyedArchiverUID 0x7fba025203f0 [0x7fff7951bed0]&amp;gt;{value = 6}&quot;;
     path = &quot;&amp;lt;CFKeyedArchiverUID 0x7fba02520350 [0x7fff7951bed0]&amp;gt;{value = 2}&quot;;
 }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;vs.&lt;/p&gt;
 
@@ -2994,7 +3220,7 @@ real_sig_decoded = NSKeyedUnarchiver.unarchiveObjectWithData_(nsdata_decrypted_p
 &lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=13_snip.py&quot;&gt; &lt;/script&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; real_sig_decoded.baselineHeight
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; real_sig_decoded.baselineHeight
 0.11764705926179886
 &amp;gt;&amp;gt;&amp;gt; real_sig_decoded.path
 Path &amp;lt;0x7fba0251bb90&amp;gt;
@@ -3004,8 +3230,7 @@ Path &amp;lt;0x7fba0251bb90&amp;gt;
     204.099686 58.862499 201.597519 49.750000 198.925385 41.500000 curveto
     196.253250 33.250000 193.444489 24.025000 192.683685 21.000000 curveto
 [...]
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;strong&gt;YAY!&lt;/strong&gt; We’ve got our vector information!&lt;/p&gt;
 
@@ -3027,15 +3252,14 @@ sig_path_shifted.transformUsingAffineTransform_(shift_path)
 &lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=14_snip.py&quot;&gt; &lt;/script&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sig_path_shifted
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sig_path_shifted
 Path &amp;lt;0x7fba04ef0000&amp;gt;
   Bounds: {{0.10000000000000142, 0.10000000000000001}, {271.91783064182891, 67}}
   Control point bounds: {{-0.64194097622566915, -1.8758532047271763}, {274.53815460205078, 68.975853204727173}}
     97.483219 61.850000 moveto
     97.097157 58.962499 94.594990 49.850000 91.922855 41.600000 curveto
     89.250721 33.350000 86.441959 24.125000 85.681156 21.100000 curveto
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Much better. Now we’re just inside (0,0).&lt;/p&gt;
 
