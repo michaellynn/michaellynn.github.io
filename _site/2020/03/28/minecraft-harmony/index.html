@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Minecraft Harmony &#8211; mikeymikey blogs here</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Making Minecraft Bedrock (aka Pocket Edition, Mobile, MCPE) play nicely with Java edition on the same server">
+    <meta name="author" content="Michael Lynn">
+    <meta name="keywords" content="">
+    <link rel="canonical" href="http://michaellynn.github.io/2020/03/28/minecraft-harmony/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for mikeymikey blogs here" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?202003282053" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Minecraft Harmony">
+    <meta property="og:description" content="the vent for my mind">
+    <meta property="og:url" content="http://michaellynn.github.io/2020/03/28/minecraft-harmony/">
+    <meta property="og:site_name" content="mikeymikey blogs here">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+    <meta name="twitter:title" content="Minecraft Harmony" />
+    <meta name="twitter:description" content="Making Minecraft Bedrock (aka Pocket Edition, Mobile, MCPE) play nicely with Java edition on the same server" />
+    <meta name="twitter:url" content="http://michaellynn.github.io/2020/03/28/minecraft-harmony/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+        
+    
+</head>
+
+<body class="site">
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://michaellynn.github.io" class="site-title">mikeymikey blogs here</a>
+      <nav class="site-nav">
+        <a href="/about/">About</a>
+      </nav>
+      <div class="clearfix"></div>
+      
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+        
+
+
+<div class="post-header mb2">
+  <span class="post-meta">Mar 28, 2020</span>
+    
+  <h1>Minecraft Harmony</h1>
+  
+  <small><span class="post-meta">tags:
+  
+  <a href="/tag/osx">osx</a>
+  
+  <a href="/tag/macos">macos</a>
+  
+  <a href="/tag/java">java</a>
+  
+  <a href="/tag/minecraft">minecraft</a>
+  </span></small><p/><p/>
+</div>
+
+<article class="post-content">
+  <p>If you’re reading this, you may be one of the adults living in a household full of Minecraft fans who can’t agree on which version is better: Java edition (aka original flavor/classic Minecraft, played on a computer - the one you can mod like crazy) or Bedrock edition (available on iPhone, iPad, Switch, other gaming consoles, etc.).</p>
+
+<p>… And if you’re cooped up in a house right now where everyone is a little on edge from not getting much of a break from each other, wouldn’t it be nice to be able to make both groups happy and able to play with each other at the same time.</p>
+
+<p>As it turns out, you can do this! It’s not perfect, but it’s pretty great and it’s definitely better than nothing.</p>
+
+<p>I’m documenting the information here for posterity and to hopefully provide a little sanity in a time of insanity.</p>
+
+<h2 id="here-are-the-requirements">Here are the requirements:</h2>
+
+<ul>
+  <li>A computer to host the server (I’m using a Mac, so these instructions will be written with macOS as the host for the server - yes these instructions work with macOS 10.15 Catalina)</li>
+  <li>When Java (computer) Minecraft players want to play with each other, they need a paid-for Mojang account.</li>
+  <li>When Bedrock players want to play with each other, they need a Xbox Live account.</li>
+  <li>… but when Bedrock players want to play with Java players, you will need an additional computer-style Mojang account for each Bedrock player.</li>
+  <li>Since you’re reading a guide about having both types of players play with each other, you’ve probably gone through the sign up for this before. But if it’s been a while, you can get additional Java Minecraft accounts at: <a href="https://my.minecraft.net/en-us/store/minecraft/#register">minecraft.net</a></li>
+</ul>
+
+<p>All of this is made possible with this wonderful tool: <a href="https://github.com/GeyserMC/Geyser">GeyserMC</a></p>
+
+<p>GeyserMC is a proxy translator for the Minecraft Bedrock protocol. It runs separately from your Minecraft server and on-the-fly translates commands from Bedrock clients into Java client protocol as well as translating the Java server response back into Bedrock compatible information.</p>
+
+<p>GeyserMC supports several different Minecraft server standards (there are <em>many</em>), but for the purposes of this article I’m going with CraftBukkit.</p>
+
+<p>Both GeyserMC and CraftBukkit are open source and free and require Java to run them.</p>
+
+<h2 id="things-you-need-to-download">Things you need to download:</h2>
+
+<ul>
+  <li><a href="https://adoptopenjdk.net">AdoptOpenJDK 8</a> - use “OpenJDK 8 (LTS)” latest release. Even though Java is now up to version 14 or whatever, the entire Minecraft modding ecosystem is pinned very strictly to 8. This particular distribution is an easy to install, free, and legal to use distribution of OpenJDK.</li>
+  <li>CraftBukkit server - I’d recommend downloading <a href="https://cdn.getbukkit.org/craftbukkit/craftbukkit-1.15.2.jar">this specific version (1.15.2)</a>, as that’s what GeyserMC supports as of this blog post</li>
+  <li>GeyserMC - specifically the <a href="https://ci.nukkitx.com/job/GeyserMC/job/Geyser/job/inventory/">“Geyser.jar” artefact file</a> from branch <strong>“inventory”</strong>, for now. This branch is where a lot of work is going on to make inventory for Bedrock players work better, especially if the players are in creative mode (like my youngest daughter adores playing). You can also build this from their Github repo directly if you like, but this is their continuous build server and any changes you see landing there show up here relatively quickly.</li>
+</ul>
+
+<h2 id="how-to-set-it-up">How to set it up:</h2>
+
+<ul>
+  <li>Install the AdoptOpenJDK pkg file you downloaded. This will install OpenJDK to a subdirectory in <code class="highlighter-rouge">/Library/Java/JavaVirtualMachines</code></li>
+  <li>Note the name of this subfolder, it should be something like: <code class="highlighter-rouge">adoptopenjdk-8.jdk</code></li>
+  <li>Make a folder for the CraftBukkit server .jar file you downloaded and put the .jar inside that folder (I called my folder <code class="highlighter-rouge">server</code>)</li>
+  <li>Make a (different) folder for the GeyserMC .jar file you downloaded and put the .jar inside that folder (I called my folder <code class="highlighter-rouge">proxy</code>)</li>
+  <li>I don’t know if separate folders are required, it’s just that each of these files will generate many other files when they run - so I just kept them separate.</li>
+</ul>
+
+<p>Now you just need some helper scripts to make it easy to turn on the Minecraft server and the GeyserMC proxy.</p>
+
+<p>In the server folder, I created a script (text) file named <code class="highlighter-rouge">server.sh</code> and this is the contents:</p>
+<noscript><pre>#!/bin/bash
+export JAVA_HOME=&quot;/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home&quot;
+export PATH=&quot;$JAVA_HOME/bin:$PATH&quot;
+cd &quot;$( dirname &quot;$0&quot; )&quot;
+java -Xmx1024M -jar craftbukkit-1.15.2.jar -o true
+</pre></noscript>
+<script src="https://gist.github.com/pudquick/af8be79d6c1308fc430cac8d69757c43.js?file=server.sh"> </script>
+
+<p>In the proxy folder, I created a script (text) file named <code class="highlighter-rouge">proxy.sh</code> and this is the contents:</p>
+<noscript><pre>#!/bin/bash
+export JAVA_HOME=&quot;/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home&quot;
+export PATH=&quot;$JAVA_HOME/bin:$PATH&quot;
+cd &quot;$( dirname &quot;$0&quot; )&quot;
+java -Xmx1024M -jar Geyser.jar
+</pre></noscript>
+<script src="https://gist.github.com/pudquick/af8be79d6c1308fc430cac8d69757c43.js?file=proxy.sh"> </script>
+
+<p><small>[ <strong>Note:</strong> If you’re not familiar or comfortable with how to make script files on macOS, you can <a href="https://gist.github.com/pudquick/af8be79d6c1308fc430cac8d69757c43">visit this page</a> and click the “Download ZIP” button at the top right. The .zip file you download, when you open/expand it, will contain both of the scripts. Simply unzip the zip file and move the .sh files into their respective folders. ]</small></p>
+
+<h2 id="how-to-run-it">How to run it:</h2>
+
+<p>Now you will need to run both the server and the GeyserMC proxy. You’ll need to open Terminal app.</p>
+
+<p>To run the server, after launching Terminal, you need to change directory (<code class="highlighter-rouge">cd</code>) into the <code class="highlighter-rouge">server</code> folder.</p>
+
+<p>If you don’t know how to do this, type <code class="highlighter-rouge">cd(space)</code> (that’s 2 letters, followed by the spacebar) and then drag the folder you made named <code class="highlighter-rouge">server</code> and drop it right onto the Terminal window.</p>
+
+<p>It will probably fill it out to look something like:</p>
+
+<p><code class="highlighter-rouge">cd /Users/yourname/Desktop/server</code></p>
+
+<p>After it fills out the path to the <code class="highlighter-rouge">server</code> folder, simply hit Return on your keyboard and you’ll have successfully changed to the <code class="highlighter-rouge">server</code> directory.</p>
+
+<p>Now you’ll need to launch <code class="highlighter-rouge">server.sh</code>. If you downloaded the copy via the .zip file tip above, you’ll need to type a few commands first:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xattr -c -r server.sh
+chmod a+x server.sh
+</code></pre></div></div>
+
+<p>(These commands make it so your computer is ready to execute the <code class="highlighter-rouge">server.sh</code> script without complaining.)</p>
+
+<p>Once you’ve done that, the command to start up the server is: <code class="highlighter-rouge">./server.sh</code>  (type that in and press Return)</p>
+
+<p>You will (hopefully) see a series of messages come across the screen, like:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>*** Error, this build is outdated ***
+*** Please download a new build as per instructions from https://www.spigotmc.org/go/outdated-spigot ***
+*** Server will start in 20 seconds ***
+Loading libraries, please wait...
+[19:00:25] [main/ERROR]: Failed to load properties from file: server.properties
+[19:00:25] [main/WARN]: Failed to load eula.txt
+[19:00:25] [main/INFO]: You need to agree to the EULA in order to run the server. Go to eula.txt for more info.
+</code></pre></div></div>
+
+<h2 id="this-is-ok-this-is-expected">THIS IS OK, THIS IS EXPECTED!</h2>
+
+<p>Don’t worry about the outdated message if you see it. You should now see several new files inside the <code class="highlighter-rouge">server</code> folder, including a <code class="highlighter-rouge">eula.txt</code> file</p>
+
+<p>Open/edit the <code class="highlighter-rouge">eula.txt</code> file and look for the line that says <code class="highlighter-rouge">eula=false</code> and change it to <code class="highlighter-rouge">eula=true</code> and save your changes.</p>
+
+<p><small>[ <strong>Note:</strong> If you’re using TextEdit on your Mac to do this, make sure you don’t accidentally save this as Rich Text. You can tell if you’re doing this if you can see things like the toolbar for making text bold, itallic, etc. at the top of the file while you’re working on it. If you see those tools, make sure you go to “Make Plain Text” under the Format menu before you save your changes. ]</small></p>
+
+<p>Now that you’ve agreed to the EULA, assuming you have your Terminal still open, you can simply re-type / re-run the command: <code class="highlighter-rouge">./server.sh</code></p>
+
+<p>Now you should see some of the same messages as before - but after 20 seconds, you should see an interface appear for your (very own) Minecraft server:</p>
+
+<p><img src="/images/2020-03-28-minecraft-harmony/server_ui.png" alt="" /></p>
+
+<p>As well as a bit of a flashback of a Dock icon:</p>
+
+<p><img src="/images/2020-03-28-minecraft-harmony/dock.png" alt="" /></p>
+
+<h2 id="yay-your-server-is-up---now-for-part-2">YAY, your server is up - now for part 2:</h2>
+
+<p>Your Minecraft server is running at this point. It will have the IP address of the computer that you’re running it on (which you can find in System Preferences -&gt; Network -&gt; Wi-Fi or Ethernet) and be listening on the default port number of 25565. You can adjust this port later by editing the <code class="highlighter-rouge">server.properties</code> file it created, but for now, it’s easiest to just leave it alone.</p>
+
+<p>Now let’s repeat what we did before, only now for the <code class="highlighter-rouge">proxy</code> folder:</p>
+
+<p>You’ll want to make a new tab (cmd+T) or new window (cmd+N) in Terminal to run this second piece of software. Only one can be running per window/tab at a time.</p>
+
+<p>To run the proxy, after making the new tab/window, you need to change directory (<code class="highlighter-rouge">cd</code>) into the <code class="highlighter-rouge">proxy</code> folder.</p>
+
+<p>If you don’t know how to do this, type <code class="highlighter-rouge">cd(space)</code> (that’s 2 letters, followed by the spacebar) and then drag the folder you made named <code class="highlighter-rouge">proxy</code> and drop it right onto the Terminal window.</p>
+
+<p>It will probably fill it out to look something like:</p>
+
+<p><code class="highlighter-rouge">cd /Users/yourname/Desktop/proxy</code></p>
+
+<p>After it fills out the path to the <code class="highlighter-rouge">proxy</code> folder, simply hit Return on your keyboard and you’ll have successfully changed to the <code class="highlighter-rouge">proxy</code> directory.</p>
+
+<p>Now you’ll need to launch <code class="highlighter-rouge">proxy.sh</code>. If you downloaded the copy via the .zip file tip above, you’ll need to type a few commands first:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xattr -c -r proxy.sh
+chmod a+x proxy.sh
+</code></pre></div></div>
+
+<p>(These commands make it so your computer is ready to execute the <code class="highlighter-rouge">proxy.sh</code> script without complaining.)</p>
+
+<p>Once you’ve done that, the command to start up the proxy is: <code class="highlighter-rouge">./proxy.sh</code>  (type that in and press Return)</p>
+
+<p>You should see some text like this:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[19:47:52 INFO] ******************************************
+[19:47:52 INFO] 
+[19:47:52 INFO] Loading Geyser version 1.0-SNAPSHOT
+[19:47:52 INFO] 
+[19:47:52 INFO] ******************************************
+[19:47:53 INFO] Started Geyser on 0.0.0.0:19132
+[19:47:53 INFO] Done (0.597s)! Run /geyser help for help!
+&gt; 
+</code></pre></div></div>
+
+<p>The version you see may differ from mine, but this means your proxy is up and running.</p>
+
+<h2 id="connecting-your-minecraft-java-clients">Connecting your Minecraft Java clients:</h2>
+
+<p>As of the posting of this article, GeyserMC expects Minecraft Java edition to be 1.15.2. Aside from the ability to do mods, Minecraft Java edition is also cool because you have the ability to play historical versions as well as upcoming “snapshot” previews of new features. We made sure that the server was version 1.15.2 earlier with CraftBukkit, but we need to do the same with the Minecraft Java clients themselves as well.</p>
+
+<p>To play Minecraft 1.15.2, you may not have to do anything - just look to the left of the “PLAY” button and see if it says 1.15.2:</p>
+
+<p><img src="/images/2020-03-28-minecraft-harmony/1.15.2.png" alt="" /></p>
+
+<p>If it doesn’t, you may need to go to “Installations” at the top and hit “New”:</p>
+
+<p><img src="/images/2020-03-28-minecraft-harmony/new.png" alt="" /></p>
+
+<p>And then give your new configuration a name and select “1.15.2” for your version:</p>
+
+<p><img src="/images/2020-03-28-minecraft-harmony/new_installation.png" alt="" /></p>
+
+<p>After launching with “Play”, you can connect to your new server by using Multiplayer -&gt; Direct Connect. Enter your IP address like this:</p>
+
+<p><img src="/images/2020-03-28-minecraft-harmony/server_address.png" alt="" /></p>
+
+<p>The format is IPADDRESS:PORT (where PORT should still be the default 25565 and IP address should be the IP of the computer running the server)</p>
+
+<p>For Minecraft Java clients, they’re directly connecting to the server and this is a mostly vanilla experience for them.</p>
+
+<p>… The same can’t be said of Bedrock / mobile clients!</p>
+
+<h2 id="connecting-your-minecraft-bedrock-clients">Connecting your Minecraft Bedrock clients:</h2>
+
+<p>When I did this, I was using Minecraft on the iPad, available in the app store.</p>
+
+<p>If you’re using a different Bedrock client, you may experience something different here - consider this fair warning!</p>
+
+<p>On the iPad, the client immediately notices there’s already a server available on the network:</p>
+
+<p><img src="/images/2020-03-28-minecraft-harmony/ipad_server.png" alt="" /></p>
+
+<p>If yours doesn’t do this (because maybe you run multiple subnets in the house), you can still manually add the server under Servers -&gt; Add Server:</p>
+
+<p><img src="/images/2020-03-28-minecraft-harmony/add_server.png" alt="" /></p>
+
+<p>and then give it a name and fill out the IP address (the port should already be set to the default for mobile, which is 19132):</p>
+
+<p><img src="/images/2020-03-28-minecraft-harmony/manual_server.png" alt="" /></p>
+
+<p>Hit Save and it should be in your Servers list to connect to.</p>
+
+<p><small>[ <strong>!Important Note!:</strong> If you go the route of using the Servers tab, Minecraft will require “for safety” that you sign up with a free XBox Live account in order to connect. This is likely because servers in this tab are usually remotely hosted, as opposed to local. Using the automatic discovered local “Friends” connection does not require this. ]</small></p>
+
+<p>Once you connect to the server … things will look a little strange. You’ll see a sky with nothing in it.</p>
+
+<p><img src="/images/2020-03-28-minecraft-harmony/empty_sky.png" alt="" /></p>
+
+<p>You’re in a bit of an “inbetween” holding spot at this point, just try rotating your view by swiping your finger/with the controls and you should trigger a new dialog.</p>
+
+<p><img src="/images/2020-03-28-minecraft-harmony/auth.png" alt="" /></p>
+
+<p>Now’s the part where it’s asking you to provide the “Minecraft Java” paid account credentials, which I mentioned at the beginning of this blog post. In order to act like a Minecraft Java client, the proxy you’re running on your computer has to obtain an authentication token for a full fleged Java computer client for connections. The username and password you provide is not sent via any third-party services, it only goes from your proxy software out to Minecraft themselves to get a token which it can then use with the Minecraft Java server.</p>
+
+<p>Authentication can be a little glitchy here. You’ll know you’ve done it right when the world starts filling in. If a second or third authentication window presents itself at that point, you can use the little <code class="highlighter-rouge">x</code> in the corner and just close it to dismiss it.</p>
+
+<h2 id="what-next">What next?</h2>
+
+<p>I highly recommend “op”ing (promoting users to operator / admin) the users, so that they can use “slash” / typed commands via Bedrock or Java client connections. It’s hard to see it in the Java CraftBukkit server interface, but there’s a little typing area in the lower right of the UI where you can type <code class="highlighter-rouge">op usernamehere</code> for connected users and press return to give them admin rights. The server will remember this for each username, you’ll likely only have to do this once.</p>
+
+<p><img src="/images/2020-03-28-minecraft-harmony/op.png" alt="" /></p>
+
+<p>Java players will probably be familiar with these, but this will be a new experience for Bedrock players. The place to type the commands is the speech bubble at the top of the screen.</p>
+
+<p>The main command you’ll probably want is <code class="highlighter-rouge">/gamemode</code> with either <code class="highlighter-rouge">/gamemode survival</code> (standard Minecraft) or <code class="highlighter-rouge">/gamemode creative</code> (make whatever you want, Lego-style). By making every user an op, you’re giving them the ability to run any of the commands and change their own mode to suit their own play style.</p>
+
+<h2 id="what-its-like">What it’s like:</h2>
+
+<p>Overally, the proxy is pretty good! There are some little glitches here and there, like right now spawn eggs for creative players on mobile all appear black in color, plus sometimes if you click too quickly the server doesn’t see your action and you may have to slow down / repeat yourself. If you’re building large intricate structures, Java Minecraft players may notice blocks missing from those placed by Bedrock players. The Java view of the world is the “definitive” view, with the proxy providing best effort for mobile clients. Bedrock clients can quit and rejoin and the world should be “fixed” to match what desktop players see.</p>
+
+<p>GeyserMC appears to be very active right now! Lots of patches coming in, don’t be afraid to check back and look for updated versions with new bug fixes on a regular basis. Generally you won’t have to worry about the server portion.</p>
+
+<p>If your machine isn’t too old, you can probably even spin up Minecraft Java client on the same machine running the server and connect and play. That’s what I’ve been doing and it’s worked great (though the fans tend to stay on).</p>
+
+<h2 id="saving-things-when-youre-done">Saving things when you’re done:</h2>
+
+<p>Once all the clients quit and are disconnected, quit the GeyserMC proxy - look for a second little “Java guy” icon on your Dock and click on it and if you see “GeyserBootstrap” in the menubar, you selected the right one. Just select “Quit GeyserBootstrap”. If you don’t see a java Dock icon (because a client never connected to the proxy), you can go back to the tab or window you were running the proxy in and simply type Ctrl+C to stop it.</p>
+
+<p>Quitting the server is even easier - just hit the close button red circle at the top left of the server UI. It’ll save all your changes and shutdown for another day.</p>
+
+<p>Once these things are shut down, you can quit Terminal.</p>
+
+<p>Ideally you found this information useful. If you have any comments or corrections for me, feel free to <a href="https://twitter.com/mikeymikey">tweet at me</a>. I had to turn off blog comments because I didn’t realize the Disqus “free” tier comment system put horrible ads at the bottom (I run an ad blocker).</p>
+
+<p>As always, hope this helps.</p>
+
+<p><em>- mike</em></p>
+
+</article>
+
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="center">
+  <div class="measure">
+    <small>
+      Michael Lynn hangs out at <a href="https://twitter.com/mikeymikey">@mikeymikey</a><br />
+      All content copyrighted where possible.<br />
+All rights reserved.
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>

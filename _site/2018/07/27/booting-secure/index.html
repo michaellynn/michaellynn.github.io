@@ -12,7 +12,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for mikeymikey blogs here" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201807291454" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?202003282053" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -240,13 +240,12 @@ Substituting found system volume /dev/disk1s1
 
 <p>But if you’ve never noticed this before on macOS devices that boot APFS (like all Secure Boot devices), macOS isn’t booting a file off of the System volume (<code class="highlighter-rouge">/dev/disk1s1</code>), it’s booting the <code class="highlighter-rouge">boot.efi</code> file from the new APFS Preboot volume (<code class="highlighter-rouge">/dev/disk1s2</code>) that you’ll find inside APFS containers:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;key&gt;BLLastBSDName&lt;/key&gt;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;key&gt;BLLastBSDName&lt;/key&gt;
 &lt;string&gt;disk1s2&lt;/string&gt;
 
 &lt;key&gt;Path&lt;/key&gt;
 &lt;string&gt;\FD77CA06-84E9-42D0-B5FE-6295D28CBB2F\System\Library\CoreServices\boot.efi&lt;/string&gt;
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>It doesn’t matter if you’ve encrypted the device or not. Every macOS device booting an APFS filesystem boots like this.</p>
 
@@ -325,28 +324,25 @@ drwxr-xr-x  7 root  wheel  224 Jul 17 09:38 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
 
 <p>A System volume within an APFS Container has its own unique GUID. Within Preboot (and the Recovery volume as well), the top level folders will contain a folder with a name matching the GUID of the System volume it’s paired with.</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>    +-&gt; Volume disk1s1 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    +-&gt; Volume disk1s1 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
     |   ---------------------------------------------------
     |   APFS Volume Disk (Role):   disk1s1 (No specific role)
     |   Name:                      Macintosh HD (Case-insensitive)
     |   Mount Point:               /
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>ls -l /Volumes/Preboot/
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ls -l /Volumes/Preboot/
 total 0
 drwxr-xr-x  7 root  wheel  224 Jul 17 09:38 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>In the HFS+ boot model, the kernel is hardcoded to look for the Recovery partition at the partition id minus 1 of the associated System partition. With APFS, a single APFS container can now contain multiple System volumes - <strong>but only a single Recovery/Preboot volume is required within the container</strong>, each of which can contain multiple GUID-named folders (one for each System volume).</p>
 
 <p>Looking back at the information we got from the bless command, we can see that the boot.efi is in a subfolder within the GUID folder: <code class="highlighter-rouge">System/Library/CoreServices/boot.efi</code></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;key&gt;Path&lt;/key&gt;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;key&gt;Path&lt;/key&gt;
 &lt;string&gt;\FD77CA06-84E9-42D0-B5FE-6295D28CBB2F\System\Library\CoreServices\boot.efi&lt;/string&gt;
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>So, if this is the boot target of the Secure Boot device, maybe there’s something in here related to the Secure Boot process.</p>
 
@@ -430,7 +426,7 @@ drwxr-xr-x  7 root  wheel  224 Jul 17 09:38 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
 
 <p>Let’s chop out the GUID names at the beginning (since they’re unique to every System volume) and just compare the contents of the subdirectories. Sort the lines of each and run both of them against each other through the <code class="highlighter-rouge">diff</code> command:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>*** Standard-listing.txt
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>*** Standard-listing.txt
 --- SecureBoot-listing.txt
 ***************
 *** 4,12 ****
@@ -455,8 +451,7 @@ drwxr-xr-x  7 root  wheel  224 Jul 17 09:38 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
 + System/Library/CoreServices/boot.efi.j137ap.15156C1879A0A6.im4m
   System/Library/CoreServices/boot.efi.j137ap.im4m
   System/Library/CoreServices/bootbase.efi.j137ap.im4m
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Wow. The only different files are on the Secure Boot device.</p>
 
@@ -1106,7 +1101,7 @@ iMac-Pro osinstallersetupd[598]: Copying AP ticket to /var/tmp/OSPersonalization
 
 <p>Let’s try some of my most favorite (and built-in) tooling to peek at the binary - <code class="highlighter-rouge">strings</code> and <code class="highlighter-rouge">otool</code>:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>strings /usr/sbin/asr | grep -i personaliz
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>strings /usr/sbin/asr | grep -i personaliz
 no-personalization
 Couldn't personalize volume %s
 Personalization failed with error %d, line %d
@@ -1114,13 +1109,11 @@ no-personalize
 personalizationRequiredForVolumeAtMountPoint:
 networkAvailableForPersonalizationWithOptions:
 personalizeVolumeAtMountPointForInstall:outputDirectory:options:completionHandler:
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>otool -L /usr/sbin/asr | grep -i personaliz
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>otool -L /usr/sbin/asr | grep -i personaliz
 	/System/Library/PrivateFrameworks/OSPersonalization.framework/Versions/A/OSPersonalization (compatibility version 1.0.0, current version 48.1.0)
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>It would appear <code class="highlighter-rouge">asr</code> gained a new trick!</p>
 
@@ -1224,9 +1217,8 @@ personalizeVolumeAtMountPointForInstall:outputDirectory:options:completionHandle
 
 <p>Going back to the install.log again, you can find this line:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>	    HardwareModel = j137ap;
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	    HardwareModel = j137ap;
+</code></pre></div></div>
 
 <p>Quick Google searches will suggest that “j137ap” is likely an internal model identifier of either the iMac Pro itself or the specific T2 chip inside it. “j680ap” and “j132ap”, with a little poking around, you’ll find are for the new 13” and 15” 2018 MacBook Pro devices.</p>
 
@@ -1237,22 +1229,6 @@ personalizeVolumeAtMountPointForInstall:outputDirectory:options:completionHandle
 
 
 
-
-
-
-  <div id="disqus_thread"></div>
-  <script type="text/javascript">
-    var disqus_shortname  = 'michaellynnblog';
-    var disqus_identifier = '/2018/07/27/booting-secure';
-    var disqus_title      = '';
-
-    (function() {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-  </script>
-  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 
 

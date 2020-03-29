@@ -12,7 +12,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for mikeymikey blogs here" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201807291454" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?202003282053" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -124,9 +124,8 @@
 
 <p>Inside the “StandardAdditions.osax” bundle, within /Contents/Resources you’ll find the “StandardAdditions.sdef” scripting definition file and the relevant definition line within it:</p>
 
-<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;command</span> <span class="na">name=</span><span class="s">"mount volume"</span> <span class="na">code=</span><span class="s">"aevtmvol"</span> <span class="na">description=</span><span class="s">"Mount the specified server volume"</span><span class="nt">&gt;</span>
-</code></pre>
-</div>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;command</span> <span class="na">name=</span><span class="s">"mount volume"</span> <span class="na">code=</span><span class="s">"aevtmvol"</span> <span class="na">description=</span><span class="s">"Mount the specified server volume"</span><span class="nt">&gt;</span>
+</code></pre></div></div>
 
 <p>Searching in Hopper for “aevtmvol” reveals the function “_AEVTaevtmvol”, which has this bit of pseudocode:</p>
 
@@ -203,12 +202,11 @@ NetFSMountURLSync(
 
 <p>Let’s see how NetFS handles in this regard:</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">NetFS</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">NetFS</span>
 <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
   <span class="n">File</span> <span class="s">"&lt;stdin&gt;"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="nb">ImportError</span><span class="p">:</span> <span class="n">No</span> <span class="n">module</span> <span class="n">named</span> <span class="n">NetFS</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>So let’s take a suggestion from that second article as to how to fix this:</p>
 
@@ -230,12 +228,11 @@ share_url = CFURLCreateWithString(None, &#39;afp://servername.local/sharename&#3
 
 <p>We won’t define any custom options, we’ll just provide a URL to mount and a list (to match the CFArrayRef for our return mountpath).</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">NetFSMountURLSync</span><span class="p">(</span><span class="n">share_url</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="p">[])</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">NetFSMountURLSync</span><span class="p">(</span><span class="n">share_url</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="p">[])</span>
 <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
   <span class="n">File</span> <span class="s">"&lt;stdin&gt;"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="nb">ValueError</span><span class="p">:</span> <span class="n">depythonifying</span> <span class="s">'pointer'</span><span class="p">,</span> <span class="n">got</span> <span class="s">'list'</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Ruh roh. It apparently didn’t like my list argument.</p>
 
@@ -316,13 +313,12 @@ objc.loadBundleFunctions(__bundle__, globals(), [(&#39;NetFSMountURLSync&#39;, &
 
 <p>Here’s how you use it:</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">error</span><span class="p">,</span> <span class="n">mountpaths</span> <span class="o">=</span> <span class="n">NetFSMountURLSync</span><span class="p">(</span><span class="n">share_url</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">error</span><span class="p">,</span> <span class="n">mountpaths</span> <span class="o">=</span> <span class="n">NetFSMountURLSync</span><span class="p">(</span><span class="n">share_url</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
 
 <span class="o">&gt;&gt;&gt;</span> <span class="n">mountpaths</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="s">u'/Volumes/sharename'</span>
 
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p><em>Holy cow - IT WORKED AND IT MOUNTED - how freaking cool is that???</em></p>
 
@@ -336,22 +332,6 @@ objc.loadBundleFunctions(__bundle__, globals(), [(&#39;NetFSMountURLSync&#39;, &
 
 
 
-
-
-
-  <div id="disqus_thread"></div>
-  <script type="text/javascript">
-    var disqus_shortname  = 'michaellynnblog';
-    var disqus_identifier = '/2015/08/08/learn-you-a-better-pyobjc-bridgesupport-signature';
-    var disqus_title      = '';
-
-    (function() {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-  </script>
-  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 
 
