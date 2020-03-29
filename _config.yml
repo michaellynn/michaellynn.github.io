@@ -15,10 +15,6 @@ show_related_posts: false
 show_post_footers:  false
 show_social_icons:  false
 
-# Disqus post comments
-# (leave blank to disable Disqus)
-disqus_shortname: michaellynnblog
-
 # Social icons
 github_username:
 stackoverflow_id:
