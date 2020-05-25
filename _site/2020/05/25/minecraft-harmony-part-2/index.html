@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Minecraft Harmony Revisited &#8211; mikeymikey blogs here</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Minecraft Harmony (Bedrock + Java), Revisted">
+    <meta name="author" content="Michael Lynn">
+    <meta name="keywords" content="">
+    <link rel="canonical" href="http://michaellynn.github.io/2020/05/25/minecraft-harmony-part-2/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for mikeymikey blogs here" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?202005251226" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Minecraft Harmony Revisited">
+    <meta property="og:description" content="the vent for my mind">
+    <meta property="og:url" content="http://michaellynn.github.io/2020/05/25/minecraft-harmony-part-2/">
+    <meta property="og:site_name" content="mikeymikey blogs here">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+    <meta name="twitter:title" content="Minecraft Harmony Revisited" />
+    <meta name="twitter:description" content="Minecraft Harmony (Bedrock + Java), Revisted" />
+    <meta name="twitter:url" content="http://michaellynn.github.io/2020/05/25/minecraft-harmony-part-2/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+        
+    
+</head>
+
+<body class="site">
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://michaellynn.github.io" class="site-title">mikeymikey blogs here</a>
+      <nav class="site-nav">
+        <a href="/about/">About</a>
+      </nav>
+      <div class="clearfix"></div>
+      
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+        
+
+
+<div class="post-header mb2">
+  <span class="post-meta">May 25, 2020</span>
+    
+  <h1>Minecraft Harmony Revisited</h1>
+  
+  <small><span class="post-meta">tags:
+  
+  <a href="/tag/osx">osx</a>
+  
+  <a href="/tag/macos">macos</a>
+  
+  <a href="/tag/java">java</a>
+  
+  <a href="/tag/minecraft">minecraft</a>
+  </span></small><p/><p/>
+</div>
+
+<article class="post-content">
+  <p>In <a href="/2020/03/28/minecraft-harmony/">my original blog post</a> on getting Minecraft Java and Bedrock editions playing together, I provided some example scripts and configurations which inadvertently made something required for the Bedrock players that <strong>isn’t strictly required</strong>: Namely a Minecraft paid-for Mojang account.</p>
+
+<p>This was purely an accident on my part. I <em>thought</em> it would be possible to do this, but in my testing I couldn’t figure out why it wasn’t working, so I just published the instructions saying it was required.</p>
+
+<h2 id="heres-where-i-messed-up">Here’s where I messed up:</h2>
+
+<noscript><pre>#!/bin/bash
+export JAVA_HOME=&quot;/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home&quot;
+export PATH=&quot;$JAVA_HOME/bin:$PATH&quot;
+cd &quot;$( dirname &quot;$0&quot; )&quot;
+java -Xmx1024M -jar craftbukkit-1.15.2.jar -o true
+</pre></noscript>
+<script src="https://gist.github.com/pudquick/af8be79d6c1308fc430cac8d69757c43.js?file=server.sh"> </script>
+
+<p>See that <code class="highlighter-rouge">-o true</code> part?</p>
+
+<p>That means: Force online mode (aka require connecting users have a valid Minecraft Java account)</p>
+
+<p>I didn’t realize that my server startup instructions were forcing online mode (regardless of server setting configuration).</p>
+
+<p>Online accounts are an artefact of how Mojang sells Java Minecraft. The software is freely available to download, so there’s no DRM in it - but in order to start playing it required that you login with a paid account. Additionally, this helped with hosted servers because you could ban/block specific accounts or make a server whitelisted only to the particular accounts of your friends.</p>
+
+<p><strong>If you’re playing at home, however</strong> and not publicly making the server available to others - this is less of a concern!</p>
+
+<p>While you’ll still need accounts for your true Minecraft Java players (to launch and start Minecraft), to add in your Bedrock/mobile players you don’t need additional accounts.</p>
+
+<h2 id="how-to-fix-it">How to fix it:</h2>
+
+<p>Edit your <code class="highlighter-rouge">server.sh</code> and remove the <code class="highlighter-rouge">-o true</code> part.</p>
+
+<p>That line should now look something like:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>java <span class="nt">-Xmx1024M</span> <span class="nt">-jar</span> craftbukkit-1.15.2.jar
+</code></pre></div></div>
+
+<p>Then, after running your server the first time you should have a <code class="highlighter-rouge">server.properties</code> file in the same directory as the server jar.</p>
+
+<p>Make sure you’ve stopped your server, then edit the <code class="highlighter-rouge">online-mode</code> line in the file to say:</p>
+
+<p><code class="highlighter-rouge">online-mode=false</code></p>
+
+<h2 id="the-effect-of-this-change">The effect of this change:</h2>
+
+<p>Now, when you see this dialog:
+<img src="/images/2020-03-28-minecraft-harmony/auth.png" alt="" /></p>
+
+<p><strong>Contrary to any other warnings about “required” you might see</strong>, you can literally put any username you like here. My youngest daughter <em>really</em> enjoys this because now her character has her real name (whereas normally paid Minecraft account usernames are unique and may already be owned by someone else).</p>
+
+<p>For the password - just leave it blank. Then hit Submit!</p>
+
+<p><small>[ <strong>Note:</strong> If you do this, <strong>please don’t put this Minecraft server online</strong> by setting up port forwarding, as now anyone can connect and since they can choose any arbitrary username, there’s no way to ban or whitelist which users are allowed. ]</small></p>
+
+<h2 id="other-side-effects">Other side effects:</h2>
+
+<p>Since people logging into the server are now no longer connected to an authenticated Java Minecraft account, there’s no metadata being delivered about what skin to use for the characters. As such your characters will end up with a random Steve or Alex skin.</p>
+
+<h2 id="additional-things-you-can-clean-up-while-youre-here">Additional things you can clean up while you’re here:</h2>
+
+<p>Remember this part?</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>*** Error, this build is outdated ***
+*** Please download a new build as per instructions from https://www.spigotmc.org/go/outdated-spigot ***
+*** Server will start in 20 seconds ***
+</code></pre></div></div>
+
+<p>You can fix that by adding a new argument to the <code class="highlighter-rouge">server.sh</code> script so that it starts up instantly:</p>
+
+<p><code class="highlighter-rouge">-DIReallyKnowWhatIAmDoingISwear=true</code></p>
+
+<p>So now your combined line with both of these changes looks something like:</p>
+
+<p><code class="highlighter-rouge">java -Xmx1024M -DIReallyKnowWhatIAmDoingISwear=true -jar craftbukkit-1.15.2.jar</code></p>
+
+<h2 id="changes-since-the-last-blog-post">Changes since the last blog post:</h2>
+
+<p>The branch I prefered using for GeyserMC was merged back into the main branch. As such, the link I had previously no longer works.</p>
+
+<p>You can now simply use the master branch, available here: <a href="https://ci.nukkitx.com/job/GeyserMC/job/Geyser/job/master/">https://ci.nukkitx.com/job/GeyserMC/job/Geyser/job/master/</a></p>
+
+<p>Keep on having fun and staying sane out there.</p>
+
+<p>As always, hope this helps.</p>
+
+<p><em>- mike</em></p>
+
+</article>
+
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="center">
+  <div class="measure">
+    <small>
+      Michael Lynn hangs out at <a href="https://twitter.com/mikeymikey">@mikeymikey</a><br />
+      All content copyrighted where possible.<br />
+All rights reserved.
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>

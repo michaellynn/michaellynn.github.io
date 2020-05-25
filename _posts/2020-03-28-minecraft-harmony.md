@@ -6,6 +6,8 @@ date: "2020-03-28 12:00:00"
 title: Minecraft Harmony
 ---
 
+# [Update: Before buying anything, be sure to [read part 2](/2020/05/25/minecraft-harmony-part-2/) as well, where I corrected some mistakes here!]
+
 If you're reading this, you may be one of the adults living in a household full of Minecraft fans who can't agree on which version is better: Java edition (aka original flavor/classic Minecraft, played on a computer - the one you can mod like crazy) or Bedrock edition (available on iPhone, iPad, Switch, other gaming consoles, etc.).
 
 ... And if you're cooped up in a house right now where everyone is a little on edge from not getting much of a break from each other, wouldn't it be nice to be able to make both groups happy and able to play with each other at the same time.
@@ -34,7 +36,9 @@ Both GeyserMC and CraftBukkit are open source and free and require Java to run t
 
 - [AdoptOpenJDK 8](https://adoptopenjdk.net) - use "OpenJDK 8 (LTS)" latest release. Even though Java is now up to version 14 or whatever, the entire Minecraft modding ecosystem is pinned very strictly to 8. This particular distribution is an easy to install, free, and legal to use distribution of OpenJDK.
 - CraftBukkit server - I'd recommend downloading [this specific version \(1.15.2\)](https://cdn.getbukkit.org/craftbukkit/craftbukkit-1.15.2.jar), as that's what GeyserMC supports as of this blog post
-- GeyserMC - specifically the ["Geyser.jar" artefact file](https://ci.nukkitx.com/job/GeyserMC/job/Geyser/job/inventory/) from branch **"inventory"**, for now. This branch is where a lot of work is going on to make inventory for Bedrock players work better, especially if the players are in creative mode (like my youngest daughter adores playing). You can also build this from their Github repo directly if you like, but this is their continuous build server and any changes you see landing there show up here relatively quickly.
+- ~~GeyserMC - specifically the ["Geyser.jar" artefact file](https://ci.nukkitx.com/job/GeyserMC/job/Geyser/job/inventory/) from branch **"inventory"**, for now. This branch is where a lot of work is going on to make inventory for Bedrock players work better, especially if the players are in creative mode (like my youngest daughter adores playing). You can also build this from their Github repo directly if you like, but this is their continuous build server and any changes you see landing there show up here relatively quickly.~~
+- GeyserMC - [Please make sure to [read part 2](/2020/05/25/minecraft-harmony-part-2/) for what changed here.] The ["Geyser.jar" artefact file](https://ci.nukkitx.com/job/GeyserMC/job/Geyser/job/master/) from branch **"master"**. You can also build this from their Github repo directly if you like, but this is their continuous build server and any changes you see landing there show up here relatively quickly.
+
 
 ## How to set it up:
 

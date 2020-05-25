@@ -7,8 +7,101 @@
     <atom:link href="http://michaellynn.github.io/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Minecraft Harmony Revisited</title>
+        <description>&lt;p&gt;In &lt;a href=&quot;/2020/03/28/minecraft-harmony/&quot;&gt;my original blog post&lt;/a&gt; on getting Minecraft Java and Bedrock editions playing together, I provided some example scripts and configurations which inadvertently made something required for the Bedrock players that &lt;strong&gt;isn’t strictly required&lt;/strong&gt;: Namely a Minecraft paid-for Mojang account.&lt;/p&gt;
+
+&lt;p&gt;This was purely an accident on my part. I &lt;em&gt;thought&lt;/em&gt; it would be possible to do this, but in my testing I couldn’t figure out why it wasn’t working, so I just published the instructions saying it was required.&lt;/p&gt;
+
+&lt;h2 id=&quot;heres-where-i-messed-up&quot;&gt;Here’s where I messed up:&lt;/h2&gt;
+
+&lt;noscript&gt;&lt;pre&gt;#!/bin/bash
+export JAVA_HOME=&amp;quot;/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home&amp;quot;
+export PATH=&amp;quot;$JAVA_HOME/bin:$PATH&amp;quot;
+cd &amp;quot;$( dirname &amp;quot;$0&amp;quot; )&amp;quot;
+java -Xmx1024M -jar craftbukkit-1.15.2.jar -o true
+&lt;/pre&gt;&lt;/noscript&gt;
+&lt;script src=&quot;https://gist.github.com/pudquick/af8be79d6c1308fc430cac8d69757c43.js?file=server.sh&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;See that &lt;code class=&quot;highlighter-rouge&quot;&gt;-o true&lt;/code&gt; part?&lt;/p&gt;
+
+&lt;p&gt;That means: Force online mode (aka require connecting users have a valid Minecraft Java account)&lt;/p&gt;
+
+&lt;p&gt;I didn’t realize that my server startup instructions were forcing online mode (regardless of server setting configuration).&lt;/p&gt;
+
+&lt;p&gt;Online accounts are an artefact of how Mojang sells Java Minecraft. The software is freely available to download, so there’s no DRM in it - but in order to start playing it required that you login with a paid account. Additionally, this helped with hosted servers because you could ban/block specific accounts or make a server whitelisted only to the particular accounts of your friends.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;If you’re playing at home, however&lt;/strong&gt; and not publicly making the server available to others - this is less of a concern!&lt;/p&gt;
+
+&lt;p&gt;While you’ll still need accounts for your true Minecraft Java players (to launch and start Minecraft), to add in your Bedrock/mobile players you don’t need additional accounts.&lt;/p&gt;
+
+&lt;h2 id=&quot;how-to-fix-it&quot;&gt;How to fix it:&lt;/h2&gt;
+
+&lt;p&gt;Edit your &lt;code class=&quot;highlighter-rouge&quot;&gt;server.sh&lt;/code&gt; and remove the &lt;code class=&quot;highlighter-rouge&quot;&gt;-o true&lt;/code&gt; part.&lt;/p&gt;
+
+&lt;p&gt;That line should now look something like:&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;java &lt;span class=&quot;nt&quot;&gt;-Xmx1024M&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-jar&lt;/span&gt; craftbukkit-1.15.2.jar
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then, after running your server the first time you should have a &lt;code class=&quot;highlighter-rouge&quot;&gt;server.properties&lt;/code&gt; file in the same directory as the server jar.&lt;/p&gt;
+
+&lt;p&gt;Make sure you’ve stopped your server, then edit the &lt;code class=&quot;highlighter-rouge&quot;&gt;online-mode&lt;/code&gt; line in the file to say:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;online-mode=false&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;the-effect-of-this-change&quot;&gt;The effect of this change:&lt;/h2&gt;
+
+&lt;p&gt;Now, when you see this dialog:
+&lt;img src=&quot;/images/2020-03-28-minecraft-harmony/auth.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Contrary to any other warnings about “required” you might see&lt;/strong&gt;, you can literally put any username you like here. My youngest daughter &lt;em&gt;really&lt;/em&gt; enjoys this because now her character has her real name (whereas normally paid Minecraft account usernames are unique and may already be owned by someone else).&lt;/p&gt;
+
+&lt;p&gt;For the password - just leave it blank. Then hit Submit!&lt;/p&gt;
+
+&lt;p&gt;&lt;small&gt;[ &lt;strong&gt;Note:&lt;/strong&gt; If you do this, &lt;strong&gt;please don’t put this Minecraft server online&lt;/strong&gt; by setting up port forwarding, as now anyone can connect and since they can choose any arbitrary username, there’s no way to ban or whitelist which users are allowed. ]&lt;/small&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;other-side-effects&quot;&gt;Other side effects:&lt;/h2&gt;
+
+&lt;p&gt;Since people logging into the server are now no longer connected to an authenticated Java Minecraft account, there’s no metadata being delivered about what skin to use for the characters. As such your characters will end up with a random Steve or Alex skin.&lt;/p&gt;
+
+&lt;h2 id=&quot;additional-things-you-can-clean-up-while-youre-here&quot;&gt;Additional things you can clean up while you’re here:&lt;/h2&gt;
+
+&lt;p&gt;Remember this part?&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;*** Error, this build is outdated ***
+*** Please download a new build as per instructions from https://www.spigotmc.org/go/outdated-spigot ***
+*** Server will start in 20 seconds ***
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You can fix that by adding a new argument to the &lt;code class=&quot;highlighter-rouge&quot;&gt;server.sh&lt;/code&gt; script so that it starts up instantly:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-DIReallyKnowWhatIAmDoingISwear=true&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;So now your combined line with both of these changes looks something like:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;java -Xmx1024M -DIReallyKnowWhatIAmDoingISwear=true -jar craftbukkit-1.15.2.jar&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;changes-since-the-last-blog-post&quot;&gt;Changes since the last blog post:&lt;/h2&gt;
+
+&lt;p&gt;The branch I prefered using for GeyserMC was merged back into the main branch. As such, the link I had previously no longer works.&lt;/p&gt;
+
+&lt;p&gt;You can now simply use the master branch, available here: &lt;a href=&quot;https://ci.nukkitx.com/job/GeyserMC/job/Geyser/job/master/&quot;&gt;https://ci.nukkitx.com/job/GeyserMC/job/Geyser/job/master/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Keep on having fun and staying sane out there.&lt;/p&gt;
+
+&lt;p&gt;As always, hope this helps.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;- mike&lt;/em&gt;&lt;/p&gt;
+</description>
+        <pubDate>Mon, 25 May 2020 08:00:00 -0700</pubDate>
+        <link>http://michaellynn.github.io/2020/05/25/minecraft-harmony-part-2/</link>
+        <guid isPermaLink="true">http://michaellynn.github.io/2020/05/25/minecraft-harmony-part-2/</guid>
+      </item>
+    
+      <item>
         <title>Minecraft Harmony</title>
-        <description>&lt;p&gt;If you’re reading this, you may be one of the adults living in a household full of Minecraft fans who can’t agree on which version is better: Java edition (aka original flavor/classic Minecraft, played on a computer - the one you can mod like crazy) or Bedrock edition (available on iPhone, iPad, Switch, other gaming consoles, etc.).&lt;/p&gt;
+        <description>&lt;h1 id=&quot;update-before-buying-anything-be-sure-to-read-part-2-as-well-where-i-corrected-some-mistakes-here&quot;&gt;[Update: Before buying anything, be sure to &lt;a href=&quot;/2020/05/25/minecraft-harmony-part-2/&quot;&gt;read part 2&lt;/a&gt; as well, where I corrected some mistakes here!]&lt;/h1&gt;
+
+&lt;p&gt;If you’re reading this, you may be one of the adults living in a household full of Minecraft fans who can’t agree on which version is better: Java edition (aka original flavor/classic Minecraft, played on a computer - the one you can mod like crazy) or Bedrock edition (available on iPhone, iPad, Switch, other gaming consoles, etc.).&lt;/p&gt;
 
 &lt;p&gt;… And if you’re cooped up in a house right now where everyone is a little on edge from not getting much of a break from each other, wouldn’t it be nice to be able to make both groups happy and able to play with each other at the same time.&lt;/p&gt;
 
@@ -39,7 +132,8 @@
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://adoptopenjdk.net&quot;&gt;AdoptOpenJDK 8&lt;/a&gt; - use “OpenJDK 8 (LTS)” latest release. Even though Java is now up to version 14 or whatever, the entire Minecraft modding ecosystem is pinned very strictly to 8. This particular distribution is an easy to install, free, and legal to use distribution of OpenJDK.&lt;/li&gt;
   &lt;li&gt;CraftBukkit server - I’d recommend downloading &lt;a href=&quot;https://cdn.getbukkit.org/craftbukkit/craftbukkit-1.15.2.jar&quot;&gt;this specific version (1.15.2)&lt;/a&gt;, as that’s what GeyserMC supports as of this blog post&lt;/li&gt;
-  &lt;li&gt;GeyserMC - specifically the &lt;a href=&quot;https://ci.nukkitx.com/job/GeyserMC/job/Geyser/job/inventory/&quot;&gt;“Geyser.jar” artefact file&lt;/a&gt; from branch &lt;strong&gt;“inventory”&lt;/strong&gt;, for now. This branch is where a lot of work is going on to make inventory for Bedrock players work better, especially if the players are in creative mode (like my youngest daughter adores playing). You can also build this from their Github repo directly if you like, but this is their continuous build server and any changes you see landing there show up here relatively quickly.&lt;/li&gt;
+  &lt;li&gt;&lt;del&gt;GeyserMC - specifically the &lt;a href=&quot;https://ci.nukkitx.com/job/GeyserMC/job/Geyser/job/inventory/&quot;&gt;“Geyser.jar” artefact file&lt;/a&gt; from branch &lt;strong&gt;“inventory”&lt;/strong&gt;, for now. This branch is where a lot of work is going on to make inventory for Bedrock players work better, especially if the players are in creative mode (like my youngest daughter adores playing). You can also build this from their Github repo directly if you like, but this is their continuous build server and any changes you see landing there show up here relatively quickly.&lt;/del&gt;&lt;/li&gt;
+  &lt;li&gt;GeyserMC - [Please make sure to &lt;a href=&quot;/2020/05/25/minecraft-harmony-part-2/&quot;&gt;read part 2&lt;/a&gt; for what changed here.] The &lt;a href=&quot;https://ci.nukkitx.com/job/GeyserMC/job/Geyser/job/master/&quot;&gt;“Geyser.jar” artefact file&lt;/a&gt; from branch &lt;strong&gt;“master”&lt;/strong&gt;. You can also build this from their Github repo directly if you like, but this is their continuous build server and any changes you see landing there show up here relatively quickly.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;how-to-set-it-up&quot;&gt;How to set it up:&lt;/h2&gt;
