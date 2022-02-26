@@ -91,6 +91,10 @@ Meanwhile, we were already in the process of selling the old house as we'd just 
 
 But it could be 6 months before it gets here? What do I do??
 
+Starlink was out. I live in a forest, no good view on the sky.
+
+Cellular? I get 1 bar of LTE on a **good** day.
+
 **Idea:** Maybe if I covered a neighbor's bill, I could use theirs? Turns out - yes! One of them was willing!
 
 Now - we wanted to live where we weren't directly in our neighbor's business. We have a couple acres. We've got several hundred feet between ourselves and the remote beginnings of anyone next door.
@@ -101,11 +105,11 @@ Now - we wanted to live where we weren't directly in our neighbor's business. We
 
 How about coaxial? Have you heard of [MoCA](https://en.wikipedia.org/wiki/Multimedia_over_Coax_Alliance)? It sounds like it would be perfect. But no, it generally has the same distance limitations of ethernet (at least for the consumer gear you're likely to get your hands on).
 
-And fiber wasn't the best of ideas either. Besides being expensive and hard to work with, I had concerns about it surviving outdoors for month on end above ground in a forest (I sure as heck wasn't going to bury it the whole way).
+And fiber wasn't the best of ideas either. Besides being expensive and hard to work with, I had concerns about it surviving outdoors for months on end above ground in a forest (I sure as heck wasn't going to bury it the whole way).
 
 ... so what about wireless point to point?
 
-**New problem:** This is what the area around our new house looks like:
+**New problem:** Like I said, I live in a forest:
 
 ![](</images/2022-02-25-the-internet-is-a-series-of-cables/my_view.jpg>)
 
