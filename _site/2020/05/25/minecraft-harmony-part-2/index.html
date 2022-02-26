@@ -8,11 +8,11 @@
     <meta name="description" content="Minecraft Harmony (Bedrock + Java), Revisted">
     <meta name="author" content="Michael Lynn">
     <meta name="keywords" content="">
-    <link rel="canonical" href="http://michaellynn.github.io/2020/05/25/minecraft-harmony-part-2/">
+    <link rel="canonical" href="http://localhost:4000/2020/05/25/minecraft-harmony-part-2/">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for mikeymikey blogs here" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?202005251226" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?202202251754" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -26,7 +26,7 @@
     <meta property="og:type" content="article">
     <meta property="og:title" content="Minecraft Harmony Revisited">
     <meta property="og:description" content="the vent for my mind">
-    <meta property="og:url" content="http://michaellynn.github.io/2020/05/25/minecraft-harmony-part-2/">
+    <meta property="og:url" content="http://localhost:4000/2020/05/25/minecraft-harmony-part-2/">
     <meta property="og:site_name" content="mikeymikey blogs here">
 
     <!-- Twitter Card -->
@@ -34,7 +34,7 @@
     
     <meta name="twitter:title" content="Minecraft Harmony Revisited" />
     <meta name="twitter:description" content="Minecraft Harmony (Bedrock + Java), Revisted" />
-    <meta name="twitter:url" content="http://michaellynn.github.io/2020/05/25/minecraft-harmony-part-2/" />
+    <meta name="twitter:url" content="http://localhost:4000/2020/05/25/minecraft-harmony-part-2/" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -60,7 +60,7 @@
     <header class="site-header px2 px-responsive">
   <div class="mt2 wrap">
     <div class="measure">
-      <a href="http://michaellynn.github.io" class="site-title">mikeymikey blogs here</a>
+      <a href="http://localhost:4000" class="site-title">mikeymikey blogs here</a>
       <nav class="site-nav">
         <a href="/about/">About</a>
       </nav>
@@ -108,7 +108,7 @@ java -Xmx1024M -jar craftbukkit-1.15.2.jar -o true
 </pre></noscript>
 <script src="https://gist.github.com/pudquick/af8be79d6c1308fc430cac8d69757c43.js?file=server.sh"> </script>
 
-<p>See that <code class="highlighter-rouge">-o true</code> part?</p>
+<p>See that <code class="language-plaintext highlighter-rouge">-o true</code> part?</p>
 
 <p>That means: Force online mode (aka require connecting users have a valid Minecraft Java account)</p>
 
@@ -122,17 +122,17 @@ java -Xmx1024M -jar craftbukkit-1.15.2.jar -o true
 
 <h2 id="how-to-fix-it">How to fix it:</h2>
 
-<p>Edit your <code class="highlighter-rouge">server.sh</code> and remove the <code class="highlighter-rouge">-o true</code> part.</p>
+<p>Edit your <code class="language-plaintext highlighter-rouge">server.sh</code> and remove the <code class="language-plaintext highlighter-rouge">-o true</code> part.</p>
 
 <p>That line should now look something like:</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>java <span class="nt">-Xmx1024M</span> <span class="nt">-jar</span> craftbukkit-1.15.2.jar
 </code></pre></div></div>
 
-<p>Then, after running your server the first time you should have a <code class="highlighter-rouge">server.properties</code> file in the same directory as the server jar.</p>
+<p>Then, after running your server the first time you should have a <code class="language-plaintext highlighter-rouge">server.properties</code> file in the same directory as the server jar.</p>
 
-<p>Make sure you’ve stopped your server, then edit the <code class="highlighter-rouge">online-mode</code> line in the file to say:</p>
+<p>Make sure you’ve stopped your server, then edit the <code class="language-plaintext highlighter-rouge">online-mode</code> line in the file to say:</p>
 
-<p><code class="highlighter-rouge">online-mode=false</code></p>
+<p><code class="language-plaintext highlighter-rouge">online-mode=false</code></p>
 
 <h2 id="the-effect-of-this-change">The effect of this change:</h2>
 
@@ -153,18 +153,18 @@ java -Xmx1024M -jar craftbukkit-1.15.2.jar -o true
 
 <p>Remember this part?</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>*** Error, this build is outdated ***
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>*** Error, this build is outdated ***
 *** Please download a new build as per instructions from https://www.spigotmc.org/go/outdated-spigot ***
 *** Server will start in 20 seconds ***
 </code></pre></div></div>
 
-<p>You can fix that by adding a new argument to the <code class="highlighter-rouge">server.sh</code> script so that it starts up instantly:</p>
+<p>You can fix that by adding a new argument to the <code class="language-plaintext highlighter-rouge">server.sh</code> script so that it starts up instantly:</p>
 
-<p><code class="highlighter-rouge">-DIReallyKnowWhatIAmDoingISwear=true</code></p>
+<p><code class="language-plaintext highlighter-rouge">-DIReallyKnowWhatIAmDoingISwear=true</code></p>
 
 <p>So now your combined line with both of these changes looks something like:</p>
 
-<p><code class="highlighter-rouge">java -Xmx1024M -DIReallyKnowWhatIAmDoingISwear=true -jar craftbukkit-1.15.2.jar</code></p>
+<p><code class="language-plaintext highlighter-rouge">java -Xmx1024M -DIReallyKnowWhatIAmDoingISwear=true -jar craftbukkit-1.15.2.jar</code></p>
 
 <h2 id="changes-since-the-last-blog-post">Changes since the last blog post:</h2>
 

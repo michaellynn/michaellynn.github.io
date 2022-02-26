@@ -8,11 +8,11 @@
     <meta name="description" content="Changing how python looks in OS X - buh-bye rocketship!">
     <meta name="author" content="Michael Lynn">
     <meta name="keywords" content="">
-    <link rel="canonical" href="http://michaellynn.github.io/2015/07/31/customized-python-app-bundles/">
+    <link rel="canonical" href="http://localhost:4000/2015/07/31/customized-python-app-bundles/">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for mikeymikey blogs here" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?202005251226" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?202202251754" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -26,7 +26,7 @@
     <meta property="og:type" content="article">
     <meta property="og:title" content="Customized Python.app Bundles">
     <meta property="og:description" content="the vent for my mind">
-    <meta property="og:url" content="http://michaellynn.github.io/2015/07/31/customized-python-app-bundles/">
+    <meta property="og:url" content="http://localhost:4000/2015/07/31/customized-python-app-bundles/">
     <meta property="og:site_name" content="mikeymikey blogs here">
 
     <!-- Twitter Card -->
@@ -34,7 +34,7 @@
     
     <meta name="twitter:title" content="Customized Python.app Bundles" />
     <meta name="twitter:description" content="Changing how python looks in OS X - buh-bye rocketship!" />
-    <meta name="twitter:url" content="http://michaellynn.github.io/2015/07/31/customized-python-app-bundles/" />
+    <meta name="twitter:url" content="http://localhost:4000/2015/07/31/customized-python-app-bundles/" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -60,7 +60,7 @@
     <header class="site-header px2 px-responsive">
   <div class="mt2 wrap">
     <div class="measure">
-      <a href="http://michaellynn.github.io" class="site-title">mikeymikey blogs here</a>
+      <a href="http://localhost:4000" class="site-title">mikeymikey blogs here</a>
       <nav class="site-nav">
         <a href="/about/">About</a>
       </nav>
@@ -97,7 +97,7 @@
 <p>As such, Apple’s python has some customizations:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">/usr/bin/python</code> is not actually the real “python” binary. It is actually a stub binary that calls the real python interpreter that your OS is configured to use (for more configuration details, see <a href="https://www.afp548.com/2013/04/25/python-versioning-in-os-x/">my AFP548 article</a>)</li>
+  <li><code class="language-plaintext highlighter-rouge">/usr/bin/python</code> is not actually the real “python” binary. It is actually a stub binary that calls the real python interpreter that your OS is configured to use (for more configuration details, see <a href="https://www.afp548.com/2013/04/25/python-versioning-in-os-x/">my AFP548 article</a>)</li>
   <li>It ships with many third-party modules pre-installed that are not part of the core python distribution, including the lovely <a href="https://pythonhosted.org/pyobjc/">pyobjc</a>, a personal favorite of mine.</li>
   <li>… and because they want to encourage python &lt;-&gt; Objective-C bridging, there is a “Python.app” bundle that’s included, allowing OS X APIs that need application bundle details (Dock icon, display name, etc.) to function. This is where we get the lovely “rocketship”, if you’ve ever seen it before:</li>
 </ul>
@@ -234,7 +234,7 @@ output = subprocess.check_output([myApp.path + &#39;/Contents/MacOS/Python&#39;,
 
 <p>Python includes another fantastic module called multiprocessing and I especially love the workflow of the <a href="https://docs.python.org/2/library/multiprocessing.html#the-process-class">Process class</a> in it.</p>
 
-<p>It allows you to spin up another python interpreter trivially in a new process and easily share data between this child process and the original with things like <a href="https://docs.python.org/2/library/multiprocessing.html#exchanging-objects-between-processes">Queues and Pipes</a>. Additionally, you don’t need a chunk of python code in a file - you can just pass a function to the Process class as the <code class="highlighter-rouge">target</code> argument and it will use that for the core of execution.</p>
+<p>It allows you to spin up another python interpreter trivially in a new process and easily share data between this child process and the original with things like <a href="https://docs.python.org/2/library/multiprocessing.html#exchanging-objects-between-processes">Queues and Pipes</a>. Additionally, you don’t need a chunk of python code in a file - you can just pass a function to the Process class as the <code class="language-plaintext highlighter-rouge">target</code> argument and it will use that for the core of execution.</p>
 
 <p>It’s a lovely lovely module and I’d recommend using it for any time you’d need to spin up additional python instances …</p>
 
@@ -252,7 +252,7 @@ output = subprocess.check_output([myApp.path + &#39;/Contents/MacOS/Python&#39;,
 
 <p>I also used the <a href="https://docs.python.org/2/library/pickle.html">pickle</a> module to do the same for sending and receiving data between the processes.</p>
 
-<p>This allowed me to pass my python code to the child process over stdin (which keeps the code out of the argument list, keeping the output of tools like <code class="highlighter-rouge">ps</code> and <code class="highlighter-rouge">top</code> uncluttered).</p>
+<p>This allowed me to pass my python code to the child process over stdin (which keeps the code out of the argument list, keeping the output of tools like <code class="language-plaintext highlighter-rouge">ps</code> and <code class="language-plaintext highlighter-rouge">top</code> uncluttered).</p>
 
 <noscript><pre>import sys, os, os.path, tempfile, plistlib, shutil, marshal, subprocess, pickle, textwrap
 

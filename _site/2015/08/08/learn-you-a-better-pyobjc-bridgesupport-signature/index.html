@@ -8,11 +8,11 @@
     <meta name="description" content="pyobjc is awesome, but sometimes it needs a little help">
     <meta name="author" content="Michael Lynn">
     <meta name="keywords" content="">
-    <link rel="canonical" href="http://michaellynn.github.io/2015/08/08/learn-you-a-better-pyobjc-bridgesupport-signature/">
+    <link rel="canonical" href="http://localhost:4000/2015/08/08/learn-you-a-better-pyobjc-bridgesupport-signature/">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for mikeymikey blogs here" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?202005251226" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?202202251754" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -26,7 +26,7 @@
     <meta property="og:type" content="article">
     <meta property="og:title" content="Learn you a better pyobjc Bridgesupport signature">
     <meta property="og:description" content="the vent for my mind">
-    <meta property="og:url" content="http://michaellynn.github.io/2015/08/08/learn-you-a-better-pyobjc-bridgesupport-signature/">
+    <meta property="og:url" content="http://localhost:4000/2015/08/08/learn-you-a-better-pyobjc-bridgesupport-signature/">
     <meta property="og:site_name" content="mikeymikey blogs here">
 
     <!-- Twitter Card -->
@@ -34,7 +34,7 @@
     
     <meta name="twitter:title" content="Learn you a better pyobjc Bridgesupport signature" />
     <meta name="twitter:description" content="pyobjc is awesome, but sometimes it needs a little help" />
-    <meta name="twitter:url" content="http://michaellynn.github.io/2015/08/08/learn-you-a-better-pyobjc-bridgesupport-signature/" />
+    <meta name="twitter:url" content="http://localhost:4000/2015/08/08/learn-you-a-better-pyobjc-bridgesupport-signature/" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -60,7 +60,7 @@
     <header class="site-header px2 px-responsive">
   <div class="mt2 wrap">
     <div class="measure">
-      <a href="http://michaellynn.github.io" class="site-title">mikeymikey blogs here</a>
+      <a href="http://localhost:4000" class="site-title">mikeymikey blogs here</a>
       <nav class="site-nav">
         <a href="/about/">About</a>
       </nav>
@@ -104,9 +104,9 @@
 
 <p><em><small>*(frogor is one of my <a href="/about">many names</a>)</small></em></p>
 
-<p>In the discussion, a few people were wondering if it was possible to mount network shares with python in OS X (<em>of course it is</em>) because using the command-line <code class="highlighter-rouge">mount</code> was running into some odd situations with Kerberos ticket handling.</p>
+<p>In the discussion, a few people were wondering if it was possible to mount network shares with python in OS X (<em>of course it is</em>) because using the command-line <code class="language-plaintext highlighter-rouge">mount</code> was running into some odd situations with Kerberos ticket handling.</p>
 
-<p>You could call out to AppleScript (<code class="highlighter-rouge">osascript</code>) to do it with “mount volume”, but the rest of the code involved was already written in python and there was interest in reducing the number of external tools used rather than replacing one with another.</p>
+<p>You could call out to AppleScript (<code class="language-plaintext highlighter-rouge">osascript</code>) to do it with “mount volume”, but the rest of the code involved was already written in python and there was interest in reducing the number of external tools used rather than replacing one with another.</p>
 
 <p>This sounded like a fun challenge!</p>
 
@@ -157,7 +157,7 @@ NetFSMountURLSync(
 
 <p>That’s a bingo.</p>
 
-<p>Looking at the pseudocode, <code class="highlighter-rouge">0x0</code> (null pointer) is used in place of the user and password arguments which lines right up with the documentation <em>“(overrides URL)”</em> indicating that as long as someone provides the password within the URL (example: <code class="highlighter-rouge">afp://username:password@server/share</code>), then they’re unnecessary.</p>
+<p>Looking at the pseudocode, <code class="language-plaintext highlighter-rouge">0x0</code> (null pointer) is used in place of the user and password arguments which lines right up with the documentation <em>“(overrides URL)”</em> indicating that as long as someone provides the password within the URL (example: <code class="language-plaintext highlighter-rouge">afp://username:password@server/share</code>), then they’re unnecessary.</p>
 
 <p>The only arguments AppleScript passes are <em>url</em>, <em>open_options</em>, <em>mount_options</em>, and a placeholder for getting the returned mountpoint after it succeeds.</p>
 
@@ -190,7 +190,7 @@ NetFSMountURLSync(
 
 <p>Could come in handy!</p>
 
-<p>It’s also interesting to note that the AppleScript code provides <code class="highlighter-rouge">0x0</code> for mountpath, which seems to imply that not defining it will make it mount in the standard dynamic fashion at /Volumes.</p>
+<p>It’s also interesting to note that the AppleScript code provides <code class="language-plaintext highlighter-rouge">0x0</code> for mountpath, which seems to imply that not defining it will make it mount in the standard dynamic fashion at /Volumes.</p>
 
 <p>So at what point do we start turning this into python code?</p>
 
@@ -246,7 +246,7 @@ share_url = CFURLCreateWithString(None, &#39;afp://servername.local/sharename&#3
 
 <p><strong>[END OF INTERMISSION]</strong></p>
 
-<p>The real problem boils down to how <code class="highlighter-rouge">NetFSMountURLSync</code> is defined in the bridgesupport file that shipped with OS X, located at: /System/Library/Frameworks/NetFS.framework/Resources/BridgeSupport/NetFS.bridgesupport</p>
+<p>The real problem boils down to how <code class="language-plaintext highlighter-rouge">NetFSMountURLSync</code> is defined in the bridgesupport file that shipped with OS X, located at: /System/Library/Frameworks/NetFS.framework/Resources/BridgeSupport/NetFS.bridgesupport</p>
 
 <noscript><pre>&lt;function name=&#39;NetFSMountURLSync&#39;&gt;
 &lt;arg type=&#39;^{__CFURL=}&#39;/&gt;
@@ -260,7 +260,7 @@ share_url = CFURLCreateWithString(None, &#39;afp://servername.local/sharename&#3
 &lt;/function&gt;</pre></noscript>
 <script src="https://gist.github.com/pudquick/8f09a0b8893c01637b74.js?file=03_snip.xml"> </script>
 
-<p>That last argument is what’s killing us: <code class="highlighter-rouge">&lt;arg type='^^{__CFArray}'/&gt;</code></p>
+<p>That last argument is what’s killing us: <code class="language-plaintext highlighter-rouge">&lt;arg type='^^{__CFArray}'/&gt;</code></p>
 
 <p>… a pointer to a pointer to a CFArray …</p>
 
@@ -268,7 +268,7 @@ share_url = CFURLCreateWithString(None, &#39;afp://servername.local/sharename&#3
 
 <p>… aka a pointer to a NSArray (<a href="https://developer.apple.com/library/ios/documentation/CoreFoundation/Conceptual/CFDesignConcepts/Articles/tollFreeBridgedTypes.html">via bridging</a>)</p>
 
-<p>Googling for countless examples on how to use <code class="highlighter-rouge">NetFSMountURLSync</code> show I can pass a null pointer by reference for this argument. OS X isn’t expecting me to pass it a CFArrayRef (NSArray), it will <u>build one for me</u> and give me back a pointer to it.</p>
+<p>Googling for countless examples on how to use <code class="language-plaintext highlighter-rouge">NetFSMountURLSync</code> show I can pass a null pointer by reference for this argument. OS X isn’t expecting me to pass it a CFArrayRef (NSArray), it will <u>build one for me</u> and give me back a pointer to it.</p>
 
 <p>I don’t really need to put anything of value <em>into</em> this function argument, I just need to get something <em>out</em> of it.</p>
 
@@ -278,9 +278,9 @@ share_url = CFURLCreateWithString(None, &#39;afp://servername.local/sharename&#3
 
 <p>His recommendation was that because all of the arguments were basically toll-free bridged types (<em>pointer to a CFURL</em> = <em>CFURLRef</em> = <em>NSURL</em>, etc.), it would be best to rewrite the signature as taking a series of object type arguments and then changing the last argument from an input argument into an output.</p>
 
-<p>While pyobjc has problems with double pointer signatures (<code class="highlighter-rouge">^^{__CFArray}</code> - each <code class="highlighter-rouge">^</code> indicates a pointer <a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html">per the documentation</a>), it has no problems with a single level of pointers.</p>
+<p>While pyobjc has problems with double pointer signatures (<code class="language-plaintext highlighter-rouge">^^{__CFArray}</code> - each <code class="language-plaintext highlighter-rouge">^</code> indicates a pointer <a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html">per the documentation</a>), it has no problems with a single level of pointers.</p>
 
-<p>By changing the signature from <code class="highlighter-rouge">^^{__CFArray}</code> (aka <em>pointer to a CFArrayRef</em> aka <em>pointer to a NSArray</em>) to <code class="highlighter-rouge">^@</code> (<em>pointer to an object</em>), pyobjc becomes able to handle it with ease! Just needed to get from <code class="highlighter-rouge">^^</code> to <code class="highlighter-rouge">^</code>.</p>
+<p>By changing the signature from <code class="language-plaintext highlighter-rouge">^^{__CFArray}</code> (aka <em>pointer to a CFArrayRef</em> aka <em>pointer to a NSArray</em>) to <code class="language-plaintext highlighter-rouge">^@</code> (<em>pointer to an object</em>), pyobjc becomes able to handle it with ease! Just needed to get from <code class="language-plaintext highlighter-rouge">^^</code> to <code class="language-plaintext highlighter-rouge">^</code>.</p>
 
 <noscript><pre>import objc
 from CoreFoundation import CFURLCreateWithString
@@ -299,24 +299,24 @@ del NetFSMountURLSync
 objc.loadBundleFunctions(__bundle__, globals(), [(&#39;NetFSMountURLSync&#39;, &#39;i@@@@@@o^@&#39;)])</pre></noscript>
 <script src="https://gist.github.com/pudquick/8f09a0b8893c01637b74.js?file=04_snip.py"> </script>
 
-<p>Let’s break down that signature: <code class="highlighter-rouge">i@@@@@@o^@</code></p>
+<p>Let’s break down that signature: <code class="language-plaintext highlighter-rouge">i@@@@@@o^@</code></p>
 
 <p>The function has 1 return value and 7 input arguments.</p>
 
-<p><a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html">Per the documentation</a>, we start off by defining the return value as <code class="highlighter-rouge">i</code>, an <strong>int</strong> type, which is pretty common for functions (usually used for error codes).</p>
+<p><a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html">Per the documentation</a>, we start off by defining the return value as <code class="language-plaintext highlighter-rouge">i</code>, an <strong>int</strong> type, which is pretty common for functions (usually used for error codes).</p>
 
-<p>The arguments follow, starting with 6 <code class="highlighter-rouge">@</code> which indicates 6 <strong>object</strong> type arguments.</p>
+<p>The arguments follow, starting with 6 <code class="language-plaintext highlighter-rouge">@</code> which indicates 6 <strong>object</strong> type arguments.</p>
 
-<p>Then magic for the last argument: <code class="highlighter-rouge">o^@</code>: out-only pointer to an <strong>object</strong> type.</p>
+<p>Then magic for the last argument: <code class="language-plaintext highlighter-rouge">o^@</code>: out-only pointer to an <strong>object</strong> type.</p>
 
-<p>When you provide a signature like this to pyobjc, you still have to pass <code class="highlighter-rouge">None</code> (null pointer) for the argument, but instead of having to deal with dereferencing pointers it saves you the pain <em>and just moves it to a second return value</em>.</p>
+<p>When you provide a signature like this to pyobjc, you still have to pass <code class="language-plaintext highlighter-rouge">None</code> (null pointer) for the argument, but instead of having to deal with dereferencing pointers it saves you the pain <em>and just moves it to a second return value</em>.</p>
 
 <p>Here’s how you use it:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">error</span><span class="p">,</span> <span class="n">mountpaths</span> <span class="o">=</span> <span class="n">NetFSMountURLSync</span><span class="p">(</span><span class="n">share_url</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
 
 <span class="o">&gt;&gt;&gt;</span> <span class="n">mountpaths</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="s">u'/Volumes/sharename'</span>
+<span class="sa">u</span><span class="s">'/Volumes/sharename'</span>
 
 </code></pre></div></div>
 

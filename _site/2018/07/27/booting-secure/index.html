@@ -8,11 +8,11 @@
     <meta name="description" content="oh crap, they shipped the T2 MBP">
     <meta name="author" content="Michael Lynn">
     <meta name="keywords" content="">
-    <link rel="canonical" href="http://michaellynn.github.io/2018/07/27/booting-secure/">
+    <link rel="canonical" href="http://localhost:4000/2018/07/27/booting-secure/">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for mikeymikey blogs here" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?202005251226" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?202202251754" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -26,7 +26,7 @@
     <meta property="og:type" content="article">
     <meta property="og:title" content="Booting Secure">
     <meta property="og:description" content="the vent for my mind">
-    <meta property="og:url" content="http://michaellynn.github.io/2018/07/27/booting-secure/">
+    <meta property="og:url" content="http://localhost:4000/2018/07/27/booting-secure/">
     <meta property="og:site_name" content="mikeymikey blogs here">
 
     <!-- Twitter Card -->
@@ -34,7 +34,7 @@
     
     <meta name="twitter:title" content="Booting Secure" />
     <meta name="twitter:description" content="oh crap, they shipped the T2 MBP" />
-    <meta name="twitter:url" content="http://michaellynn.github.io/2018/07/27/booting-secure/" />
+    <meta name="twitter:url" content="http://localhost:4000/2018/07/27/booting-secure/" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -60,7 +60,7 @@
     <header class="site-header px2 px-responsive">
   <div class="mt2 wrap">
     <div class="measure">
-      <a href="http://michaellynn.github.io" class="site-title">mikeymikey blogs here</a>
+      <a href="http://localhost:4000" class="site-title">mikeymikey blogs here</a>
       <nav class="site-nav">
         <a href="/about/">About</a>
       </nav>
@@ -187,7 +187,7 @@
 
 <p>I’m putting this one first because it’s the easiest to talk about. Simply put, this is closest to the classic boot model we knew before the T2. All the normal stuff applies.</p>
 
-<p>The device firmware has to be able to see a boot.efi it can use in a volume it can read and boot from and the OS inside the volume has to say it supports the hardware (which is foremost stored in <code class="highlighter-rouge">/System/Library/CoreServices/PlatformSupport.plist</code>, if you’ve ever wondered) and provide all the necessary hardware kexts for talking to the bits of the computer.</p>
+<p>The device firmware has to be able to see a boot.efi it can use in a volume it can read and boot from and the OS inside the volume has to say it supports the hardware (which is foremost stored in <code class="language-plaintext highlighter-rouge">/System/Library/CoreServices/PlatformSupport.plist</code>, if you’ve ever wondered) and provide all the necessary hardware kexts for talking to the bits of the computer.</p>
 
 <p>Secure Boot devices come with additional requirements in that the T2 chip runs its own OS (bridgeOS), but yadda yadda yadda this isn’t the boot mode you’re interested in reading about. This is your normal “if the OS is compatible, it can boot the Mac” situation.</p>
 
@@ -197,7 +197,7 @@
 
 <p>We’ll ask a Secure Boot device what it’s booting. Let’s start with the bless command:</p>
 
-<p><code class="highlighter-rouge">sudo bless --getBoot --verbose</code></p>
+<p><code class="language-plaintext highlighter-rouge">sudo bless --getBoot --verbose</code></p>
 
 <noscript><pre>EFI found at IODeviceTree:/efi
 Current EFI boot device string is: &#39;&lt;array&gt;&lt;dict&gt;&lt;key&gt;IOMatch&lt;/key&gt;&lt;dict&gt;&lt;key&gt;IOProviderClass
@@ -238,9 +238,9 @@ Substituting found system volume /dev/disk1s1
 
 <p>There’s a lot of information there.</p>
 
-<p>But if you’ve never noticed this before on macOS devices that boot APFS (like all Secure Boot devices), macOS isn’t booting a file off of the System volume (<code class="highlighter-rouge">/dev/disk1s1</code>), it’s booting the <code class="highlighter-rouge">boot.efi</code> file from the new APFS Preboot volume (<code class="highlighter-rouge">/dev/disk1s2</code>) that you’ll find inside APFS containers:</p>
+<p>But if you’ve never noticed this before on macOS devices that boot APFS (like all Secure Boot devices), macOS isn’t booting a file off of the System volume (<code class="language-plaintext highlighter-rouge">/dev/disk1s1</code>), it’s booting the <code class="language-plaintext highlighter-rouge">boot.efi</code> file from the new APFS Preboot volume (<code class="language-plaintext highlighter-rouge">/dev/disk1s2</code>) that you’ll find inside APFS containers:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;key&gt;BLLastBSDName&lt;/key&gt;
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;key&gt;BLLastBSDName&lt;/key&gt;
 &lt;string&gt;disk1s2&lt;/string&gt;
 
 &lt;key&gt;Path&lt;/key&gt;
@@ -249,7 +249,7 @@ Substituting found system volume /dev/disk1s1
 
 <p>It doesn’t matter if you’ve encrypted the device or not. Every macOS device booting an APFS filesystem boots like this.</p>
 
-<p>You can see the container layout with this command: <code class="highlighter-rouge">diskutil apfs list</code></p>
+<p>You can see the container layout with this command: <code class="language-plaintext highlighter-rouge">diskutil apfs list</code></p>
 
 <noscript><pre>diskutil apfs list
 APFS Container (1 found)
@@ -300,7 +300,7 @@ APFS Container (1 found)
         FileVault:                 No (Encrypted at rest)</pre></noscript>
 <script src="https://gist.github.com/pudquick/13a2b419416f8fd010a7c8fcda2a9b87.js?file=02_snip.txt"> </script>
 
-<p>It comes in a triplet: OS/System volume, Preboot, and Recovery. If you’re booted from a System volume within an APFS Container, you’ll also see a (temporary) VM volume, which has taken the place of and is mounted at <code class="highlighter-rouge">/private/var/vm</code>.</p>
+<p>It comes in a triplet: OS/System volume, Preboot, and Recovery. If you’re booted from a System volume within an APFS Container, you’ll also see a (temporary) VM volume, which has taken the place of and is mounted at <code class="language-plaintext highlighter-rouge">/private/var/vm</code>.</p>
 
 <p>So we’re booting from Preboot.</p>
 
@@ -308,9 +308,9 @@ APFS Container (1 found)
 
 <p>Let’s mount them and see. For the OS that’s booted off the internal disk, that’s usually:</p>
 
-<p><code class="highlighter-rouge">diskutil mount /dev/disk1s2</code></p>
+<p><code class="language-plaintext highlighter-rouge">diskutil mount /dev/disk1s2</code></p>
 
-<p>It should mount at <code class="highlighter-rouge">/Volumes/Preboot</code></p>
+<p>It should mount at <code class="language-plaintext highlighter-rouge">/Volumes/Preboot</code></p>
 
 <noscript><pre>diskutil mount /dev/disk1s2
 Volume Preboot on /dev/disk1s2 mounted
@@ -320,27 +320,27 @@ total 0
 drwxr-xr-x  7 root  wheel  224 Jul 17 09:38 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F</pre></noscript>
 <script src="https://gist.github.com/pudquick/13a2b419416f8fd010a7c8fcda2a9b87.js?file=03_snip.txt"> </script>
 
-<p>If you look at the top level of the disk, you’ll see one (or more) folders that look like long hex strings with dashes in them. Those are <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier">GUIDs</a>. Not only are they GUIDs, but the GUIDs match some of the output that we saw before in <code class="highlighter-rouge">diskutil apfs list</code></p>
+<p>If you look at the top level of the disk, you’ll see one (or more) folders that look like long hex strings with dashes in them. Those are <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier">GUIDs</a>. Not only are they GUIDs, but the GUIDs match some of the output that we saw before in <code class="language-plaintext highlighter-rouge">diskutil apfs list</code></p>
 
 <p>A System volume within an APFS Container has its own unique GUID. Within Preboot (and the Recovery volume as well), the top level folders will contain a folder with a name matching the GUID of the System volume it’s paired with.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    +-&gt; Volume disk1s1 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    +-&gt; Volume disk1s1 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
     |   ---------------------------------------------------
     |   APFS Volume Disk (Role):   disk1s1 (No specific role)
     |   Name:                      Macintosh HD (Case-insensitive)
     |   Mount Point:               /
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ls -l /Volumes/Preboot/
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ls -l /Volumes/Preboot/
 total 0
 drwxr-xr-x  7 root  wheel  224 Jul 17 09:38 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
 </code></pre></div></div>
 
 <p>In the HFS+ boot model, the kernel is hardcoded to look for the Recovery partition at the partition id minus 1 of the associated System partition. With APFS, a single APFS container can now contain multiple System volumes - <strong>but only a single Recovery/Preboot volume is required within the container</strong>, each of which can contain multiple GUID-named folders (one for each System volume).</p>
 
-<p>Looking back at the information we got from the bless command, we can see that the boot.efi is in a subfolder within the GUID folder: <code class="highlighter-rouge">System/Library/CoreServices/boot.efi</code></p>
+<p>Looking back at the information we got from the bless command, we can see that the boot.efi is in a subfolder within the GUID folder: <code class="language-plaintext highlighter-rouge">System/Library/CoreServices/boot.efi</code></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;key&gt;Path&lt;/key&gt;
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;key&gt;Path&lt;/key&gt;
 &lt;string&gt;\FD77CA06-84E9-42D0-B5FE-6295D28CBB2F\System\Library\CoreServices\boot.efi&lt;/string&gt;
 </code></pre></div></div>
 
@@ -424,9 +424,9 @@ drwxr-xr-x  7 root  wheel  224 Jul 17 09:38 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
 
 <p>Maybe we could compare them to a device running the same OS version without a T2 chip. For the record here, that means I’m comparing an iMac Pro to a 2017 MacBook Pro running 10.13.6.</p>
 
-<p>Let’s chop out the GUID names at the beginning (since they’re unique to every System volume) and just compare the contents of the subdirectories. Sort the lines of each and run both of them against each other through the <code class="highlighter-rouge">diff</code> command:</p>
+<p>Let’s chop out the GUID names at the beginning (since they’re unique to every System volume) and just compare the contents of the subdirectories. Sort the lines of each and run both of them against each other through the <code class="language-plaintext highlighter-rouge">diff</code> command:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>*** Standard-listing.txt
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>*** Standard-listing.txt
 --- SecureBoot-listing.txt
 ***************
 *** 4,12 ****
@@ -475,7 +475,7 @@ drwxr-xr-x  7 root  wheel  224 Jul 17 09:38 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
 
 <p>Oh? So this might be different if we look at yet another iMac Pro? Good thing I access to a few to compare 😄</p>
 
-<p>And sure enough, there are the same additional files on the other device, but the hex string before the .im4m suffix (the <strong>15156C1879A0A6</strong> in <code class="highlighter-rouge">boot.efi.j137ap.15156C1879A0A6.im4m</code>) is different.</p>
+<p>And sure enough, there are the same additional files on the other device, but the hex string before the .im4m suffix (the <strong>15156C1879A0A6</strong> in <code class="language-plaintext highlighter-rouge">boot.efi.j137ap.15156C1879A0A6.im4m</code>) is different.</p>
 
 <p>Well.</p>
 
@@ -495,7 +495,7 @@ drwxr-xr-x  7 root  wheel  224 Jul 17 09:38 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
 
 <p>BINGO. It would seem we have part of the equation.</p>
 
-<p>Reconnecting the device to the network and then later checking in Preboot, it would seem new <code class="highlighter-rouge">*.j137ap.15156C1879A0A6.im4m</code> files have been recreated.</p>
+<p>Reconnecting the device to the network and then later checking in Preboot, it would seem new <code class="language-plaintext highlighter-rouge">*.j137ap.15156C1879A0A6.im4m</code> files have been recreated.</p>
 
 <p>Interestingly, each one rebuilds a uniquely named file - but always with the same hex name for itself.</p>
 
@@ -507,11 +507,11 @@ drwxr-xr-x  7 root  wheel  224 Jul 17 09:38 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
 
 <p>Normally for this kind of thing, if I want to search through the entire contents of the machine I’d reach out to my standard tools like <a href="https://geoff.greer.fm/ag/">the Silver Searcher</a> or <a href="https://blog.burntsushi.net/ripgrep/">RipGrep</a>. Both of these tools will gladly recursively search through both text and binary files to locate strings you’re interested in. These guys get frequent shoutouts in my reverse engineering talks.</p>
 
-<p>However, in this case, I dumbly lucked out by trying the naive approach and checking to see if the output of <code class="highlighter-rouge">system_profiler</code> (which lists other unique identifiers like ethernet MAC addresses, serial numbers, etc.) happened to contain the hex string in question.</p>
+<p>However, in this case, I dumbly lucked out by trying the naive approach and checking to see if the output of <code class="language-plaintext highlighter-rouge">system_profiler</code> (which lists other unique identifiers like ethernet MAC addresses, serial numbers, etc.) happened to contain the hex string in question.</p>
 
 <p>It did!</p>
 
-<p>But <strong>only because I’d freshly re-installed the OS</strong> and <code class="highlighter-rouge">system_profiler</code> tends to include recent portions of several log files. In this instance, it included <code class="highlighter-rouge">install.log</code>:</p>
+<p>But <strong>only because I’d freshly re-installed the OS</strong> and <code class="language-plaintext highlighter-rouge">system_profiler</code> tends to include recent portions of several log files. In this instance, it included <code class="language-plaintext highlighter-rouge">install.log</code>:</p>
 
 <noscript><pre>osinstallersetupd[598]: tss_submit_job: ----Begin request
 osinstallersetupd[598]: tss_submit_job: &lt;CFBasicHash 0x7fe8e067bd30 [0x106a7daf0]&gt;{type = mutable dict, count = 16,
@@ -573,7 +573,7 @@ iMac-Pro osinstallersetupd[598]: AMAuthInstallHttpMessageSendSync: httpRequest=&
 
 <p><a href="https://www.theiphonewiki.com/wiki/SHSH_Protocol">SHSH Protocol</a></p>
 
-<p>Wow, the “Sending data (request)” section there looks <em>very</em> similar to the details the Mac is sending: <code class="highlighter-rouge">@HostPlatformInfo</code>, <code class="highlighter-rouge">ApECID</code>, etc.</p>
+<p>Wow, the “Sending data (request)” section there looks <em>very</em> similar to the details the Mac is sending: <code class="language-plaintext highlighter-rouge">@HostPlatformInfo</code>, <code class="language-plaintext highlighter-rouge">ApECID</code>, etc.</p>
 
 <p>This is locking it in pretty solid that Apple has leveraged this same technology for generating signatures for validated booting for Secure Boot on Mac.</p>
 
@@ -581,7 +581,7 @@ iMac-Pro osinstallersetupd[598]: AMAuthInstallHttpMessageSendSync: httpRequest=&
 
 <p>Copying them between Secure Boot devices and renaming them to match the ECID of the other device still results in Secure Boot wanting to repair the signature.</p>
 
-<p>Going back to the 2017 MacBook Pro that does not have Secure Boot, it doesn’t have a uniquely named .im4m file - but it does have a “generic” .im4m file for the boot.efi: <code class="highlighter-rouge">boot.efi.j137ap.im4m</code></p>
+<p>Going back to the 2017 MacBook Pro that does not have Secure Boot, it doesn’t have a uniquely named .im4m file - but it does have a “generic” .im4m file for the boot.efi: <code class="language-plaintext highlighter-rouge">boot.efi.j137ap.im4m</code></p>
 
 <p>What happens if we delete it?</p>
 
@@ -650,7 +650,7 @@ iMac-Pro osinstallersetupd[598]: Copying AP ticket to /var/tmp/OSPersonalization
 
 <p>Are .im4m files just simply ASN.1 encoded?</p>
 
-<p>Let’s run them against <code class="highlighter-rouge">openssl asn1parse</code> and find out:</p>
+<p>Let’s run them against <code class="language-plaintext highlighter-rouge">openssl asn1parse</code> and find out:</p>
 
 <p><strong>boot.efi.j137ap.15156C1879A0A6.im4m:</strong></p>
 
@@ -1083,13 +1083,13 @@ iMac-Pro osinstallersetupd[598]: Copying AP ticket to /var/tmp/OSPersonalization
   <li><a href="https://derflounder.wordpress.com/2017/01/10/imaging-will-be-dead-soon-ish/">Imaging will be dead soonish</a> (by the Blogfather himself, Rich Trouton)</li>
 </ul>
 
-<p>In the early first release days of the iMac Pro, there was talk that you couldn’t use <code class="highlighter-rouge">asr</code> to restore an OS image to the device and have it boot out of the box.</p>
+<p>In the early first release days of the iMac Pro, there was talk that you couldn’t use <code class="language-plaintext highlighter-rouge">asr</code> to restore an OS image to the device and have it boot out of the box.</p>
 
 <p>However, if you were fortunate enough to have two iMac Pros (or brave enough to try from Internet Recovery), they could apparently image themselves.</p>
 
 <p>Did you bother to check back after this news? Have you tried it again recently?</p>
 
-<p>If you’re making a never booted image with wonderful tools like <a href="https://github.com/MagerValp/AutoDMG">AutoDMG</a>, these days <code class="highlighter-rouge">asr</code> can very definitely restore a booting macOS onto these devices, even if the host device running the <code class="highlighter-rouge">asr</code> restore is <strong>not</strong> a Secure Boot device.</p>
+<p>If you’re making a never booted image with wonderful tools like <a href="https://github.com/MagerValp/AutoDMG">AutoDMG</a>, these days <code class="language-plaintext highlighter-rouge">asr</code> can very definitely restore a booting macOS onto these devices, even if the host device running the <code class="language-plaintext highlighter-rouge">asr</code> restore is <strong>not</strong> a Secure Boot device.</p>
 
 <p>So what changed?</p>
 
@@ -1097,11 +1097,11 @@ iMac-Pro osinstallersetupd[598]: Copying AP ticket to /var/tmp/OSPersonalization
 
 <p>When 10.13.4 was released, it was a unified build and the iMac Pro no longer ran its own fork.</p>
 
-<p>So, using the knowledge of “personalization” above, can we look at the <code class="highlighter-rouge">asr</code> command itself and see what may have changed?</p>
+<p>So, using the knowledge of “personalization” above, can we look at the <code class="language-plaintext highlighter-rouge">asr</code> command itself and see what may have changed?</p>
 
-<p>Let’s try some of my most favorite (and built-in) tooling to peek at the binary - <code class="highlighter-rouge">strings</code> and <code class="highlighter-rouge">otool</code>:</p>
+<p>Let’s try some of my most favorite (and built-in) tooling to peek at the binary - <code class="language-plaintext highlighter-rouge">strings</code> and <code class="language-plaintext highlighter-rouge">otool</code>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>strings /usr/sbin/asr | grep -i personaliz
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>strings /usr/sbin/asr | grep -i personaliz
 no-personalization
 Couldn't personalize volume %s
 Personalization failed with error %d, line %d
@@ -1111,15 +1111,15 @@ networkAvailableForPersonalizationWithOptions:
 personalizeVolumeAtMountPointForInstall:outputDirectory:options:completionHandler:
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>otool -L /usr/sbin/asr | grep -i personaliz
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>otool -L /usr/sbin/asr | grep -i personaliz
 	/System/Library/PrivateFrameworks/OSPersonalization.framework/Versions/A/OSPersonalization (compatibility version 1.0.0, current version 48.1.0)
 </code></pre></div></div>
 
-<p>It would appear <code class="highlighter-rouge">asr</code> gained a new trick!</p>
+<p>It would appear <code class="language-plaintext highlighter-rouge">asr</code> gained a new trick!</p>
 
-<p>In fact, the <code class="highlighter-rouge">asr</code> in the iMac Pro’s copy of 10.13.3 already had this new capability, which is why it worked from device to device <a href="https://managingosx.wordpress.com/2018/01/25/early-notes-on-deploying-images-to-imac-pro/">or from within Recovery to itself</a>.</p>
+<p>In fact, the <code class="language-plaintext highlighter-rouge">asr</code> in the iMac Pro’s copy of 10.13.3 already had this new capability, which is why it worked from device to device <a href="https://managingosx.wordpress.com/2018/01/25/early-notes-on-deploying-images-to-imac-pro/">or from within Recovery to itself</a>.</p>
 
-<p><code class="highlighter-rouge">asr</code> on any 10.13.4+ macOS version now has the same capability without the need for special undocumented flags or tricks.</p>
+<p><code class="language-plaintext highlighter-rouge">asr</code> on any 10.13.4+ macOS version now has the same capability without the need for special undocumented flags or tricks.</p>
 
 <p>If you tinker a little deeper (like I have), you’ll find out that there’s code in the OSPersonalization PrivateFramework to <strong>read the ECID of a target disk mode attached device</strong>. This allows it to personalize a device even in Full Security mode with the ECID-specific, device-specific manifest.</p>
 
@@ -1143,7 +1143,7 @@ personalizeVolumeAtMountPointForInstall:outputDirectory:options:completionHandle
 
 <p>They don’t say you <em>can’t</em>. Just that they <em>don’t recommend it</em>. That it’s <em>not supported</em>.</p>
 
-<p>They quite obviously built the functionality into <code class="highlighter-rouge">asr</code>.</p>
+<p>They quite obviously built the functionality into <code class="language-plaintext highlighter-rouge">asr</code>.</p>
 
 <h3 id="but---should-you">But - should you?</h3>
 
@@ -1195,7 +1195,7 @@ personalizeVolumeAtMountPointForInstall:outputDirectory:options:completionHandle
 
 <p>Nobody but Apple knows will be next. But they do, in the meantime, provide guidance.</p>
 
-<p>And their guidance is that you should be looking at DEP/MDM-based workflows for your provisioning. The latest operating system versions already include some features (like managing automatic kernel extension loading) that can only be done <em>remotely</em> and adjusted post-deployment <a href="https://support.apple.com/en-us/HT208019">via MDM deployed profiles</a>. SIU had the capability to make network bootable images that ran <code class="highlighter-rouge">scutil</code> to reconfigure the trust settings, but all of that is moot now that Secure Boot devices don’t network boot at all. MDM is the only game.</p>
+<p>And their guidance is that you should be looking at DEP/MDM-based workflows for your provisioning. The latest operating system versions already include some features (like managing automatic kernel extension loading) that can only be done <em>remotely</em> and adjusted post-deployment <a href="https://support.apple.com/en-us/HT208019">via MDM deployed profiles</a>. SIU had the capability to make network bootable images that ran <code class="language-plaintext highlighter-rouge">scutil</code> to reconfigure the trust settings, but all of that is moot now that Secure Boot devices don’t network boot at all. MDM is the only game.</p>
 
 <p><strong>If you or your organization feel the need to image devices, then do so.</strong></p>
 
@@ -1217,7 +1217,7 @@ personalizeVolumeAtMountPointForInstall:outputDirectory:options:completionHandle
 
 <p>Going back to the install.log again, you can find this line:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	    HardwareModel = j137ap;
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	    HardwareModel = j137ap;
 </code></pre></div></div>
 
 <p>Quick Google searches will suggest that “j137ap” is likely an internal model identifier of either the iMac Pro itself or the specific T2 chip inside it. “j680ap” and “j132ap”, with a little poking around, you’ll find are for the new 13” and 15” 2018 MacBook Pro devices.</p>

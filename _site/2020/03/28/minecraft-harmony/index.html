@@ -8,11 +8,11 @@
     <meta name="description" content="Making Minecraft Bedrock (aka Pocket Edition, Mobile, MCPE) play nicely with Java edition on the same server">
     <meta name="author" content="Michael Lynn">
     <meta name="keywords" content="">
-    <link rel="canonical" href="http://michaellynn.github.io/2020/03/28/minecraft-harmony/">
+    <link rel="canonical" href="http://localhost:4000/2020/03/28/minecraft-harmony/">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for mikeymikey blogs here" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?202005251226" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?202202251754" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -26,7 +26,7 @@
     <meta property="og:type" content="article">
     <meta property="og:title" content="Minecraft Harmony">
     <meta property="og:description" content="the vent for my mind">
-    <meta property="og:url" content="http://michaellynn.github.io/2020/03/28/minecraft-harmony/">
+    <meta property="og:url" content="http://localhost:4000/2020/03/28/minecraft-harmony/">
     <meta property="og:site_name" content="mikeymikey blogs here">
 
     <!-- Twitter Card -->
@@ -34,7 +34,7 @@
     
     <meta name="twitter:title" content="Minecraft Harmony" />
     <meta name="twitter:description" content="Making Minecraft Bedrock (aka Pocket Edition, Mobile, MCPE) play nicely with Java edition on the same server" />
-    <meta name="twitter:url" content="http://michaellynn.github.io/2020/03/28/minecraft-harmony/" />
+    <meta name="twitter:url" content="http://localhost:4000/2020/03/28/minecraft-harmony/" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -60,7 +60,7 @@
     <header class="site-header px2 px-responsive">
   <div class="mt2 wrap">
     <div class="measure">
-      <a href="http://michaellynn.github.io" class="site-title">mikeymikey blogs here</a>
+      <a href="http://localhost:4000" class="site-title">mikeymikey blogs here</a>
       <nav class="site-nav">
         <a href="/about/">About</a>
       </nav>
@@ -134,16 +134,16 @@
 <h2 id="how-to-set-it-up">How to set it up:</h2>
 
 <ul>
-  <li>Install the AdoptOpenJDK pkg file you downloaded. This will install OpenJDK to a subdirectory in <code class="highlighter-rouge">/Library/Java/JavaVirtualMachines</code></li>
-  <li>Note the name of this subfolder, it should be something like: <code class="highlighter-rouge">adoptopenjdk-8.jdk</code></li>
-  <li>Make a folder for the CraftBukkit server .jar file you downloaded and put the .jar inside that folder (I called my folder <code class="highlighter-rouge">server</code>)</li>
-  <li>Make a (different) folder for the GeyserMC .jar file you downloaded and put the .jar inside that folder (I called my folder <code class="highlighter-rouge">proxy</code>)</li>
+  <li>Install the AdoptOpenJDK pkg file you downloaded. This will install OpenJDK to a subdirectory in <code class="language-plaintext highlighter-rouge">/Library/Java/JavaVirtualMachines</code></li>
+  <li>Note the name of this subfolder, it should be something like: <code class="language-plaintext highlighter-rouge">adoptopenjdk-8.jdk</code></li>
+  <li>Make a folder for the CraftBukkit server .jar file you downloaded and put the .jar inside that folder (I called my folder <code class="language-plaintext highlighter-rouge">server</code>)</li>
+  <li>Make a (different) folder for the GeyserMC .jar file you downloaded and put the .jar inside that folder (I called my folder <code class="language-plaintext highlighter-rouge">proxy</code>)</li>
   <li>I don’t know if separate folders are required, it’s just that each of these files will generate many other files when they run - so I just kept them separate.</li>
 </ul>
 
 <p>Now you just need some helper scripts to make it easy to turn on the Minecraft server and the GeyserMC proxy.</p>
 
-<p>In the server folder, I created a script (text) file named <code class="highlighter-rouge">server.sh</code> and this is the contents:</p>
+<p>In the server folder, I created a script (text) file named <code class="language-plaintext highlighter-rouge">server.sh</code> and this is the contents:</p>
 <noscript><pre>#!/bin/bash
 export JAVA_HOME=&quot;/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home&quot;
 export PATH=&quot;$JAVA_HOME/bin:$PATH&quot;
@@ -152,7 +152,7 @@ java -Xmx1024M -jar craftbukkit-1.15.2.jar -o true
 </pre></noscript>
 <script src="https://gist.github.com/pudquick/af8be79d6c1308fc430cac8d69757c43.js?file=server.sh"> </script>
 
-<p>In the proxy folder, I created a script (text) file named <code class="highlighter-rouge">proxy.sh</code> and this is the contents:</p>
+<p>In the proxy folder, I created a script (text) file named <code class="language-plaintext highlighter-rouge">proxy.sh</code> and this is the contents:</p>
 <noscript><pre>#!/bin/bash
 export JAVA_HOME=&quot;/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home&quot;
 export PATH=&quot;$JAVA_HOME/bin:$PATH&quot;
@@ -167,27 +167,27 @@ java -Xmx1024M -jar Geyser.jar
 
 <p>Now you will need to run both the server and the GeyserMC proxy. You’ll need to open Terminal app.</p>
 
-<p>To run the server, after launching Terminal, you need to change directory (<code class="highlighter-rouge">cd</code>) into the <code class="highlighter-rouge">server</code> folder.</p>
+<p>To run the server, after launching Terminal, you need to change directory (<code class="language-plaintext highlighter-rouge">cd</code>) into the <code class="language-plaintext highlighter-rouge">server</code> folder.</p>
 
-<p>If you don’t know how to do this, type <code class="highlighter-rouge">cd(space)</code> (that’s 2 letters, followed by the spacebar) and then drag the folder you made named <code class="highlighter-rouge">server</code> and drop it right onto the Terminal window.</p>
+<p>If you don’t know how to do this, type <code class="language-plaintext highlighter-rouge">cd(space)</code> (that’s 2 letters, followed by the spacebar) and then drag the folder you made named <code class="language-plaintext highlighter-rouge">server</code> and drop it right onto the Terminal window.</p>
 
 <p>It will probably fill it out to look something like:</p>
 
-<p><code class="highlighter-rouge">cd /Users/yourname/Desktop/server</code></p>
+<p><code class="language-plaintext highlighter-rouge">cd /Users/yourname/Desktop/server</code></p>
 
-<p>After it fills out the path to the <code class="highlighter-rouge">server</code> folder, simply hit Return on your keyboard and you’ll have successfully changed to the <code class="highlighter-rouge">server</code> directory.</p>
+<p>After it fills out the path to the <code class="language-plaintext highlighter-rouge">server</code> folder, simply hit Return on your keyboard and you’ll have successfully changed to the <code class="language-plaintext highlighter-rouge">server</code> directory.</p>
 
-<p>Now you’ll need to launch <code class="highlighter-rouge">server.sh</code>. If you downloaded the copy via the .zip file tip above, you’ll need to type a few commands first:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xattr -c -r server.sh
+<p>Now you’ll need to launch <code class="language-plaintext highlighter-rouge">server.sh</code>. If you downloaded the copy via the .zip file tip above, you’ll need to type a few commands first:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xattr -c -r server.sh
 chmod a+x server.sh
 </code></pre></div></div>
 
-<p>(These commands make it so your computer is ready to execute the <code class="highlighter-rouge">server.sh</code> script without complaining.)</p>
+<p>(These commands make it so your computer is ready to execute the <code class="language-plaintext highlighter-rouge">server.sh</code> script without complaining.)</p>
 
-<p>Once you’ve done that, the command to start up the server is: <code class="highlighter-rouge">./server.sh</code>  (type that in and press Return)</p>
+<p>Once you’ve done that, the command to start up the server is: <code class="language-plaintext highlighter-rouge">./server.sh</code>  (type that in and press Return)</p>
 
 <p>You will (hopefully) see a series of messages come across the screen, like:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>*** Error, this build is outdated ***
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>*** Error, this build is outdated ***
 *** Please download a new build as per instructions from https://www.spigotmc.org/go/outdated-spigot ***
 *** Server will start in 20 seconds ***
 Loading libraries, please wait...
@@ -198,13 +198,13 @@ Loading libraries, please wait...
 
 <h2 id="this-is-ok-this-is-expected">THIS IS OK, THIS IS EXPECTED!</h2>
 
-<p>Don’t worry about the outdated message if you see it. You should now see several new files inside the <code class="highlighter-rouge">server</code> folder, including a <code class="highlighter-rouge">eula.txt</code> file</p>
+<p>Don’t worry about the outdated message if you see it. You should now see several new files inside the <code class="language-plaintext highlighter-rouge">server</code> folder, including a <code class="language-plaintext highlighter-rouge">eula.txt</code> file</p>
 
-<p>Open/edit the <code class="highlighter-rouge">eula.txt</code> file and look for the line that says <code class="highlighter-rouge">eula=false</code> and change it to <code class="highlighter-rouge">eula=true</code> and save your changes.</p>
+<p>Open/edit the <code class="language-plaintext highlighter-rouge">eula.txt</code> file and look for the line that says <code class="language-plaintext highlighter-rouge">eula=false</code> and change it to <code class="language-plaintext highlighter-rouge">eula=true</code> and save your changes.</p>
 
 <p><small>[ <strong>Note:</strong> If you’re using TextEdit on your Mac to do this, make sure you don’t accidentally save this as Rich Text. You can tell if you’re doing this if you can see things like the toolbar for making text bold, itallic, etc. at the top of the file while you’re working on it. If you see those tools, make sure you go to “Make Plain Text” under the Format menu before you save your changes. ]</small></p>
 
-<p>Now that you’ve agreed to the EULA, assuming you have your Terminal still open, you can simply re-type / re-run the command: <code class="highlighter-rouge">./server.sh</code></p>
+<p>Now that you’ve agreed to the EULA, assuming you have your Terminal still open, you can simply re-type / re-run the command: <code class="language-plaintext highlighter-rouge">./server.sh</code></p>
 
 <p>Now you should see some of the same messages as before - but after 20 seconds, you should see an interface appear for your (very own) Minecraft server:</p>
 
@@ -216,34 +216,34 @@ Loading libraries, please wait...
 
 <h2 id="yay-your-server-is-up---now-for-part-2">YAY, your server is up - now for part 2:</h2>
 
-<p>Your Minecraft server is running at this point. It will have the IP address of the computer that you’re running it on (which you can find in System Preferences -&gt; Network -&gt; Wi-Fi or Ethernet) and be listening on the default port number of 25565. You can adjust this port later by editing the <code class="highlighter-rouge">server.properties</code> file it created, but for now, it’s easiest to just leave it alone.</p>
+<p>Your Minecraft server is running at this point. It will have the IP address of the computer that you’re running it on (which you can find in System Preferences -&gt; Network -&gt; Wi-Fi or Ethernet) and be listening on the default port number of 25565. You can adjust this port later by editing the <code class="language-plaintext highlighter-rouge">server.properties</code> file it created, but for now, it’s easiest to just leave it alone.</p>
 
-<p>Now let’s repeat what we did before, only now for the <code class="highlighter-rouge">proxy</code> folder:</p>
+<p>Now let’s repeat what we did before, only now for the <code class="language-plaintext highlighter-rouge">proxy</code> folder:</p>
 
 <p>You’ll want to make a new tab (cmd+T) or new window (cmd+N) in Terminal to run this second piece of software. Only one can be running per window/tab at a time.</p>
 
-<p>To run the proxy, after making the new tab/window, you need to change directory (<code class="highlighter-rouge">cd</code>) into the <code class="highlighter-rouge">proxy</code> folder.</p>
+<p>To run the proxy, after making the new tab/window, you need to change directory (<code class="language-plaintext highlighter-rouge">cd</code>) into the <code class="language-plaintext highlighter-rouge">proxy</code> folder.</p>
 
-<p>If you don’t know how to do this, type <code class="highlighter-rouge">cd(space)</code> (that’s 2 letters, followed by the spacebar) and then drag the folder you made named <code class="highlighter-rouge">proxy</code> and drop it right onto the Terminal window.</p>
+<p>If you don’t know how to do this, type <code class="language-plaintext highlighter-rouge">cd(space)</code> (that’s 2 letters, followed by the spacebar) and then drag the folder you made named <code class="language-plaintext highlighter-rouge">proxy</code> and drop it right onto the Terminal window.</p>
 
 <p>It will probably fill it out to look something like:</p>
 
-<p><code class="highlighter-rouge">cd /Users/yourname/Desktop/proxy</code></p>
+<p><code class="language-plaintext highlighter-rouge">cd /Users/yourname/Desktop/proxy</code></p>
 
-<p>After it fills out the path to the <code class="highlighter-rouge">proxy</code> folder, simply hit Return on your keyboard and you’ll have successfully changed to the <code class="highlighter-rouge">proxy</code> directory.</p>
+<p>After it fills out the path to the <code class="language-plaintext highlighter-rouge">proxy</code> folder, simply hit Return on your keyboard and you’ll have successfully changed to the <code class="language-plaintext highlighter-rouge">proxy</code> directory.</p>
 
-<p>Now you’ll need to launch <code class="highlighter-rouge">proxy.sh</code>. If you downloaded the copy via the .zip file tip above, you’ll need to type a few commands first:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xattr -c -r proxy.sh
+<p>Now you’ll need to launch <code class="language-plaintext highlighter-rouge">proxy.sh</code>. If you downloaded the copy via the .zip file tip above, you’ll need to type a few commands first:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xattr -c -r proxy.sh
 chmod a+x proxy.sh
 </code></pre></div></div>
 
-<p>(These commands make it so your computer is ready to execute the <code class="highlighter-rouge">proxy.sh</code> script without complaining.)</p>
+<p>(These commands make it so your computer is ready to execute the <code class="language-plaintext highlighter-rouge">proxy.sh</code> script without complaining.)</p>
 
-<p>Once you’ve done that, the command to start up the proxy is: <code class="highlighter-rouge">./proxy.sh</code>  (type that in and press Return)</p>
+<p>Once you’ve done that, the command to start up the proxy is: <code class="language-plaintext highlighter-rouge">./proxy.sh</code>  (type that in and press Return)</p>
 
 <p>You should see some text like this:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[19:47:52 INFO] ******************************************
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[19:47:52 INFO] ******************************************
 [19:47:52 INFO] 
 [19:47:52 INFO] Loading Geyser version 1.0-SNAPSHOT
 [19:47:52 INFO] 
@@ -313,17 +313,17 @@ chmod a+x proxy.sh
 
 <p>Now’s the part where it’s asking you to provide the “Minecraft Java” paid account credentials, which I mentioned at the beginning of this blog post. In order to act like a Minecraft Java client, the proxy you’re running on your computer has to obtain an authentication token for a full fleged Java computer client for connections. The username and password you provide is not sent via any third-party services, it only goes from your proxy software out to Minecraft themselves to get a token which it can then use with the Minecraft Java server.</p>
 
-<p>Authentication can be a little glitchy here. You’ll know you’ve done it right when the world starts filling in. If a second or third authentication window presents itself at that point, you can use the little <code class="highlighter-rouge">x</code> in the corner and just close it to dismiss it.</p>
+<p>Authentication can be a little glitchy here. You’ll know you’ve done it right when the world starts filling in. If a second or third authentication window presents itself at that point, you can use the little <code class="language-plaintext highlighter-rouge">x</code> in the corner and just close it to dismiss it.</p>
 
 <h2 id="what-next">What next?</h2>
 
-<p>I highly recommend “op”ing (promoting users to operator / admin) the users, so that they can use “slash” / typed commands via Bedrock or Java client connections. It’s hard to see it in the Java CraftBukkit server interface, but there’s a little typing area in the lower right of the UI where you can type <code class="highlighter-rouge">op usernamehere</code> for connected users and press return to give them admin rights. The server will remember this for each username, you’ll likely only have to do this once.</p>
+<p>I highly recommend “op”ing (promoting users to operator / admin) the users, so that they can use “slash” / typed commands via Bedrock or Java client connections. It’s hard to see it in the Java CraftBukkit server interface, but there’s a little typing area in the lower right of the UI where you can type <code class="language-plaintext highlighter-rouge">op usernamehere</code> for connected users and press return to give them admin rights. The server will remember this for each username, you’ll likely only have to do this once.</p>
 
 <p><img src="/images/2020-03-28-minecraft-harmony/op.png" alt="" /></p>
 
 <p>Java players will probably be familiar with these, but this will be a new experience for Bedrock players. The place to type the commands is the speech bubble at the top of the screen.</p>
 
-<p>The main command you’ll probably want is <code class="highlighter-rouge">/gamemode</code> with either <code class="highlighter-rouge">/gamemode survival</code> (standard Minecraft) or <code class="highlighter-rouge">/gamemode creative</code> (make whatever you want, Lego-style). By making every user an op, you’re giving them the ability to run any of the commands and change their own mode to suit their own play style.</p>
+<p>The main command you’ll probably want is <code class="language-plaintext highlighter-rouge">/gamemode</code> with either <code class="language-plaintext highlighter-rouge">/gamemode survival</code> (standard Minecraft) or <code class="language-plaintext highlighter-rouge">/gamemode creative</code> (make whatever you want, Lego-style). By making every user an op, you’re giving them the ability to run any of the commands and change their own mode to suit their own play style.</p>
 
 <h2 id="what-its-like">What it’s like:</h2>
 

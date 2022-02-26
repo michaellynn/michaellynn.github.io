@@ -8,11 +8,11 @@
     <meta name="description" content="Whereupon I go into way too much detail about OS X Preview.app signatures.">
     <meta name="author" content="Michael Lynn">
     <meta name="keywords" content="">
-    <link rel="canonical" href="http://michaellynn.github.io/2015/07/26/exploring-os-x-preview-signatures/">
+    <link rel="canonical" href="http://localhost:4000/2015/07/26/exploring-os-x-preview-signatures/">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for mikeymikey blogs here" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?202005251226" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?202202251754" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -26,7 +26,7 @@
     <meta property="og:type" content="article">
     <meta property="og:title" content="Exploring OS X Preview Signatures">
     <meta property="og:description" content="the vent for my mind">
-    <meta property="og:url" content="http://michaellynn.github.io/2015/07/26/exploring-os-x-preview-signatures/">
+    <meta property="og:url" content="http://localhost:4000/2015/07/26/exploring-os-x-preview-signatures/">
     <meta property="og:site_name" content="mikeymikey blogs here">
 
     <!-- Twitter Card -->
@@ -34,7 +34,7 @@
     
     <meta name="twitter:title" content="Exploring OS X Preview Signatures" />
     <meta name="twitter:description" content="Whereupon I go into way too much detail about OS X Preview.app signatures." />
-    <meta name="twitter:url" content="http://michaellynn.github.io/2015/07/26/exploring-os-x-preview-signatures/" />
+    <meta name="twitter:url" content="http://localhost:4000/2015/07/26/exploring-os-x-preview-signatures/" />
 
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -60,7 +60,7 @@
     <header class="site-header px2 px-responsive">
   <div class="mt2 wrap">
     <div class="measure">
-      <a href="http://michaellynn.github.io" class="site-title">mikeymikey blogs here</a>
+      <a href="http://localhost:4000" class="site-title">mikeymikey blogs here</a>
       <nav class="site-nav">
         <a href="/about/">About</a>
       </nav>
@@ -164,7 +164,7 @@ first_sig = signature_array[0]
 
 <p>But if you look at the first few characters in it, you might see something recognizable:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; str(first_sig)[:50]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; str(first_sig)[:50]
 'bplist00\xd4\x01\x02\x03\x04\x05\x06\x1e\x1fX$versionX$objectsY$archiverT$top'
 </code></pre></div></div>
 
@@ -174,7 +174,7 @@ first_sig = signature_array[0]
 </pre></noscript>
 <script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=03_snip.py"> </script>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; sig_plist
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; sig_plist
 {
     "$archiver" = NSKeyedArchiver;
     "$objects" =     (
@@ -192,7 +192,7 @@ sig_decoded = NSKeyedUnarchiver.unarchiveObjectWithData_(first_sig)
 </pre></noscript>
 <script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=04_snip.py"> </script>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Traceback (most recent call last):
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Traceback (most recent call last):
   File "&lt;stdin&gt;", line 1, in &lt;module&gt;
 objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decodeObjectForKey:]: cannot decode object of class (PVSignature)
 </code></pre></div></div>
@@ -205,7 +205,7 @@ objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decod
 
 <p>It can dump the signature of Objective-C objects defined within applications and frameworks (… hopefully PVSignature is within Preview.app itself!)</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class-dump -H /Applications/Preview.app/Contents/MacOS/Preview
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class-dump -H /Applications/Preview.app/Contents/MacOS/Preview
 </code></pre></div></div>
 
 <p>Yay, our output includes a “PVSignature.h” file.</p>
@@ -231,7 +231,7 @@ objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decod
 
 <p>When storing a single object, NSKeyedArchiver object stores the object attributes in the 2nd item of the “$objects” key:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; sig_plist['$objects'][1]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; sig_plist['$objects'][1]
 {
     "$class" = "&lt;CFKeyedArchiverUID 0x7fd3ada65f80 [0x7fff7951bed0]&gt;{value = 4}";
     data = "&lt;CFKeyedArchiverUID 0x7fd3ada98480 [0x7fff7951bed0]&gt;{value = 2}";
@@ -249,7 +249,7 @@ objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decod
 
 <p>Once we find it, we can use <em>Window -&gt; Show Psuedo Code of Procedure</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[...]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[...]
 rbx-&gt;_undecryptedData = [[r14 decodeObjectForKey:@"data"] retain];
 rbx-&gt;_uid = [r14 decodeInt32ForKey:@"uid"];
 rbx-&gt;_cannotDecrypt = 0x0;
@@ -301,7 +301,7 @@ sig_decoded = NSKeyedUnarchiver.unarchiveObjectWithData_(first_sig)
 
 <p>Yay, no errors! Let’s see what our object looks like:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; sig_decoded._uid
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; sig_decoded._uid
 1000
 
 &gt;&gt;&gt; sig_decoded._undecryptedData
@@ -310,7 +310,7 @@ sig_decoded = NSKeyedUnarchiver.unarchiveObjectWithData_(first_sig)
 
 <p>Cool. Let’s try the trick we did before for checking out if the raw data is anything we recognize:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; str(sig_decoded._undecryptedData)[:50]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; str(sig_decoded._undecryptedData)[:50]
 'E\x8e\x1d\xefT4\xc5\xab\x94\t@I\xdf\xd2BM\x0e\xbe\x7f\xf6\xc7\x9c{\x82F=mV\xac\xee\x1c\xda8\xe357|\xbb\xa9\xf9\xdc\xbd\x16\x1a+6\x16\x90Z\xfc'
 </code></pre></div></div>
 
@@ -332,7 +332,7 @@ binary_key = binascii.unhexlify(hex_key)
 </pre></noscript>
 <script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=07_snip.py"> </script>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; len(binary_key)
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; len(binary_key)
 16
 </code></pre></div></div>
 
@@ -346,18 +346,18 @@ binary_key = binascii.unhexlify(hex_key)
 
 <p>Looking at the pseudocode for it, it generates an instance of a new class “PVSignatureEncryptor”:</p>
 
-<p><code class="highlighter-rouge">rax = [PVSignatureEncryptor sharedInstance];</code></p>
+<p><code class="language-plaintext highlighter-rouge">rax = [PVSignatureEncryptor sharedInstance];</code></p>
 
 <p>Based on that, we find: <strong>-[PVSignatureEncryptor decryptedData:]:</strong></p>
 
 <p>This code has exactly what we’re looking for - information about how it decrypts the data:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if (CCCrypt(0x1, 0x0, 0x1, r12, 0x10, 0x0, var_68, r14, r15, rax, var_58) == 0x0) {
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if (CCCrypt(0x1, 0x0, 0x1, r12, 0x10, 0x0, var_68, r14, r15, rax, var_58) == 0x0) {
 </code></pre></div></div>
 
 <p>And in this instance, we want to look at not just the pseudocode, but also the assembly for a little more clarity:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   mov edi, 0x1    ; argument "op" for method imp___stubs__CCCrypt
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   mov edi, 0x1    ; argument "op" for method imp___stubs__CCCrypt
    mov esi, 0x0    ; argument "alg" for method imp___stubs__CCCrypt
    mov edx, 0x1    ; argument "options" for method imp___stubs__CCCrypt
    mov rcx, r12    ; argument "key" for method imp___stubs__CCCrypt
@@ -367,7 +367,7 @@ binary_key = binascii.unhexlify(hex_key)
 
 <p>Looking at the <a href="https://developer.apple.com/library/ios/documentation/System/Conceptual/ManPages_iPhoneOS/man3/CCCrypt.3cc.html">documentation for CCCrypt</a>, we get:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CCCrypt(CCOperation op, CCAlgorithm alg, CCOptions options,
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CCCrypt(CCOperation op, CCAlgorithm alg, CCOptions options,
          const void *key, size_t keyLength, const void *iv,
          const void *dataIn, size_t dataInLength, void *dataOut,
          size_t dataOutAvailable, size_t *dataOutMoved);
@@ -399,19 +399,19 @@ decrypted_data = cipher.decrypt(str(sig_decoded._undecryptedData))
 </pre></noscript>
 <script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=08_snip.py"> </script>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; decrypted_data[:50]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; decrypted_data[:50]
 "\xe4\x9c\x0f\xff\xd2\xee`\x0e\xbe8w8\xef\xaaT\xf1\x07\xeas\xe0Z\x96'6\xfc\x95\x9e\xa9\xce\xb5&gt;\xd4bplist00\xd4\x01\x02\x03\x04\x05\x06,-X"
 </code></pre></div></div>
 
 <p><em>Oh ho ho!</em> I see a <strong>bplist00</strong> …</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; decrypted_data.index('bplist00')
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; decrypted_data.index('bplist00')
 32
 </code></pre></div></div>
 
 <p>Looks like there’s a 32 byte prefix - looking back at the code of <strong>-[PVSignatureEncryptor decryptedData:]</strong>, we can see:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CC_SHA256(rbx, rsi, var_50);
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CC_SHA256(rbx, rsi, var_50);
 </code></pre></div></div>
 
 <p>SHA-256 is a 32-byte CRC. Likely the decrypted data is prefixed with its CRC hash so that the code can tell easily if it decrypted the signature correctly by validating the hash of the binary plist data matches the hash in the 32 byte prefix.</p>
@@ -420,7 +420,7 @@ decrypted_data = cipher.decrypt(str(sig_decoded._undecryptedData))
 
 <p>… But before we do that, the <em>“kCCOptionPKCS7Padding”</em> option that was mentioned earlier means that this data is padded out to a multiple of 16 bytes:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; len(decrypted_data)/16.
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; len(decrypted_data)/16.
 120.0
 </code></pre></div></div>
 
@@ -457,7 +457,7 @@ unpadded_decrypted_data = encoder.decode(decrypted_data)
 </pre></noscript>
 <script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=10_snip.py"> </script>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; decrypted_plist
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; decrypted_plist
 {
     "$archiver" = NSKeyedArchiver;
     "$objects" =     (
@@ -476,7 +476,7 @@ real_sig_decoded = NSKeyedUnarchiver.unarchiveObjectWithData_(nsdata_decrypted_p
 </pre></noscript>
 <script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=11_snip.py"> </script>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Traceback (most recent call last):
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Traceback (most recent call last):
   File "&lt;stdin&gt;", line 1, in &lt;module&gt;
 objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decodeObjectForKey:]: cannot decode object of class (PVSignaturePayload)
 </code></pre></div></div>
@@ -485,7 +485,7 @@ objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decod
 
 <p>Again, let’s look at what data we have, and then compare that against the contents of “PVSignaturePayload.h” from our earlier class-dump run:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; decrypted_plist['$objects'][1]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; decrypted_plist['$objects'][1]
 {
     "$class" = "&lt;CFKeyedArchiverUID 0x7fba02522bd0 [0x7fff7951bed0]&gt;{value = 7}";
     baselineHeight = "0.1176470592617989";
@@ -555,7 +555,7 @@ real_sig_decoded = NSKeyedUnarchiver.unarchiveObjectWithData_(nsdata_decrypted_p
 </pre></noscript>
 <script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=13_snip.py"> </script>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; real_sig_decoded.baselineHeight
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; real_sig_decoded.baselineHeight
 0.11764705926179886
 &gt;&gt;&gt; real_sig_decoded.path
 Path &lt;0x7fba0251bb90&gt;
@@ -587,7 +587,7 @@ sig_path_shifted.transformUsingAffineTransform_(shift_path)
 </pre></noscript>
 <script src="https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=14_snip.py"> </script>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; sig_path_shifted
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; sig_path_shifted
 Path &lt;0x7fba04ef0000&gt;
   Bounds: {{0.10000000000000142, 0.10000000000000001}, {271.91783064182891, 67}}
   Control point bounds: {{-0.64194097622566915, -1.8758532047271763}, {274.53815460205078, 68.975853204727173}}

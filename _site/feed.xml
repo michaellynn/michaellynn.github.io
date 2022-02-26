@@ -3,8 +3,166 @@
   <channel>
     <title>mikeymikey blogs here</title>
     <description>the vent for my mind</description>
-    <link>http://michaellynn.github.io/</link>
-    <atom:link href="http://michaellynn.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
+    
+      <item>
+        <title>The Internet is a Series of Cables</title>
+        <description>&lt;p&gt;I just had to write this one up, because everyone deserves to know stupid tricks that work.&lt;/p&gt;
+
+&lt;p&gt;This is also a story of my reason for needing to do something this stupid. If you just want to get to the stupid trick part, you can &lt;a href=&quot;#stupidtrick&quot;&gt;skip ahead&lt;/a&gt;. If you want to feel a little of my pain, then read on.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;If you don’t follow me on &lt;a href=&quot;https://twitter.com/mikeymikey&quot;&gt;twitter&lt;/a&gt;, you probably didn’t see that last fall we were fortunate enough to move into a newly built home. And it’s just lovely, really it is.&lt;/p&gt;
+
+&lt;p&gt;And like anything worth doing well, it took time.&lt;/p&gt;
+
+&lt;p&gt;When we started well over a year ago in our goal of finding/making our new home, I had three basic needs:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;The mortgage needs to be reasonable&lt;/li&gt;
+  &lt;li&gt;I need a dedicated office in the house&lt;/li&gt;
+  &lt;li&gt;The house needs to support high speed internet (by which I mean cable or fiber, not DSL)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;That last bulletpoint was actually critical in passing on a few locations we were looking at. Just about every single address will always pass for DSL (as long as you’re not out in the total middle of nowhere), but having worked for a DSL reseller in the past I was all too familiar with the wide variations in speed and how absolutely crucial it was to be &lt;em&gt;very&lt;/em&gt; close to the nearest central office for anything remotely speedy (Dearest reader: We were not planning to live close to &lt;em&gt;any&lt;/em&gt; CO).&lt;/p&gt;
+
+&lt;p&gt;As it turns out, checking for high speed internet service where a house doesn’t actually exist yet is somewhat non-trivial. &lt;strong&gt;I thought&lt;/strong&gt; it was good enough to check whether service was available at every other address on the street.&lt;/p&gt;
+
+&lt;p&gt;… This was, in fact, not enough.&lt;/p&gt;
+
+&lt;p&gt;We had already almost completed build, were waiting on some last few things, and were rapidly approaching obtaining the last inspections for occupancy when I decided “Looks like the perfect time to start getting that cable internet connected!”&lt;/p&gt;
+
+&lt;p&gt;I knew immediately I was headed for problems when my freshly minted (~ 1-2 months) address didn’t register as an address for even a basic service check.&lt;/p&gt;
+
+&lt;p&gt;So I called them up.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Them:&lt;/strong&gt; “Oh! It looks like your address isn’t in the system yet. We’ll need to get you scheduled for a service availability check for your site location.”&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Me:&lt;/strong&gt; “Sounds great, let’s do that!” So I provide all my contact information - surely I will learn that this was just a blip on my journey to the information super highway.&lt;/p&gt;
+
+&lt;p&gt;Time passes. 1 week. 2 weeks. Nothing.&lt;/p&gt;
+
+&lt;p&gt;So I call back to check on how that’s going.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Them:&lt;/strong&gt; “Oh! It looks like the check was done. You should have been told that service might be available at your location, but they’d have to do an assessment to see what work would be required.”&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Me:&lt;/strong&gt; “Oh. Ok. Let’s do that.” I am informed this may take several more weeks. I express my concern that I didn’t hear anything back last time and I’m doubly assured that this time I will surely get a call back.&lt;/p&gt;
+
+&lt;p&gt;… History repeats itself. I call back, again irritated at having heard nothing.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Them:&lt;/strong&gt; “Oh! Hmm. It looks like this was done. You didn’t hear anything? Let me see if I can get the results.”&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Them:&lt;/strong&gt; “Ah. It says here that they will have to run a new buried service line to your address.”&lt;/p&gt;
+
+&lt;p&gt;You see, as it turns out, even though the entire neighborhood had service, this cable company had decided that it was a brilliant idea to not actually provide cabling to all lots in the area when service was initially introduced but to instead only do it for locations which at the time had existing houses.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Me:&lt;/strong&gt; “Oh, that should be fine. We had conduit put in to the house from the propery edge, so just run it through that.”&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Them:&lt;/strong&gt; “Well, it looks like the place where service is located at is actually half way down the street from you. They would need to run a cable from that location to your conduit. &lt;strong&gt;It looks like they estimate it could cost as much as $14,000&lt;/strong&gt;.”&lt;/p&gt;
+
+&lt;p&gt;I now understood why they hadn’t called me back.&lt;/p&gt;
+
+&lt;p&gt;They had a shut-the-fuck-up-and-go-away back of the napkin estimate and they expected I’d balk when hearing it. Either that or they were still just very bad at customer service and had once again failed to get back to me.&lt;/p&gt;
+
+&lt;p&gt;But what the cable company didn’t know was that the house construction was under budget.&lt;/p&gt;
+
+&lt;p&gt;We had the money to do this.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Me:&lt;/strong&gt; “Ok! Let’s do it!”&lt;/p&gt;
+
+&lt;p&gt;… There was momentary silence on their end. I don’t think they get this response very often. I think they were a bit lost on what happens next.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Them:&lt;/strong&gt; “Ohhh. Uh. Ok. We’ll need your contact information to get an initial survey scheduled with actual pricing for the estimated work involved.”&lt;/p&gt;
+
+&lt;p&gt;So I gave them my contact information. For the third time. I expected to never hear from them again. I was mostly right.&lt;/p&gt;
+
+&lt;p&gt;I heard from someone, but it wasn’t the cable company. It was a third-party escrow company who was contracted to hold onto the funds on my behalf for the initial survey and the actual work to be done.&lt;/p&gt;
+
+&lt;p&gt;This person reached out to me themselves. They were informative. They were easy to get in contact with. They were responsive! All of the things the cable company had not been so far. It was a pleasure talking to them.&lt;/p&gt;
+
+&lt;p&gt;Working with them, an initial assessment was done by someone who showed up and took photos of the street and portions of my property. After they drew up the plans of what would need to be done and those were sent back, a grand total closer to about $11,000 was finally settled on. I went through a series of electronic documents, paid the money to escrow, and then got the saddest news.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Nice person:&lt;/strong&gt; “I just want to let you know, this could take up to 6 months.”&lt;/p&gt;
+
+&lt;p&gt;6 months ?!?!!? To go like 200 feet to my conduit !?!?&lt;/p&gt;
+
+&lt;p&gt;Meanwhile, we were already in the process of selling the old house as we’d just passed final occupancy inspection for the new one.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p id=&quot;stupidtrick&quot;&gt;So I&apos;m in a bind. I need internet - for work, for the kids, for family harmony.&lt;/p&gt;
+
+&lt;p&gt;But it could be 6 months before it gets here? What do I do??&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Idea:&lt;/strong&gt; Maybe if I covered a neighbor’s bill, I could use theirs? Turns out - yes! One of them was willing!&lt;/p&gt;
+
+&lt;p&gt;Now - we wanted to live where we weren’t directly in our neighbor’s business. We have a couple acres. We’ve got several hundred feet between ourselves and the remote beginnings of anyone next door.&lt;/p&gt;
+
+&lt;p&gt;… so maybe run a cable?&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Problem:&lt;/strong&gt; The ethernet standard, if you’re not familiar with it, promises you 100 meters before you’ll need a repeater. In feet, that’s just shy of 330 feet. And my neighbor was easily 2x that. A repeater isn’t going to cut it. I’d need power half way down the line - maybe twice. And outdoor rated repeaters. More connections, more problems - sounds like a recipe for disaster.&lt;/p&gt;
+
+&lt;p&gt;How about coaxial? Have you heard of &lt;a href=&quot;https://en.wikipedia.org/wiki/Multimedia_over_Coax_Alliance&quot;&gt;MoCA&lt;/a&gt;? It sounds like it would be perfect. But no, it generally has the same distance limitations of ethernet (at least for the consumer gear you’re likely to get your hands on).&lt;/p&gt;
+
+&lt;p&gt;And fiber wasn’t the best of ideas either. Besides being expensive and hard to work with, I had concerns about it surviving outdoors for month on end above ground in a forest (I sure as heck wasn’t going to bury it the whole way).&lt;/p&gt;
+
+&lt;p&gt;… so what about wireless point to point?&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;New problem:&lt;/strong&gt; This is what the area around our new house looks like:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2022-02-25-the-internet-is-a-series-of-cables/my_view.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Line of sight wasn’t really doable.&lt;/p&gt;
+
+&lt;p&gt;So what to do?&lt;/p&gt;
+
+&lt;p&gt;.. as it turns out, DSL &lt;em&gt;was&lt;/em&gt; actually the solution here. But not in the way you’d expect.&lt;/p&gt;
+
+&lt;p&gt;You can, in fact, become your own DSL provider(ish) with a &lt;a href=&quot;https://www.amazon.com/Tupavco-Ethernet-Extender-Kit-Repeater-VDSL/dp/B01BOD8C9W/&quot;&gt;pair of DSL transceivers&lt;/a&gt; like these!&lt;/p&gt;
+
+&lt;center&gt;&lt;img src=&quot;/images/2022-02-25-the-internet-is-a-series-of-cables/magicbox.jpg&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;They effectively act like a patch cable, passing traffic from one end to the other at up to 100 Mbps and up to 7000 feet (though not at that speed at full length). All you need is Cat5 or better inbetween and power at both ends. Ordered a 1000 ft spool of it and we’re good to go. Perfect!&lt;/p&gt;
+
+&lt;p&gt;So I can wire up one end of this in my house, connected to my home router and APs - but what about the other end?&lt;/p&gt;
+
+&lt;p&gt;… How do I get something easily connected to a neighbor’s internet but without inconveniencing them when they’ve already been so generous?&lt;/p&gt;
+
+&lt;p&gt;The answer was in using a piece of equipment that I’d long been a fan of, pre-pandemic, when traveling - a &lt;a href=&quot;https://www.gl-inet.com/products/gl-mt1300/&quot;&gt;GL.iNet travel router&lt;/a&gt;:&lt;/p&gt;
+
+&lt;center&gt;&lt;img src=&quot;/images/2022-02-25-the-internet-is-a-series-of-cables/router.jpg&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;These things are my swiss army knife when it comes to solving networking challenges. One of the modes you can put it into is as an ethernet extender for an existing SSID. When power cycled, it’ll come back up and try to re-associate.&lt;/p&gt;
+
+&lt;p&gt;So all I needed was to connect one of these, configured to join my neighbor’s guest wifi network (to keep his household traffic separate from mine) to one of the transceivers with a little power - and all I’ll need to do is get it close enough to his house for a strong enough signal. No wiring required on his end aside from the power connection.&lt;/p&gt;
+
+&lt;p&gt;So I grabbed a &lt;a href=&quot;https://www.amazon.com/SOCKiTBOX-Weatherproof-Connection-Electrical-Transformers/dp/B00274SLK8/&quot;&gt;fantastic waterproof outdoor box&lt;/a&gt; (seriously, I need to buy a few more of these), combined it all together - and this wonderful little thing is what provided my household internet connectivity from October until February - 5 months! - with only a single maintenance instance required the entire time (had to power cycle it after a neighborhood power outage brought up the network in the wrong order):&lt;/p&gt;
+
+&lt;center&gt;&lt;img src=&quot;/images/2022-02-25-the-internet-is-a-series-of-cables/internals.jpg&quot; /&gt;&lt;/center&gt;
+
+&lt;center&gt;&lt;img src=&quot;/images/2022-02-25-the-internet-is-a-series-of-cables/installed.jpg&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;(The white cable is power running into the box, the black cable is my outdoor rated Cat5 - those are the only connections made!)&lt;/p&gt;
+
+&lt;p&gt;The connection wasn’t amazing - but it wasn’t bad either! (60Mbit down, 12 up)&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;The story does have a happy ending.&lt;/p&gt;
+
+&lt;p&gt;I now have a very happy internet connection:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2022-02-25-the-internet-is-a-series-of-cables/zoomzoom.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I hope this gives someone out there some new mental tools and ideas to try against this unforgiving world - The Packets Must Flow!&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;- mike&lt;/em&gt;&lt;/p&gt;
+</description>
+        <pubDate>Fri, 25 Feb 2022 08:00:00 -0800</pubDate>
+        <link>http://localhost:4000/2022/02/25/the-internet-is-a-series-of-cables/</link>
+        <guid isPermaLink="true">http://localhost:4000/2022/02/25/the-internet-is-a-series-of-cables/</guid>
+      </item>
     
       <item>
         <title>Minecraft Harmony Revisited</title>
@@ -22,7 +180,7 @@ java -Xmx1024M -jar craftbukkit-1.15.2.jar -o true
 &lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/pudquick/af8be79d6c1308fc430cac8d69757c43.js?file=server.sh&quot;&gt; &lt;/script&gt;
 
-&lt;p&gt;See that &lt;code class=&quot;highlighter-rouge&quot;&gt;-o true&lt;/code&gt; part?&lt;/p&gt;
+&lt;p&gt;See that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-o true&lt;/code&gt; part?&lt;/p&gt;
 
 &lt;p&gt;That means: Force online mode (aka require connecting users have a valid Minecraft Java account)&lt;/p&gt;
 
@@ -36,17 +194,17 @@ java -Xmx1024M -jar craftbukkit-1.15.2.jar -o true
 
 &lt;h2 id=&quot;how-to-fix-it&quot;&gt;How to fix it:&lt;/h2&gt;
 
-&lt;p&gt;Edit your &lt;code class=&quot;highlighter-rouge&quot;&gt;server.sh&lt;/code&gt; and remove the &lt;code class=&quot;highlighter-rouge&quot;&gt;-o true&lt;/code&gt; part.&lt;/p&gt;
+&lt;p&gt;Edit your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;server.sh&lt;/code&gt; and remove the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-o true&lt;/code&gt; part.&lt;/p&gt;
 
 &lt;p&gt;That line should now look something like:&lt;/p&gt;
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;java &lt;span class=&quot;nt&quot;&gt;-Xmx1024M&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-jar&lt;/span&gt; craftbukkit-1.15.2.jar
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Then, after running your server the first time you should have a &lt;code class=&quot;highlighter-rouge&quot;&gt;server.properties&lt;/code&gt; file in the same directory as the server jar.&lt;/p&gt;
+&lt;p&gt;Then, after running your server the first time you should have a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;server.properties&lt;/code&gt; file in the same directory as the server jar.&lt;/p&gt;
 
-&lt;p&gt;Make sure you’ve stopped your server, then edit the &lt;code class=&quot;highlighter-rouge&quot;&gt;online-mode&lt;/code&gt; line in the file to say:&lt;/p&gt;
+&lt;p&gt;Make sure you’ve stopped your server, then edit the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;online-mode&lt;/code&gt; line in the file to say:&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;online-mode=false&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;online-mode=false&lt;/code&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;the-effect-of-this-change&quot;&gt;The effect of this change:&lt;/h2&gt;
 
@@ -67,18 +225,18 @@ java -Xmx1024M -jar craftbukkit-1.15.2.jar -o true
 
 &lt;p&gt;Remember this part?&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;*** Error, this build is outdated ***
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;*** Error, this build is outdated ***
 *** Please download a new build as per instructions from https://www.spigotmc.org/go/outdated-spigot ***
 *** Server will start in 20 seconds ***
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;You can fix that by adding a new argument to the &lt;code class=&quot;highlighter-rouge&quot;&gt;server.sh&lt;/code&gt; script so that it starts up instantly:&lt;/p&gt;
+&lt;p&gt;You can fix that by adding a new argument to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;server.sh&lt;/code&gt; script so that it starts up instantly:&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-DIReallyKnowWhatIAmDoingISwear=true&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-DIReallyKnowWhatIAmDoingISwear=true&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;So now your combined line with both of these changes looks something like:&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;java -Xmx1024M -DIReallyKnowWhatIAmDoingISwear=true -jar craftbukkit-1.15.2.jar&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;java -Xmx1024M -DIReallyKnowWhatIAmDoingISwear=true -jar craftbukkit-1.15.2.jar&lt;/code&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;changes-since-the-last-blog-post&quot;&gt;Changes since the last blog post:&lt;/h2&gt;
 
@@ -93,8 +251,8 @@ java -Xmx1024M -jar craftbukkit-1.15.2.jar -o true
 &lt;p&gt;&lt;em&gt;- mike&lt;/em&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 25 May 2020 08:00:00 -0700</pubDate>
-        <link>http://michaellynn.github.io/2020/05/25/minecraft-harmony-part-2/</link>
-        <guid isPermaLink="true">http://michaellynn.github.io/2020/05/25/minecraft-harmony-part-2/</guid>
+        <link>http://localhost:4000/2020/05/25/minecraft-harmony-part-2/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/05/25/minecraft-harmony-part-2/</guid>
       </item>
     
       <item>
@@ -139,16 +297,16 @@ java -Xmx1024M -jar craftbukkit-1.15.2.jar -o true
 &lt;h2 id=&quot;how-to-set-it-up&quot;&gt;How to set it up:&lt;/h2&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Install the AdoptOpenJDK pkg file you downloaded. This will install OpenJDK to a subdirectory in &lt;code class=&quot;highlighter-rouge&quot;&gt;/Library/Java/JavaVirtualMachines&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;Note the name of this subfolder, it should be something like: &lt;code class=&quot;highlighter-rouge&quot;&gt;adoptopenjdk-8.jdk&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;Make a folder for the CraftBukkit server .jar file you downloaded and put the .jar inside that folder (I called my folder &lt;code class=&quot;highlighter-rouge&quot;&gt;server&lt;/code&gt;)&lt;/li&gt;
-  &lt;li&gt;Make a (different) folder for the GeyserMC .jar file you downloaded and put the .jar inside that folder (I called my folder &lt;code class=&quot;highlighter-rouge&quot;&gt;proxy&lt;/code&gt;)&lt;/li&gt;
+  &lt;li&gt;Install the AdoptOpenJDK pkg file you downloaded. This will install OpenJDK to a subdirectory in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/Library/Java/JavaVirtualMachines&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Note the name of this subfolder, it should be something like: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;adoptopenjdk-8.jdk&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Make a folder for the CraftBukkit server .jar file you downloaded and put the .jar inside that folder (I called my folder &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;server&lt;/code&gt;)&lt;/li&gt;
+  &lt;li&gt;Make a (different) folder for the GeyserMC .jar file you downloaded and put the .jar inside that folder (I called my folder &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;proxy&lt;/code&gt;)&lt;/li&gt;
   &lt;li&gt;I don’t know if separate folders are required, it’s just that each of these files will generate many other files when they run - so I just kept them separate.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;Now you just need some helper scripts to make it easy to turn on the Minecraft server and the GeyserMC proxy.&lt;/p&gt;
 
-&lt;p&gt;In the server folder, I created a script (text) file named &lt;code class=&quot;highlighter-rouge&quot;&gt;server.sh&lt;/code&gt; and this is the contents:&lt;/p&gt;
+&lt;p&gt;In the server folder, I created a script (text) file named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;server.sh&lt;/code&gt; and this is the contents:&lt;/p&gt;
 &lt;noscript&gt;&lt;pre&gt;#!/bin/bash
 export JAVA_HOME=&amp;quot;/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home&amp;quot;
 export PATH=&amp;quot;$JAVA_HOME/bin:$PATH&amp;quot;
@@ -157,7 +315,7 @@ java -Xmx1024M -jar craftbukkit-1.15.2.jar -o true
 &lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/pudquick/af8be79d6c1308fc430cac8d69757c43.js?file=server.sh&quot;&gt; &lt;/script&gt;
 
-&lt;p&gt;In the proxy folder, I created a script (text) file named &lt;code class=&quot;highlighter-rouge&quot;&gt;proxy.sh&lt;/code&gt; and this is the contents:&lt;/p&gt;
+&lt;p&gt;In the proxy folder, I created a script (text) file named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;proxy.sh&lt;/code&gt; and this is the contents:&lt;/p&gt;
 &lt;noscript&gt;&lt;pre&gt;#!/bin/bash
 export JAVA_HOME=&amp;quot;/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home&amp;quot;
 export PATH=&amp;quot;$JAVA_HOME/bin:$PATH&amp;quot;
@@ -172,27 +330,27 @@ java -Xmx1024M -jar Geyser.jar
 
 &lt;p&gt;Now you will need to run both the server and the GeyserMC proxy. You’ll need to open Terminal app.&lt;/p&gt;
 
-&lt;p&gt;To run the server, after launching Terminal, you need to change directory (&lt;code class=&quot;highlighter-rouge&quot;&gt;cd&lt;/code&gt;) into the &lt;code class=&quot;highlighter-rouge&quot;&gt;server&lt;/code&gt; folder.&lt;/p&gt;
+&lt;p&gt;To run the server, after launching Terminal, you need to change directory (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cd&lt;/code&gt;) into the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;server&lt;/code&gt; folder.&lt;/p&gt;
 
-&lt;p&gt;If you don’t know how to do this, type &lt;code class=&quot;highlighter-rouge&quot;&gt;cd(space)&lt;/code&gt; (that’s 2 letters, followed by the spacebar) and then drag the folder you made named &lt;code class=&quot;highlighter-rouge&quot;&gt;server&lt;/code&gt; and drop it right onto the Terminal window.&lt;/p&gt;
+&lt;p&gt;If you don’t know how to do this, type &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cd(space)&lt;/code&gt; (that’s 2 letters, followed by the spacebar) and then drag the folder you made named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;server&lt;/code&gt; and drop it right onto the Terminal window.&lt;/p&gt;
 
 &lt;p&gt;It will probably fill it out to look something like:&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cd /Users/yourname/Desktop/server&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cd /Users/yourname/Desktop/server&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;After it fills out the path to the &lt;code class=&quot;highlighter-rouge&quot;&gt;server&lt;/code&gt; folder, simply hit Return on your keyboard and you’ll have successfully changed to the &lt;code class=&quot;highlighter-rouge&quot;&gt;server&lt;/code&gt; directory.&lt;/p&gt;
+&lt;p&gt;After it fills out the path to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;server&lt;/code&gt; folder, simply hit Return on your keyboard and you’ll have successfully changed to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;server&lt;/code&gt; directory.&lt;/p&gt;
 
-&lt;p&gt;Now you’ll need to launch &lt;code class=&quot;highlighter-rouge&quot;&gt;server.sh&lt;/code&gt;. If you downloaded the copy via the .zip file tip above, you’ll need to type a few commands first:&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xattr -c -r server.sh
+&lt;p&gt;Now you’ll need to launch &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;server.sh&lt;/code&gt;. If you downloaded the copy via the .zip file tip above, you’ll need to type a few commands first:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xattr -c -r server.sh
 chmod a+x server.sh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;(These commands make it so your computer is ready to execute the &lt;code class=&quot;highlighter-rouge&quot;&gt;server.sh&lt;/code&gt; script without complaining.)&lt;/p&gt;
+&lt;p&gt;(These commands make it so your computer is ready to execute the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;server.sh&lt;/code&gt; script without complaining.)&lt;/p&gt;
 
-&lt;p&gt;Once you’ve done that, the command to start up the server is: &lt;code class=&quot;highlighter-rouge&quot;&gt;./server.sh&lt;/code&gt;  (type that in and press Return)&lt;/p&gt;
+&lt;p&gt;Once you’ve done that, the command to start up the server is: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;./server.sh&lt;/code&gt;  (type that in and press Return)&lt;/p&gt;
 
 &lt;p&gt;You will (hopefully) see a series of messages come across the screen, like:&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;*** Error, this build is outdated ***
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;*** Error, this build is outdated ***
 *** Please download a new build as per instructions from https://www.spigotmc.org/go/outdated-spigot ***
 *** Server will start in 20 seconds ***
 Loading libraries, please wait...
@@ -203,13 +361,13 @@ Loading libraries, please wait...
 
 &lt;h2 id=&quot;this-is-ok-this-is-expected&quot;&gt;THIS IS OK, THIS IS EXPECTED!&lt;/h2&gt;
 
-&lt;p&gt;Don’t worry about the outdated message if you see it. You should now see several new files inside the &lt;code class=&quot;highlighter-rouge&quot;&gt;server&lt;/code&gt; folder, including a &lt;code class=&quot;highlighter-rouge&quot;&gt;eula.txt&lt;/code&gt; file&lt;/p&gt;
+&lt;p&gt;Don’t worry about the outdated message if you see it. You should now see several new files inside the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;server&lt;/code&gt; folder, including a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;eula.txt&lt;/code&gt; file&lt;/p&gt;
 
-&lt;p&gt;Open/edit the &lt;code class=&quot;highlighter-rouge&quot;&gt;eula.txt&lt;/code&gt; file and look for the line that says &lt;code class=&quot;highlighter-rouge&quot;&gt;eula=false&lt;/code&gt; and change it to &lt;code class=&quot;highlighter-rouge&quot;&gt;eula=true&lt;/code&gt; and save your changes.&lt;/p&gt;
+&lt;p&gt;Open/edit the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;eula.txt&lt;/code&gt; file and look for the line that says &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;eula=false&lt;/code&gt; and change it to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;eula=true&lt;/code&gt; and save your changes.&lt;/p&gt;
 
 &lt;p&gt;&lt;small&gt;[ &lt;strong&gt;Note:&lt;/strong&gt; If you’re using TextEdit on your Mac to do this, make sure you don’t accidentally save this as Rich Text. You can tell if you’re doing this if you can see things like the toolbar for making text bold, itallic, etc. at the top of the file while you’re working on it. If you see those tools, make sure you go to “Make Plain Text” under the Format menu before you save your changes. ]&lt;/small&gt;&lt;/p&gt;
 
-&lt;p&gt;Now that you’ve agreed to the EULA, assuming you have your Terminal still open, you can simply re-type / re-run the command: &lt;code class=&quot;highlighter-rouge&quot;&gt;./server.sh&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Now that you’ve agreed to the EULA, assuming you have your Terminal still open, you can simply re-type / re-run the command: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;./server.sh&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;Now you should see some of the same messages as before - but after 20 seconds, you should see an interface appear for your (very own) Minecraft server:&lt;/p&gt;
 
@@ -221,34 +379,34 @@ Loading libraries, please wait...
 
 &lt;h2 id=&quot;yay-your-server-is-up---now-for-part-2&quot;&gt;YAY, your server is up - now for part 2:&lt;/h2&gt;
 
-&lt;p&gt;Your Minecraft server is running at this point. It will have the IP address of the computer that you’re running it on (which you can find in System Preferences -&amp;gt; Network -&amp;gt; Wi-Fi or Ethernet) and be listening on the default port number of 25565. You can adjust this port later by editing the &lt;code class=&quot;highlighter-rouge&quot;&gt;server.properties&lt;/code&gt; file it created, but for now, it’s easiest to just leave it alone.&lt;/p&gt;
+&lt;p&gt;Your Minecraft server is running at this point. It will have the IP address of the computer that you’re running it on (which you can find in System Preferences -&amp;gt; Network -&amp;gt; Wi-Fi or Ethernet) and be listening on the default port number of 25565. You can adjust this port later by editing the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;server.properties&lt;/code&gt; file it created, but for now, it’s easiest to just leave it alone.&lt;/p&gt;
 
-&lt;p&gt;Now let’s repeat what we did before, only now for the &lt;code class=&quot;highlighter-rouge&quot;&gt;proxy&lt;/code&gt; folder:&lt;/p&gt;
+&lt;p&gt;Now let’s repeat what we did before, only now for the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;proxy&lt;/code&gt; folder:&lt;/p&gt;
 
 &lt;p&gt;You’ll want to make a new tab (cmd+T) or new window (cmd+N) in Terminal to run this second piece of software. Only one can be running per window/tab at a time.&lt;/p&gt;
 
-&lt;p&gt;To run the proxy, after making the new tab/window, you need to change directory (&lt;code class=&quot;highlighter-rouge&quot;&gt;cd&lt;/code&gt;) into the &lt;code class=&quot;highlighter-rouge&quot;&gt;proxy&lt;/code&gt; folder.&lt;/p&gt;
+&lt;p&gt;To run the proxy, after making the new tab/window, you need to change directory (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cd&lt;/code&gt;) into the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;proxy&lt;/code&gt; folder.&lt;/p&gt;
 
-&lt;p&gt;If you don’t know how to do this, type &lt;code class=&quot;highlighter-rouge&quot;&gt;cd(space)&lt;/code&gt; (that’s 2 letters, followed by the spacebar) and then drag the folder you made named &lt;code class=&quot;highlighter-rouge&quot;&gt;proxy&lt;/code&gt; and drop it right onto the Terminal window.&lt;/p&gt;
+&lt;p&gt;If you don’t know how to do this, type &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cd(space)&lt;/code&gt; (that’s 2 letters, followed by the spacebar) and then drag the folder you made named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;proxy&lt;/code&gt; and drop it right onto the Terminal window.&lt;/p&gt;
 
 &lt;p&gt;It will probably fill it out to look something like:&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cd /Users/yourname/Desktop/proxy&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cd /Users/yourname/Desktop/proxy&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;After it fills out the path to the &lt;code class=&quot;highlighter-rouge&quot;&gt;proxy&lt;/code&gt; folder, simply hit Return on your keyboard and you’ll have successfully changed to the &lt;code class=&quot;highlighter-rouge&quot;&gt;proxy&lt;/code&gt; directory.&lt;/p&gt;
+&lt;p&gt;After it fills out the path to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;proxy&lt;/code&gt; folder, simply hit Return on your keyboard and you’ll have successfully changed to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;proxy&lt;/code&gt; directory.&lt;/p&gt;
 
-&lt;p&gt;Now you’ll need to launch &lt;code class=&quot;highlighter-rouge&quot;&gt;proxy.sh&lt;/code&gt;. If you downloaded the copy via the .zip file tip above, you’ll need to type a few commands first:&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xattr -c -r proxy.sh
+&lt;p&gt;Now you’ll need to launch &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;proxy.sh&lt;/code&gt;. If you downloaded the copy via the .zip file tip above, you’ll need to type a few commands first:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xattr -c -r proxy.sh
 chmod a+x proxy.sh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;(These commands make it so your computer is ready to execute the &lt;code class=&quot;highlighter-rouge&quot;&gt;proxy.sh&lt;/code&gt; script without complaining.)&lt;/p&gt;
+&lt;p&gt;(These commands make it so your computer is ready to execute the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;proxy.sh&lt;/code&gt; script without complaining.)&lt;/p&gt;
 
-&lt;p&gt;Once you’ve done that, the command to start up the proxy is: &lt;code class=&quot;highlighter-rouge&quot;&gt;./proxy.sh&lt;/code&gt;  (type that in and press Return)&lt;/p&gt;
+&lt;p&gt;Once you’ve done that, the command to start up the proxy is: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;./proxy.sh&lt;/code&gt;  (type that in and press Return)&lt;/p&gt;
 
 &lt;p&gt;You should see some text like this:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[19:47:52 INFO] ******************************************
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[19:47:52 INFO] ******************************************
 [19:47:52 INFO] 
 [19:47:52 INFO] Loading Geyser version 1.0-SNAPSHOT
 [19:47:52 INFO] 
@@ -318,17 +476,17 @@ chmod a+x proxy.sh
 
 &lt;p&gt;Now’s the part where it’s asking you to provide the “Minecraft Java” paid account credentials, which I mentioned at the beginning of this blog post. In order to act like a Minecraft Java client, the proxy you’re running on your computer has to obtain an authentication token for a full fleged Java computer client for connections. The username and password you provide is not sent via any third-party services, it only goes from your proxy software out to Minecraft themselves to get a token which it can then use with the Minecraft Java server.&lt;/p&gt;
 
-&lt;p&gt;Authentication can be a little glitchy here. You’ll know you’ve done it right when the world starts filling in. If a second or third authentication window presents itself at that point, you can use the little &lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt; in the corner and just close it to dismiss it.&lt;/p&gt;
+&lt;p&gt;Authentication can be a little glitchy here. You’ll know you’ve done it right when the world starts filling in. If a second or third authentication window presents itself at that point, you can use the little &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x&lt;/code&gt; in the corner and just close it to dismiss it.&lt;/p&gt;
 
 &lt;h2 id=&quot;what-next&quot;&gt;What next?&lt;/h2&gt;
 
-&lt;p&gt;I highly recommend “op”ing (promoting users to operator / admin) the users, so that they can use “slash” / typed commands via Bedrock or Java client connections. It’s hard to see it in the Java CraftBukkit server interface, but there’s a little typing area in the lower right of the UI where you can type &lt;code class=&quot;highlighter-rouge&quot;&gt;op usernamehere&lt;/code&gt; for connected users and press return to give them admin rights. The server will remember this for each username, you’ll likely only have to do this once.&lt;/p&gt;
+&lt;p&gt;I highly recommend “op”ing (promoting users to operator / admin) the users, so that they can use “slash” / typed commands via Bedrock or Java client connections. It’s hard to see it in the Java CraftBukkit server interface, but there’s a little typing area in the lower right of the UI where you can type &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;op usernamehere&lt;/code&gt; for connected users and press return to give them admin rights. The server will remember this for each username, you’ll likely only have to do this once.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/2020-03-28-minecraft-harmony/op.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Java players will probably be familiar with these, but this will be a new experience for Bedrock players. The place to type the commands is the speech bubble at the top of the screen.&lt;/p&gt;
 
-&lt;p&gt;The main command you’ll probably want is &lt;code class=&quot;highlighter-rouge&quot;&gt;/gamemode&lt;/code&gt; with either &lt;code class=&quot;highlighter-rouge&quot;&gt;/gamemode survival&lt;/code&gt; (standard Minecraft) or &lt;code class=&quot;highlighter-rouge&quot;&gt;/gamemode creative&lt;/code&gt; (make whatever you want, Lego-style). By making every user an op, you’re giving them the ability to run any of the commands and change their own mode to suit their own play style.&lt;/p&gt;
+&lt;p&gt;The main command you’ll probably want is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/gamemode&lt;/code&gt; with either &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/gamemode survival&lt;/code&gt; (standard Minecraft) or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/gamemode creative&lt;/code&gt; (make whatever you want, Lego-style). By making every user an op, you’re giving them the ability to run any of the commands and change their own mode to suit their own play style.&lt;/p&gt;
 
 &lt;h2 id=&quot;what-its-like&quot;&gt;What it’s like:&lt;/h2&gt;
 
@@ -353,8 +511,8 @@ chmod a+x proxy.sh
 &lt;p&gt;&lt;em&gt;- mike&lt;/em&gt;&lt;/p&gt;
 </description>
         <pubDate>Sat, 28 Mar 2020 12:00:00 -0700</pubDate>
-        <link>http://michaellynn.github.io/2020/03/28/minecraft-harmony/</link>
-        <guid isPermaLink="true">http://michaellynn.github.io/2020/03/28/minecraft-harmony/</guid>
+        <link>http://localhost:4000/2020/03/28/minecraft-harmony/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/03/28/minecraft-harmony/</guid>
       </item>
     
       <item>
@@ -452,7 +610,7 @@ chmod a+x proxy.sh
 
 &lt;p&gt;I’m putting this one first because it’s the easiest to talk about. Simply put, this is closest to the classic boot model we knew before the T2. All the normal stuff applies.&lt;/p&gt;
 
-&lt;p&gt;The device firmware has to be able to see a boot.efi it can use in a volume it can read and boot from and the OS inside the volume has to say it supports the hardware (which is foremost stored in &lt;code class=&quot;highlighter-rouge&quot;&gt;/System/Library/CoreServices/PlatformSupport.plist&lt;/code&gt;, if you’ve ever wondered) and provide all the necessary hardware kexts for talking to the bits of the computer.&lt;/p&gt;
+&lt;p&gt;The device firmware has to be able to see a boot.efi it can use in a volume it can read and boot from and the OS inside the volume has to say it supports the hardware (which is foremost stored in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/System/Library/CoreServices/PlatformSupport.plist&lt;/code&gt;, if you’ve ever wondered) and provide all the necessary hardware kexts for talking to the bits of the computer.&lt;/p&gt;
 
 &lt;p&gt;Secure Boot devices come with additional requirements in that the T2 chip runs its own OS (bridgeOS), but yadda yadda yadda this isn’t the boot mode you’re interested in reading about. This is your normal “if the OS is compatible, it can boot the Mac” situation.&lt;/p&gt;
 
@@ -462,7 +620,7 @@ chmod a+x proxy.sh
 
 &lt;p&gt;We’ll ask a Secure Boot device what it’s booting. Let’s start with the bless command:&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo bless --getBoot --verbose&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sudo bless --getBoot --verbose&lt;/code&gt;&lt;/p&gt;
 
 &lt;noscript&gt;&lt;pre&gt;EFI found at IODeviceTree:/efi
 Current EFI boot device string is: &amp;#39;&amp;lt;array&amp;gt;&amp;lt;dict&amp;gt;&amp;lt;key&amp;gt;IOMatch&amp;lt;/key&amp;gt;&amp;lt;dict&amp;gt;&amp;lt;key&amp;gt;IOProviderClass
@@ -503,9 +661,9 @@ Substituting found system volume /dev/disk1s1
 
 &lt;p&gt;There’s a lot of information there.&lt;/p&gt;
 
-&lt;p&gt;But if you’ve never noticed this before on macOS devices that boot APFS (like all Secure Boot devices), macOS isn’t booting a file off of the System volume (&lt;code class=&quot;highlighter-rouge&quot;&gt;/dev/disk1s1&lt;/code&gt;), it’s booting the &lt;code class=&quot;highlighter-rouge&quot;&gt;boot.efi&lt;/code&gt; file from the new APFS Preboot volume (&lt;code class=&quot;highlighter-rouge&quot;&gt;/dev/disk1s2&lt;/code&gt;) that you’ll find inside APFS containers:&lt;/p&gt;
+&lt;p&gt;But if you’ve never noticed this before on macOS devices that boot APFS (like all Secure Boot devices), macOS isn’t booting a file off of the System volume (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/dev/disk1s1&lt;/code&gt;), it’s booting the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;boot.efi&lt;/code&gt; file from the new APFS Preboot volume (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/dev/disk1s2&lt;/code&gt;) that you’ll find inside APFS containers:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;key&amp;gt;BLLastBSDName&amp;lt;/key&amp;gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;key&amp;gt;BLLastBSDName&amp;lt;/key&amp;gt;
 &amp;lt;string&amp;gt;disk1s2&amp;lt;/string&amp;gt;
 
 &amp;lt;key&amp;gt;Path&amp;lt;/key&amp;gt;
@@ -514,7 +672,7 @@ Substituting found system volume /dev/disk1s1
 
 &lt;p&gt;It doesn’t matter if you’ve encrypted the device or not. Every macOS device booting an APFS filesystem boots like this.&lt;/p&gt;
 
-&lt;p&gt;You can see the container layout with this command: &lt;code class=&quot;highlighter-rouge&quot;&gt;diskutil apfs list&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;You can see the container layout with this command: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;diskutil apfs list&lt;/code&gt;&lt;/p&gt;
 
 &lt;noscript&gt;&lt;pre&gt;diskutil apfs list
 APFS Container (1 found)
@@ -565,7 +723,7 @@ APFS Container (1 found)
         FileVault:                 No (Encrypted at rest)&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/pudquick/13a2b419416f8fd010a7c8fcda2a9b87.js?file=02_snip.txt&quot;&gt; &lt;/script&gt;
 
-&lt;p&gt;It comes in a triplet: OS/System volume, Preboot, and Recovery. If you’re booted from a System volume within an APFS Container, you’ll also see a (temporary) VM volume, which has taken the place of and is mounted at &lt;code class=&quot;highlighter-rouge&quot;&gt;/private/var/vm&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;It comes in a triplet: OS/System volume, Preboot, and Recovery. If you’re booted from a System volume within an APFS Container, you’ll also see a (temporary) VM volume, which has taken the place of and is mounted at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/private/var/vm&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;So we’re booting from Preboot.&lt;/p&gt;
 
@@ -573,9 +731,9 @@ APFS Container (1 found)
 
 &lt;p&gt;Let’s mount them and see. For the OS that’s booted off the internal disk, that’s usually:&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;diskutil mount /dev/disk1s2&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;diskutil mount /dev/disk1s2&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;It should mount at &lt;code class=&quot;highlighter-rouge&quot;&gt;/Volumes/Preboot&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;It should mount at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/Volumes/Preboot&lt;/code&gt;&lt;/p&gt;
 
 &lt;noscript&gt;&lt;pre&gt;diskutil mount /dev/disk1s2
 Volume Preboot on /dev/disk1s2 mounted
@@ -585,27 +743,27 @@ total 0
 drwxr-xr-x  7 root  wheel  224 Jul 17 09:38 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/pudquick/13a2b419416f8fd010a7c8fcda2a9b87.js?file=03_snip.txt&quot;&gt; &lt;/script&gt;
 
-&lt;p&gt;If you look at the top level of the disk, you’ll see one (or more) folders that look like long hex strings with dashes in them. Those are &lt;a href=&quot;https://en.wikipedia.org/wiki/Universally_unique_identifier&quot;&gt;GUIDs&lt;/a&gt;. Not only are they GUIDs, but the GUIDs match some of the output that we saw before in &lt;code class=&quot;highlighter-rouge&quot;&gt;diskutil apfs list&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;If you look at the top level of the disk, you’ll see one (or more) folders that look like long hex strings with dashes in them. Those are &lt;a href=&quot;https://en.wikipedia.org/wiki/Universally_unique_identifier&quot;&gt;GUIDs&lt;/a&gt;. Not only are they GUIDs, but the GUIDs match some of the output that we saw before in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;diskutil apfs list&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;A System volume within an APFS Container has its own unique GUID. Within Preboot (and the Recovery volume as well), the top level folders will contain a folder with a name matching the GUID of the System volume it’s paired with.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    +-&amp;gt; Volume disk1s1 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    +-&amp;gt; Volume disk1s1 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
     |   ---------------------------------------------------
     |   APFS Volume Disk (Role):   disk1s1 (No specific role)
     |   Name:                      Macintosh HD (Case-insensitive)
     |   Mount Point:               /
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ls -l /Volumes/Preboot/
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ls -l /Volumes/Preboot/
 total 0
 drwxr-xr-x  7 root  wheel  224 Jul 17 09:38 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;In the HFS+ boot model, the kernel is hardcoded to look for the Recovery partition at the partition id minus 1 of the associated System partition. With APFS, a single APFS container can now contain multiple System volumes - &lt;strong&gt;but only a single Recovery/Preboot volume is required within the container&lt;/strong&gt;, each of which can contain multiple GUID-named folders (one for each System volume).&lt;/p&gt;
 
-&lt;p&gt;Looking back at the information we got from the bless command, we can see that the boot.efi is in a subfolder within the GUID folder: &lt;code class=&quot;highlighter-rouge&quot;&gt;System/Library/CoreServices/boot.efi&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Looking back at the information we got from the bless command, we can see that the boot.efi is in a subfolder within the GUID folder: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;System/Library/CoreServices/boot.efi&lt;/code&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;key&amp;gt;Path&amp;lt;/key&amp;gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;key&amp;gt;Path&amp;lt;/key&amp;gt;
 &amp;lt;string&amp;gt;\FD77CA06-84E9-42D0-B5FE-6295D28CBB2F\System\Library\CoreServices\boot.efi&amp;lt;/string&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -689,9 +847,9 @@ drwxr-xr-x  7 root  wheel  224 Jul 17 09:38 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
 
 &lt;p&gt;Maybe we could compare them to a device running the same OS version without a T2 chip. For the record here, that means I’m comparing an iMac Pro to a 2017 MacBook Pro running 10.13.6.&lt;/p&gt;
 
-&lt;p&gt;Let’s chop out the GUID names at the beginning (since they’re unique to every System volume) and just compare the contents of the subdirectories. Sort the lines of each and run both of them against each other through the &lt;code class=&quot;highlighter-rouge&quot;&gt;diff&lt;/code&gt; command:&lt;/p&gt;
+&lt;p&gt;Let’s chop out the GUID names at the beginning (since they’re unique to every System volume) and just compare the contents of the subdirectories. Sort the lines of each and run both of them against each other through the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;diff&lt;/code&gt; command:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;*** Standard-listing.txt
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;*** Standard-listing.txt
 --- SecureBoot-listing.txt
 ***************
 *** 4,12 ****
@@ -740,7 +898,7 @@ drwxr-xr-x  7 root  wheel  224 Jul 17 09:38 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
 
 &lt;p&gt;Oh? So this might be different if we look at yet another iMac Pro? Good thing I access to a few to compare 😄&lt;/p&gt;
 
-&lt;p&gt;And sure enough, there are the same additional files on the other device, but the hex string before the .im4m suffix (the &lt;strong&gt;15156C1879A0A6&lt;/strong&gt; in &lt;code class=&quot;highlighter-rouge&quot;&gt;boot.efi.j137ap.15156C1879A0A6.im4m&lt;/code&gt;) is different.&lt;/p&gt;
+&lt;p&gt;And sure enough, there are the same additional files on the other device, but the hex string before the .im4m suffix (the &lt;strong&gt;15156C1879A0A6&lt;/strong&gt; in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;boot.efi.j137ap.15156C1879A0A6.im4m&lt;/code&gt;) is different.&lt;/p&gt;
 
 &lt;p&gt;Well.&lt;/p&gt;
 
@@ -760,7 +918,7 @@ drwxr-xr-x  7 root  wheel  224 Jul 17 09:38 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
 
 &lt;p&gt;BINGO. It would seem we have part of the equation.&lt;/p&gt;
 
-&lt;p&gt;Reconnecting the device to the network and then later checking in Preboot, it would seem new &lt;code class=&quot;highlighter-rouge&quot;&gt;*.j137ap.15156C1879A0A6.im4m&lt;/code&gt; files have been recreated.&lt;/p&gt;
+&lt;p&gt;Reconnecting the device to the network and then later checking in Preboot, it would seem new &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;*.j137ap.15156C1879A0A6.im4m&lt;/code&gt; files have been recreated.&lt;/p&gt;
 
 &lt;p&gt;Interestingly, each one rebuilds a uniquely named file - but always with the same hex name for itself.&lt;/p&gt;
 
@@ -772,11 +930,11 @@ drwxr-xr-x  7 root  wheel  224 Jul 17 09:38 FD77CA06-84E9-42D0-B5FE-6295D28CBB2F
 
 &lt;p&gt;Normally for this kind of thing, if I want to search through the entire contents of the machine I’d reach out to my standard tools like &lt;a href=&quot;https://geoff.greer.fm/ag/&quot;&gt;the Silver Searcher&lt;/a&gt; or &lt;a href=&quot;https://blog.burntsushi.net/ripgrep/&quot;&gt;RipGrep&lt;/a&gt;. Both of these tools will gladly recursively search through both text and binary files to locate strings you’re interested in. These guys get frequent shoutouts in my reverse engineering talks.&lt;/p&gt;
 
-&lt;p&gt;However, in this case, I dumbly lucked out by trying the naive approach and checking to see if the output of &lt;code class=&quot;highlighter-rouge&quot;&gt;system_profiler&lt;/code&gt; (which lists other unique identifiers like ethernet MAC addresses, serial numbers, etc.) happened to contain the hex string in question.&lt;/p&gt;
+&lt;p&gt;However, in this case, I dumbly lucked out by trying the naive approach and checking to see if the output of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;system_profiler&lt;/code&gt; (which lists other unique identifiers like ethernet MAC addresses, serial numbers, etc.) happened to contain the hex string in question.&lt;/p&gt;
 
 &lt;p&gt;It did!&lt;/p&gt;
 
-&lt;p&gt;But &lt;strong&gt;only because I’d freshly re-installed the OS&lt;/strong&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;system_profiler&lt;/code&gt; tends to include recent portions of several log files. In this instance, it included &lt;code class=&quot;highlighter-rouge&quot;&gt;install.log&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;But &lt;strong&gt;only because I’d freshly re-installed the OS&lt;/strong&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;system_profiler&lt;/code&gt; tends to include recent portions of several log files. In this instance, it included &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;install.log&lt;/code&gt;:&lt;/p&gt;
 
 &lt;noscript&gt;&lt;pre&gt;osinstallersetupd[598]: tss_submit_job: ----Begin request
 osinstallersetupd[598]: tss_submit_job: &amp;lt;CFBasicHash 0x7fe8e067bd30 [0x106a7daf0]&amp;gt;{type = mutable dict, count = 16,
@@ -838,7 +996,7 @@ iMac-Pro osinstallersetupd[598]: AMAuthInstallHttpMessageSendSync: httpRequest=&
 
 &lt;p&gt;&lt;a href=&quot;https://www.theiphonewiki.com/wiki/SHSH_Protocol&quot;&gt;SHSH Protocol&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;Wow, the “Sending data (request)” section there looks &lt;em&gt;very&lt;/em&gt; similar to the details the Mac is sending: &lt;code class=&quot;highlighter-rouge&quot;&gt;@HostPlatformInfo&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;ApECID&lt;/code&gt;, etc.&lt;/p&gt;
+&lt;p&gt;Wow, the “Sending data (request)” section there looks &lt;em&gt;very&lt;/em&gt; similar to the details the Mac is sending: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@HostPlatformInfo&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ApECID&lt;/code&gt;, etc.&lt;/p&gt;
 
 &lt;p&gt;This is locking it in pretty solid that Apple has leveraged this same technology for generating signatures for validated booting for Secure Boot on Mac.&lt;/p&gt;
 
@@ -846,7 +1004,7 @@ iMac-Pro osinstallersetupd[598]: AMAuthInstallHttpMessageSendSync: httpRequest=&
 
 &lt;p&gt;Copying them between Secure Boot devices and renaming them to match the ECID of the other device still results in Secure Boot wanting to repair the signature.&lt;/p&gt;
 
-&lt;p&gt;Going back to the 2017 MacBook Pro that does not have Secure Boot, it doesn’t have a uniquely named .im4m file - but it does have a “generic” .im4m file for the boot.efi: &lt;code class=&quot;highlighter-rouge&quot;&gt;boot.efi.j137ap.im4m&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Going back to the 2017 MacBook Pro that does not have Secure Boot, it doesn’t have a uniquely named .im4m file - but it does have a “generic” .im4m file for the boot.efi: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;boot.efi.j137ap.im4m&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;What happens if we delete it?&lt;/p&gt;
 
@@ -915,7 +1073,7 @@ iMac-Pro osinstallersetupd[598]: Copying AP ticket to /var/tmp/OSPersonalization
 
 &lt;p&gt;Are .im4m files just simply ASN.1 encoded?&lt;/p&gt;
 
-&lt;p&gt;Let’s run them against &lt;code class=&quot;highlighter-rouge&quot;&gt;openssl asn1parse&lt;/code&gt; and find out:&lt;/p&gt;
+&lt;p&gt;Let’s run them against &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;openssl asn1parse&lt;/code&gt; and find out:&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;boot.efi.j137ap.15156C1879A0A6.im4m:&lt;/strong&gt;&lt;/p&gt;
 
@@ -1348,13 +1506,13 @@ iMac-Pro osinstallersetupd[598]: Copying AP ticket to /var/tmp/OSPersonalization
   &lt;li&gt;&lt;a href=&quot;https://derflounder.wordpress.com/2017/01/10/imaging-will-be-dead-soon-ish/&quot;&gt;Imaging will be dead soonish&lt;/a&gt; (by the Blogfather himself, Rich Trouton)&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;In the early first release days of the iMac Pro, there was talk that you couldn’t use &lt;code class=&quot;highlighter-rouge&quot;&gt;asr&lt;/code&gt; to restore an OS image to the device and have it boot out of the box.&lt;/p&gt;
+&lt;p&gt;In the early first release days of the iMac Pro, there was talk that you couldn’t use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;asr&lt;/code&gt; to restore an OS image to the device and have it boot out of the box.&lt;/p&gt;
 
 &lt;p&gt;However, if you were fortunate enough to have two iMac Pros (or brave enough to try from Internet Recovery), they could apparently image themselves.&lt;/p&gt;
 
 &lt;p&gt;Did you bother to check back after this news? Have you tried it again recently?&lt;/p&gt;
 
-&lt;p&gt;If you’re making a never booted image with wonderful tools like &lt;a href=&quot;https://github.com/MagerValp/AutoDMG&quot;&gt;AutoDMG&lt;/a&gt;, these days &lt;code class=&quot;highlighter-rouge&quot;&gt;asr&lt;/code&gt; can very definitely restore a booting macOS onto these devices, even if the host device running the &lt;code class=&quot;highlighter-rouge&quot;&gt;asr&lt;/code&gt; restore is &lt;strong&gt;not&lt;/strong&gt; a Secure Boot device.&lt;/p&gt;
+&lt;p&gt;If you’re making a never booted image with wonderful tools like &lt;a href=&quot;https://github.com/MagerValp/AutoDMG&quot;&gt;AutoDMG&lt;/a&gt;, these days &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;asr&lt;/code&gt; can very definitely restore a booting macOS onto these devices, even if the host device running the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;asr&lt;/code&gt; restore is &lt;strong&gt;not&lt;/strong&gt; a Secure Boot device.&lt;/p&gt;
 
 &lt;p&gt;So what changed?&lt;/p&gt;
 
@@ -1362,13 +1520,13 @@ iMac-Pro osinstallersetupd[598]: Copying AP ticket to /var/tmp/OSPersonalization
 
 &lt;p&gt;When 10.13.4 was released, it was a unified build and the iMac Pro no longer ran its own fork.&lt;/p&gt;
 
-&lt;p&gt;So, using the knowledge of “personalization” above, can we look at the &lt;code class=&quot;highlighter-rouge&quot;&gt;asr&lt;/code&gt; command itself and see what may have changed?&lt;/p&gt;
+&lt;p&gt;So, using the knowledge of “personalization” above, can we look at the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;asr&lt;/code&gt; command itself and see what may have changed?&lt;/p&gt;
 
-&lt;p&gt;Let’s try some of my most favorite (and built-in) tooling to peek at the binary - &lt;code class=&quot;highlighter-rouge&quot;&gt;strings&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;otool&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;Let’s try some of my most favorite (and built-in) tooling to peek at the binary - &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;strings&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;otool&lt;/code&gt;:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;strings /usr/sbin/asr | grep -i personaliz
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;strings /usr/sbin/asr | grep -i personaliz
 no-personalization
-Couldn't personalize volume %s
+Couldn&apos;t personalize volume %s
 Personalization failed with error %d, line %d
 no-personalize
 personalizationRequiredForVolumeAtMountPoint:
@@ -1376,15 +1534,15 @@ networkAvailableForPersonalizationWithOptions:
 personalizeVolumeAtMountPointForInstall:outputDirectory:options:completionHandler:
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;otool -L /usr/sbin/asr | grep -i personaliz
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;otool -L /usr/sbin/asr | grep -i personaliz
 	/System/Library/PrivateFrameworks/OSPersonalization.framework/Versions/A/OSPersonalization (compatibility version 1.0.0, current version 48.1.0)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;It would appear &lt;code class=&quot;highlighter-rouge&quot;&gt;asr&lt;/code&gt; gained a new trick!&lt;/p&gt;
+&lt;p&gt;It would appear &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;asr&lt;/code&gt; gained a new trick!&lt;/p&gt;
 
-&lt;p&gt;In fact, the &lt;code class=&quot;highlighter-rouge&quot;&gt;asr&lt;/code&gt; in the iMac Pro’s copy of 10.13.3 already had this new capability, which is why it worked from device to device &lt;a href=&quot;https://managingosx.wordpress.com/2018/01/25/early-notes-on-deploying-images-to-imac-pro/&quot;&gt;or from within Recovery to itself&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;In fact, the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;asr&lt;/code&gt; in the iMac Pro’s copy of 10.13.3 already had this new capability, which is why it worked from device to device &lt;a href=&quot;https://managingosx.wordpress.com/2018/01/25/early-notes-on-deploying-images-to-imac-pro/&quot;&gt;or from within Recovery to itself&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;asr&lt;/code&gt; on any 10.13.4+ macOS version now has the same capability without the need for special undocumented flags or tricks.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;asr&lt;/code&gt; on any 10.13.4+ macOS version now has the same capability without the need for special undocumented flags or tricks.&lt;/p&gt;
 
 &lt;p&gt;If you tinker a little deeper (like I have), you’ll find out that there’s code in the OSPersonalization PrivateFramework to &lt;strong&gt;read the ECID of a target disk mode attached device&lt;/strong&gt;. This allows it to personalize a device even in Full Security mode with the ECID-specific, device-specific manifest.&lt;/p&gt;
 
@@ -1408,7 +1566,7 @@ personalizeVolumeAtMountPointForInstall:outputDirectory:options:completionHandle
 
 &lt;p&gt;They don’t say you &lt;em&gt;can’t&lt;/em&gt;. Just that they &lt;em&gt;don’t recommend it&lt;/em&gt;. That it’s &lt;em&gt;not supported&lt;/em&gt;.&lt;/p&gt;
 
-&lt;p&gt;They quite obviously built the functionality into &lt;code class=&quot;highlighter-rouge&quot;&gt;asr&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;They quite obviously built the functionality into &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;asr&lt;/code&gt;.&lt;/p&gt;
 
 &lt;h3 id=&quot;but---should-you&quot;&gt;But - should you?&lt;/h3&gt;
 
@@ -1460,7 +1618,7 @@ personalizeVolumeAtMountPointForInstall:outputDirectory:options:completionHandle
 
 &lt;p&gt;Nobody but Apple knows will be next. But they do, in the meantime, provide guidance.&lt;/p&gt;
 
-&lt;p&gt;And their guidance is that you should be looking at DEP/MDM-based workflows for your provisioning. The latest operating system versions already include some features (like managing automatic kernel extension loading) that can only be done &lt;em&gt;remotely&lt;/em&gt; and adjusted post-deployment &lt;a href=&quot;https://support.apple.com/en-us/HT208019&quot;&gt;via MDM deployed profiles&lt;/a&gt;. SIU had the capability to make network bootable images that ran &lt;code class=&quot;highlighter-rouge&quot;&gt;scutil&lt;/code&gt; to reconfigure the trust settings, but all of that is moot now that Secure Boot devices don’t network boot at all. MDM is the only game.&lt;/p&gt;
+&lt;p&gt;And their guidance is that you should be looking at DEP/MDM-based workflows for your provisioning. The latest operating system versions already include some features (like managing automatic kernel extension loading) that can only be done &lt;em&gt;remotely&lt;/em&gt; and adjusted post-deployment &lt;a href=&quot;https://support.apple.com/en-us/HT208019&quot;&gt;via MDM deployed profiles&lt;/a&gt;. SIU had the capability to make network bootable images that ran &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;scutil&lt;/code&gt; to reconfigure the trust settings, but all of that is moot now that Secure Boot devices don’t network boot at all. MDM is the only game.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;If you or your organization feel the need to image devices, then do so.&lt;/strong&gt;&lt;/p&gt;
 
@@ -1482,7 +1640,7 @@ personalizeVolumeAtMountPointForInstall:outputDirectory:options:completionHandle
 
 &lt;p&gt;Going back to the install.log again, you can find this line:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;	    HardwareModel = j137ap;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;	    HardwareModel = j137ap;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Quick Google searches will suggest that “j137ap” is likely an internal model identifier of either the iMac Pro itself or the specific T2 chip inside it. “j680ap” and “j132ap”, with a little poking around, you’ll find are for the new 13” and 15” 2018 MacBook Pro devices.&lt;/p&gt;
@@ -1491,8 +1649,8 @@ personalizeVolumeAtMountPointForInstall:outputDirectory:options:completionHandle
 
 </description>
         <pubDate>Fri, 27 Jul 2018 12:00:00 -0700</pubDate>
-        <link>http://michaellynn.github.io/2018/07/27/booting-secure/</link>
-        <guid isPermaLink="true">http://michaellynn.github.io/2018/07/27/booting-secure/</guid>
+        <link>http://localhost:4000/2018/07/27/booting-secure/</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/07/27/booting-secure/</guid>
       </item>
     
       <item>
@@ -1600,17 +1758,17 @@ Apple had &lt;a href=&quot;https://developer.apple.com/videos/play/wwdc2016/701/
 
 &lt;p&gt;What would you do if the entire OS that is macOS - if &lt;em&gt;all&lt;/em&gt; of it was protected, like it is on iOS/tvOS/watchOS?&lt;/p&gt;
 
-&lt;p&gt;I don’t just mean &lt;code class=&quot;highlighter-rouge&quot;&gt;/System&lt;/code&gt; and the things that SIP protects now.&lt;/p&gt;
+&lt;p&gt;I don’t just mean &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/System&lt;/code&gt; and the things that SIP protects now.&lt;/p&gt;
 
 &lt;p&gt;I mean &lt;em&gt;everything&lt;/em&gt; that the “Install macOS Sierra.app” installs on your machine now.&lt;/p&gt;
 
-&lt;p&gt;We’re talking &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;/var&lt;/code&gt;, portions of &lt;code class=&quot;highlighter-rouge&quot;&gt;/Library&lt;/code&gt;, etc. in addition to everything SIP already protects in Sierra now.&lt;/p&gt;
+&lt;p&gt;We’re talking &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/var&lt;/code&gt;, portions of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/Library&lt;/code&gt;, etc. in addition to everything SIP already protects in Sierra now.&lt;/p&gt;
 
 &lt;p&gt;Are you an administrator of Macs like I am?&lt;/p&gt;
 
-&lt;p&gt;What if you couldn’t change &lt;code class=&quot;highlighter-rouge&quot;&gt;ntp.conf&lt;/code&gt;?&lt;/p&gt;
+&lt;p&gt;What if you couldn’t change &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ntp.conf&lt;/code&gt;?&lt;/p&gt;
 
-&lt;p&gt;Or &lt;code class=&quot;highlighter-rouge&quot;&gt;ssh_config&lt;/code&gt;?&lt;/p&gt;
+&lt;p&gt;Or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ssh_config&lt;/code&gt;?&lt;/p&gt;
 
 &lt;p&gt;Or mess with the default User Template? &lt;em&gt;(I can’t stand it if you do this, but it &lt;strong&gt;is&lt;/strong&gt; supported by Apple right now)&lt;/em&gt;&lt;/p&gt;
 
@@ -1781,13 +1939,13 @@ If APFS is the gateway that makes macOS immutable, the road to it is being paved
 &lt;p&gt;&lt;em&gt;- mike&lt;/em&gt;&lt;/p&gt;
 </description>
         <pubDate>Tue, 04 Oct 2016 01:00:00 -0700</pubDate>
-        <link>http://michaellynn.github.io/2016/10/04/mDMacOS/</link>
-        <guid isPermaLink="true">http://michaellynn.github.io/2016/10/04/mDMacOS/</guid>
+        <link>http://localhost:4000/2016/10/04/mDMacOS/</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/10/04/mDMacOS/</guid>
       </item>
     
       <item>
-        <title>Apple's BookmarkData - exposed!</title>
-        <description>&lt;p&gt;&lt;em&gt;(And we’ll cover &lt;code class=&quot;highlighter-rouge&quot;&gt;.sfl&lt;/code&gt; files while we’re at it!)&lt;/em&gt;&lt;/p&gt;
+        <title>Apple&apos;s BookmarkData - exposed!</title>
+        <description>&lt;p&gt;&lt;em&gt;(And we’ll cover &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.sfl&lt;/code&gt; files while we’re at it!)&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;A good friend of mine, &lt;a href=&quot;https://twitter.com/Sacrilicious&quot;&gt;Allister&lt;/a&gt;, had an interesting question on the &lt;a href=&quot;http://macadmins.org/&quot;&gt;MacAdmins Slack&lt;/a&gt;:&lt;/p&gt;
 
@@ -1795,7 +1953,7 @@ If APFS is the gateway that makes macOS immutable, the road to it is being paved
   &lt;p&gt;&lt;em&gt;@allister: zero hits on developer.apple.com for this file extension: Library/Application Support/com.apple.sharedfilelist/com.apple.LSSharedFileList.RecentServers.sfl&lt;/em&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;To wit: What &lt;em&gt;are&lt;/em&gt; the &lt;code class=&quot;highlighter-rouge&quot;&gt;.sfl&lt;/code&gt; files that are appearing in OS X 10.11 El Capitan? There sure are a lot of them!&lt;/p&gt;
+&lt;p&gt;To wit: What &lt;em&gt;are&lt;/em&gt; the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.sfl&lt;/code&gt; files that are appearing in OS X 10.11 El Capitan? There sure are a lot of them!&lt;/p&gt;
 
 &lt;p&gt;Diving into the file format, it was pretty obvious it was a binary plist - and with a little more digging, an &lt;a href=&quot;https://developer.apple.com/library/watchos/documentation/Cocoa/Reference/Foundation/Classes/NSKeyedArchiver_Class/index.html&quot;&gt;NSKeyedArchiver&lt;/a&gt; file at that.&lt;/p&gt;
 
@@ -1819,25 +1977,25 @@ If APFS is the gateway that makes macOS immutable, the road to it is being paved
 &lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=01_snip.py&quot;&gt; &lt;/script&gt;
 
-&lt;p&gt;At its heart, it’s a dictionary with 3 keys, the most interesting key being &lt;code class=&quot;highlighter-rouge&quot;&gt;items&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;At its heart, it’s a dictionary with 3 keys, the most interesting key being &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;items&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;items&lt;/code&gt; array is made up of &lt;code class=&quot;highlighter-rouge&quot;&gt;SFLListItem&lt;/code&gt;, a new internal object in 10.11, with the following properties:&lt;/p&gt;
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;items&lt;/code&gt; array is made up of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SFLListItem&lt;/code&gt;, a new internal object in 10.11, with the following properties:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;name&lt;/code&gt;: Display name in the list (in this case, the name of the volume)&lt;/p&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;name&lt;/code&gt;: Display name in the list (in this case, the name of the volume)&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;order&lt;/code&gt;: Number representing order within the list&lt;/p&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;order&lt;/code&gt;: Number representing order within the list&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;uniqueIdentifier&lt;/code&gt;: A NSUUID generated to uniquely represent the entry in the list&lt;/p&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;uniqueIdentifier&lt;/code&gt;: A NSUUID generated to uniquely represent the entry in the list&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;properties&lt;/code&gt;: A dictionary with one or more keys (all of these only had “com.apple.LSSharedFileList.OverrideIcon.OSType” with the value “srvr”)&lt;/p&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;properties&lt;/code&gt;: A dictionary with one or more keys (all of these only had “com.apple.LSSharedFileList.OverrideIcon.OSType” with the value “srvr”)&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;bookmark&lt;/code&gt;: An NSURL BookmarkData object containing information to reach the file/shares&lt;/p&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bookmark&lt;/code&gt;: An NSURL BookmarkData object containing information to reach the file/shares&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
@@ -1863,13 +2021,13 @@ If APFS is the gateway that makes macOS immutable, the road to it is being paved
   &lt;p&gt;&lt;em&gt;If this method fails, you can use the resourceValuesForKeys:fromBookmarkData: method to obtain information about the bookmark, such as the last known path (NSURLPathKey) to help the user decide how to proceed.”&lt;/em&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;Even with the options &lt;code class=&quot;highlighter-rouge&quot;&gt;NSURLBookmarkResolutionWithoutMounting&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;NSURLBookmarkResolutionWithoutUI&lt;/code&gt;, you’ll find &lt;a href=&quot;http://tangent405.com/dealing-with-slow-security-scoped-bookmarks&quot;&gt;articles like this one&lt;/a&gt; which indicate that the OS is going to attempt to resolve the resource, even if it doesn’t pop up anything to the user when it can’t find it.&lt;/p&gt;
+&lt;p&gt;Even with the options &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NSURLBookmarkResolutionWithoutMounting&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NSURLBookmarkResolutionWithoutUI&lt;/code&gt;, you’ll find &lt;a href=&quot;http://tangent405.com/dealing-with-slow-security-scoped-bookmarks&quot;&gt;articles like this one&lt;/a&gt; which indicate that the OS is going to attempt to resolve the resource, even if it doesn’t pop up anything to the user when it can’t find it.&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;And yet&lt;/em&gt;, if you open up the BookmarkData in a &lt;a href=&quot;http://ridiculousfish.com/hexfiend/&quot;&gt;hex editor&lt;/a&gt;, it’s &lt;strong&gt;obvious&lt;/strong&gt; the URL information is there in a form it should be directly extractable from. For something like a normal network share, there is absolutely &lt;strong&gt;no reason&lt;/strong&gt; to need to do any sort of resolving to be able to return this data. We should be able to just say “Give me the URL” and it should instantly return the value (instead of failing because the server isn’t visible on the current network).&lt;/p&gt;
 
-&lt;p&gt;So what about the aforementioned &lt;code class=&quot;highlighter-rouge&quot;&gt;resourceValuesForKeys:fromBookmarkData:&lt;/code&gt; ?&lt;/p&gt;
+&lt;p&gt;So what about the aforementioned &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;resourceValuesForKeys:fromBookmarkData:&lt;/code&gt; ?&lt;/p&gt;
 
-&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;USELESS!&lt;/span&gt; The NSURLPathKey for server shares appears to return the mounted volume path (&lt;code class=&quot;highlighter-rouge&quot;&gt;/Volumes/whatever&lt;/code&gt;) - &lt;strong&gt;not the URL of the server share itself&lt;/strong&gt;!&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;USELESS!&lt;/span&gt; The NSURLPathKey for server shares appears to return the mounted volume path (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/Volumes/whatever&lt;/code&gt;) - &lt;strong&gt;not the URL of the server share itself&lt;/strong&gt;!&lt;/p&gt;
 
 &lt;p&gt;… Maybe it’s a resource value in a different key?&lt;/p&gt;
 
@@ -1877,13 +2035,13 @@ If APFS is the gateway that makes macOS immutable, the road to it is being paved
 
 &lt;p&gt;Everywhere you search, everyone just recommends &lt;a href=&quot;http://www.cocoabuilder.com/archive/cocoa/313438-how-to-get-bookmarks-data-for-non-existing-files.html&quot;&gt;“try all the keys”&lt;/a&gt; or “try the keys you want values for”.&lt;/p&gt;
 
-&lt;p&gt;… But &lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSURL_Class/#//apple_ref/doc/uid/20000301-DontLinkElementID_1&quot;&gt;none of the keys&lt;/a&gt; Apple has documented return just the simple share URL. They apparently want you to only use &lt;code class=&quot;highlighter-rouge&quot;&gt;URLByResolvingBookmarkData&lt;/code&gt; for that.&lt;/p&gt;
+&lt;p&gt;… But &lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSURL_Class/#//apple_ref/doc/uid/20000301-DontLinkElementID_1&quot;&gt;none of the keys&lt;/a&gt; Apple has documented return just the simple share URL. They apparently want you to only use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;URLByResolvingBookmarkData&lt;/code&gt; for that.&lt;/p&gt;
 
 &lt;h1 id=&quot;to-hell-with-that&quot;&gt;To hell with that!&lt;/h1&gt;
 
 &lt;p&gt;So instead, let’s go exploring with &lt;a href=&quot;http://www.hopperapp.com&quot;&gt;my favorite disassembler&lt;/a&gt; 😁&lt;/p&gt;
 
-&lt;p&gt;According to Apple’s documentation, NSURL is part of Foundation and sure enough we can find the &lt;code class=&quot;highlighter-rouge&quot;&gt;NSURL.h&lt;/code&gt; header file within &lt;code class=&quot;highlighter-rouge&quot;&gt;Foundation.framework&lt;/code&gt;. Let’s see what Hopper tells us &lt;code class=&quot;highlighter-rouge&quot;&gt;URLByResolvingBookmarkData&lt;/code&gt; is doing:&lt;/p&gt;
+&lt;p&gt;According to Apple’s documentation, NSURL is part of Foundation and sure enough we can find the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NSURL.h&lt;/code&gt; header file within &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Foundation.framework&lt;/code&gt;. Let’s see what Hopper tells us &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;URLByResolvingBookmarkData&lt;/code&gt; is doing:&lt;/p&gt;
 
 &lt;noscript&gt;&lt;pre&gt;void * +[NSURL(NSURL) URLByResolvingBookmarkData:options:relativeToURL:bookmarkDataIsStale:error:](void * self, void * _cmd, void * arg_8, unsigned int arg_C, void * arg_10, char * arg_14, void * * arg_18) {
     eax = [self allocWithZone:0x0];
@@ -1894,13 +2052,13 @@ If APFS is the gateway that makes macOS immutable, the road to it is being paved
 &lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=03_snip.m&quot;&gt; &lt;/script&gt;
 
-&lt;p&gt;A quick inspection shows this to be a wrapper around &lt;code class=&quot;highlighter-rouge&quot;&gt;initByResolvingBookmarkData&lt;/code&gt;, on with the hunt!&lt;/p&gt;
+&lt;p&gt;A quick inspection shows this to be a wrapper around &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;initByResolvingBookmarkData&lt;/code&gt;, on with the hunt!&lt;/p&gt;
 
 &lt;noscript&gt;&lt;pre&gt;edi = CFURLCreateByResolvingBookmarkData(*_kCFAllocatorDefault, arg_8, arg_C, edi, 0x0, arg_14, arg_18);
 &lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=04_snip.c&quot;&gt; &lt;/script&gt;
 
-&lt;p&gt;That CF looks like we’re skipping on over to &lt;code class=&quot;highlighter-rouge&quot;&gt;CoreFoundation.framework&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;That CF looks like we’re skipping on over to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CoreFoundation.framework&lt;/code&gt;.&lt;/p&gt;
 
 &lt;noscript&gt;&lt;pre&gt;int _CFURLCreateByResolvingBookmarkData(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {  
     r9 = arg5;  
@@ -1920,9 +2078,9 @@ If APFS is the gateway that makes macOS immutable, the road to it is being paved
 
 &lt;p&gt;This function isn’t defined here, it’s apparently a “CFCoreServicesInternal” bit of code. Now where could that be defined? …&lt;/p&gt;
 
-&lt;p&gt;… Let’s check our good friends over at &lt;code class=&quot;highlighter-rouge&quot;&gt;/System/Library/PrivateFrameworks&lt;/code&gt; 😆&lt;/p&gt;
+&lt;p&gt;… Let’s check our good friends over at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/System/Library/PrivateFrameworks&lt;/code&gt; 😆&lt;/p&gt;
 
-&lt;p&gt;&lt;em&gt;Oh my&lt;/em&gt;, there appears to be a &lt;code class=&quot;highlighter-rouge&quot;&gt;CoreServicesInternal.framework&lt;/code&gt; there!&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Oh my&lt;/em&gt;, there appears to be a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CoreServicesInternal.framework&lt;/code&gt; there!&lt;/p&gt;
 
 &lt;p&gt;Imagine my surprise.&lt;/p&gt;
 
@@ -1938,19 +2096,19 @@ If APFS is the gateway that makes macOS immutable, the road to it is being paved
 
 &lt;p&gt;OH &lt;em&gt;HELLLLLLOOoo… what do we have here???&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;returnAllPropertiesInBookmark&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;returnAllPropertyKeysInBookmark&lt;/code&gt;, and &lt;code class=&quot;highlighter-rouge&quot;&gt;returnDetailedDump&lt;/code&gt; you say? &lt;em&gt;Fascinating&lt;/em&gt; function names.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;returnAllPropertiesInBookmark&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;returnAllPropertyKeysInBookmark&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;returnDetailedDump&lt;/code&gt; you say? &lt;em&gt;Fascinating&lt;/em&gt; function names.&lt;/p&gt;
 
-&lt;p&gt;Visiting any one of those functions, I’m extremely curious to see how they get &lt;strong&gt;called&lt;/strong&gt;. So we use Hopper’s helpful “Show Places Calling This Procedure…” and all 3 take us to &lt;code class=&quot;highlighter-rouge&quot;&gt;BookmarkResourcePropertyKeyToInfoStructInit()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Visiting any one of those functions, I’m extremely curious to see how they get &lt;strong&gt;called&lt;/strong&gt;. So we use Hopper’s helpful “Show Places Calling This Procedure…” and all 3 take us to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BookmarkResourcePropertyKeyToInfoStructInit()&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/2015-10-24-apples-bookmarkdata-exposed/BookmarkData3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;😱 😭 😱&lt;/p&gt;
 
-&lt;p&gt;&lt;em&gt;Do my eyes deceive me?&lt;/em&gt; Are these &lt;strong&gt;secret undocumented NSURL&lt;/strong&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;resourceValuesForKeys:&lt;/code&gt; keys !??!&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Do my eyes deceive me?&lt;/em&gt; Are these &lt;strong&gt;secret undocumented NSURL&lt;/strong&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;resourceValuesForKeys:&lt;/code&gt; keys !??!&lt;/p&gt;
 
 &lt;p&gt;They sure as hell look like it! Let’s try ‘em out!!&lt;/p&gt;
 
-&lt;p&gt;How about we try &lt;code class=&quot;highlighter-rouge&quot;&gt;NSURLBookmarkAllPropertiesKey&lt;/code&gt;, first?&lt;/p&gt;
+&lt;p&gt;How about we try &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NSURLBookmarkAllPropertiesKey&lt;/code&gt;, first?&lt;/p&gt;
 
 &lt;p&gt;&lt;small&gt;&lt;em&gt;(*insert magical handwaving, skipping over the boring part to get to the amazing part*)&lt;/em&gt;&lt;/small&gt;&lt;/p&gt;
 
@@ -2003,9 +2161,9 @@ If APFS is the gateway that makes macOS immutable, the road to it is being paved
 
 &lt;p&gt;… and yet … none of them are what I’m looking for: just the plain URL to the share.&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;NSURLBookmarkAllPropertyKeysKey&lt;/code&gt; turns out to be a bit of a repeat, listing only the keys (but without values).&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NSURLBookmarkAllPropertyKeysKey&lt;/code&gt; turns out to be a bit of a repeat, listing only the keys (but without values).&lt;/p&gt;
 
-&lt;p&gt;Want to guess what &lt;code class=&quot;highlighter-rouge&quot;&gt;NSURLBookmarkDetailedDescription&lt;/code&gt; does?&lt;/p&gt;
+&lt;p&gt;Want to guess what &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NSURLBookmarkDetailedDescription&lt;/code&gt; does?&lt;/p&gt;
 
 &lt;p&gt;It &lt;span style=&quot;color:red&quot;&gt;knocked my socks off&lt;/span&gt;, that’s what it does.&lt;/p&gt;
 
@@ -2041,7 +2199,7 @@ If APFS is the gateway that makes macOS immutable, the road to it is being paved
 
 &lt;p&gt;The URL of the share itself shows up like this:&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;11) itemType=0x2050 flags=0x0 dataOffset=0x148 volMountURL:&quot;&amp;lt;CFURL 0x7fb2b1691d30 [0x7fff767fbed0]&amp;gt;{string = smb://username@192.168.0.1/shares, encoding = 134217984, base = (null)}&quot;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;11) itemType=0x2050 flags=0x0 dataOffset=0x148 volMountURL:&quot;&amp;lt;CFURL 0x7fb2b1691d30 [0x7fff767fbed0]&amp;gt;{string = smb://username@192.168.0.1/shares, encoding = 134217984, base = (null)}&quot;&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;With the information this undocumented debug output provides, I was able to determine the entire structure of the BookmarkData format, which I’ll now document here 😄&lt;/p&gt;
 
@@ -2059,15 +2217,15 @@ If APFS is the gateway that makes macOS immutable, the road to it is being paved
 
 &lt;p&gt;&lt;img src=&quot;/images/2015-10-24-apples-bookmarkdata-exposed/Structure_01_Header.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;■&lt;/span&gt; 4 byte string: &lt;strong&gt;BookmarkData signature&lt;/strong&gt; (can be &lt;code class=&quot;highlighter-rouge&quot;&gt;book&lt;/code&gt;, the new style, or &lt;code class=&quot;highlighter-rouge&quot;&gt;alis&lt;/code&gt;, the original alias record of Mac OS)&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;■&lt;/span&gt; 4 byte string: &lt;strong&gt;BookmarkData signature&lt;/strong&gt; (can be &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;book&lt;/code&gt;, the new style, or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;alis&lt;/code&gt;, the original alias record of Mac OS)&lt;/p&gt;
 
 &lt;p&gt;&lt;span style=&quot;color:lightgreen&quot;&gt;■&lt;/span&gt; 32-bit integer: &lt;strong&gt;Total length of BookmarkData&lt;/strong&gt; structure (including header)&lt;/p&gt;
 
-&lt;p&gt;&lt;span style=&quot;color:blue&quot;&gt;■&lt;/span&gt; 4 bytes: &lt;strong&gt;Version&lt;/strong&gt; &lt;em&gt;(might be a big endian int&lt;/em&gt;? &lt;code class=&quot;highlighter-rouge&quot;&gt;1040&lt;/code&gt;&lt;em&gt;)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;color:blue&quot;&gt;■&lt;/span&gt; 4 bytes: &lt;strong&gt;Version&lt;/strong&gt; &lt;em&gt;(might be a big endian int&lt;/em&gt;? &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1040&lt;/code&gt;&lt;em&gt;)&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;span style=&quot;color:yellow&quot;&gt;■&lt;/span&gt; 32-bit integer: &lt;strong&gt;Offset of BookmarkData data&lt;/strong&gt; payload from beginning of BookmarkData structure (always &lt;code class=&quot;highlighter-rouge&quot;&gt;48&lt;/code&gt; currently)&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;color:yellow&quot;&gt;■&lt;/span&gt; 32-bit integer: &lt;strong&gt;Offset of BookmarkData data&lt;/strong&gt; payload from beginning of BookmarkData structure (always &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;48&lt;/code&gt; currently)&lt;/p&gt;
 
-&lt;p&gt;&lt;span style=&quot;color:cyan&quot;&gt;■&lt;/span&gt; N-bytes: null / &lt;code class=&quot;highlighter-rouge&quot;&gt;0x00&lt;/code&gt; bytes used as &lt;strong&gt;filler&lt;/strong&gt; until the beginning of BookmarkData data payload&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;color:cyan&quot;&gt;■&lt;/span&gt; N-bytes: null / &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0x00&lt;/code&gt; bytes used as &lt;strong&gt;filler&lt;/strong&gt; until the beginning of BookmarkData data payload&lt;/p&gt;
 
 &lt;h3 id=&quot;bookmarkdata-data&quot;&gt;BookmarkData Data&lt;/h3&gt;
 
@@ -2075,7 +2233,7 @@ If APFS is the gateway that makes macOS immutable, the road to it is being paved
 
 &lt;p&gt;&lt;img src=&quot;/images/2015-10-24-apples-bookmarkdata-exposed/Structure_02_Data.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;span style=&quot;color:orange&quot;&gt;■&lt;/span&gt; 32-bit integer: &lt;strong&gt;Offset of first TOC&lt;/strong&gt;, measured from the start of the BookmarkData data payload (example: an offset of &lt;code class=&quot;highlighter-rouge&quot;&gt;100&lt;/code&gt; is actually &lt;code class=&quot;highlighter-rouge&quot;&gt;148&lt;/code&gt; bytes from the beginning. &lt;code class=&quot;highlighter-rouge&quot;&gt;48&lt;/code&gt; byte header + &lt;code class=&quot;highlighter-rouge&quot;&gt;100&lt;/code&gt; bytes from start of data payload)&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;color:orange&quot;&gt;■&lt;/span&gt; 32-bit integer: &lt;strong&gt;Offset of first TOC&lt;/strong&gt;, measured from the start of the BookmarkData data payload (example: an offset of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;100&lt;/code&gt; is actually &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;148&lt;/code&gt; bytes from the beginning. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;48&lt;/code&gt; byte header + &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;100&lt;/code&gt; bytes from start of data payload)&lt;/p&gt;
 
 &lt;p&gt;&lt;span style=&quot;color:lightgray&quot;&gt;■&lt;/span&gt; N-bytes: The remainder of the data section is composed of TOC records (which tell where to find the data records) and the data records themselves.&lt;/p&gt;
 
@@ -2089,13 +2247,13 @@ If APFS is the gateway that makes macOS immutable, the road to it is being paved
 
 &lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;■&lt;/span&gt; 32-bit integer: &lt;strong&gt;Length of TOC data&lt;/strong&gt; segment after the header&lt;/p&gt;
 
-&lt;p&gt;&lt;span style=&quot;color:lightgreen&quot;&gt;■&lt;/span&gt; 16-bit integer: &lt;strong&gt;Record type (TOC)&lt;/strong&gt; (&lt;code class=&quot;highlighter-rouge&quot;&gt;0xFEFF&lt;/code&gt; / &lt;code class=&quot;highlighter-rouge&quot;&gt;65279&lt;/code&gt;. Might be signed? In which case the value would be &lt;code class=&quot;highlighter-rouge&quot;&gt;-2&lt;/code&gt;)&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;color:lightgreen&quot;&gt;■&lt;/span&gt; 16-bit integer: &lt;strong&gt;Record type (TOC)&lt;/strong&gt; (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0xFEFF&lt;/code&gt; / &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;65279&lt;/code&gt;. Might be signed? In which case the value would be &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-2&lt;/code&gt;)&lt;/p&gt;
 
-&lt;p&gt;&lt;span style=&quot;color:blue&quot;&gt;■&lt;/span&gt; 16-bit integer: &lt;strong&gt;Flags&lt;/strong&gt; (unused for TOC, always set to &lt;code class=&quot;highlighter-rouge&quot;&gt;0xFFFF&lt;/code&gt;)&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;color:blue&quot;&gt;■&lt;/span&gt; 16-bit integer: &lt;strong&gt;Flags&lt;/strong&gt; (unused for TOC, always set to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0xFFFF&lt;/code&gt;)&lt;/p&gt;
 
 &lt;h3 id=&quot;toc-data&quot;&gt;TOC Data&lt;/h3&gt;
 
-&lt;p&gt;&lt;span style=&quot;color:yellow&quot;&gt;■&lt;/span&gt; 32-bit integer: &lt;strong&gt;Level&lt;/strong&gt; (for a server mount, the value seems to be &lt;code class=&quot;highlighter-rouge&quot;&gt;1&lt;/code&gt;)&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;color:yellow&quot;&gt;■&lt;/span&gt; 32-bit integer: &lt;strong&gt;Level&lt;/strong&gt; (for a server mount, the value seems to be &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1&lt;/code&gt;)&lt;/p&gt;
 
 &lt;p&gt;&lt;span style=&quot;color:cyan&quot;&gt;■&lt;/span&gt; 32-bit integer: &lt;strong&gt;Offset of next TOC&lt;/strong&gt; record, measured from beginning of BookmarkData data section&lt;/p&gt;
 
@@ -2105,9 +2263,9 @@ If APFS is the gateway that makes macOS immutable, the road to it is being paved
 
 &lt;h3 id=&quot;toc-data-record&quot;&gt;TOC Data Record&lt;/h3&gt;
 
-&lt;p&gt;&lt;span style=&quot;color:orange&quot;&gt;■&lt;/span&gt; 16-bit integer: &lt;strong&gt;Record type&lt;/strong&gt; - varies (examples: &lt;code class=&quot;highlighter-rouge&quot;&gt;8272&lt;/code&gt;: “volMountURL”, &lt;code class=&quot;highlighter-rouge&quot;&gt;8208&lt;/code&gt;: “volName”)&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;color:orange&quot;&gt;■&lt;/span&gt; 16-bit integer: &lt;strong&gt;Record type&lt;/strong&gt; - varies (examples: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;8272&lt;/code&gt;: “volMountURL”, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;8208&lt;/code&gt;: “volName”)&lt;/p&gt;
 
-&lt;p&gt;&lt;span style=&quot;color:salmon&quot;&gt;■&lt;/span&gt; 16-bit integer: &lt;strong&gt;Flags&lt;/strong&gt; (always seems to be &lt;code class=&quot;highlighter-rouge&quot;&gt;0x0000&lt;/code&gt;)&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;color:salmon&quot;&gt;■&lt;/span&gt; 16-bit integer: &lt;strong&gt;Flags&lt;/strong&gt; (always seems to be &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0x0000&lt;/code&gt;)&lt;/p&gt;
 
 &lt;p&gt;&lt;span style=&quot;color:lightblue&quot;&gt;■&lt;/span&gt; 64-bit integer: &lt;strong&gt;Offset of record data&lt;/strong&gt;, measured from beginning of BookmarkData data portion&lt;/p&gt;
 
@@ -2123,9 +2281,9 @@ If APFS is the gateway that makes macOS immutable, the road to it is being paved
 
 &lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;■&lt;/span&gt; 32-bit integer: &lt;strong&gt;Length of data&lt;/strong&gt; payload, the actual data stored here&lt;/p&gt;
 
-&lt;p&gt;&lt;span style=&quot;color:blue&quot;&gt;■&lt;/span&gt; 32-bit integer: &lt;strong&gt;Data type&lt;/strong&gt; - varies (examples: &lt;code class=&quot;highlighter-rouge&quot;&gt;2305&lt;/code&gt;: CFURL, &lt;code class=&quot;highlighter-rouge&quot;&gt;257&lt;/code&gt;: string)&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;color:blue&quot;&gt;■&lt;/span&gt; 32-bit integer: &lt;strong&gt;Data type&lt;/strong&gt; - varies (examples: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;2305&lt;/code&gt;: CFURL, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;257&lt;/code&gt;: string)&lt;/p&gt;
 
-&lt;p&gt;&lt;span style=&quot;color:lightgreen&quot;&gt;■&lt;/span&gt; N-bytes: &lt;strong&gt;Record data&lt;/strong&gt;, padded with &lt;code class=&quot;highlighter-rouge&quot;&gt;0x00&lt;/code&gt; on the end if necessary to reach a multiple of 4 bytes in length&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;color:lightgreen&quot;&gt;■&lt;/span&gt; N-bytes: &lt;strong&gt;Record data&lt;/strong&gt;, padded with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0x00&lt;/code&gt; on the end if necessary to reach a multiple of 4 bytes in length&lt;/p&gt;
 
 &lt;p&gt;(… wow, you made it this far? Yay! 🎉)&lt;/p&gt;
 
@@ -2133,13 +2291,13 @@ If APFS is the gateway that makes macOS immutable, the road to it is being paved
 
 &lt;p&gt;… The &lt;em&gt;even sharper&lt;/em&gt; readers which have persisted this far may have noticed that the standard data record in my example doesn’t appear to be something you can easily extract a share URL from. There’s a reason for that!&lt;/p&gt;
 
-&lt;p&gt;I picked the older &lt;code class=&quot;highlighter-rouge&quot;&gt;alis&lt;/code&gt; BookmarkData structure as an example because of its size (260 bytes for this one). Your average &lt;code class=&quot;highlighter-rouge&quot;&gt;book&lt;/code&gt; modern style BookmarkData structure is well over a megabyte in size (!) because one of the records it contains is &lt;code class=&quot;highlighter-rouge&quot;&gt;icns&lt;/code&gt; icon information for how your share’s icon should look.&lt;/p&gt;
+&lt;p&gt;I picked the older &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;alis&lt;/code&gt; BookmarkData structure as an example because of its size (260 bytes for this one). Your average &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;book&lt;/code&gt; modern style BookmarkData structure is well over a megabyte in size (!) because one of the records it contains is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;icns&lt;/code&gt; icon information for how your share’s icon should look.&lt;/p&gt;
 
-&lt;p&gt;Unfortunately, the &lt;code class=&quot;highlighter-rouge&quot;&gt;alis&lt;/code&gt;-style is literally the thinnest of wrappers around what’s actually an original Mac OS (pre OS X) &lt;code class=&quot;highlighter-rouge&quot;&gt;alis&lt;/code&gt; resource fork fileshare record.&lt;/p&gt;
+&lt;p&gt;Unfortunately, the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;alis&lt;/code&gt;-style is literally the thinnest of wrappers around what’s actually an original Mac OS (pre OS X) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;alis&lt;/code&gt; resource fork fileshare record.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/2015-10-24-apples-bookmarkdata-exposed/ResEdit.gif&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;The newer &lt;code class=&quot;highlighter-rouge&quot;&gt;book&lt;/code&gt; variant contains the record types (like &lt;code class=&quot;highlighter-rouge&quot;&gt;8272&lt;/code&gt; aka “volMountURL”) I mentioned earlier.&lt;/p&gt;
+&lt;p&gt;The newer &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;book&lt;/code&gt; variant contains the record types (like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;8272&lt;/code&gt; aka “volMountURL”) I mentioned earlier.&lt;/p&gt;
 
 &lt;p&gt;So - what to do?&lt;/p&gt;
 
@@ -2147,13 +2305,13 @@ If APFS is the gateway that makes macOS immutable, the road to it is being paved
 Back to Where We Started
 ————————&lt;/p&gt;
 
-&lt;p&gt;If you have records that are &lt;code class=&quot;highlighter-rouge&quot;&gt;book&lt;/code&gt; type, &lt;a href=&quot;https://gist.github.com/pudquick/4776b4b2075bf9b7e512&quot;&gt;I have posted quick and dirty code here&lt;/a&gt; that will give you the “volMountURL” information instantly for the &lt;code class=&quot;highlighter-rouge&quot;&gt;.sfl&lt;/code&gt; files that started this wild ride.&lt;/p&gt;
+&lt;p&gt;If you have records that are &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;book&lt;/code&gt; type, &lt;a href=&quot;https://gist.github.com/pudquick/4776b4b2075bf9b7e512&quot;&gt;I have posted quick and dirty code here&lt;/a&gt; that will give you the “volMountURL” information instantly for the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.sfl&lt;/code&gt; files that started this wild ride.&lt;/p&gt;
 
 &lt;p&gt;I’m working on more formal code for BookmarkData parsing as I write this. But now that the information is out there, maybe someone will beat me to the punch 😊&lt;/p&gt;
 
-&lt;p&gt;If you have &lt;code class=&quot;highlighter-rouge&quot;&gt;alis&lt;/code&gt;-style information, you can can attempt to use code like this:&lt;/p&gt;
+&lt;p&gt;If you have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;alis&lt;/code&gt;-style information, you can can attempt to use code like this:&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;url,isStale,err = NSURL.URLByResolvingBookmarkData_options_relativeToURL_bookmarkDataIsStale_error_(bookmark_data, NSURLBookmarkResolutionWithoutMounting+NSURLBookmarkResolutionWithoutUI, None, None, None)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;url,isStale,err = NSURL.URLByResolvingBookmarkData_options_relativeToURL_bookmarkDataIsStale_error_(bookmark_data, NSURLBookmarkResolutionWithoutMounting+NSURLBookmarkResolutionWithoutUI, None, None, None)&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;… But don’t be surprised if you get back results like this if the resource no longer exists:&lt;/p&gt;
 
@@ -2166,7 +2324,7 @@ Error Domain=NSOSStatusErrorDomain Code=-43 &amp;quot;The operation couldn’t b
 &lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/pudquick/c089771fd8196f449662.js?file=08_snip.py&quot;&gt; &lt;/script&gt;
 
-&lt;p&gt;But worry not, friend readers - I’ve &lt;em&gt;also&lt;/em&gt; completely decoded &lt;code class=&quot;highlighter-rouge&quot;&gt;alis&lt;/code&gt; records in python, &lt;a href=&quot;https://bitbucket.org/al45tair/mac_alias&quot;&gt;as have others&lt;/a&gt;!&lt;/p&gt;
+&lt;p&gt;But worry not, friend readers - I’ve &lt;em&gt;also&lt;/em&gt; completely decoded &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;alis&lt;/code&gt; records in python, &lt;a href=&quot;https://bitbucket.org/al45tair/mac_alias&quot;&gt;as have others&lt;/a&gt;!&lt;/p&gt;
 
 &lt;p&gt;And the AFPX mount records they can contain.&lt;/p&gt;
 
@@ -2177,8 +2335,8 @@ Error Domain=NSOSStatusErrorDomain Code=-43 &amp;quot;The operation couldn’t b
 &lt;p&gt;&lt;em&gt;- mike&lt;/em&gt;&lt;/p&gt;
 </description>
         <pubDate>Sat, 24 Oct 2015 09:00:00 -0700</pubDate>
-        <link>http://michaellynn.github.io/2015/10/24/apples-bookmarkdata-exposed/</link>
-        <guid isPermaLink="true">http://michaellynn.github.io/2015/10/24/apples-bookmarkdata-exposed/</guid>
+        <link>http://localhost:4000/2015/10/24/apples-bookmarkdata-exposed/</link>
+        <guid isPermaLink="true">http://localhost:4000/2015/10/24/apples-bookmarkdata-exposed/</guid>
       </item>
     
       <item>
@@ -2189,13 +2347,13 @@ Error Domain=NSOSStatusErrorDomain Code=-43 &amp;quot;The operation couldn’t b
 
 &lt;p&gt;After it was posted, a Twitter friend of mine &lt;a href=&quot;https://twitter.com/morningwoodspor/status/630886277538258945&quot;&gt;asked for a little more help&lt;/a&gt; with one of these more problematic apps.&lt;/p&gt;
 
-&lt;p&gt;I was able to confirm that the app in question could run if I provided the right arguments to &lt;code class=&quot;highlighter-rouge&quot;&gt;/usr/bin/java&lt;/code&gt;, so why couldn’t JavaApplicationStub launching work?&lt;/p&gt;
+&lt;p&gt;I was able to confirm that the app in question could run if I provided the right arguments to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/usr/bin/java&lt;/code&gt;, so why couldn’t JavaApplicationStub launching work?&lt;/p&gt;
 
 &lt;p&gt;A little more research (aka Google) turned up &lt;a href=&quot;http://apple.stackexchange.com/a/136976&quot;&gt;this marvelous additional tidbit&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;Basically the problematic Java .apps in question had their .jar files coded to look for &lt;code class=&quot;highlighter-rouge&quot;&gt;libserver.dylib&lt;/code&gt;, which isn’t part of the current JDK distribution.&lt;/p&gt;
+&lt;p&gt;Basically the problematic Java .apps in question had their .jar files coded to look for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;libserver.dylib&lt;/code&gt;, which isn’t part of the current JDK distribution.&lt;/p&gt;
 
-&lt;p&gt;This fix involves creating the original directory structure it expects it at and symlinking &lt;code class=&quot;highlighter-rouge&quot;&gt;libjvm.dylib&lt;/code&gt; to the old location.&lt;/p&gt;
+&lt;p&gt;This fix involves creating the original directory structure it expects it at and symlinking &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;libjvm.dylib&lt;/code&gt; to the old location.&lt;/p&gt;
 
 &lt;p&gt;It worked, it fixed the launching! (&lt;strong&gt;&lt;em&gt;and Minecraft works as-is for me now, no more modifying the .app bundle!!&lt;/em&gt;&lt;/strong&gt;)&lt;/p&gt;
 
@@ -2257,8 +2415,8 @@ for info_plist in jdk_info_plists():
 &lt;p&gt;&lt;em&gt;- mike&lt;/em&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 10 Aug 2015 18:15:00 -0700</pubDate>
-        <link>http://michaellynn.github.io/2015/08/10/even-more-oracle-java-compatibility/</link>
-        <guid isPermaLink="true">http://michaellynn.github.io/2015/08/10/even-more-oracle-java-compatibility/</guid>
+        <link>http://localhost:4000/2015/08/10/even-more-oracle-java-compatibility/</link>
+        <guid isPermaLink="true">http://localhost:4000/2015/08/10/even-more-oracle-java-compatibility/</guid>
       </item>
     
       <item>
@@ -2275,9 +2433,9 @@ for info_plist in jdk_info_plists():
 
 &lt;p&gt;&lt;em&gt;&lt;small&gt;*(frogor is one of my &lt;a href=&quot;/about&quot;&gt;many names&lt;/a&gt;)&lt;/small&gt;&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;In the discussion, a few people were wondering if it was possible to mount network shares with python in OS X (&lt;em&gt;of course it is&lt;/em&gt;) because using the command-line &lt;code class=&quot;highlighter-rouge&quot;&gt;mount&lt;/code&gt; was running into some odd situations with Kerberos ticket handling.&lt;/p&gt;
+&lt;p&gt;In the discussion, a few people were wondering if it was possible to mount network shares with python in OS X (&lt;em&gt;of course it is&lt;/em&gt;) because using the command-line &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mount&lt;/code&gt; was running into some odd situations with Kerberos ticket handling.&lt;/p&gt;
 
-&lt;p&gt;You could call out to AppleScript (&lt;code class=&quot;highlighter-rouge&quot;&gt;osascript&lt;/code&gt;) to do it with “mount volume”, but the rest of the code involved was already written in python and there was interest in reducing the number of external tools used rather than replacing one with another.&lt;/p&gt;
+&lt;p&gt;You could call out to AppleScript (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;osascript&lt;/code&gt;) to do it with “mount volume”, but the rest of the code involved was already written in python and there was interest in reducing the number of external tools used rather than replacing one with another.&lt;/p&gt;
 
 &lt;p&gt;This sounded like a fun challenge!&lt;/p&gt;
 
@@ -2328,7 +2486,7 @@ NetFSMountURLSync(
 
 &lt;p&gt;That’s a bingo.&lt;/p&gt;
 
-&lt;p&gt;Looking at the pseudocode, &lt;code class=&quot;highlighter-rouge&quot;&gt;0x0&lt;/code&gt; (null pointer) is used in place of the user and password arguments which lines right up with the documentation &lt;em&gt;“(overrides URL)”&lt;/em&gt; indicating that as long as someone provides the password within the URL (example: &lt;code class=&quot;highlighter-rouge&quot;&gt;afp://username:password@server/share&lt;/code&gt;), then they’re unnecessary.&lt;/p&gt;
+&lt;p&gt;Looking at the pseudocode, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0x0&lt;/code&gt; (null pointer) is used in place of the user and password arguments which lines right up with the documentation &lt;em&gt;“(overrides URL)”&lt;/em&gt; indicating that as long as someone provides the password within the URL (example: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;afp://username:password@server/share&lt;/code&gt;), then they’re unnecessary.&lt;/p&gt;
 
 &lt;p&gt;The only arguments AppleScript passes are &lt;em&gt;url&lt;/em&gt;, &lt;em&gt;open_options&lt;/em&gt;, &lt;em&gt;mount_options&lt;/em&gt;, and a placeholder for getting the returned mountpoint after it succeeds.&lt;/p&gt;
 
@@ -2361,7 +2519,7 @@ NetFSMountURLSync(
 
 &lt;p&gt;Could come in handy!&lt;/p&gt;
 
-&lt;p&gt;It’s also interesting to note that the AppleScript code provides &lt;code class=&quot;highlighter-rouge&quot;&gt;0x0&lt;/code&gt; for mountpath, which seems to imply that not defining it will make it mount in the standard dynamic fashion at /Volumes.&lt;/p&gt;
+&lt;p&gt;It’s also interesting to note that the AppleScript code provides &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0x0&lt;/code&gt; for mountpath, which seems to imply that not defining it will make it mount in the standard dynamic fashion at /Volumes.&lt;/p&gt;
 
 &lt;p&gt;So at what point do we start turning this into python code?&lt;/p&gt;
 
@@ -2402,7 +2560,7 @@ share_url = CFURLCreateWithString(None, &amp;#39;afp://servername.local/sharenam
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NetFSMountURLSync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;share_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[])&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;Traceback&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;most&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;recent&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;call&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;last&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;stdin&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;ValueError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;depythonifying&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'pointer'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;got&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'list'&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;ValueError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;depythonifying&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;pointer&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;got&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;list&apos;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Ruh roh. It apparently didn’t like my list argument.&lt;/p&gt;
@@ -2417,7 +2575,7 @@ share_url = CFURLCreateWithString(None, &amp;#39;afp://servername.local/sharenam
 
 &lt;p&gt;&lt;strong&gt;[END OF INTERMISSION]&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;The real problem boils down to how &lt;code class=&quot;highlighter-rouge&quot;&gt;NetFSMountURLSync&lt;/code&gt; is defined in the bridgesupport file that shipped with OS X, located at: /System/Library/Frameworks/NetFS.framework/Resources/BridgeSupport/NetFS.bridgesupport&lt;/p&gt;
+&lt;p&gt;The real problem boils down to how &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NetFSMountURLSync&lt;/code&gt; is defined in the bridgesupport file that shipped with OS X, located at: /System/Library/Frameworks/NetFS.framework/Resources/BridgeSupport/NetFS.bridgesupport&lt;/p&gt;
 
 &lt;noscript&gt;&lt;pre&gt;&amp;lt;function name=&amp;#39;NetFSMountURLSync&amp;#39;&amp;gt;
 &amp;lt;arg type=&amp;#39;^{__CFURL=}&amp;#39;/&amp;gt;
@@ -2431,7 +2589,7 @@ share_url = CFURLCreateWithString(None, &amp;#39;afp://servername.local/sharenam
 &amp;lt;/function&amp;gt;&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/pudquick/8f09a0b8893c01637b74.js?file=03_snip.xml&quot;&gt; &lt;/script&gt;
 
-&lt;p&gt;That last argument is what’s killing us: &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;arg type='^^{__CFArray}'/&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;That last argument is what’s killing us: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;arg type=&apos;^^{__CFArray}&apos;/&amp;gt;&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;… a pointer to a pointer to a CFArray …&lt;/p&gt;
 
@@ -2439,7 +2597,7 @@ share_url = CFURLCreateWithString(None, &amp;#39;afp://servername.local/sharenam
 
 &lt;p&gt;… aka a pointer to a NSArray (&lt;a href=&quot;https://developer.apple.com/library/ios/documentation/CoreFoundation/Conceptual/CFDesignConcepts/Articles/tollFreeBridgedTypes.html&quot;&gt;via bridging&lt;/a&gt;)&lt;/p&gt;
 
-&lt;p&gt;Googling for countless examples on how to use &lt;code class=&quot;highlighter-rouge&quot;&gt;NetFSMountURLSync&lt;/code&gt; show I can pass a null pointer by reference for this argument. OS X isn’t expecting me to pass it a CFArrayRef (NSArray), it will &lt;u&gt;build one for me&lt;/u&gt; and give me back a pointer to it.&lt;/p&gt;
+&lt;p&gt;Googling for countless examples on how to use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NetFSMountURLSync&lt;/code&gt; show I can pass a null pointer by reference for this argument. OS X isn’t expecting me to pass it a CFArrayRef (NSArray), it will &lt;u&gt;build one for me&lt;/u&gt; and give me back a pointer to it.&lt;/p&gt;
 
 &lt;p&gt;I don’t really need to put anything of value &lt;em&gt;into&lt;/em&gt; this function argument, I just need to get something &lt;em&gt;out&lt;/em&gt; of it.&lt;/p&gt;
 
@@ -2449,9 +2607,9 @@ share_url = CFURLCreateWithString(None, &amp;#39;afp://servername.local/sharenam
 
 &lt;p&gt;His recommendation was that because all of the arguments were basically toll-free bridged types (&lt;em&gt;pointer to a CFURL&lt;/em&gt; = &lt;em&gt;CFURLRef&lt;/em&gt; = &lt;em&gt;NSURL&lt;/em&gt;, etc.), it would be best to rewrite the signature as taking a series of object type arguments and then changing the last argument from an input argument into an output.&lt;/p&gt;
 
-&lt;p&gt;While pyobjc has problems with double pointer signatures (&lt;code class=&quot;highlighter-rouge&quot;&gt;^^{__CFArray}&lt;/code&gt; - each &lt;code class=&quot;highlighter-rouge&quot;&gt;^&lt;/code&gt; indicates a pointer &lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html&quot;&gt;per the documentation&lt;/a&gt;), it has no problems with a single level of pointers.&lt;/p&gt;
+&lt;p&gt;While pyobjc has problems with double pointer signatures (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;^^{__CFArray}&lt;/code&gt; - each &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;^&lt;/code&gt; indicates a pointer &lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html&quot;&gt;per the documentation&lt;/a&gt;), it has no problems with a single level of pointers.&lt;/p&gt;
 
-&lt;p&gt;By changing the signature from &lt;code class=&quot;highlighter-rouge&quot;&gt;^^{__CFArray}&lt;/code&gt; (aka &lt;em&gt;pointer to a CFArrayRef&lt;/em&gt; aka &lt;em&gt;pointer to a NSArray&lt;/em&gt;) to &lt;code class=&quot;highlighter-rouge&quot;&gt;^@&lt;/code&gt; (&lt;em&gt;pointer to an object&lt;/em&gt;), pyobjc becomes able to handle it with ease! Just needed to get from &lt;code class=&quot;highlighter-rouge&quot;&gt;^^&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;^&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;By changing the signature from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;^^{__CFArray}&lt;/code&gt; (aka &lt;em&gt;pointer to a CFArrayRef&lt;/em&gt; aka &lt;em&gt;pointer to a NSArray&lt;/em&gt;) to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;^@&lt;/code&gt; (&lt;em&gt;pointer to an object&lt;/em&gt;), pyobjc becomes able to handle it with ease! Just needed to get from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;^^&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;^&lt;/code&gt;.&lt;/p&gt;
 
 &lt;noscript&gt;&lt;pre&gt;import objc
 from CoreFoundation import CFURLCreateWithString
@@ -2470,24 +2628,24 @@ del NetFSMountURLSync
 objc.loadBundleFunctions(__bundle__, globals(), [(&amp;#39;NetFSMountURLSync&amp;#39;, &amp;#39;i@@@@@@o^@&amp;#39;)])&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/pudquick/8f09a0b8893c01637b74.js?file=04_snip.py&quot;&gt; &lt;/script&gt;
 
-&lt;p&gt;Let’s break down that signature: &lt;code class=&quot;highlighter-rouge&quot;&gt;i@@@@@@o^@&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Let’s break down that signature: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;i@@@@@@o^@&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;The function has 1 return value and 7 input arguments.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html&quot;&gt;Per the documentation&lt;/a&gt;, we start off by defining the return value as &lt;code class=&quot;highlighter-rouge&quot;&gt;i&lt;/code&gt;, an &lt;strong&gt;int&lt;/strong&gt; type, which is pretty common for functions (usually used for error codes).&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html&quot;&gt;Per the documentation&lt;/a&gt;, we start off by defining the return value as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;i&lt;/code&gt;, an &lt;strong&gt;int&lt;/strong&gt; type, which is pretty common for functions (usually used for error codes).&lt;/p&gt;
 
-&lt;p&gt;The arguments follow, starting with 6 &lt;code class=&quot;highlighter-rouge&quot;&gt;@&lt;/code&gt; which indicates 6 &lt;strong&gt;object&lt;/strong&gt; type arguments.&lt;/p&gt;
+&lt;p&gt;The arguments follow, starting with 6 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@&lt;/code&gt; which indicates 6 &lt;strong&gt;object&lt;/strong&gt; type arguments.&lt;/p&gt;
 
-&lt;p&gt;Then magic for the last argument: &lt;code class=&quot;highlighter-rouge&quot;&gt;o^@&lt;/code&gt;: out-only pointer to an &lt;strong&gt;object&lt;/strong&gt; type.&lt;/p&gt;
+&lt;p&gt;Then magic for the last argument: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;o^@&lt;/code&gt;: out-only pointer to an &lt;strong&gt;object&lt;/strong&gt; type.&lt;/p&gt;
 
-&lt;p&gt;When you provide a signature like this to pyobjc, you still have to pass &lt;code class=&quot;highlighter-rouge&quot;&gt;None&lt;/code&gt; (null pointer) for the argument, but instead of having to deal with dereferencing pointers it saves you the pain &lt;em&gt;and just moves it to a second return value&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;When you provide a signature like this to pyobjc, you still have to pass &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;None&lt;/code&gt; (null pointer) for the argument, but instead of having to deal with dereferencing pointers it saves you the pain &lt;em&gt;and just moves it to a second return value&lt;/em&gt;.&lt;/p&gt;
 
 &lt;p&gt;Here’s how you use it:&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mountpaths&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NetFSMountURLSync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;share_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
 &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mountpaths&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;u'/Volumes/sharename'&lt;/span&gt;
+&lt;span class=&quot;sa&quot;&gt;u&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;/Volumes/sharename&apos;&lt;/span&gt;
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -2500,8 +2658,8 @@ objc.loadBundleFunctions(__bundle__, globals(), [(&amp;#39;NetFSMountURLSync&amp
 &lt;p&gt;&lt;em&gt;- mike&lt;/em&gt;&lt;/p&gt;
 </description>
         <pubDate>Sat, 08 Aug 2015 16:15:00 -0700</pubDate>
-        <link>http://michaellynn.github.io/2015/08/08/learn-you-a-better-pyobjc-bridgesupport-signature/</link>
-        <guid isPermaLink="true">http://michaellynn.github.io/2015/08/08/learn-you-a-better-pyobjc-bridgesupport-signature/</guid>
+        <link>http://localhost:4000/2015/08/08/learn-you-a-better-pyobjc-bridgesupport-signature/</link>
+        <guid isPermaLink="true">http://localhost:4000/2015/08/08/learn-you-a-better-pyobjc-bridgesupport-signature/</guid>
       </item>
     
       <item>
@@ -2513,7 +2671,7 @@ objc.loadBundleFunctions(__bundle__, globals(), [(&amp;#39;NetFSMountURLSync&amp
 &lt;p&gt;As such, Apple’s python has some customizations:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/usr/bin/python&lt;/code&gt; is not actually the real “python” binary. It is actually a stub binary that calls the real python interpreter that your OS is configured to use (for more configuration details, see &lt;a href=&quot;https://www.afp548.com/2013/04/25/python-versioning-in-os-x/&quot;&gt;my AFP548 article&lt;/a&gt;)&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/usr/bin/python&lt;/code&gt; is not actually the real “python” binary. It is actually a stub binary that calls the real python interpreter that your OS is configured to use (for more configuration details, see &lt;a href=&quot;https://www.afp548.com/2013/04/25/python-versioning-in-os-x/&quot;&gt;my AFP548 article&lt;/a&gt;)&lt;/li&gt;
   &lt;li&gt;It ships with many third-party modules pre-installed that are not part of the core python distribution, including the lovely &lt;a href=&quot;https://pythonhosted.org/pyobjc/&quot;&gt;pyobjc&lt;/a&gt;, a personal favorite of mine.&lt;/li&gt;
   &lt;li&gt;… and because they want to encourage python &amp;lt;-&amp;gt; Objective-C bridging, there is a “Python.app” bundle that’s included, allowing OS X APIs that need application bundle details (Dock icon, display name, etc.) to function. This is where we get the lovely “rocketship”, if you’ve ever seen it before:&lt;/li&gt;
 &lt;/ul&gt;
@@ -2650,7 +2808,7 @@ output = subprocess.check_output([myApp.path + &amp;#39;/Contents/MacOS/Python&a
 
 &lt;p&gt;Python includes another fantastic module called multiprocessing and I especially love the workflow of the &lt;a href=&quot;https://docs.python.org/2/library/multiprocessing.html#the-process-class&quot;&gt;Process class&lt;/a&gt; in it.&lt;/p&gt;
 
-&lt;p&gt;It allows you to spin up another python interpreter trivially in a new process and easily share data between this child process and the original with things like &lt;a href=&quot;https://docs.python.org/2/library/multiprocessing.html#exchanging-objects-between-processes&quot;&gt;Queues and Pipes&lt;/a&gt;. Additionally, you don’t need a chunk of python code in a file - you can just pass a function to the Process class as the &lt;code class=&quot;highlighter-rouge&quot;&gt;target&lt;/code&gt; argument and it will use that for the core of execution.&lt;/p&gt;
+&lt;p&gt;It allows you to spin up another python interpreter trivially in a new process and easily share data between this child process and the original with things like &lt;a href=&quot;https://docs.python.org/2/library/multiprocessing.html#exchanging-objects-between-processes&quot;&gt;Queues and Pipes&lt;/a&gt;. Additionally, you don’t need a chunk of python code in a file - you can just pass a function to the Process class as the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;target&lt;/code&gt; argument and it will use that for the core of execution.&lt;/p&gt;
 
 &lt;p&gt;It’s a lovely lovely module and I’d recommend using it for any time you’d need to spin up additional python instances …&lt;/p&gt;
 
@@ -2668,7 +2826,7 @@ output = subprocess.check_output([myApp.path + &amp;#39;/Contents/MacOS/Python&a
 
 &lt;p&gt;I also used the &lt;a href=&quot;https://docs.python.org/2/library/pickle.html&quot;&gt;pickle&lt;/a&gt; module to do the same for sending and receiving data between the processes.&lt;/p&gt;
 
-&lt;p&gt;This allowed me to pass my python code to the child process over stdin (which keeps the code out of the argument list, keeping the output of tools like &lt;code class=&quot;highlighter-rouge&quot;&gt;ps&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;top&lt;/code&gt; uncluttered).&lt;/p&gt;
+&lt;p&gt;This allowed me to pass my python code to the child process over stdin (which keeps the code out of the argument list, keeping the output of tools like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ps&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;top&lt;/code&gt; uncluttered).&lt;/p&gt;
 
 &lt;noscript&gt;&lt;pre&gt;import sys, os, os.path, tempfile, plistlib, shutil, marshal, subprocess, pickle, textwrap
 
@@ -2845,8 +3003,8 @@ result = myApp.run(example_main_function, message=&amp;#39;The message was Hello
 &lt;p&gt;&lt;em&gt;- mike&lt;/em&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 31 Jul 2015 11:45:00 -0700</pubDate>
-        <link>http://michaellynn.github.io/2015/07/31/customized-python-app-bundles/</link>
-        <guid isPermaLink="true">http://michaellynn.github.io/2015/07/31/customized-python-app-bundles/</guid>
+        <link>http://localhost:4000/2015/07/31/customized-python-app-bundles/</link>
+        <guid isPermaLink="true">http://localhost:4000/2015/07/31/customized-python-app-bundles/</guid>
       </item>
     
       <item>
@@ -2923,8 +3081,8 @@ first_sig = signature_array[0]
 
 &lt;p&gt;But if you look at the first few characters in it, you might see something recognizable:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; str(first_sig)[:50]
-'bplist00\xd4\x01\x02\x03\x04\x05\x06\x1e\x1fX$versionX$objectsY$archiverT$top'
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; str(first_sig)[:50]
+&apos;bplist00\xd4\x01\x02\x03\x04\x05\x06\x1e\x1fX$versionX$objectsY$archiverT$top&apos;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;The first few characters “bplist00” are an indicator that the contents of the array are binary plists themselves. So let’s unpack it.&lt;/p&gt;
@@ -2933,7 +3091,7 @@ first_sig = signature_array[0]
 &lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=03_snip.py&quot;&gt; &lt;/script&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sig_plist
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sig_plist
 {
     &quot;$archiver&quot; = NSKeyedArchiver;
     &quot;$objects&quot; =     (
@@ -2951,7 +3109,7 @@ sig_decoded = NSKeyedUnarchiver.unarchiveObjectWithData_(first_sig)
 &lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=04_snip.py&quot;&gt; &lt;/script&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Traceback (most recent call last):
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Traceback (most recent call last):
   File &quot;&amp;lt;stdin&amp;gt;&quot;, line 1, in &amp;lt;module&amp;gt;
 objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decodeObjectForKey:]: cannot decode object of class (PVSignature)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -2964,7 +3122,7 @@ objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decod
 
 &lt;p&gt;It can dump the signature of Objective-C objects defined within applications and frameworks (… hopefully PVSignature is within Preview.app itself!)&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class-dump -H /Applications/Preview.app/Contents/MacOS/Preview
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class-dump -H /Applications/Preview.app/Contents/MacOS/Preview
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Yay, our output includes a “PVSignature.h” file.&lt;/p&gt;
@@ -2990,7 +3148,7 @@ objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decod
 
 &lt;p&gt;When storing a single object, NSKeyedArchiver object stores the object attributes in the 2nd item of the “$objects” key:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sig_plist['$objects'][1]
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sig_plist[&apos;$objects&apos;][1]
 {
     &quot;$class&quot; = &quot;&amp;lt;CFKeyedArchiverUID 0x7fd3ada65f80 [0x7fff7951bed0]&amp;gt;{value = 4}&quot;;
     data = &quot;&amp;lt;CFKeyedArchiverUID 0x7fd3ada98480 [0x7fff7951bed0]&amp;gt;{value = 2}&quot;;
@@ -3008,7 +3166,7 @@ objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decod
 
 &lt;p&gt;Once we find it, we can use &lt;em&gt;Window -&amp;gt; Show Psuedo Code of Procedure&lt;/em&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[...]
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[...]
 rbx-&amp;gt;_undecryptedData = [[r14 decodeObjectForKey:@&quot;data&quot;] retain];
 rbx-&amp;gt;_uid = [r14 decodeInt32ForKey:@&quot;uid&quot;];
 rbx-&amp;gt;_cannotDecrypt = 0x0;
@@ -3060,7 +3218,7 @@ sig_decoded = NSKeyedUnarchiver.unarchiveObjectWithData_(first_sig)
 
 &lt;p&gt;Yay, no errors! Let’s see what our object looks like:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sig_decoded._uid
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sig_decoded._uid
 1000
 
 &amp;gt;&amp;gt;&amp;gt; sig_decoded._undecryptedData
@@ -3069,8 +3227,8 @@ sig_decoded = NSKeyedUnarchiver.unarchiveObjectWithData_(first_sig)
 
 &lt;p&gt;Cool. Let’s try the trick we did before for checking out if the raw data is anything we recognize:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; str(sig_decoded._undecryptedData)[:50]
-'E\x8e\x1d\xefT4\xc5\xab\x94\t@I\xdf\xd2BM\x0e\xbe\x7f\xf6\xc7\x9c{\x82F=mV\xac\xee\x1c\xda8\xe357|\xbb\xa9\xf9\xdc\xbd\x16\x1a+6\x16\x90Z\xfc'
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; str(sig_decoded._undecryptedData)[:50]
+&apos;E\x8e\x1d\xefT4\xc5\xab\x94\t@I\xdf\xd2BM\x0e\xbe\x7f\xf6\xc7\x9c{\x82F=mV\xac\xee\x1c\xda8\xe357|\xbb\xa9\xf9\xdc\xbd\x16\x1a+6\x16\x90Z\xfc&apos;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Hmm. Nope. Not ringing any bells.&lt;/p&gt;
@@ -3091,7 +3249,7 @@ binary_key = binascii.unhexlify(hex_key)
 &lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=07_snip.py&quot;&gt; &lt;/script&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; len(binary_key)
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; len(binary_key)
 16
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -3105,18 +3263,18 @@ binary_key = binascii.unhexlify(hex_key)
 
 &lt;p&gt;Looking at the pseudocode for it, it generates an instance of a new class “PVSignatureEncryptor”:&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;rax = [PVSignatureEncryptor sharedInstance];&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rax = [PVSignatureEncryptor sharedInstance];&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;Based on that, we find: &lt;strong&gt;-[PVSignatureEncryptor decryptedData:]:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;This code has exactly what we’re looking for - information about how it decrypts the data:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if (CCCrypt(0x1, 0x0, 0x1, r12, 0x10, 0x0, var_68, r14, r15, rax, var_58) == 0x0) {
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if (CCCrypt(0x1, 0x0, 0x1, r12, 0x10, 0x0, var_68, r14, r15, rax, var_58) == 0x0) {
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;And in this instance, we want to look at not just the pseudocode, but also the assembly for a little more clarity:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   mov edi, 0x1    ; argument &quot;op&quot; for method imp___stubs__CCCrypt
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   mov edi, 0x1    ; argument &quot;op&quot; for method imp___stubs__CCCrypt
    mov esi, 0x0    ; argument &quot;alg&quot; for method imp___stubs__CCCrypt
    mov edx, 0x1    ; argument &quot;options&quot; for method imp___stubs__CCCrypt
    mov rcx, r12    ; argument &quot;key&quot; for method imp___stubs__CCCrypt
@@ -3126,7 +3284,7 @@ binary_key = binascii.unhexlify(hex_key)
 
 &lt;p&gt;Looking at the &lt;a href=&quot;https://developer.apple.com/library/ios/documentation/System/Conceptual/ManPages_iPhoneOS/man3/CCCrypt.3cc.html&quot;&gt;documentation for CCCrypt&lt;/a&gt;, we get:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;CCCrypt(CCOperation op, CCAlgorithm alg, CCOptions options,
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;CCCrypt(CCOperation op, CCAlgorithm alg, CCOptions options,
          const void *key, size_t keyLength, const void *iv,
          const void *dataIn, size_t dataInLength, void *dataOut,
          size_t dataOutAvailable, size_t *dataOutMoved);
@@ -3158,19 +3316,19 @@ decrypted_data = cipher.decrypt(str(sig_decoded._undecryptedData))
 &lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=08_snip.py&quot;&gt; &lt;/script&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_data[:50]
-&quot;\xe4\x9c\x0f\xff\xd2\xee`\x0e\xbe8w8\xef\xaaT\xf1\x07\xeas\xe0Z\x96'6\xfc\x95\x9e\xa9\xce\xb5&amp;gt;\xd4bplist00\xd4\x01\x02\x03\x04\x05\x06,-X&quot;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_data[:50]
+&quot;\xe4\x9c\x0f\xff\xd2\xee`\x0e\xbe8w8\xef\xaaT\xf1\x07\xeas\xe0Z\x96&apos;6\xfc\x95\x9e\xa9\xce\xb5&amp;gt;\xd4bplist00\xd4\x01\x02\x03\x04\x05\x06,-X&quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;em&gt;Oh ho ho!&lt;/em&gt; I see a &lt;strong&gt;bplist00&lt;/strong&gt; …&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_data.index('bplist00')
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_data.index(&apos;bplist00&apos;)
 32
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Looks like there’s a 32 byte prefix - looking back at the code of &lt;strong&gt;-[PVSignatureEncryptor decryptedData:]&lt;/strong&gt;, we can see:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;CC_SHA256(rbx, rsi, var_50);
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;CC_SHA256(rbx, rsi, var_50);
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;SHA-256 is a 32-byte CRC. Likely the decrypted data is prefixed with its CRC hash so that the code can tell easily if it decrypted the signature correctly by validating the hash of the binary plist data matches the hash in the 32 byte prefix.&lt;/p&gt;
@@ -3179,7 +3337,7 @@ decrypted_data = cipher.decrypt(str(sig_decoded._undecryptedData))
 
 &lt;p&gt;… But before we do that, the &lt;em&gt;“kCCOptionPKCS7Padding”&lt;/em&gt; option that was mentioned earlier means that this data is padded out to a multiple of 16 bytes:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; len(decrypted_data)/16.
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; len(decrypted_data)/16.
 120.0
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -3216,7 +3374,7 @@ unpadded_decrypted_data = encoder.decode(decrypted_data)
 &lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=10_snip.py&quot;&gt; &lt;/script&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_plist
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_plist
 {
     &quot;$archiver&quot; = NSKeyedArchiver;
     &quot;$objects&quot; =     (
@@ -3235,7 +3393,7 @@ real_sig_decoded = NSKeyedUnarchiver.unarchiveObjectWithData_(nsdata_decrypted_p
 &lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=11_snip.py&quot;&gt; &lt;/script&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Traceback (most recent call last):
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Traceback (most recent call last):
   File &quot;&amp;lt;stdin&amp;gt;&quot;, line 1, in &amp;lt;module&amp;gt;
 objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decodeObjectForKey:]: cannot decode object of class (PVSignaturePayload)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -3244,7 +3402,7 @@ objc.error: NSInvalidUnarchiveOperationException - *** -[NSKeyedUnarchiver decod
 
 &lt;p&gt;Again, let’s look at what data we have, and then compare that against the contents of “PVSignaturePayload.h” from our earlier class-dump run:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_plist['$objects'][1]
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; decrypted_plist[&apos;$objects&apos;][1]
 {
     &quot;$class&quot; = &quot;&amp;lt;CFKeyedArchiverUID 0x7fba02522bd0 [0x7fff7951bed0]&amp;gt;{value = 7}&quot;;
     baselineHeight = &quot;0.1176470592617989&quot;;
@@ -3314,7 +3472,7 @@ real_sig_decoded = NSKeyedUnarchiver.unarchiveObjectWithData_(nsdata_decrypted_p
 &lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=13_snip.py&quot;&gt; &lt;/script&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; real_sig_decoded.baselineHeight
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; real_sig_decoded.baselineHeight
 0.11764705926179886
 &amp;gt;&amp;gt;&amp;gt; real_sig_decoded.path
 Path &amp;lt;0x7fba0251bb90&amp;gt;
@@ -3346,7 +3504,7 @@ sig_path_shifted.transformUsingAffineTransform_(shift_path)
 &lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/pudquick/785a464ab1b0fffe5fa7.js?file=14_snip.py&quot;&gt; &lt;/script&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sig_path_shifted
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sig_path_shifted
 Path &amp;lt;0x7fba04ef0000&amp;gt;
   Bounds: {{0.10000000000000142, 0.10000000000000001}, {271.91783064182891, 67}}
   Control point bounds: {{-0.64194097622566915, -1.8758532047271763}, {274.53815460205078, 68.975853204727173}}
@@ -3417,36 +3575,8 @@ result = data.writeToFile_atomically_(os.path.expanduser(&amp;quot;~/Desktop/my_
 &lt;p&gt;&lt;em&gt;- mike&lt;/em&gt;&lt;/p&gt;
 </description>
         <pubDate>Sun, 26 Jul 2015 21:00:00 -0700</pubDate>
-        <link>http://michaellynn.github.io/2015/07/26/exploring-os-x-preview-signatures/</link>
-        <guid isPermaLink="true">http://michaellynn.github.io/2015/07/26/exploring-os-x-preview-signatures/</guid>
-      </item>
-    
-      <item>
-        <title>A Home for my Long-form Rambling</title>
-        <description>&lt;p&gt;For quite some time, my friends have been &lt;a href=&quot;https://twitter.com/tvsutton/status/565118553809235968&quot;&gt;nagging
-me&lt;/a&gt; &lt;a href=&quot;https://twitter.com/Vaughn_E_Miller/status/603232042772516866&quot;&gt;to put
-together&lt;/a&gt; &lt;a href=&quot;https://twitter.com/foigus/status/608800195707564032&quot;&gt;a
-blog&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Blame this site on them.&lt;/p&gt;
-
-&lt;p&gt;I’ve been sharing code and tips in random &lt;a href=&quot;https://gist.github.com/pudquick&quot;&gt;Github
-gists&lt;/a&gt; for several years via
-&lt;a href=&quot;https://twitter.com/mikeymikey&quot;&gt;tweets&lt;/a&gt; and online chats.&lt;/p&gt;
-
-&lt;p&gt;I’ll probably keep doing that.&lt;/p&gt;
-
-&lt;p&gt;But now if it’s interesting enough to write about but I can’t fit it into 140
-characters, it’ll probably end up here.&lt;/p&gt;
-
-&lt;p&gt;And if it doesn’t - now I have no excuse to avoid blogging about it when you nag
-me.&lt;/p&gt;
-
-&lt;p&gt;Happy now?&lt;/p&gt;
-</description>
-        <pubDate>Sun, 19 Jul 2015 23:44:00 -0700</pubDate>
-        <link>http://michaellynn.github.io/2015/07/19/your-fault/</link>
-        <guid isPermaLink="true">http://michaellynn.github.io/2015/07/19/your-fault/</guid>
+        <link>http://localhost:4000/2015/07/26/exploring-os-x-preview-signatures/</link>
+        <guid isPermaLink="true">http://localhost:4000/2015/07/26/exploring-os-x-preview-signatures/</guid>
       </item>
     
   </channel>
